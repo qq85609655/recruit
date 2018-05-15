@@ -1,0 +1,21 @@
+[
+	{id: "user", text: "用户管理",
+		children: [
+			{id: "addUser", text: "增加用户"},
+			{id: "editUser", text: "修改用户"},
+			{id: "removeUser", text: "删除用户",
+				children: [
+					{id: "aaa", text: "AAA"},
+					{id: "bbb", text: "BBB"}
+				]
+			}
+		]
+	},
+	{id: "right", text: "权限管理",
+		children: [
+			{id: "addRight", text: "增加权限"},
+			{id: "editRight", text: "修改权限"},
+			{id: "removeRight", text: "删除权限"}
+		]
+	}
+]

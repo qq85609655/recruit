@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:context="http://www.springframework.org/schema/context" xmlns:mvc="http://www.springframework.org/schema/mvc"
+  xmlns:p="http://www.springframework.org/schema/p"
+  xsi:schemaLocation="
+       http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context-4.0.xsd
+       http://www.springframework.org/schema/mvc
+       http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd">
+
+  <bean id="gsonHttpMessageConverter" class="org.amberframework.core.converter.json.AmberGsonHttpMessageConverter"
+    init-method="init">
+    <property name="supportedMediaTypes" value="text/html;charset=UTF-8" />
+  </bean>
+  <bean id="stringHttpMessageConverter" class="org.springframework.http.converter.StringHttpMessageConverter">
+    <property name="supportedMediaTypes" value="text/plain;charset=UTF-8" />
+  </bean>
+
+  <!-- 默认的注解映射的支持 -->
+  <mvc:annotation-driven conversion-service="conversionService">
+    <mvc:argument-resolvers>
+      <bean class="org.amberframework.core.bind.method.CurrentUserMethodArgumentResolver" />
+    </mvc:argument-resolvers>
+    <mvc:message-converters>
+      <ref bean="gsonHttpMessageConverter" />
+      <ref bean="stringHttpMessageConverter" />
+    </mvc:message-converters>
+  </mvc:annotation-driven>
+
+  <!-- webBindingInitializer 解决SpringMVC数据绑定的日期时间转化问题 -->
+  <bean id="conversionService" class="org.springframework.format.support.FormattingConversionServiceFactoryBean">
+    <property name="converters">
+      <list>
+        <bean class="org.amberframework.core.converter.CustomDateConverter" />
+      </list>
+    </property>
+  </bean>
+
+  <!-- 默认静态资源映射 -->
+  <mvc:default-servlet-handler />
+  
+  <!-- 静态资源映射 -->
+  <mvc:resources mapping="/resources/**" location="/resources/" />
+
+  <!-- 默认的视图解析器 -->
+  <bean id="defaultViewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver"
+    p:order="3">
+    <property name="viewClass" value="org.springframework.web.servlet.view.JstlView" />
+    <property name="contentType" value="text/html" />
+    <property name="prefix" value="/webpage/" />
+    <property name="suffix" value=".jsp" />
+  </bean>
+  
+  <!-- 控制器异常处理 -->
+  <!-- 由于取消自动注册，DispatcherServlet会在spring上下文寻找 id 为 handlerExceptionResolver作为异常解析器 -->
+  <bean id="handlerExceptionResolver" class="org.amberframework.core.exception.method.AnnotationHandlerMethodExceptionResolver">
+    <property name="defaultErrorView" value="error" />
+    <property name="messageConverters">
+      <list>
+        <ref bean="gsonHttpMessageConverter" />
+        <ref bean="stringHttpMessageConverter" />
+      </list>
+    </property>
+  </bean>
+  <!-- 用于注入到所有controller中的异常处理方法 -->
+  <bean class="org.amberframework.core.exception.handler.DefaultExceptionHandler" />
+
+  <!-- 添加上传文档 -->
+  <bean id="multipartResolver" name="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">  
+        <!-- set the max upload size10MB -->  
+        <property name="maxUploadSize" value="10485760" />
+    <property name="maxInMemorySize" value="4096" />
+    <property name="defaultEncoding" value="UTF-8"></property>
+   </bean>
+
+  <!-- SpringMVC拦截器 
+  <mvc:interceptors>
+    <mvc:interceptor>
+      <mvc:mapping path="/**" />
+      <bean class="org.amberframework.core.interceptor.EncodingInterceptor" />
+    </mvc:interceptor>
+  </mvc:interceptors>
+  -->
+
+  <import resource="springservlet-mvc-scan.xml" />
+  <import resource="springservlet-mvc-shiro.xml" />
+</beans>

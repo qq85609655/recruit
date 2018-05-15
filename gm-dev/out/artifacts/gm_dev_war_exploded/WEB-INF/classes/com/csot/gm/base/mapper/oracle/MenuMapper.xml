@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.csot.gm.base.dao.extension.MenuMapper">
+ <resultMap id="ResourceResultMap" type="org.amberframework.web.system.auth.model.original.resource.SysResource" >
+    <id column="ID" property="id" jdbcType="DECIMAL" />
+    <result column="NAME" property="name" jdbcType="VARCHAR" />
+    <result column="MENU_NAME" property="menuName" jdbcType="VARCHAR" />
+    <result column="URL" property="url" jdbcType="VARCHAR" />
+    <result column="PARENT_ID" property="parentId" jdbcType="DECIMAL" />
+    <result column="PARENT_IDS" property="parentIds" jdbcType="VARCHAR" />
+    <result column="ICON" property="icon" jdbcType="VARCHAR" />
+    <result column="SHOW_AS_MENU" property="showAsMenu" jdbcType="CHAR" />
+    <result column="IDENTIFER" property="identifer" jdbcType="VARCHAR" />
+    <result column="WEIGHT" property="weight" jdbcType="DECIMAL" />
+  </resultMap>
+  
+  <!--通过路径名获取相应菜单列表  -->
+  <select id="selectMenuByName" parameterType="java.lang.String" resultMap="ResourceResultMap">
+  select distinct res.* 
+    from T_SYS_RESOURCE res
+    where res.show_as_menu = '1' and res.name = #{name,jdbcType=CHAR}
+    order by res.weight asc
+  </select>
+</mapper>

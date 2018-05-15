@@ -1,0 +1,8 @@
+<parts>
+  <part id="11111" name="haha">
+    <properties>
+      <property propertyName="size" isEnum="Y" isUnique="Y"/>
+    </properties>
+  </part>
+  <part id="255" name="4245"/>
+</parts>

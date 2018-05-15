@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<excelExport>
+       可配置元素：
+  <!-- 
+  showIndex  是否显示行序号  boolean类型，值为true或false；
+  indexColumnNum  行序号所在列号  如果showIndex为true，必须配置。值为数字，从0开始计算；
+  excelColumn  导出Excel的列配置，目前支持以下属性：
+          name  导出dateset对象的属性名称；
+          cellIndex  导出在Excel中的列位置，列号从0开始计算；
+          type  导出值类型，目前只有0；
+          sourceDateFormat（用于日期时间格式导出）  导出dateset对象属性的源日期格式
+          exportDateFormat（用于日期时间格式导出）  导出后需写入Excel中的目标日期格式
+   -->
+  <showIndex>true</showIndex>
+  <indexColumnNum>0</indexColumnNum>
+  <excelColumn name="partNo" cellIndex="1" type="0"></excelColumn>
+  <excelColumn name="partName" cellIndex="2" type="0"></excelColumn>
+  <excelColumn name="partLevel" cellIndex="3" type="0"></excelColumn>
+  <excelColumn name="department" cellIndex="4" type="0"></excelColumn>
+  <excelColumn name="createName" cellIndex="5" type="0"></excelColumn>
+  <excelColumn name="createCode" cellIndex="6" type="0"></excelColumn>
+  <excelColumn name="createTime" cellIndex="7" type="0" sourceDateFormat="yyyy-MM-dd HH:mm:ss"
+    exportDateFormat="yyyy-MM-dd HH:mm:ss"></excelColumn>
+  <excelColumn name="deviceClass" cellIndex="8" type="0"></excelColumn>
+  <excelColumn name="devicePlant" cellIndex="9" type="0"></excelColumn>
+  <excelColumn name="brand" cellIndex="10" type="0"></excelColumn>
+  <excelColumn name="spec" cellIndex="11" type="0"></excelColumn>
+</excelExport>

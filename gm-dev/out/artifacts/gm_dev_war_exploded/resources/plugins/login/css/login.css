@@ -1,0 +1,69 @@
+BODY {
+	FONT-FAMILY: Arial, Helvetica, sans-serif, "宋体"; COLOR: #333; FONT-SIZE: 12px
+}
+TD {
+	FONT-FAMILY: Arial, Helvetica, sans-serif, "宋体"; COLOR: #333; FONT-SIZE: 12px
+}
+TH {
+	FONT-FAMILY: Arial, Helvetica, sans-serif, "宋体"; COLOR: #333; FONT-SIZE: 12px
+}
+BODY {
+	BACKGROUND-COLOR: #fff; MARGIN: 0px
+}
+A:link {
+	COLOR: #434343; FONT-SIZE: 12px; TEXT-DECORATION: none
+}
+A:visited {
+	COLOR: #434343; FONT-SIZE: 12px; TEXT-DECORATION: none
+}
+A:active {
+	COLOR: #434343; FONT-SIZE: 12px; TEXT-DECORATION: none
+}
+A:hover {
+	FONT-FAMILY: Arial, Helvetica, sans-serif, "宋体"; COLOR: #003cff; FONT-SIZE: 12px; TEXT-DECORATION: none
+}
+A.blue:link {
+	COLOR: #4788ee; FONT-SIZE: 12px; TEXT-DECORATION: none
+}
+A.blue:visited {
+	COLOR: #4788ee; FONT-SIZE: 12px; TEXT-DECORATION: none
+}
+A.blue:active {
+	COLOR: #4788ee; FONT-SIZE: 12px; TEXT-DECORATION: none
+}
+A.blue:hover {
+	COLOR: #ff1e00; FONT-SIZE: 12px; TEXT-DECORATION: none
+}
+.bg_top {
+	BACKGROUND-IMAGE: url(images/loading_jb_bg.gif); BACKGROUND-REPEAT: repeat-y; BACKGROUND-POSITION: right 50%
+}
+.gray_1 {
+	COLOR: #cbcbcb
+}
+.table_bk {
+	BORDER-BOTTOM: #dedede 1px solid; BORDER-LEFT: #dedede 1px solid; PADDING-BOTTOM: 13px; PADDING-LEFT: 13px; PADDING-RIGHT: 13px; BORDER-TOP: #dedede 1px solid; BORDER-RIGHT: #dedede 1px solid; PADDING-TOP: 13px
+}
+.black_t1_16 {
+	COLOR: #3f3f3f; FONT-SIZE: 16px; FONT-WEIGHT: bold
+}
+.black_t2 {
+	COLOR: #959595; FONT-SIZE: 12px
+}
+.black_t1_14 {
+	LINE-HEIGHT: 25px; PADDING-LEFT: 0px; COLOR: #3f3f3f; FONT-SIZE: 14px; FONT-WEIGHT: bold
+}
+.textfield {
+	BORDER-BOTTOM: #d8d8d8 1px solid; BORDER-LEFT: #d8d8d8 1px solid; LINE-HEIGHT: 25px; WIDTH: 196px; FONT-FAMILY: Arial, Helvetica, sans-serif, "宋体"; HEIGHT: 25px; COLOR: #4a4a4a; FONT-SIZE: 12px; BORDER-TOP: #d8d8d8 1px solid; BORDER-RIGHT: #d8d8d8 1px solid
+}
+.foot {
+	COLOR: #7e7e7e; FONT-SIZE: 12px
+}
+.btn_login {
+	TEXT-ALIGN: center; LINE-HEIGHT: 36px; WIDTH: 89px; DISPLAY: block; BACKGROUND: url(but_loading.gif) no-repeat; HEIGHT: 36px; COLOR: #fff !important; FONT-SIZE: 16px !important; CURSOR: pointer; FONT-WEIGHT: bold; TEXT-DECORATION: none
+}
+.btn_login:hover {
+	TEXT-ALIGN: center; LINE-HEIGHT: 36px; WIDTH: 89px; DISPLAY: block; BACKGROUND: url(but_loading.gif) no-repeat; HEIGHT: 36px; COLOR: #fff !important; FONT-SIZE: 16px !important; CURSOR: pointer; FONT-WEIGHT: bold; TEXT-DECORATION: none
+}
+.btn_login:hover {
+	BACKGROUND: url(but_loading_on.gif) no-repeat; COLOR: #fff; TEXT-DECORATION: none
+}

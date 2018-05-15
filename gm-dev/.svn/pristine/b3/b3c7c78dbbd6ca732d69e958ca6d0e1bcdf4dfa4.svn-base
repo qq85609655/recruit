@@ -1,0 +1,17 @@
+#Database Connection
+dbconf.connection.driver=oracle.jdbc.driver.OracleDriver
+dbconf.connection.url=jdbc:oracle:thin:@(DESCRIPTION =(failover = on)(ADDRESS = (PROTOCOL = TCP)(HOST = 10.108.4.191)(PORT = 1521))(ADDRESS = (PROTOCOL = TCP)(HOST = 10.108.4.193)(PORT = 1521))(LOAD_BALANCE = no)(CONNECT_DATA =(SERVER = DEDICATED)(SERVICE_NAME = p1intsrv1)(FAILOVER_MODE= (TYPE = SELECT)(METHOD = BASIC)(RETRIES = 10)(DELAY = 5))))
+dbconf.connection.user=mdmprd
+dbconf.connection.password=mdmprd
+
+#Proxool config
+proxool.alias=amberdb
+proxool.houseKeepingSleepTime=900000
+proxool.testBeforeUse=true
+proxool.prototypeCount=2
+proxool.maximumConnectionCount=20
+proxool.minimumConnectionCount=5
+proxool.simultaneousBuildThrottle=10
+proxool.houseKeepingTestSql=select 1 from dual
+proxool.verbose=true
+proxool.trace=true

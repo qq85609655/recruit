@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 注意，生成代码的时候需要基本都不需要修改此XML文档，配置项在properties中  -->
+
+<!DOCTYPE generatorConfiguration
+  PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+  "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+<generatorConfiguration>
+  <properties resource="sys-config.properties"/>
+  <context id="GeneratorContext" targetRuntime="MyBatis3">
+    <plugin type="org.mybatis.generator.plugins.CaseInsensitiveLikePlugin"></plugin>
+    <plugin type="org.mybatis.generator.plugins.EqualsHashCodePlugin"></plugin>
+    <plugin type="org.mybatis.generator.plugins.RenameExampleClassPlugin">
+      <property name="searchString" value="Example$" />
+      <property name="replaceString" value="Criteria" />
+    </plugin>
+    <plugin type="org.mybatis.generator.plugins.SerializablePlugin"></plugin>
+    <commentGenerator>
+      <!-- 是否去除自动生成的代码生成时间戳注释 true：是 ： false:否 -->
+      <property name="suppressDate" value="true" />
+      <!-- 是否去除自动生成的注释 true：是 ： false:否 -->
+      <property name="suppressAllComments" value="false" />
+    </commentGenerator>
+    <!--数据库链接URL，用户名、密码 -->
+    <jdbcConnection driverClass="${db.connection.driver}" connectionURL="${db.connection.url}"
+      userId="${db.connection.user}" password="${db.connection.password}"
+    >
+    </jdbcConnection>
+    <!-- JDBC DECIMAL and NUMERIC types resolver -->
+    <javaTypeResolver>
+      <property name="forceBigDecimals" value="false" />
+    </javaTypeResolver>
+    <!-- 生成模型的包名和位置 -->
+    <javaModelGenerator targetPackage="test.testcase.original.model"
+      targetProject="/E:/JavaWorkspace/ee_spring/testweb_mvn/src/main/java"
+    >
+      <property name="enableSubPackages" value="false" />
+      <property name="trimStrings" value="false" />
+    </javaModelGenerator>
+    <!-- 生成映射文件的包名和位置 -->
+    <sqlMapGenerator targetPackage="test.testcase.original.mapper" targetProject="/E:/JavaWorkspace/ee_spring/testweb_mvn/src/main/java">
+      <property name="enableSubPackages" value="false" />
+    </sqlMapGenerator>
+    <!-- 生成DAO的包名和位置 -->
+    <javaClientGenerator type="XMLMAPPER" targetPackage="test.testcase.original.dao"
+      targetProject="/E:/JavaWorkspace/ee_spring/testweb_mvn/src/main/java"
+    >
+      <property name="enableSubPackages" value="false" />
+      <property name="rootInterface" value="org.amberframework.core.mybatis.dao.MyBatisBaseMapper" />
+    </javaClientGenerator>
+    <!-- 为空。table标签必须有，但是这里面的内容不会使用，所以不需要配置  -->
+    <table tableName="" domainObjectName=""></table>
+  </context>
+</generatorConfiguration>

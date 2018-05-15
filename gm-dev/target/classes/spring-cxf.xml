@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+        xmlns="http://www.springframework.org/schema/beans"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:jaxws="http://cxf.apache.org/jaxws"
+        xsi:schemaLocation="
+http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+http://cxf.apache.org/jaxws http://cxf.apache.org/schemas/jaxws.xsd">
+
+  <import resource="classpath:META-INF/cxf/cxf.xml"/>
+  <!-- import resource="classpath:META-INF/cxf/cxf-extension-soap.xml"/ -->
+  <import resource="classpath:META-INF/cxf/cxf-servlet.xml"/>
+
+  <jaxws:endpoint 
+          id="gm4plmUpdateService" 
+          implementor="com.csot.gm.esbws.importUpdatePartInfoSrv.ESBGMGMImportUpdatePartInfoSrvImpl" 
+          implementorClass="com.csot.gm.esbws.importUpdatePartInfoSrv.ESBGMGMImportUpdatePartInfoSrv" 
+          address="/gm4plmUpdateService" />
+  
+  <jaxws:endpoint 
+          id="gm4plmInquiryService"  
+          implementor="com.csot.gm.esbws.inquiryPartInfoSrv.ESBGMGMInquiryPartInfoSrvImpl" 
+          implementorClass="com.csot.gm.esbws.inquiryPartInfoSrv.ESBGMGMInquiryPartInfoSrv" 
+          address="/gm4plmInquiryService" />
+          
+  <jaxws:endpoint
+    id="ESB_ESB_ESB_ImportOrgInfoRouteSrv"
+    implementor="com.csot.gm.esbws.org.ESBESBESBImportOrgInfoRouteSrvImpl"
+    address="/ESB_ESB_ESB_ImportOrgInfoRouteSrv"
+    wsdlLocation="/WEB-INF/wsdl/ESB_ESB_ESB_ImportOrgInfoRouteSrv/ESB_ESB_ESB_ImportOrgInfoRouteSrv.wsdl" />
+  
+  <jaxws:endpoint
+    id="ESB_ESB_ESB_ImportUserAccountInfoRouteSrv"
+    implementor="com.csot.gm.esbws.account.ESBESBESBImportUserAccountInfoRouteSrvImpl"
+    address="/ESB_ESB_ESB_ImportUserAccountInfoRouteSrv"
+    wsdlLocation="/WEB-INF/wsdl/ESB_ESB_ESB_ImportUserAccountInfoRouteSrv/ESB_ESB_ESB_ImportUserAccountInfoRouteSrv.wsdl" />
+    
+  <jaxws:endpoint
+    id="ESB_ESB_ESB_ImportEmpBasicInfoRouteSrv"
+    implementor="com.csot.gm.esbws.emp.ESBESBESBImportEmpBasicInfoRouteSrvImpl"
+    address="/ESB_ESB_ESB_ImportEmpBasicInfoRouteSrv"
+    wsdlLocation="/WEB-INF/wsdl/ESB_ESB_ESB_ImportEmpBasicInfoRouteSrv/ESB_ESB_ESB_ImportEmpBasicInfoRouteSrv.wsdl" />
+
+<!--   <bean id="getPartInfo" class="com.csot.gm.esbws.getpartinfo.GetPartInfoImp" />  
+  <jaxws:endpoint
+    id="getPartInfoRouteSrv"
+    implementor="#getPartInfo"
+    address="/getPartInfo" /> -->
+
+  <jaxws:endpoint
+    id="getPartInfoRouteSrv"
+    implementor="com.csot.gm.esbws.getpartinfo.GetPartInfoImp"
+    address="/getPartInfo" /> 
+</beans>

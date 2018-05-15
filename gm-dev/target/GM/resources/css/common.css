@@ -1,0 +1,43 @@
+@CHARSET "UTF-8";
+
+html, body {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.errorText {
+  color: red;
+}
+
+.mainform {
+  padding: 8px 12px;
+}
+
+.formTable {
+  width: 100%;
+  border-collapse: collapse;
+  border: none;
+}
+
+.formTable TD.formLabel {
+  width: 20%;
+  text-align: right;
+  background-color: #e7e9eb;
+  border: solid #a8a8a8 1px;
+  padding: 5px 8px;
+}
+
+.formTable TD.formContent {
+  border: solid #a8a8a8 1px;
+  padding: 5px 8px;
+}
+
+.dialogFooter {
+  text-align: center;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  border: 0;
+}
