@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.csot.barret.dao.ReportMapper" >
+  <resultMap id="BaseResultMap" type="com.csot.barret.model.Report" >
+    <result column="usercode" property="userCode" jdbcType="VARCHAR" />
+    <result column="userdesc" property="userName" jdbcType="VARCHAR" />
+  </resultMap>
+
+
+  <select id="selectBaseUser" parameterType="map" resultMap="BaseResultMap" >
+    select usercode, userdesc from base_user
+  </select>
+
+</mapper>

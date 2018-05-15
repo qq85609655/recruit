@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+  <settings>
+    <!-- 设置但JDBC类型为空时, 某些驱动程序 要指定值, 可选NULL|OTHER|VARCHAR, 默认为OTHER, -->
+    <!-- mapper中不指定jdbcType又要防止传null报错则需要设置为NULL -->
+    <setting
+      name="jdbcTypeForNull"
+      value="NULL" />
+  </settings>
+
+<!--
+  <typeAliases>
+    <typeAlias
+      alias="EmpBasicInfoItemEntity"
+      type="com.csot.plm.soa.imp.entity.EmpBasicInfoItemEntity" />
+  </typeAliases>
+  -->
+
+  <!-- <mappers> 
+  <mapper resource="com/test/Customer.xml" /> 
+  </mappers> -->
+</configuration>

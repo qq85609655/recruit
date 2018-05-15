@@ -1,0 +1,37 @@
+log4j.rootCategory=${log4jconf.rootCategory.level}, console, R
+
+log4j.appender.console=org.apache.log4j.ConsoleAppender
+log4j.appender.console.layout=org.apache.log4j.PatternLayout
+log4j.appender.console.layout.ConversionPattern=${log4jconf.console.conversionPattern}
+
+log4j.appender.R=org.apache.log4j.DailyRollingFileAppender
+log4j.appender.R.File=${log4jconf.r.file.location}
+log4j.appender.R.DatePattern=${log4jconf.r.datePattern}
+log4j.appender.R.layout=org.apache.log4j.PatternLayout
+log4j.appender.R.layout.ConversionPattern=${log4jconf.r.conversionPattern}
+
+
+
+log4j.logger.org.amberframework=${log4jconf.rootCategory.level}
+log4j.logger.org.apache.commons=ERROR
+log4j.logger.org.displaytag=ERROR
+log4j.logger.org.springframework=WARN
+
+#Mybatis
+log4j.logger.org.mybatis.spring=INFO
+log4j.logger.com.ibatis=INFO
+log4j.logger.com.ibatis.common.jdbc.SimpleDataSource=${log4jconf.rootCategory.level}
+log4j.logger.com.ibatis.common.jdbc.ScriptRunner=${log4jconf.rootCategory.level}
+log4j.logger.com.ibatis.sqlmap.engine.impl.SqlMapClientDelegate=${log4jconf.rootCategory.level}
+log4j.logger.java.sql.Connection=${log4jconf.rootCategory.level}
+log4j.logger.java.sql.PreparedStatement=${log4jconf.rootCategory.level}
+log4j.logger.java.sql.Statement=${log4jconf.rootCategory.level}
+log4j.logger.java.sql.ResultSet=${log4jconf.rootCategory.level}
+
+#Proxool & Ehcache
+log4j.logger.org.logicalcobwebs.proxool.ProxyFactory=INFO
+log4j.logger.org.logicalcobwebs.proxool.ConnectionPool=INFO
+log4j.logger.net.sf.ehcache.Cache=INFO
+
+#Shiro
+log4j.logger.org.apache.shiro.web.servlet.SimpleCookie=INFO

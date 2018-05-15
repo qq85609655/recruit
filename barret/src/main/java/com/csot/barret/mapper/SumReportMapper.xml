@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.csot.barret.dao.SumReportMapper" >
+
+  <select id="getBomValueAdd" resultType="java.lang.Integer" >
+    select count(1) from mdm_bomcva_code t1,mdm_user_code t2 where trunc(t1.audittime)&gt;=to_date(#{startTime},'yyyy:mm:dd')
+    and trunc(t1.audittime)&lt;= to_date(#{endTime},'yyyy:mm:dd') and t1.code is not null
+    and t1.recordercode != 'admin' and t1.recordercode = t2.desc2  and t1.auditflag = #{status} AND t2.desc14 = #{companyName}
+  </select>
+
+  <select id="getNotBomValueAdd" resultType="java.lang.Integer" >
+    select count(1) from (select * from mdm_spec_code where desc2 not like 'G%' union all select * from mdm_brand_code) t1
+    ,mdm_user_code t2 where trunc(t1.audittime)&gt;=to_date(#{startTime},'yy:mm:dd') and
+    trunc(t1.audittime)&lt;= to_date(#{endTime},'yy:mm:dd')
+    and t1.recordercode = t2.desc2  and t1.auditflag = #{status} AND t2.desc14 = #{companyName}
+  </select>
+
+  <select id="getNotProductValueAdd" resultType="java.lang.Integer" >
+    select count(1) from (select * from mdm_spec_code where desc2 like 'G%') t1
+    ,mdm_user_code t2 where trunc(t1.audittime)&gt;=to_date(#{startTime},'yy:mm:dd') and
+    trunc(t1.audittime)&lt;= to_date(#{endTime},'yy:mm:dd')
+    and t1.recordercode = t2.desc2  and t1.auditflag = #{status} AND t2.desc14 = #{companyName}
+  </select>
+
+  <select id="getBomPartNoAdd" resultType="java.lang.Integer" >
+    select count(1) from mdm_bomcsj_code t1,mdm_user_code t2 where trunc(t1.audittime)&gt;=to_date(#{startTime},'yy:mm:dd')
+    and trunc(t1.audittime)&lt;= to_date(#{endTime},'yy:mm:dd')
+    and t1.recordercode != 'admin' and t1.recordercode = t2.desc2  and t1.auditflag = #{status} AND t2.desc14 = #{companyName}
+  </select>
+
+  <select id="getNotBomPartNoAdd" resultType="java.lang.Integer" >
+    select count(1) from mdm_fbomsj_code t1,mdm_user_code t2 where trunc(t1.audittime)&gt;=to_date(#{startTime},'yy:mm:dd')
+    and trunc(t1.audittime)&lt;= to_date(#{endTime},'yy:mm:dd') and t1.recordercode != 'admin'
+    and t1.recordercode = t2.desc2  and t1.auditflag = #{status}and t1.categorycode not like 'G%' AND t2.desc14 = #{companyName}
+  </select>
+
+  <select id="getNotProductPartNoAdd" resultType="java.lang.Integer" >
+    select count(1) from mdm_fbomsj_code t1,mdm_user_code t2 where trunc(t1.audittime)&gt;=to_date(#{startTime},'yy:mm:dd')
+    and trunc(t1.audittime)&lt;= to_date(#{endTime},'yy:mm:dd') and t1.recordercode != 'admin'
+    and t1.recordercode = t2.desc2  and t1.auditflag = #{status}and t1.categorycode like 'G%' AND t2.desc14 = #{companyName}
+  </select>
+
+  <select id="getBomPartNoUpdate" resultType="java.lang.Integer" >
+    select count(1) from mdm_bomcsj_codebg t1,mdm_user_code t2 where trunc(t1.audittime)&gt;=to_date(#{startTime},'yy:mm:dd')
+    and trunc(t1.audittime)&lt;= to_date(#{endTime},'yy:mm:dd') and t1.recordercode != 'admin'
+    and t1.recordercode = t2.desc2 and t1.auditflag = #{status} AND t2.desc14 = #{companyName}
+  </select>
+
+  <select id="getNotBomPartNoUpdate" resultType="java.lang.Integer" >
+    select count(1) from mdm_fbomsj_codebg t1,mdm_user_code t2 where trunc(t1.audittime)&gt;=to_date(#{startTime},'yy:mm:dd')
+    and trunc(t1.audittime)&lt;= to_date(#{endTime},'yy:mm:dd') and t1.recordercode != 'admin'
+    and t1.recordercode = t2.desc2 and t1.auditflag = #{status} and t1.categorycode not like 'G%' AND t2.desc14 = #{companyName}
+  </select>
+
+  <select id="getNotProductPartNoUpdate" resultType="java.lang.Integer" >
+    select count(1) from mdm_fbomsj_codebg t1,mdm_user_code t2 where trunc(t1.audittime)&gt;=to_date(#{startTime},'yy:mm:dd')
+    and trunc(t1.audittime)&lt;= to_date(#{endTime},'yy:mm:dd') and t1.recordercode != 'admin'
+    and t1.recordercode = t2.desc2 and t1.auditflag = #{status} and t1.categorycode like 'G%' AND t2.desc14 = #{companyName}
+  </select>
+
+  <select id="getBomPlantExtend" resultType="java.lang.Integer" >
+    select count(1) from mdm_gcmx_code t1,mdm_user_code t2 where trunc(t1.audittime)&gt;=to_date(#{startTime},'yy:mm:dd')
+    and trunc(t1.audittime)&lt;= to_date(#{endTime},'yy:mm:dd') and t1.workflowid is not null
+    and t1.recordercode != 'admin' and t1.recordercode = t2.desc2  and t1.auditflag = #{status} AND t2.desc14 = #{companyName}
+  </select>
+
+  <select id="getNotBomPlantExtend" resultType="java.lang.Integer" >
+    select count(1) from mdm_fbgcmx_code t1,mdm_user_code t2 where trunc(t1.audittime)&gt;=to_date(#{startTime},'yy:mm:dd')
+    and trunc(t1.audittime)&lt;= to_date(#{endTime},'yy:mm:dd') and t1.workflowid is not null and t1.recordercode != 'admin'
+    and t1.recordercode = t2.desc2 and t1.auditflag = #{status}
+    and exists (select 1 from mdm_fbomsj_code t3 where t3.categorycode not like 'G%' and t3.codeid = t1.desc5) AND t2.desc14 = #{companyName}
+  </select>
+
+  <select id="getNotProductPlantExtend" resultType="java.lang.Integer" >
+    select count(1) from mdm_fbgcmx_code t1,mdm_user_code t2 where trunc(t1.audittime)&gt;=to_date(#{startTime},'yy:mm:dd')
+    and trunc(t1.audittime)&lt;= to_date(#{endTime},'yy:mm:dd') and t1.workflowid is not null and t1.recordercode != 'admin'
+    and t1.recordercode = t2.desc2 and t1.auditflag = #{status}
+    and exists (select 1 from mdm_fbomsj_code t3 where t3.categorycode like 'G%' and t3.codeid = t1.desc5) AND t2.desc14 = #{companyName}
+  </select>
+
+  <select id="getBomPlantUpdate" resultType="java.lang.Integer" >
+    select count(1) from mdm_gcmx_codebg t1,mdm_user_code t2 where trunc(t1.audittime)&gt;=to_date(#{startTime},'yy:mm:dd')
+    and trunc(t1.audittime)&lt;= to_date(#{endTime},'yy:mm:dd')
+    and t1.recordercode != 'admin' and t1.recordercode = t2.desc2  and t1.auditflag = #{status} AND t2.desc14 = #{companyName}
+  </select>
+
+  <select id="getNotBomPlantUpdate" resultType="java.lang.Integer" >
+    select count(1) from mdm_fbgcmx_codebg t1,mdm_user_code t2 where trunc(t1.audittime)&gt;=to_date(#{startTime},'yy:mm:dd')
+    and trunc(t1.audittime)&lt;= to_date(#{endTime},'yy:mm:dd') and t1.recordercode != 'admin' and t1.recordercode = t2.desc2
+    and t1.auditflag = #{status}
+    and exists (select 1 from mdm_fbomsj_code t3 where t3.categorycode not like 'G%' and t3.codeid = t1.desc5)  AND t2.desc14 = #{companyName}
+  </select>
+
+  <select id="getNotProductPlantUpdate" resultType="java.lang.Integer" >
+    select count(1) from mdm_fbgcmx_codebg t1,mdm_user_code t2 where trunc(t1.audittime)&gt;=to_date(#{startTime},'yy:mm:dd')
+    and trunc(t1.audittime)&lt;= to_date(#{endTime},'yy:mm:dd') and t1.recordercode != 'admin' and t1.recordercode = t2.desc2
+    and t1.auditflag = #{status}
+    and exists (select 1 from mdm_fbomsj_code t3 where t3.categorycode like 'G%' and t3.codeid = t1.desc5)  AND t2.desc14 = #{companyName}
+  </select>
+
+  <select id="getNotBomStatusFreeze" resultType="java.lang.Integer" >
+    select count(1) from mdm_fbomdj_code t1,mdm_user_code t2 where trunc(t1.audittime)&gt;=to_date(#{startTime},'yy:mm:dd')
+    and trunc(t1.audittime)&lt;= to_date(#{endTime},'yy:mm:dd') and t1.desc3 = '2' and t1.recordercode != 'admin'
+    and t1.recordercode = t2.desc2  and t1.auditflag = #{status}
+    and exists (select 1 from mdm_fbomsj_code t3 where t3.categorycode not like 'G%' and t3.codeid = t1.desc4) AND t2.desc14 = #{companyName}
+  </select>
+
+  <select id="getNotProductStatusFreeze" resultType="java.lang.Integer" >
+    select count(1) from mdm_fbomdj_code t1,mdm_user_code t2 where trunc(t1.audittime)&gt;=to_date(#{startTime},'yy:mm:dd')
+    and trunc(t1.audittime)&lt;= to_date(#{endTime},'yy:mm:dd') and t1.desc3 = '2' and t1.recordercode != 'admin'
+    and t1.recordercode = t2.desc2  and t1.auditflag = #{status}
+    and exists (select 1 from mdm_fbomsj_code t3 where t3.categorycode like 'G%' and t3.codeid = t1.desc4) AND t2.desc14 = #{companyName}
+  </select>
+
+  <select id="getNotBomReleaseFreeze" resultType="java.lang.Integer" >
+    select count(1) from mdm_fbomdj_code t1,mdm_user_code t2 where trunc(t1.audittime)&gt;=to_date(#{startTime},'yy:mm:dd')
+    and trunc(t1.audittime)&lt;= to_date(#{endTime},'yy:mm:dd') and t1.desc3 = '1' and t1.recordercode != 'admin' and t1.recordercode = t2.desc2  and t1.auditflag = #{status}
+    and exists (select 1 from mdm_fbomsj_code t3 where t3.categorycode not like 'G%' and t3.codeid = t1.desc4) AND t2.desc14 = #{companyName}
+  </select>
+
+  <select id="getNotProductReleaseFreeze" resultType="java.lang.Integer" >
+    select count(1) from mdm_fbomdj_code t1,mdm_user_code t2 where trunc(t1.audittime)&gt;=to_date(#{startTime},'yy:mm:dd')
+    and trunc(t1.audittime)&lt;= to_date(#{endTime},'yy:mm:dd') and t1.desc3 = '1' and t1.recordercode != 'admin' and t1.recordercode = t2.desc2  and t1.auditflag = #{status}
+    and exists (select 1 from mdm_fbomsj_code t3 where t3.categorycode like 'G%' and t3.codeid = t1.desc4) AND t2.desc14 = #{companyName}
+  </select>
+
+  <select id="getNotBomForbidOrder" resultType="java.lang.Integer" >
+    select count(1) from mdm_fbomdj_code t1,mdm_user_code t2 where trunc(t1.audittime)&gt;=to_date(#{startTime},'yy:mm:dd') and
+    trunc(t1.audittime)&lt;= to_date(#{endTime},'yy:mm:dd') and t1.desc3 = '3' and t1.recordercode != 'admin' and t1.recordercode = t2.desc2  and t1.auditflag = #{status}
+    and exists (select 1 from mdm_fbomsj_code t3 where t3.categorycode not like 'G%' and t3.codeid = t1.desc4) AND t2.desc14 = #{companyName}
+  </select>
+
+  <select id="getNotProductForbidOrder" resultType="java.lang.Integer" >
+    select count(1) from mdm_fbomdj_code t1,mdm_user_code t2 where trunc(t1.audittime)&gt;=to_date(#{startTime},'yy:mm:dd') and
+    trunc(t1.audittime)&lt;= to_date(#{endTime},'yy:mm:dd') and t1.desc3 = '3' and t1.recordercode != 'admin' and t1.recordercode = t2.desc2  and t1.auditflag = #{status}
+    and exists (select 1 from mdm_fbomsj_code t3 where t3.categorycode like 'G%' and t3.codeid = t1.desc4) AND t2.desc14 = #{companyName}
+  </select>
+
+  <select id="getNotBomReleaseOrder" resultType="java.lang.Integer" >
+    select count(1) from mdm_fbomdj_code t1,mdm_user_code t2 where trunc(t1.audittime)&gt;=to_date(#{startTime},'yy:mm:dd') and
+    trunc(t1.audittime)&lt;= to_date(#{endTime},'yy:mm:dd') and t1.desc3 = '4' and t1.recordercode != 'admin' and t1.recordercode = t2.desc2  and t1.auditflag = #{status}
+    and exists (select 1 from mdm_fbomsj_code t3 where t3.categorycode not like 'G%' and t3.codeid = t1.desc4) AND t2.desc14 = #{companyName}
+  </select>
+
+  <select id="getNotProductReleaseOrder" resultType="java.lang.Integer" >
+    select count(1) from mdm_fbomdj_code t1,mdm_user_code t2 where trunc(t1.audittime)&gt;=to_date(#{startTime},'yy:mm:dd') and
+    trunc(t1.audittime)&lt;= to_date(#{endTime},'yy:mm:dd') and t1.desc3 = '4' and t1.recordercode != 'admin' and t1.recordercode = t2.desc2  and t1.auditflag = #{status}
+    and exists (select 1 from mdm_fbomsj_code t3 where t3.categorycode like 'G%' and t3.codeid = t1.desc4) AND t2.desc14 = #{companyName}
+  </select>
+
+
+</mapper>

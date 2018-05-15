@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.amberframework.web.system.auth.dao.extension.SysAuthMapper">
+  <resultMap id="RoleResultMap" type="org.amberframework.web.system.auth.model.original.role.SysRole" >
+    <id column="ID" property="id" jdbcType="DECIMAL" />
+    <result column="NAME" property="name" jdbcType="VARCHAR" />
+    <result column="ROLE" property="role" jdbcType="VARCHAR" />
+    <result column="DESCRIPTION" property="description" jdbcType="VARCHAR" />
+    <result column="ENABLED" property="enabled" jdbcType="CHAR" />
+  </resultMap>
+  
+  <resultMap id="AuthPermResultMap" type="org.amberframework.web.system.auth.model.extension.SysAuthPermission" >
+    <id column="ID" property="id" jdbcType="DECIMAL" />
+    <result column="IDENTIFER" property="identifer" jdbcType="VARCHAR" />
+    <result column="PERMISSION" property="permission" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  <resultMap id="ResourceResultMap" type="org.amberframework.web.system.auth.model.original.resource.SysResource" >
+    <id column="ID" property="id" jdbcType="DECIMAL" />
+    <result column="NAME" property="name" jdbcType="VARCHAR" />
+    <result column="MENU_NAME" property="menuName" jdbcType="VARCHAR" />
+    <result column="URL" property="url" jdbcType="VARCHAR" />
+    <result column="PARENT_ID" property="parentId" jdbcType="DECIMAL" />
+    <result column="PARENT_IDS" property="parentIds" jdbcType="VARCHAR" />
+    <result column="ICON" property="icon" jdbcType="VARCHAR" />
+    <result column="SHOW_AS_MENU" property="showAsMenu" jdbcType="CHAR" />
+    <result column="IDENTIFER" property="identifer" jdbcType="VARCHAR" />
+    <result column="WEIGHT" property="weight" jdbcType="DECIMAL" />
+  </resultMap>
+  
+  <select id="selectRoleByUserId" parameterType="java.lang.String" resultMap="RoleResultMap">
+    select distinct r.* from T_SYS_ROLE r
+    inner join T_SYS_GROUP_ROLE gr on r.id = gr.role_id
+    inner join T_SYS_USER_GROUP ug on ug.group_id = gr.group_id
+    inner join T_SYS_USER u on u.id = ug.user_id 
+    where u.id = #{userId,jdbcType=CHAR}
+  </select>
+  
+  <select id="selectResourcePermByUserId" parameterType="java.lang.String" resultMap="AuthPermResultMap">
+    select distinct res.identifer, perm.permission from T_SYS_ROLE_RESOURCE_PERMISSION rrp
+    inner join T_SYS_RESOURCE res on res.id = rrp.resource_id
+    inner join T_SYS_PERMISSION perm on perm.id = rrp.permission_id
+    inner join T_SYS_ROLE r on r.id = rrp.role_id
+    inner join T_SYS_GROUP_ROLE gr on r.id = gr.role_id
+    inner join T_SYS_USER_GROUP ug on ug.group_id = gr.group_id
+    inner join T_SYS_USER u on u.id = ug.user_id 
+    where res.identifer is not null and u.id = #{userId,jdbcType=CHAR}
+  </select>
+  
+  <select id="selectResourceByUserId" parameterType="java.lang.String" resultMap="ResourceResultMap">
+    select distinct res.* from T_SYS_ROLE_RESOURCE rr
+    inner join T_SYS_RESOURCE res on res.id = rr.resource_id
+    inner join T_SYS_ROLE r on r.id = rr.role_id
+    inner join T_SYS_GROUP_ROLE gr on r.id = gr.role_id
+    inner join T_SYS_USER_GROUP ug on ug.group_id = gr.group_id
+    inner join T_SYS_USER u on u.id = ug.user_id 
+    where res.identifer is not null and u.id = #{userId,jdbcType=CHAR}
+  </select>
+  
+  <select id="selectMenuByUserId" parameterType="java.lang.String" resultMap="ResourceResultMap">
+    select distinct res.* from T_SYS_ROLE_RESOURCE rr
+    inner join T_SYS_RESOURCE res on res.id = rr.resource_id
+    inner join T_SYS_ROLE r on r.id = rr.role_id
+    inner join T_SYS_GROUP_ROLE gr on r.id = gr.role_id
+    inner join T_SYS_USER_GROUP ug on ug.group_id = gr.group_id
+    inner join T_SYS_USER u on u.id = ug.user_id 
+    where res.show_as_menu = '1' and u.id = #{userId,jdbcType=CHAR}
+    order by res.weight asc
+  </select>
+  
+  <select id="selectAllMenus" resultMap="ResourceResultMap">
+    select distinct res.* 
+    from T_SYS_RESOURCE res
+    where res.show_as_menu = '1'
+    order by res.weight asc
+  </select>
+</mapper>

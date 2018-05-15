@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:tx="http://www.springframework.org/schema/tx" xmlns:aop="http://www.springframework.org/schema/aop"
+  xsi:schemaLocation="
+       http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+       http://www.springframework.org/schema/aop
+       http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context-4.0.xsd
+       http://www.springframework.org/schema/tx 
+       http://www.springframework.org/schema/tx/spring-tx-4.0.xsd">
+
+  <!-- Data source -->
+
+  <bean id="dataSource" class="org.logicalcobwebs.proxool.ProxoolDataSource">
+    <property name="driver">
+      <value>oracle.jdbc.driver.OracleDriver</value>
+    </property>
+    <property name="driverUrl">
+      <value>jdbc:oracle:thin:@(DESCRIPTION = (failover = on)(ADDRESS = (PROTOCOL = TCP)(HOST = 10.108.234.39)(PORT = 1521))(ADDRESS = (PROTOCOL = TCP)(HOST = 10.108.234.41)(PORT = 1521))(LOAD_BALANCE = no)(CONNECT_DATA =(SERVER = DEDICATED)(SERVICE_NAME = p1mdmsrv1)(FAILOVER_MODE= (TYPE = SELECT)(METHOD = BASIC)(RETRIES = 10)(DELAY = 5))))</value>
+    </property>
+    <property name="user" value="mdmprd" />
+    <property name="password" value="mdm1023csot" />
+    <property name="alias" value="mdmdb" />
+    <property name="houseKeepingSleepTime" value="900000" />
+    <property name="testBeforeUse" value="true" />
+    <property name="prototypeCount" value="2" />
+    <property name="maximumConnectionCount" value="20" />
+    <property name="minimumConnectionCount" value="5" />
+    <property name="simultaneousBuildThrottle" value="10" />
+    <property name="maximumConnectionLifetime" value="14400000" />
+    <property name="houseKeepingTestSql" value="select 1 from dual" />
+    <property name="verbose" value="true" />
+    <property name="trace" value="true" />
+  </bean>
+
+  <!-- Transaction 配置事物管理器，在*ServiceImpl里写@Transactional就可以启用事物管理 -->
+  <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+    <property name="dataSource" ref="dataSource" />
+  </bean>
+  <!-- 开启事务注解驱动 -->
+  <tx:annotation-driven transaction-manager="transactionManager" />
+
+  <import resource="spring-mybatis-scan.xml"/>
+</beans>

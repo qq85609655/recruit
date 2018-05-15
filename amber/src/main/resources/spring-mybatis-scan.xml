@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:tx="http://www.springframework.org/schema/tx" xmlns:aop="http://www.springframework.org/schema/aop"
+  xsi:schemaLocation="
+       http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+       http://www.springframework.org/schema/aop
+       http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context-4.0.xsd">
+
+  <!-- dao接口注入自动扫描，如果添加模块，需要到这里配置basePackage，逗号隔开 -->
+  <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+    <property name="basePackage" value="org.amberframework,com.csot,haha.test" />
+    <!-- 扫描basePackage下所有以@MyBatisRepository注解标识的接口或继承于MyBatisBaseMapper接口的接口（两者取并集），用于缩小搜索范围 ，防止搜索到其他bean -->
+    <property name="annotationClass" value="org.amberframework.core.mybatis.annotation.MyBatisRepository" />
+    <property name="markerInterface" value="org.amberframework.core.mybatis.dao.MyBatisBaseMapper" />
+    <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"></property>
+  </bean>
+  
+  <!-- Sql session factory : myBatis -->
+  <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+    <property name="dataSource" ref="dataSource" />
+
+    <property name="configLocation" value="classpath:mybatis-config.xml"></property>
+
+    <!-- mapper.xml自动扫描，如果添加模块，需要到这里配置 -->
+    <!-- mapperLocations表示我们的Mapper文件存放的位置，当我们的Mapper文件跟对应的Mapper接口处于同一位置的时候可以不用指定该属性的值 -->
+    <property name="mapperLocations">
+      <list>
+        <value>classpath:org/amberframework/**/oracle/**/*Mapper.xml</value>
+        <value>classpath:com/csot/**/oracle/**/*Mapper.xml</value>
+        <value>classpath:haha/test/**/oracle/**/*Mapper.xml</value>
+      </list>
+    </property>
+
+    <!-- typeAliasesPackage一般对应我们的实体类所在的包，这个时候会自动取对应包中不包括包名的简单类名作为包括包名的别名。 -->
+    <!-- 多个package之间可以用逗号或者分号等来进行分隔 -->
+    <!--property name="typeAliasesPackage" value="com.csot.entity" / -->
+
+    <!-- typeAliases数组类型，用来指定别名的。指定了这个属性后，Mybatis会把这个类型的短名称作为这个类型的别名. -->
+    <!-- 前提是该类上没有标注@Alias注解，否则将使用该注解对应的值作为此种类型的别名 -->
+    <!--
+    <property name="typeAliases"> 
+      <array> 
+        <value>com.csot.entity.Blog</value> 
+        <value>com.csot.entity.Comment</value> 
+      </array> 
+    </property>
+     -->
+  </bean>
+
+</beans>

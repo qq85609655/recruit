@@ -1,0 +1,35 @@
+<!DOCTYPE HTML>
+<html>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<head>
+		<title> GRI calendar Demo </title>
+		<script type="text/javascript" src="./jquery.min.js"></script>
+		<script type="text/javascript" src="./dateRange.js"></script>
+		<script type="text/javascript" src="./monthPicker.js"></script>
+		<link rel="stylesheet" type="text/css" href="./dateRange.css"/>
+		<link rel="stylesheet" type="text/css" href="./monthPicker.css"/>
+	</head>
+	<body>
+	<div class="ta_date" id="div_date_demo3">
+                    <span class="date_title" id="date_demo3"></span>
+                    <a class="opt_sel" id="input_trigger_demo3" href="#">
+                        <i class="i_orderd"></i>
+                    </a>
+                </div>
+                <div id="datePicker"></div>
+	<br/>
+	<script type="text/javascript">
+					var dateRange = new pickerDateRange('date_demo3', {
+						isTodayValid : true,
+						startDate : '2017-04-14',
+						endDate : '2017-04-21',
+						defaultText : ' 至 ',
+						inputTrigger : 'input_trigger_demo3',
+						theme : 'ta',
+						success : function(obj) {
+							alert("hahah");
+						}
+					});
+	</script>
+	</body>
+</html>

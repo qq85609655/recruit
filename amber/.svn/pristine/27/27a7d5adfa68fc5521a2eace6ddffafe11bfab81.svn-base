@@ -1,0 +1,6 @@
+log4jconf.rootCategory.level=INFO
+log4jconf.r.file.location=C\:/logs/testweb_mvn/log4j.log
+
+log4jconf.console.conversionPattern=%-5p [%t] %l | %m%n
+log4jconf.r.datePattern='.'yyyy-MM-dd
+log4jconf.r.conversionPattern=%-d{yyyy-MM-dd HH:mm:ss} [%c]-[%p] %m%n

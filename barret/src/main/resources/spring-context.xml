@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="
+       http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context-4.0.xsd">
+
+  <!-- 读取properties文件的配置 -->
+  <bean id="propertyPlaceholderConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+    <property name="locations">
+      <list>
+        <value>classpath:sys-config.properties</value>
+      </list>
+    </property>
+  </bean>
+
+
+  <!-- 加载service等Component,此时要排除要controller,因为controller会在springmvc-servlet中加载,service在controller之前加载,保证事物有效 -->
+  <context:component-scan base-package="com.csot.barret.*">
+    <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller" />
+  </context:component-scan>
+
+  <import resource="spring-mybatis.xml" />
+  <!--<import resource="spring-cache.xml" />
+  <import resource="spring-shiro.xml" />
+  <import resource="spring-cxf.xml" />
+  <import resource="spring-mvc-timeTask.xml" />-->
+
+
+</beans>
