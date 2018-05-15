@@ -1,0 +1,23 @@
+package com.csot.recruit.service.candidate;
+
+import java.util.Map;
+
+import com.csot.recruit.model.original.candidate.Candidate;
+import com.csot.recruit.model.vo.InterviewBookListVo;
+
+import org.amberframework.web.miniui.pojo.MiniGridPageSort;
+import org.amberframework.web.miniui.pojo.MiniRtn2Grid;
+
+public interface CandidateService {
+    MiniRtn2Grid<Candidate> getGrid(MiniGridPageSort pageSort, String searchKey);
+
+    Candidate getByPrimaryKey(String primaryKey);
+
+    void create(Candidate candidate);
+
+    void updateSelective(Candidate candidate);
+
+    void remove(String primaryKey);
+
+    MiniRtn2Grid<InterviewBookListVo> queryCandidateListByPage(Map<String, Object> map);
+}

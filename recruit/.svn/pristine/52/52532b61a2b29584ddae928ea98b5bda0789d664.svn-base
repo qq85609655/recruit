@@ -1,0 +1,665 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.csot.recruit.dao.original.campus.CampusTaskMapper">
+  <resultMap id="BaseResultMap" type="com.csot.recruit.model.original.campus.CampusTask">
+    <id column="ID" property="id" jdbcType="VARCHAR"/>
+    <result column="SITE_ID" property="siteId" jdbcType="VARCHAR"/>
+    <result column="SITE_NAME" property="siteName" jdbcType="VARCHAR"/>
+    <result column="POST_ID" property="postId" jdbcType="VARCHAR"/>
+    <result column="POST_NAME" property="postName" jdbcType="VARCHAR"/>
+    <result column="TASK_NUMBER_BA" property="taskNumberBa" jdbcType="DECIMAL"/>
+    <result column="TASK_NUMBER_MA" property="taskNumberMa" jdbcType="DECIMAL"/>
+    <result column="TASK_NUMBER_DO" property="taskNumberDo" jdbcType="DECIMAL"/>
+    <result column="REMARK" property="remark" jdbcType="VARCHAR"/>
+    <result column="RESERVED_1" property="reserved1" jdbcType="VARCHAR"/>
+    <result column="RESERVED_2" property="reserved2" jdbcType="VARCHAR"/>
+    <result column="RESERVED_3" property="reserved3" jdbcType="VARCHAR"/>
+    <result column="STATUS" property="status" jdbcType="VARCHAR"/>
+    <result column="YEARTH" property="yearth" jdbcType="VARCHAR"/>
+    <result column="ORG_NAME" property="orgName" jdbcType="VARCHAR"/>
+    <result column="ORGANIZATION" property="organization" jdbcType="VARCHAR"/>
+    <result column="BIG_CENTER" property="bigCenter" jdbcType="VARCHAR"/>
+    <result column="SMALL_CENTER" property="smallCenter" jdbcType="VARCHAR"/>
+    <result column="DEPARTMENT" property="department" jdbcType="VARCHAR"/>
+    <result column="BRANCH" property="branch" jdbcType="VARCHAR"/>
+    <result column="JOB_FAMILY" property="jobFamily" jdbcType="VARCHAR"/>
+    <result column="JOB_CLASS" property="jobClass" jdbcType="VARCHAR"/>
+    <result column="JOB_SUBCLASS" property="jobSubclass" jdbcType="VARCHAR"/>
+    <result column="JOB_DESCRIBE" property="jobDescribe" jdbcType="VARCHAR"/>
+    <result column="NIGHT_SHIFT" property="nightShift" jdbcType="VARCHAR"/>
+    <result column="DUST_FREE" property="dustFree" jdbcType="VARCHAR"/>
+    <result column="TASK_NUMBER_SUM" property="taskNumberSum" jdbcType="DECIMAL"/>
+    <result column="TASK_NUMBER_MAIL" property="taskNumberMail" jdbcType="DECIMAL"/>
+    <result column="TASK_NUMBER_FEMAIL" property="taskNumberFemail" jdbcType="DECIMAL"/>
+    <result column="SPECIAL_REQUIRE" property="specialRequire" jdbcType="VARCHAR"/>
+    <result column="PREFERRED_MAJOR" property="preferredMajor" jdbcType="VARCHAR"/>
+    <result column="ALTERNATIVE_MAJOR" property="alternativeMajor" jdbcType="VARCHAR"/>
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" suffix=")" prefixOverrides="and">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")"
+                           separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" suffix=")" prefixOverrides="and">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")"
+                           separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    ID, SITE_ID, SITE_NAME, POST_ID, POST_NAME, TASK_NUMBER_BA, TASK_NUMBER_MA, TASK_NUMBER_DO, 
+    REMARK, RESERVED_1, RESERVED_2, RESERVED_3, STATUS, YEARTH, ORG_NAME, ORGANIZATION, 
+    BIG_CENTER, SMALL_CENTER, DEPARTMENT, BRANCH, JOB_FAMILY, JOB_CLASS, JOB_SUBCLASS, 
+    JOB_DESCRIBE, NIGHT_SHIFT, DUST_FREE, TASK_NUMBER_SUM, TASK_NUMBER_MAIL, TASK_NUMBER_FEMAIL, 
+    SPECIAL_REQUIRE, PREFERRED_MAJOR, ALTERNATIVE_MAJOR
+  </sql>
+
+  <select id="getTaskSum" parameterType="map" resultMap="BaseResultMap">
+    SELECT t.ORG_NAME, t.SITE_NAME, t.POST_NAME, t.YEARTH, SUM(t.TASK_NUMBER_BA) AS TASK_NUMBER_BA, SUM(t.TASK_NUMBER_MA) AS TASK_NUMBER_MA, SUM(t.TASK_NUMBER_DO) AS TASK_NUMBER_DO
+    FROM T_CAMPUS_TASK t
+    WHERE SITE_ID LIKE #{siteId} AND POST_ID LIKE #{postId} AND ORGANIZATION LIKE #{orgId} AND YEARTH LIKE #{yearth}
+    GROUP BY t.ORG_NAME, t.SITE_NAME, t.POST_NAME, t.YEARTH
+  </select>
+  <select id="selectByExample" resultMap="BaseResultMap"
+          parameterType="com.csot.recruit.model.original.campus.CampusTaskCriteria">
+    <include refid="Oracle_Dialect_Pagination_Prefix"/>
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List"/>
+    from T_CAMPUS_TASK
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause"/>
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+    <include refid="Oracle_Dialect_Pagination_Suffix"/>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String">
+    select
+    <include refid="Base_Column_List"/>
+    from T_CAMPUS_TASK
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from T_CAMPUS_TASK
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample"
+          parameterType="com.csot.recruit.model.original.campus.CampusTaskCriteria">
+    delete from T_CAMPUS_TASK
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause"/>
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.csot.recruit.model.original.campus.CampusTask">
+    insert into T_CAMPUS_TASK (ID, SITE_ID, SITE_NAME, 
+      POST_ID, POST_NAME, TASK_NUMBER_BA, 
+      TASK_NUMBER_MA, TASK_NUMBER_DO, REMARK, 
+      RESERVED_1, RESERVED_2, RESERVED_3, 
+      STATUS, YEARTH, ORG_NAME, 
+      ORGANIZATION, BIG_CENTER, SMALL_CENTER, 
+      DEPARTMENT, BRANCH, JOB_FAMILY, 
+      JOB_CLASS, JOB_SUBCLASS, JOB_DESCRIBE, 
+      NIGHT_SHIFT, DUST_FREE, TASK_NUMBER_SUM, 
+      TASK_NUMBER_MAIL, TASK_NUMBER_FEMAIL, SPECIAL_REQUIRE, 
+      PREFERRED_MAJOR, ALTERNATIVE_MAJOR)
+    values (#{id,jdbcType=VARCHAR}, #{siteId,jdbcType=VARCHAR}, #{siteName,jdbcType=VARCHAR}, 
+      #{postId,jdbcType=VARCHAR}, #{postName,jdbcType=VARCHAR}, #{taskNumberBa,jdbcType=DECIMAL}, 
+      #{taskNumberMa,jdbcType=DECIMAL}, #{taskNumberDo,jdbcType=DECIMAL}, #{remark,jdbcType=VARCHAR}, 
+      #{reserved1,jdbcType=VARCHAR}, #{reserved2,jdbcType=VARCHAR}, #{reserved3,jdbcType=VARCHAR}, 
+      #{status,jdbcType=VARCHAR}, #{yearth,jdbcType=VARCHAR}, #{orgName,jdbcType=VARCHAR}, 
+      #{organization,jdbcType=VARCHAR}, #{bigCenter,jdbcType=VARCHAR}, #{smallCenter,jdbcType=VARCHAR}, 
+      #{department,jdbcType=VARCHAR}, #{branch,jdbcType=VARCHAR}, #{jobFamily,jdbcType=VARCHAR}, 
+      #{jobClass,jdbcType=VARCHAR}, #{jobSubclass,jdbcType=VARCHAR}, #{jobDescribe,jdbcType=VARCHAR}, 
+      #{nightShift,jdbcType=VARCHAR}, #{dustFree,jdbcType=VARCHAR}, #{taskNumberSum,jdbcType=DECIMAL}, 
+      #{taskNumberMail,jdbcType=DECIMAL}, #{taskNumberFemail,jdbcType=DECIMAL}, #{specialRequire,jdbcType=VARCHAR}, 
+      #{preferredMajor,jdbcType=VARCHAR}, #{alternativeMajor,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.csot.recruit.model.original.campus.CampusTask">
+    insert into T_CAMPUS_TASK
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="siteId != null">
+        SITE_ID,
+      </if>
+      <if test="siteName != null">
+        SITE_NAME,
+      </if>
+      <if test="postId != null">
+        POST_ID,
+      </if>
+      <if test="postName != null">
+        POST_NAME,
+      </if>
+      <if test="taskNumberBa != null">
+        TASK_NUMBER_BA,
+      </if>
+      <if test="taskNumberMa != null">
+        TASK_NUMBER_MA,
+      </if>
+      <if test="taskNumberDo != null">
+        TASK_NUMBER_DO,
+      </if>
+      <if test="remark != null">
+        REMARK,
+      </if>
+      <if test="reserved1 != null">
+        RESERVED_1,
+      </if>
+      <if test="reserved2 != null">
+        RESERVED_2,
+      </if>
+      <if test="reserved3 != null">
+        RESERVED_3,
+      </if>
+      <if test="status != null">
+        STATUS,
+      </if>
+      <if test="yearth != null">
+        YEARTH,
+      </if>
+      <if test="orgName != null">
+        ORG_NAME,
+      </if>
+      <if test="organization != null">
+        ORGANIZATION,
+      </if>
+      <if test="bigCenter != null">
+        BIG_CENTER,
+      </if>
+      <if test="smallCenter != null">
+        SMALL_CENTER,
+      </if>
+      <if test="department != null">
+        DEPARTMENT,
+      </if>
+      <if test="branch != null">
+        BRANCH,
+      </if>
+      <if test="jobFamily != null">
+        JOB_FAMILY,
+      </if>
+      <if test="jobClass != null">
+        JOB_CLASS,
+      </if>
+      <if test="jobSubclass != null">
+        JOB_SUBCLASS,
+      </if>
+      <if test="jobDescribe != null">
+        JOB_DESCRIBE,
+      </if>
+      <if test="nightShift != null">
+        NIGHT_SHIFT,
+      </if>
+      <if test="dustFree != null">
+        DUST_FREE,
+      </if>
+      <if test="taskNumberSum != null">
+        TASK_NUMBER_SUM,
+      </if>
+      <if test="taskNumberMail != null">
+        TASK_NUMBER_MAIL,
+      </if>
+      <if test="taskNumberFemail != null">
+        TASK_NUMBER_FEMAIL,
+      </if>
+      <if test="specialRequire != null">
+        SPECIAL_REQUIRE,
+      </if>
+      <if test="preferredMajor != null">
+        PREFERRED_MAJOR,
+      </if>
+      <if test="alternativeMajor != null">
+        ALTERNATIVE_MAJOR,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="siteId != null">
+        #{siteId,jdbcType=VARCHAR},
+      </if>
+      <if test="siteName != null">
+        #{siteName,jdbcType=VARCHAR},
+      </if>
+      <if test="postId != null">
+        #{postId,jdbcType=VARCHAR},
+      </if>
+      <if test="postName != null">
+        #{postName,jdbcType=VARCHAR},
+      </if>
+      <if test="taskNumberBa != null">
+        #{taskNumberBa,jdbcType=DECIMAL},
+      </if>
+      <if test="taskNumberMa != null">
+        #{taskNumberMa,jdbcType=DECIMAL},
+      </if>
+      <if test="taskNumberDo != null">
+        #{taskNumberDo,jdbcType=DECIMAL},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="reserved1 != null">
+        #{reserved1,jdbcType=VARCHAR},
+      </if>
+      <if test="reserved2 != null">
+        #{reserved2,jdbcType=VARCHAR},
+      </if>
+      <if test="reserved3 != null">
+        #{reserved3,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="yearth != null">
+        #{yearth,jdbcType=VARCHAR},
+      </if>
+      <if test="orgName != null">
+        #{orgName,jdbcType=VARCHAR},
+      </if>
+      <if test="organization != null">
+        #{organization,jdbcType=VARCHAR},
+      </if>
+      <if test="bigCenter != null">
+        #{bigCenter,jdbcType=VARCHAR},
+      </if>
+      <if test="smallCenter != null">
+        #{smallCenter,jdbcType=VARCHAR},
+      </if>
+      <if test="department != null">
+        #{department,jdbcType=VARCHAR},
+      </if>
+      <if test="branch != null">
+        #{branch,jdbcType=VARCHAR},
+      </if>
+      <if test="jobFamily != null">
+        #{jobFamily,jdbcType=VARCHAR},
+      </if>
+      <if test="jobClass != null">
+        #{jobClass,jdbcType=VARCHAR},
+      </if>
+      <if test="jobSubclass != null">
+        #{jobSubclass,jdbcType=VARCHAR},
+      </if>
+      <if test="jobDescribe != null">
+        #{jobDescribe,jdbcType=VARCHAR},
+      </if>
+      <if test="nightShift != null">
+        #{nightShift,jdbcType=VARCHAR},
+      </if>
+      <if test="dustFree != null">
+        #{dustFree,jdbcType=VARCHAR},
+      </if>
+      <if test="taskNumberSum != null">
+        #{taskNumberSum,jdbcType=DECIMAL},
+      </if>
+      <if test="taskNumberMail != null">
+        #{taskNumberMail,jdbcType=DECIMAL},
+      </if>
+      <if test="taskNumberFemail != null">
+        #{taskNumberFemail,jdbcType=DECIMAL},
+      </if>
+      <if test="specialRequire != null">
+        #{specialRequire,jdbcType=VARCHAR},
+      </if>
+      <if test="preferredMajor != null">
+        #{preferredMajor,jdbcType=VARCHAR},
+      </if>
+      <if test="alternativeMajor != null">
+        #{alternativeMajor,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample"
+          parameterType="com.csot.recruit.model.original.campus.CampusTaskCriteria"
+          resultType="java.lang.Integer">
+    select count(*) from T_CAMPUS_TASK
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause"/>
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update T_CAMPUS_TASK
+    <set>
+      <if test="record.id != null">
+        ID = #{record.id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.siteId != null">
+        SITE_ID = #{record.siteId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.siteName != null">
+        SITE_NAME = #{record.siteName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.postId != null">
+        POST_ID = #{record.postId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.postName != null">
+        POST_NAME = #{record.postName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.taskNumberBa != null">
+        TASK_NUMBER_BA = #{record.taskNumberBa,jdbcType=DECIMAL},
+      </if>
+      <if test="record.taskNumberMa != null">
+        TASK_NUMBER_MA = #{record.taskNumberMa,jdbcType=DECIMAL},
+      </if>
+      <if test="record.taskNumberDo != null">
+        TASK_NUMBER_DO = #{record.taskNumberDo,jdbcType=DECIMAL},
+      </if>
+      <if test="record.remark != null">
+        REMARK = #{record.remark,jdbcType=VARCHAR},
+      </if>
+      <if test="record.reserved1 != null">
+        RESERVED_1 = #{record.reserved1,jdbcType=VARCHAR},
+      </if>
+      <if test="record.reserved2 != null">
+        RESERVED_2 = #{record.reserved2,jdbcType=VARCHAR},
+      </if>
+      <if test="record.reserved3 != null">
+        RESERVED_3 = #{record.reserved3,jdbcType=VARCHAR},
+      </if>
+      <if test="record.status != null">
+        STATUS = #{record.status,jdbcType=VARCHAR},
+      </if>
+      <if test="record.yearth != null">
+        YEARTH = #{record.yearth,jdbcType=VARCHAR},
+      </if>
+      <if test="record.orgName != null">
+        ORG_NAME = #{record.orgName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.organization != null">
+        ORGANIZATION = #{record.organization,jdbcType=VARCHAR},
+      </if>
+      <if test="record.bigCenter != null">
+        BIG_CENTER = #{record.bigCenter,jdbcType=VARCHAR},
+      </if>
+      <if test="record.smallCenter != null">
+        SMALL_CENTER = #{record.smallCenter,jdbcType=VARCHAR},
+      </if>
+      <if test="record.department != null">
+        DEPARTMENT = #{record.department,jdbcType=VARCHAR},
+      </if>
+      <if test="record.branch != null">
+        BRANCH = #{record.branch,jdbcType=VARCHAR},
+      </if>
+      <if test="record.jobFamily != null">
+        JOB_FAMILY = #{record.jobFamily,jdbcType=VARCHAR},
+      </if>
+      <if test="record.jobClass != null">
+        JOB_CLASS = #{record.jobClass,jdbcType=VARCHAR},
+      </if>
+      <if test="record.jobSubclass != null">
+        JOB_SUBCLASS = #{record.jobSubclass,jdbcType=VARCHAR},
+      </if>
+      <if test="record.jobDescribe != null">
+        JOB_DESCRIBE = #{record.jobDescribe,jdbcType=VARCHAR},
+      </if>
+      <if test="record.nightShift != null">
+        NIGHT_SHIFT = #{record.nightShift,jdbcType=VARCHAR},
+      </if>
+      <if test="record.dustFree != null">
+        DUST_FREE = #{record.dustFree,jdbcType=VARCHAR},
+      </if>
+      <if test="record.taskNumberSum != null">
+        TASK_NUMBER_SUM = #{record.taskNumberSum,jdbcType=DECIMAL},
+      </if>
+      <if test="record.taskNumberMail != null">
+        TASK_NUMBER_MAIL = #{record.taskNumberMail,jdbcType=DECIMAL},
+      </if>
+      <if test="record.taskNumberFemail != null">
+        TASK_NUMBER_FEMAIL = #{record.taskNumberFemail,jdbcType=DECIMAL},
+      </if>
+      <if test="record.specialRequire != null">
+        SPECIAL_REQUIRE = #{record.specialRequire,jdbcType=VARCHAR},
+      </if>
+      <if test="record.preferredMajor != null">
+        PREFERRED_MAJOR = #{record.preferredMajor,jdbcType=VARCHAR},
+      </if>
+      <if test="record.alternativeMajor != null">
+        ALTERNATIVE_MAJOR = #{record.alternativeMajor,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause"/>
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update T_CAMPUS_TASK
+    set ID = #{record.id,jdbcType=VARCHAR},
+    SITE_ID = #{record.siteId,jdbcType=VARCHAR},
+    SITE_NAME = #{record.siteName,jdbcType=VARCHAR},
+    POST_ID = #{record.postId,jdbcType=VARCHAR},
+    POST_NAME = #{record.postName,jdbcType=VARCHAR},
+    TASK_NUMBER_BA = #{record.taskNumberBa,jdbcType=DECIMAL},
+    TASK_NUMBER_MA = #{record.taskNumberMa,jdbcType=DECIMAL},
+    TASK_NUMBER_DO = #{record.taskNumberDo,jdbcType=DECIMAL},
+    REMARK = #{record.remark,jdbcType=VARCHAR},
+    RESERVED_1 = #{record.reserved1,jdbcType=VARCHAR},
+    RESERVED_2 = #{record.reserved2,jdbcType=VARCHAR},
+    RESERVED_3 = #{record.reserved3,jdbcType=VARCHAR},
+    STATUS = #{record.status,jdbcType=VARCHAR},
+    YEARTH = #{record.yearth,jdbcType=VARCHAR},
+    ORG_NAME = #{record.orgName,jdbcType=VARCHAR},
+    ORGANIZATION = #{record.organization,jdbcType=VARCHAR},
+    BIG_CENTER = #{record.bigCenter,jdbcType=VARCHAR},
+    SMALL_CENTER = #{record.smallCenter,jdbcType=VARCHAR},
+    DEPARTMENT = #{record.department,jdbcType=VARCHAR},
+    BRANCH = #{record.branch,jdbcType=VARCHAR},
+    JOB_FAMILY = #{record.jobFamily,jdbcType=VARCHAR},
+    JOB_CLASS = #{record.jobClass,jdbcType=VARCHAR},
+    JOB_SUBCLASS = #{record.jobSubclass,jdbcType=VARCHAR},
+    JOB_DESCRIBE = #{record.jobDescribe,jdbcType=VARCHAR},
+    NIGHT_SHIFT = #{record.nightShift,jdbcType=VARCHAR},
+    DUST_FREE = #{record.dustFree,jdbcType=VARCHAR},
+    TASK_NUMBER_SUM = #{record.taskNumberSum,jdbcType=DECIMAL},
+    TASK_NUMBER_MAIL = #{record.taskNumberMail,jdbcType=DECIMAL},
+    TASK_NUMBER_FEMAIL = #{record.taskNumberFemail,jdbcType=DECIMAL},
+    SPECIAL_REQUIRE = #{record.specialRequire,jdbcType=VARCHAR},
+    PREFERRED_MAJOR = #{record.preferredMajor,jdbcType=VARCHAR},
+    ALTERNATIVE_MAJOR = #{record.alternativeMajor,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause"/>
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective"
+          parameterType="com.csot.recruit.model.original.campus.CampusTask">
+    update T_CAMPUS_TASK
+    <set>
+      <if test="siteId != null">
+        SITE_ID = #{siteId,jdbcType=VARCHAR},
+      </if>
+      <if test="siteName != null">
+        SITE_NAME = #{siteName,jdbcType=VARCHAR},
+      </if>
+      <if test="postId != null">
+        POST_ID = #{postId,jdbcType=VARCHAR},
+      </if>
+      <if test="postName != null">
+        POST_NAME = #{postName,jdbcType=VARCHAR},
+      </if>
+      <if test="taskNumberBa != null">
+        TASK_NUMBER_BA = #{taskNumberBa,jdbcType=DECIMAL},
+      </if>
+      <if test="taskNumberMa != null">
+        TASK_NUMBER_MA = #{taskNumberMa,jdbcType=DECIMAL},
+      </if>
+      <if test="taskNumberDo != null">
+        TASK_NUMBER_DO = #{taskNumberDo,jdbcType=DECIMAL},
+      </if>
+      <if test="remark != null">
+        REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="reserved1 != null">
+        RESERVED_1 = #{reserved1,jdbcType=VARCHAR},
+      </if>
+      <if test="reserved2 != null">
+        RESERVED_2 = #{reserved2,jdbcType=VARCHAR},
+      </if>
+      <if test="reserved3 != null">
+        RESERVED_3 = #{reserved3,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        STATUS = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="yearth != null">
+        YEARTH = #{yearth,jdbcType=VARCHAR},
+      </if>
+      <if test="orgName != null">
+        ORG_NAME = #{orgName,jdbcType=VARCHAR},
+      </if>
+      <if test="organization != null">
+        ORGANIZATION = #{organization,jdbcType=VARCHAR},
+      </if>
+      <if test="bigCenter != null">
+        BIG_CENTER = #{bigCenter,jdbcType=VARCHAR},
+      </if>
+      <if test="smallCenter != null">
+        SMALL_CENTER = #{smallCenter,jdbcType=VARCHAR},
+      </if>
+      <if test="department != null">
+        DEPARTMENT = #{department,jdbcType=VARCHAR},
+      </if>
+      <if test="branch != null">
+        BRANCH = #{branch,jdbcType=VARCHAR},
+      </if>
+      <if test="jobFamily != null">
+        JOB_FAMILY = #{jobFamily,jdbcType=VARCHAR},
+      </if>
+      <if test="jobClass != null">
+        JOB_CLASS = #{jobClass,jdbcType=VARCHAR},
+      </if>
+      <if test="jobSubclass != null">
+        JOB_SUBCLASS = #{jobSubclass,jdbcType=VARCHAR},
+      </if>
+      <if test="jobDescribe != null">
+        JOB_DESCRIBE = #{jobDescribe,jdbcType=VARCHAR},
+      </if>
+      <if test="nightShift != null">
+        NIGHT_SHIFT = #{nightShift,jdbcType=VARCHAR},
+      </if>
+      <if test="dustFree != null">
+        DUST_FREE = #{dustFree,jdbcType=VARCHAR},
+      </if>
+      <if test="taskNumberSum != null">
+        TASK_NUMBER_SUM = #{taskNumberSum,jdbcType=DECIMAL},
+      </if>
+      <if test="taskNumberMail != null">
+        TASK_NUMBER_MAIL = #{taskNumberMail,jdbcType=DECIMAL},
+      </if>
+      <if test="taskNumberFemail != null">
+        TASK_NUMBER_FEMAIL = #{taskNumberFemail,jdbcType=DECIMAL},
+      </if>
+      <if test="specialRequire != null">
+        SPECIAL_REQUIRE = #{specialRequire,jdbcType=VARCHAR},
+      </if>
+      <if test="preferredMajor != null">
+        PREFERRED_MAJOR = #{preferredMajor,jdbcType=VARCHAR},
+      </if>
+      <if test="alternativeMajor != null">
+        ALTERNATIVE_MAJOR = #{alternativeMajor,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.csot.recruit.model.original.campus.CampusTask">
+    update T_CAMPUS_TASK
+    set SITE_ID = #{siteId,jdbcType=VARCHAR},
+      SITE_NAME = #{siteName,jdbcType=VARCHAR},
+      POST_ID = #{postId,jdbcType=VARCHAR},
+      POST_NAME = #{postName,jdbcType=VARCHAR},
+      TASK_NUMBER_BA = #{taskNumberBa,jdbcType=DECIMAL},
+      TASK_NUMBER_MA = #{taskNumberMa,jdbcType=DECIMAL},
+      TASK_NUMBER_DO = #{taskNumberDo,jdbcType=DECIMAL},
+      REMARK = #{remark,jdbcType=VARCHAR},
+      RESERVED_1 = #{reserved1,jdbcType=VARCHAR},
+      RESERVED_2 = #{reserved2,jdbcType=VARCHAR},
+      RESERVED_3 = #{reserved3,jdbcType=VARCHAR},
+      STATUS = #{status,jdbcType=VARCHAR},
+      YEARTH = #{yearth,jdbcType=VARCHAR},
+      ORG_NAME = #{orgName,jdbcType=VARCHAR},
+      ORGANIZATION = #{organization,jdbcType=VARCHAR},
+      BIG_CENTER = #{bigCenter,jdbcType=VARCHAR},
+      SMALL_CENTER = #{smallCenter,jdbcType=VARCHAR},
+      DEPARTMENT = #{department,jdbcType=VARCHAR},
+      BRANCH = #{branch,jdbcType=VARCHAR},
+      JOB_FAMILY = #{jobFamily,jdbcType=VARCHAR},
+      JOB_CLASS = #{jobClass,jdbcType=VARCHAR},
+      JOB_SUBCLASS = #{jobSubclass,jdbcType=VARCHAR},
+      JOB_DESCRIBE = #{jobDescribe,jdbcType=VARCHAR},
+      NIGHT_SHIFT = #{nightShift,jdbcType=VARCHAR},
+      DUST_FREE = #{dustFree,jdbcType=VARCHAR},
+      TASK_NUMBER_SUM = #{taskNumberSum,jdbcType=DECIMAL},
+      TASK_NUMBER_MAIL = #{taskNumberMail,jdbcType=DECIMAL},
+      TASK_NUMBER_FEMAIL = #{taskNumberFemail,jdbcType=DECIMAL},
+      SPECIAL_REQUIRE = #{specialRequire,jdbcType=VARCHAR},
+      PREFERRED_MAJOR = #{preferredMajor,jdbcType=VARCHAR},
+      ALTERNATIVE_MAJOR = #{alternativeMajor,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <sql id="Oracle_Dialect_Pagination_Prefix">
+    <if test="page != null">
+      select * from ( select row_.*, rownum rownum_ from (
+    </if>
+  </sql>
+  <sql id="Oracle_Dialect_Pagination_Suffix">
+    <if test="page != null">
+      <![CDATA[ ) row_ ) where rownum_ > #{page.begin} and rownum_ <= #{page.end} ]]>
+    </if>
+  </sql>
+</mapper>

@@ -1,0 +1,33 @@
+#resume-add-candidate-win table {
+	margin: 20px;
+	line-height: 30px;
+	font-size: 14px;
+}
+#resume-add-candidate-win table td {
+	vertical-align: top;
+}
+#resume-add-candidate-win table td.label {
+	color: #777;
+	width: 100px;
+}
+#resume-add-candidate-win table td .tip {
+	color: #777;
+	font-size: 13px;
+}
+#resume-add-candidate-win table td select {
+	width: 150px;
+}
+.position_name {
+	border: 1px solid #ddd;
+	border-radius: 5px;
+	padding: 0 20px 0 5px;
+	height: 25px;
+	width: 190px;
+	position: relative;
+}
+.position_name .select {
+	position: absolute;
+	right: 0;
+	top: 5px;
+	color: #ddd;
+}

@@ -1,0 +1,109 @@
+var Header = function(d) {
+	this.c = {};
+	$.extend(this.c,d);
+	this.id = "#" + this.c.id;
+	this.init();
+};
+Header.prototype = {
+	init: function() {
+		this.getMenuData();
+		this.eventBind();
+		this.moveTocurrent();
+	},
+	getMenuData : function() { // 获取菜单数据  
+	    var that = this;
+		var URL = basePath + '/sys/auth/menutree';
+	    $.ajax({
+	        url : URL,
+	        type : 'post',
+	        async : false,
+	        dataType : "json",
+	        cache : false,
+	        success : function(data) {
+	        	that.createMenu(data);
+	        }
+	    });
+	},
+	eventBind : function() { // 初始化一些事件
+		var that = this;
+		
+	    // 设置被选中的菜单项
+	    $(this.id + ' .nav .models .menu-resource').each(function(i) {
+	    	var menu_name = $(this).text();
+	    	if(currentPage) {
+	    		if(currentPage == menu_name) {
+	    			$(this).parents("li").toggleClass("active");
+	    		}
+	    	}
+	    	else {
+	    		var url = window.location.pathname;
+	    		var href = $(this).attr("href");
+	    		if(url == href) {
+	    			$(this).parents("li").toggleClass("active");
+	    		}
+	    	}
+	    });
+	    
+		// 下划线移动
+		$(this.id + ' .nav .models .models-item').on("hover",function(){
+		    var width = $(this).outerWidth();
+		    var left = $(this).offset().left;
+		    that.moveLine(width,left);
+		});
+		
+		// 下划线复原
+		$(this.id + " .nav .models").mouseleave(function(){
+			that.moveTocurrent();
+		});
+	},
+	moveLine : function(width,left) { // 移动下划线
+		$(this.id + ' .nav .models .line').css({'width':width,'left':left});
+	},
+	moveTocurrent : function() { // 移动下划线到当前选中
+		var active = $(this.id + ' .nav .models .models-item.active');
+		if(active.length > 0) {
+			var width = $(active).outerWidth();
+			var left = $(active).offset().left;
+			this.moveLine(width,left);
+		}
+		else {
+			this.moveLine(0,0);
+		}
+	},
+	createMenu : function(d){
+		
+		if(d && d.length > 0) {
+			var html = "";
+			for(var i = 0; i < d.length; i++) { // 第一层
+				var url1 = 'javascript:void(0);';
+	            d[i]['url'] ? url1 = basePath + d[i]['url'] : "";
+				html += "<li class='models-item'><a class='menu-resource' href='" + url1 + "'>" + d[i]['menuName'] + "</a>";
+				var dd = d[i]['children'];
+		        if(dd && dd.length > 0) {
+		        	html += "<ul class='models-item-sub'>";
+		        	for(var j = 0; j < dd.length; j++) { // 第二层
+		        		var ddd = dd[j]['children'];
+		        		if(ddd && ddd.length > 0) {
+		        			html += "<li class='models-item-sub-menu'><a class='menu-resource models-item-sub-menu-text'>" + dd[j]['menuName'] + "</a>";
+		        			html += "<ul class='models-item-sub-menu-sub'>";
+		        			for(var k = 0; k < ddd.length; k++) { // 第三层
+		        				var url3 = 'javascript:void(0);';
+		        				ddd[k]['url'] ? url3 = basePath + ddd[k]['url'] : "";
+		        				html += "<li class='models-item-sub-menu-sub-item'><a class='menu-resource' href='" + url3 + "'>" + ddd[k]['menuName'] + "</a></li>";
+		        			}
+		        			html += "</ul></li>";
+		        		}
+		        		else {
+		        			var url2 = 'javascript:void(0);';
+		    	        	dd[j]['url'] ? url2 = basePath + dd[j]['url'] : "";
+		        			html += "<li class='models-item-sub-item'><a class='menu-resource' href='" + url2 + "'>" + dd[j]['menuName'] + "</a></li>";
+		        		}
+		        	}
+		        	html += "</ul>";
+		        }
+				html += "</li>";
+			}
+			$(this.id + " .nav .models").append(html);
+		}
+	}
+};

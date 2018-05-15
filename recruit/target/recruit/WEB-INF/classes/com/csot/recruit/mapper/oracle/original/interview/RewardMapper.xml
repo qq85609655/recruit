@@ -1,0 +1,356 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.csot.recruit.dao.original.interview.RewardMapper" >
+  <resultMap id="BaseResultMap" type="com.csot.recruit.model.original.interview.Reward" >
+    <id column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="PERSON_CODE" property="personCode" jdbcType="VARCHAR" />
+    <result column="REWARD_NAME_1" property="rewardName1" jdbcType="VARCHAR" />
+    <result column="REWARD_DATE_1" property="rewardDate1" jdbcType="VARCHAR" />
+    <result column="AUTHORITIES_1" property="authorities1" jdbcType="VARCHAR" />
+    <result column="REWARD_NAME_2" property="rewardName2" jdbcType="VARCHAR" />
+    <result column="REWARD_DATE_2" property="rewardDate2" jdbcType="VARCHAR" />
+    <result column="AUTHORITIES_2" property="authorities2" jdbcType="VARCHAR" />
+    <result column="REWARD_NAME_3" property="rewardName3" jdbcType="VARCHAR" />
+    <result column="REWARD_DATE_3" property="rewardDate3" jdbcType="VARCHAR" />
+    <result column="AUTHORITIES_3" property="authorities3" jdbcType="VARCHAR" />
+    <result column="HOBBY" property="hobby" jdbcType="VARCHAR" />
+    <result column="SPECIALITY" property="speciality" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    ID, PERSON_CODE, REWARD_NAME_1, REWARD_DATE_1, AUTHORITIES_1, REWARD_NAME_2, REWARD_DATE_2, 
+    AUTHORITIES_2, REWARD_NAME_3, REWARD_DATE_3, AUTHORITIES_3, HOBBY, SPECIALITY
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.csot.recruit.model.original.interview.RewardCriteria" >
+    <include refid="Oracle_Dialect_Pagination_Prefix" />
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from T_REWARD
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <include refid="Oracle_Dialect_Pagination_Suffix" />
+  </select>
+  <select id="selectByPersonCode" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from T_REWARD
+    where person_code = #{personCode,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from T_REWARD
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from T_REWARD
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.csot.recruit.model.original.interview.RewardCriteria" >
+    delete from T_REWARD
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.csot.recruit.model.original.interview.Reward" >
+    insert into T_REWARD (ID, PERSON_CODE, REWARD_NAME_1, 
+      REWARD_DATE_1, AUTHORITIES_1, REWARD_NAME_2, 
+      REWARD_DATE_2, AUTHORITIES_2, REWARD_NAME_3, 
+      REWARD_DATE_3, AUTHORITIES_3, HOBBY, 
+      SPECIALITY)
+    values (#{id,jdbcType=VARCHAR}, #{personCode,jdbcType=VARCHAR}, #{rewardName1,jdbcType=VARCHAR}, 
+      #{rewardDate1,jdbcType=VARCHAR}, #{authorities1,jdbcType=VARCHAR}, #{rewardName2,jdbcType=VARCHAR}, 
+      #{rewardDate2,jdbcType=VARCHAR}, #{authorities2,jdbcType=VARCHAR}, #{rewardName3,jdbcType=VARCHAR}, 
+      #{rewardDate3,jdbcType=VARCHAR}, #{authorities3,jdbcType=VARCHAR}, #{hobby,jdbcType=VARCHAR}, 
+      #{speciality,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.csot.recruit.model.original.interview.Reward" >
+    insert into T_REWARD
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="personCode != null" >
+        PERSON_CODE,
+      </if>
+      <if test="rewardName1 != null" >
+        REWARD_NAME_1,
+      </if>
+      <if test="rewardDate1 != null" >
+        REWARD_DATE_1,
+      </if>
+      <if test="authorities1 != null" >
+        AUTHORITIES_1,
+      </if>
+      <if test="rewardName2 != null" >
+        REWARD_NAME_2,
+      </if>
+      <if test="rewardDate2 != null" >
+        REWARD_DATE_2,
+      </if>
+      <if test="authorities2 != null" >
+        AUTHORITIES_2,
+      </if>
+      <if test="rewardName3 != null" >
+        REWARD_NAME_3,
+      </if>
+      <if test="rewardDate3 != null" >
+        REWARD_DATE_3,
+      </if>
+      <if test="authorities3 != null" >
+        AUTHORITIES_3,
+      </if>
+      <if test="hobby != null" >
+        HOBBY,
+      </if>
+      <if test="speciality != null" >
+        SPECIALITY,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="personCode != null" >
+        #{personCode,jdbcType=VARCHAR},
+      </if>
+      <if test="rewardName1 != null" >
+        #{rewardName1,jdbcType=VARCHAR},
+      </if>
+      <if test="rewardDate1 != null" >
+        #{rewardDate1,jdbcType=VARCHAR},
+      </if>
+      <if test="authorities1 != null" >
+        #{authorities1,jdbcType=VARCHAR},
+      </if>
+      <if test="rewardName2 != null" >
+        #{rewardName2,jdbcType=VARCHAR},
+      </if>
+      <if test="rewardDate2 != null" >
+        #{rewardDate2,jdbcType=VARCHAR},
+      </if>
+      <if test="authorities2 != null" >
+        #{authorities2,jdbcType=VARCHAR},
+      </if>
+      <if test="rewardName3 != null" >
+        #{rewardName3,jdbcType=VARCHAR},
+      </if>
+      <if test="rewardDate3 != null" >
+        #{rewardDate3,jdbcType=VARCHAR},
+      </if>
+      <if test="authorities3 != null" >
+        #{authorities3,jdbcType=VARCHAR},
+      </if>
+      <if test="hobby != null" >
+        #{hobby,jdbcType=VARCHAR},
+      </if>
+      <if test="speciality != null" >
+        #{speciality,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.csot.recruit.model.original.interview.RewardCriteria" resultType="java.lang.Integer" >
+    select count(*) from T_REWARD
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update T_REWARD
+    <set >
+      <if test="record.id != null" >
+        ID = #{record.id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.personCode != null" >
+        PERSON_CODE = #{record.personCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.rewardName1 != null" >
+        REWARD_NAME_1 = #{record.rewardName1,jdbcType=VARCHAR},
+      </if>
+      <if test="record.rewardDate1 != null" >
+        REWARD_DATE_1 = #{record.rewardDate1,jdbcType=VARCHAR},
+      </if>
+      <if test="record.authorities1 != null" >
+        AUTHORITIES_1 = #{record.authorities1,jdbcType=VARCHAR},
+      </if>
+      <if test="record.rewardName2 != null" >
+        REWARD_NAME_2 = #{record.rewardName2,jdbcType=VARCHAR},
+      </if>
+      <if test="record.rewardDate2 != null" >
+        REWARD_DATE_2 = #{record.rewardDate2,jdbcType=VARCHAR},
+      </if>
+      <if test="record.authorities2 != null" >
+        AUTHORITIES_2 = #{record.authorities2,jdbcType=VARCHAR},
+      </if>
+      <if test="record.rewardName3 != null" >
+        REWARD_NAME_3 = #{record.rewardName3,jdbcType=VARCHAR},
+      </if>
+      <if test="record.rewardDate3 != null" >
+        REWARD_DATE_3 = #{record.rewardDate3,jdbcType=VARCHAR},
+      </if>
+      <if test="record.authorities3 != null" >
+        AUTHORITIES_3 = #{record.authorities3,jdbcType=VARCHAR},
+      </if>
+      <if test="record.hobby != null" >
+        HOBBY = #{record.hobby,jdbcType=VARCHAR},
+      </if>
+      <if test="record.speciality != null" >
+        SPECIALITY = #{record.speciality,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update T_REWARD
+    set ID = #{record.id,jdbcType=VARCHAR},
+      PERSON_CODE = #{record.personCode,jdbcType=VARCHAR},
+      REWARD_NAME_1 = #{record.rewardName1,jdbcType=VARCHAR},
+      REWARD_DATE_1 = #{record.rewardDate1,jdbcType=VARCHAR},
+      AUTHORITIES_1 = #{record.authorities1,jdbcType=VARCHAR},
+      REWARD_NAME_2 = #{record.rewardName2,jdbcType=VARCHAR},
+      REWARD_DATE_2 = #{record.rewardDate2,jdbcType=VARCHAR},
+      AUTHORITIES_2 = #{record.authorities2,jdbcType=VARCHAR},
+      REWARD_NAME_3 = #{record.rewardName3,jdbcType=VARCHAR},
+      REWARD_DATE_3 = #{record.rewardDate3,jdbcType=VARCHAR},
+      AUTHORITIES_3 = #{record.authorities3,jdbcType=VARCHAR},
+      HOBBY = #{record.hobby,jdbcType=VARCHAR},
+      SPECIALITY = #{record.speciality,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.csot.recruit.model.original.interview.Reward" >
+    update T_REWARD
+    <set >
+      <if test="personCode != null" >
+        PERSON_CODE = #{personCode,jdbcType=VARCHAR},
+      </if>
+      <if test="rewardName1 != null" >
+        REWARD_NAME_1 = #{rewardName1,jdbcType=VARCHAR},
+      </if>
+      <if test="rewardDate1 != null" >
+        REWARD_DATE_1 = #{rewardDate1,jdbcType=VARCHAR},
+      </if>
+      <if test="authorities1 != null" >
+        AUTHORITIES_1 = #{authorities1,jdbcType=VARCHAR},
+      </if>
+      <if test="rewardName2 != null" >
+        REWARD_NAME_2 = #{rewardName2,jdbcType=VARCHAR},
+      </if>
+      <if test="rewardDate2 != null" >
+        REWARD_DATE_2 = #{rewardDate2,jdbcType=VARCHAR},
+      </if>
+      <if test="authorities2 != null" >
+        AUTHORITIES_2 = #{authorities2,jdbcType=VARCHAR},
+      </if>
+      <if test="rewardName3 != null" >
+        REWARD_NAME_3 = #{rewardName3,jdbcType=VARCHAR},
+      </if>
+      <if test="rewardDate3 != null" >
+        REWARD_DATE_3 = #{rewardDate3,jdbcType=VARCHAR},
+      </if>
+      <if test="authorities3 != null" >
+        AUTHORITIES_3 = #{authorities3,jdbcType=VARCHAR},
+      </if>
+      <if test="hobby != null" >
+        HOBBY = #{hobby,jdbcType=VARCHAR},
+      </if>
+      <if test="speciality != null" >
+        SPECIALITY = #{speciality,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.csot.recruit.model.original.interview.Reward" >
+    update T_REWARD
+    set PERSON_CODE = #{personCode,jdbcType=VARCHAR},
+      REWARD_NAME_1 = #{rewardName1,jdbcType=VARCHAR},
+      REWARD_DATE_1 = #{rewardDate1,jdbcType=VARCHAR},
+      AUTHORITIES_1 = #{authorities1,jdbcType=VARCHAR},
+      REWARD_NAME_2 = #{rewardName2,jdbcType=VARCHAR},
+      REWARD_DATE_2 = #{rewardDate2,jdbcType=VARCHAR},
+      AUTHORITIES_2 = #{authorities2,jdbcType=VARCHAR},
+      REWARD_NAME_3 = #{rewardName3,jdbcType=VARCHAR},
+      REWARD_DATE_3 = #{rewardDate3,jdbcType=VARCHAR},
+      AUTHORITIES_3 = #{authorities3,jdbcType=VARCHAR},
+      HOBBY = #{hobby,jdbcType=VARCHAR},
+      SPECIALITY = #{speciality,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <sql id="Oracle_Dialect_Pagination_Prefix" >
+    <if test="page != null" >
+      select * from ( select row_.*, rownum rownum_ from ( 
+    </if>
+  </sql>
+  <sql id="Oracle_Dialect_Pagination_Suffix" >
+    <if test="page != null" >
+      <![CDATA[ ) row_ ) where rownum_ > #{page.begin} and rownum_ <= #{page.end} ]]>
+    </if>
+  </sql>
+</mapper>

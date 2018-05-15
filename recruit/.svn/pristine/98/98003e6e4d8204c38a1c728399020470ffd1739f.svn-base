@@ -1,0 +1,164 @@
+/* /* �˲���ݵ���ҳ��css */
+.position-import-main {
+	background-color: #FFFFFF;
+	padding: 15px;
+}
+.mt10 {
+	margin-top: 10px;
+}
+.f14 {
+	margin-left: 10px;
+}
+.email-template-help{
+	font-size: 13px;
+}
+
+label{
+	font-size: 13px;
+}
+
+.position-import-right {
+	height: 70px;
+	margin-left: 10px;
+}
+.msgBox {
+	padding: 15px;
+	border: 1px solid #F7DA8D;
+	background: #FFFCE9 none repeat scroll 0% 0%;
+	color: #4D4D4D;
+	border-radius: 5px;
+}
+
+.position-import-div3 {
+	height: 65px;
+	margin-top: 10px;
+	margin-left: 10px;
+	border-bottom: 1px dotted #898989;
+	display: none;
+}
+
+.import-surface {
+	margin-top: 20px;
+	min-height: 70px;
+	border-bottom: 1px dotted #898989;
+	width: 99%;
+	clear: left;
+}
+
+.import-surface span {
+	color: gray;
+	font-size: 13px;
+}
+
+.import-inner-upper {
+	float: left;
+	margin-top: 25px;
+	width: 3%;
+}
+
+.import-inner-bottom {
+	float: left;
+	margin-top: 10px;
+	width: 3%;
+}
+
+.import-form-tab {
+	width: 70%;
+	margin-left: 30px;
+	padding-top: 20px;
+}
+
+.import-form-tab input[type='submit'] {
+	background-color: blue;
+	font-size: 12px;
+	color: white;
+	width: 40px;
+	height: 20px;
+}
+
+.import-form-tab tr {
+	height: 35px;
+}
+
+.import-form-left {
+	width: 40%;
+	float: left;
+	margin-top: 20px;
+}
+
+.import-form-right {
+	float: right;
+	font-size: 12px;
+	color: gray;
+	background-color: #EEF2FB;
+	margin-right: 100px;
+	margin-top: 20px;
+}
+
+.import-form-right p {
+	padding: 10px;
+	font-size: 13px;
+}
+.red {
+    color: #F00;
+    font-size:5px;
+}
+.ml10 {
+    margin-left: 10px;
+}
+.c999left {
+    color: #999;
+    text-align: left;
+    font-weight: normal;
+    vertical-align:top;
+}
+.tGlobal th {
+    background: #eef2fb none repeat scroll 0 0;
+    border-bottom: 1px solid #cddef2;
+}
+.tGlobal th {
+    height: 32px;
+    padding: 0 5px;
+    text-align: left;
+}
+.tGlobal{
+	font-size:14px;
+	width:100%;
+}
+#templateTitle{
+    width: 385px;
+    border-bottom: 1px solid #cddef2;
+}
+#templateContext{
+	width: 385px;
+}
+#templateContext{
+	margin-top:10px;
+}
+.c111{
+	margin-top:10px;
+	display:block;
+}
+.tGlobal tr{
+	height:30px;
+	border-bottom: 1px dashed #ddd;
+}
+.attch666{
+	color:green;
+	border:none;
+	background-color:#fff;
+	font-size:20px;
+}
+.fileName:hover span{
+	display:inline;
+}
+.fileName{
+	font-size:12px;
+	color:#06c;
+	padding-right:8px;
+}
+.fileName span{
+	font-size:14px;
+	padding-left:4px;
+	display:none;
+}

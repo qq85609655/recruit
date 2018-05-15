@@ -1,0 +1,17 @@
+package com.csot.recruit.service.resumelibrary.source;
+
+import com.csot.recruit.model.original.resumelibrary.source.ResumeSource;
+import org.amberframework.web.miniui.pojo.MiniGridPageSort;
+import org.amberframework.web.miniui.pojo.MiniRtn2Grid;
+
+public interface ResumeSourceService {
+    MiniRtn2Grid<ResumeSource> getGrid(MiniGridPageSort pageSort, String searchKey);
+
+    ResumeSource getByPrimaryKey(String primaryKey);
+
+    void create(ResumeSource resumeSource);
+
+    void updateSelective(ResumeSource resumeSource);
+
+    void remove(String primaryKey);
+}

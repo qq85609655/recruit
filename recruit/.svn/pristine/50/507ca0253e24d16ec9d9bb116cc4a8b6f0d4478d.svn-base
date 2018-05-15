@@ -1,0 +1,250 @@
+package com.csot.recruit.service.impl.campus;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.util.List;
+import java.util.UUID;
+
+import com.csot.recruit.common.util.CampusUtils;
+import com.csot.recruit.common.util.ExcelReadUtils;
+import com.csot.recruit.dao.extension.campus.CampusTaskExtMapper;
+import com.csot.recruit.dao.original.campus.CampusPostMapper;
+import com.csot.recruit.dao.original.campus.CampusTaskMapper;
+import com.csot.recruit.model.datadict.DatadictGroup;
+import com.csot.recruit.model.datadict.DatadictGroupType;
+import com.csot.recruit.model.extension.campus.CampusTaskExt;
+import com.csot.recruit.model.original.campus.CampusPost;
+import com.csot.recruit.model.original.campus.CampusSite;
+import com.csot.recruit.model.original.campus.CampusTask;
+import com.csot.recruit.model.original.campus.CampusTaskColumns;
+import com.csot.recruit.model.original.campus.CampusTaskCriteria;
+import com.csot.recruit.service.campus.CampusSiteService;
+import com.csot.recruit.service.campus.CampusTaskService;
+
+import javax.annotation.Resource;
+
+import com.csot.recruit.service.datadict.DatadictGroupTypeService;
+import org.amberframework.core.common.model.AjaxRtnJson;
+import org.amberframework.core.mybatis.pojo.Page;
+import org.amberframework.web.miniui.pojo.MiniGridPageSort;
+import org.amberframework.web.miniui.pojo.MiniRtn2Grid;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
+import org.springframework.web.multipart.MultipartFile;
+
+@Service("campusTaskService")
+public class CampusTaskServiceImpl implements CampusTaskService {
+  private static final Logger logger = LoggerFactory.getLogger(CampusTaskServiceImpl.class);
+
+  @Resource
+  private CampusTaskMapper campusTaskMapper;
+  @Resource
+  private CampusTaskExtMapper campusTaskExtMapper;
+  @Resource
+  private CampusPostMapper campusPostMapper;
+  @Resource
+  private CampusSiteService campusSiteService;
+  @Resource
+  private DatadictGroupTypeService datadictGroupTypeService;
+
+  @Override
+  public MiniRtn2Grid<CampusTask> getGrid(MiniGridPageSort pageSort, String yearth,
+                                          String organizationId, String siteId, String postId) {
+    MiniRtn2Grid<CampusTask> grid = new MiniRtn2Grid<CampusTask>();
+    CampusTaskCriteria criteria = new CampusTaskCriteria();
+    CampusTaskCriteria.Criteria criter = criteria.or();
+    // 查询条件
+    if (StringUtils.hasText(yearth)) {
+      criter.andYearthEqualTo(yearth);
+    }
+    if (StringUtils.hasText(organizationId)) {
+      criter.andReserved1EqualTo(organizationId);
+    }
+    if (StringUtils.hasText(siteId)) {
+      criter.andSiteIdEqualTo(siteId);
+    }
+    if (StringUtils.hasText(postId)) {
+      criter.andPostIdEqualTo(postId);
+    }
+    // 分页和排序
+    if (pageSort.isShowPager()) {
+      Page page = Page.newInstanceWithPageIndex(pageSort.getPageIndex(), pageSort.getPageSize());
+      criteria.setPage(page);
+    }
+    String sortColumn = CampusTaskColumns.getColumn(pageSort.getSortField());
+    if (StringUtils.hasText(sortColumn)) {
+      StringBuilder sortStrBldr =
+              new StringBuilder(sortColumn).append(" ").append(pageSort.getSortOrder());
+      criteria.setOrderByClause(sortStrBldr.toString());
+    }
+    grid.setData(campusTaskMapper.selectByExample(criteria));
+    grid.setTotal(campusTaskMapper.countByExample(criteria));
+    return grid;
+  }
+
+  @Override
+  public CampusTask getByPrimaryKey(String primaryKey) {
+    return campusTaskMapper.selectByPrimaryKey(primaryKey);
+  }
+
+  @Override
+  public void create(CampusTask campusTask) {
+    campusTaskMapper.insert(campusTask);
+  }
+
+  @Override
+  public void updateSelective(CampusTask campusTask) {
+    campusTaskMapper.updateByPrimaryKeySelective(campusTask);
+  }
+
+  @Override
+  public void remove(String primaryKey) {
+    campusTaskMapper.deleteByPrimaryKey(primaryKey);
+  }
+
+  @Override
+  public List<CampusTask> getTaskByOrganizationSitePostYearth(String organizationId, String siteId, String postId, String yearth) {
+    CampusTaskCriteria criteria = new CampusTaskCriteria();
+    CampusTaskCriteria.Criteria criter = criteria.or();
+    if (StringUtils.hasText(organizationId)) {
+      criter.andReserved1EqualTo(organizationId);
+    }
+    if (StringUtils.hasText(siteId)) {
+      criter.andSiteIdEqualTo(siteId);
+    }
+    if (StringUtils.hasText(postId)) {
+      criter.andPostIdEqualTo(postId);
+    }
+    if (StringUtils.hasText(yearth)) {
+      criter.andYearthEqualTo(yearth);
+    }
+    List<CampusTask> list = campusTaskMapper.selectByExample(criteria);
+    return list;
+  }
+
+  @Override
+  public boolean checkIsExistTask(String organizationId, String siteId, String postId, String yearth) {
+    List<CampusTask> taskList = getTaskByOrganizationSitePostYearth(organizationId, siteId, postId, yearth);
+    if (taskList.isEmpty()) {
+      return false;
+    } else {
+      return true;
+    }
+  }
+
+  @Override
+  public List<CampusTask> getCampusTaskBySiteId(String siteId) {
+    CampusTaskCriteria criteria = new CampusTaskCriteria();
+    criteria.or().andSiteIdEqualTo(siteId);
+    return campusTaskMapper.selectByExample(criteria);
+  }
+
+  @Override
+  public List<CampusTask> getCampusTaskByPostId(String postId) {
+    CampusTaskCriteria criteria = new CampusTaskCriteria();
+    criteria.or().andPostIdEqualTo(postId);
+    return campusTaskMapper.selectByExample(criteria);
+  }
+
+  @SuppressWarnings("resource")
+  @Override
+  public AjaxRtnJson importCampusTask(MultipartFile multipartFile, String basePath)
+          throws Exception {
+    String msg = "";
+    String sourceName = multipartFile.getOriginalFilename();
+    File file = new File(basePath);
+    if (!file.exists()) {
+      file.mkdirs();
+    }
+    String path = basePath + File.separator + sourceName;
+    multipartFile.transferTo(new File(path));
+    FileInputStream in = new FileInputStream(path);
+    Workbook wb = null;
+    int count = 0;
+    if (path.endsWith(".xls")) {
+      wb = new HSSFWorkbook(in);
+    } else if (path.endsWith(".xlsx")) {
+      wb = new XSSFWorkbook(in);
+    } else {
+      return new AjaxRtnJson(false, "上传文件格式有误！");
+    }
+    Sheet sheet = wb.getSheetAt(0);
+    int rowNum = sheet.getLastRowNum();
+    if (rowNum < 3) {
+      logger.error("上传文件为空！");
+      return new AjaxRtnJson(false, "上传文件为空！");
+    } else {
+      for (int i = 3; i <= rowNum; i++) {
+        Row row = sheet.getRow(i);
+        String orgName = ExcelReadUtils.getValue(row.getCell(0));
+        String siteName = ExcelReadUtils.getValue(row.getCell(1));
+        String postName = ExcelReadUtils.getValue(row.getCell(2));
+        String taskNumberBa = ExcelReadUtils.getValue(row.getCell(3));
+        String taskNumberMa = ExcelReadUtils.getValue(row.getCell(4));
+        String taskNumberDo = ExcelReadUtils.getValue(row.getCell(5));
+        Integer taskNumberBaInt = Integer.parseInt(taskNumberBa);
+        Integer taskNumberMaInt = Integer.parseInt(taskNumberMa);
+        Integer taskNumberDoInt = Integer.parseInt(taskNumberDo);
+        String yearth = CampusUtils.getCurrentYearth();
+
+        // 校验组织、站点和岗位
+        CampusSite site = campusSiteService.getBySiteIdOrName("", siteName);
+        DatadictGroupType post = datadictGroupTypeService.getTypeByGorupCodeAndName("pose_type", postName);
+        DatadictGroupType org = datadictGroupTypeService.getTypeByGorupCodeAndName("campus_company", orgName);
+        if (null == site || null == post || null == org) {
+          if (null == site) {
+            msg = msg + siteName + "站点不存在；";
+          }
+          if (null == post) {
+            msg = msg + postName + "岗位不存在；";
+          }
+          if (null == org) {
+            msg = msg + orgName + "组织不存在；";
+          }
+          continue;
+        }
+
+        CampusTaskCriteria criteria = new CampusTaskCriteria();
+        criteria.or().andSiteIdEqualTo(site.getSiteId()).andPostIdEqualTo(post.getTypeId()).andYearthEqualTo(yearth).andReserved1EqualTo(org.getTypeId());
+        List<CampusTask> list = campusTaskMapper.selectByExample(criteria);
+        if (list.isEmpty()) {
+          CampusTask task = new CampusTask();
+          task.setId(UUID.randomUUID().toString().replace("-", ""));
+          task.setPostId(post.getTypeId());
+          task.setPostName(postName);
+          task.setSiteId(site.getSiteId());
+          task.setSiteName(siteName);
+          task.setTaskNumberBa(taskNumberBaInt);
+          task.setTaskNumberMa(taskNumberMaInt);
+          task.setTaskNumberDo(taskNumberDoInt);
+          task.setYearth(yearth);
+          task.setReserved1(org.getTypeId());
+          task.setReserved2(orgName);
+          campusTaskMapper.insert(task);
+        } else {
+          String id = list.get(0).getId();
+          CampusTask task = new CampusTask();
+          task.setId(id);
+          task.setTaskNumberBa(taskNumberBaInt);
+          task.setTaskNumberMa(taskNumberMaInt);
+          task.setTaskNumberDo(taskNumberDoInt);
+          campusTaskMapper.updateByPrimaryKeySelective(task);
+        }
+        count++;
+      }
+    }
+    return new AjaxRtnJson(true, "成功更新" + count + "条任务； " + msg);
+  }
+
+  @Override
+  public List<CampusTaskExt> getGrid4Yearth() {
+    return campusTaskExtMapper.selectAllYearth();
+  }
+}

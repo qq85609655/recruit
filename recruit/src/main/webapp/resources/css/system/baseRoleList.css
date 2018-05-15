@@ -1,0 +1,76 @@
+
+html {
+    background: #eef2fb none repeat scroll 0 0;
+    color: #4d4d4d;
+}
+body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, code, form, fieldset, legend, input, textarea, p, blockquote, th, td {
+    margin: 0;
+    padding: 0;
+}
+.account-search{
+    background: #effaff none repeat scroll 0 0;
+    border: 1px solid #a9ccde;
+    border-radius: 5px;
+    padding: 10px;
+    position: relative;
+    margin-top: 20px;
+}
+
+.role{
+	float:left;
+	color:blue;
+	display:block;
+	margin-left: 10px;
+}
+
+.account-content{
+	margin-top: 20px;
+}
+#addRoleButton{
+	margin-left: 10px;
+}
+.addRole{
+	height:30px;
+	margin-top: 10px;
+	margin-bottom: 10px;
+	border-bottom:1px; 
+}
+
+
+#roleForm{
+	margin-left: 30px;
+}
+#roleForm td{
+	height: 40px;
+	font-size: 13px;
+}
+
+#roleForm span{
+	color: red;
+}
+.win-footer-btn{
+	display: inline-block;
+}
+.delete-tip{
+	text-align: center;
+}
+.delete-tip span{
+	font-size: 15px;
+}
+body, button, input, select, textarea {
+    font: 12px/1 Microsoft YaHei,Verdana,Arial,Helvetica,sans-serif;
+}
+body, h1, h2, h3, h4, h5, h6, hr, p, blockquote, dl, dt, dd, ul, ol, li, pre, fieldset, lengend, button, input, textarea, th, td {
+    margin: 0;
+    padding: 0;
+}
+.button {
+    background-color: #48b8e8;
+    border: medium none;
+    color: #fff;
+    cursor: pointer;
+    font-weight: normal;
+    height: 24px;
+    line-height: 22px;
+    padding: 0 10px;
+}

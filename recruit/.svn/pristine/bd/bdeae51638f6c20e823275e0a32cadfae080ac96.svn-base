@@ -1,0 +1,23 @@
+[
+    { "id": "siteName", "text": "站点" },
+    { "id": "workingPlace", "text": "工作地点" },
+    { "id": "organization", "text": "组织" },
+    { "id": "bigCenter", "text": "大中心" },
+    { "id": "smallCenter", "text": "小中心" },
+    { "id": "department", "text": "部门" },
+    { "id": "offices", "text": "科室" },
+    { "id": "postName", "text": "岗位" },
+    { "id": "realname", "text": "姓名" },
+    { "id": "sex", "text": "性别" },
+    { "id": "education", "text": "学历" },
+    { "id": "nativePlace", "text": "籍贯" },
+    { "id": "school", "text": "学校" },
+    { "id": "major", "text": "专业" },
+    { "id": "phoneNo", "text": "联系电话" },
+    { "id": "email", "text": "邮箱" },
+    { "id": "evaluation", "text": "测评成绩" },
+    { "id": "moraleRisk", "text": "心理风险" },
+    { "id": "resultFirst", "text": "一面得分" },
+    { "id": "resultSecond", "text": "二面得分" },
+    { "id": "yearth", "text": "招聘年份" }
+]

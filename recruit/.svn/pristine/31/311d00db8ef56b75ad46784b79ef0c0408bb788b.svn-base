@@ -1,0 +1,104 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="t" uri="/recruit-tags"%>
+<!DOCTYPE html>
+<%@include file="/webpage/common.jsp"%>
+
+<head>
+<link rel="stylesheet" type="text/css" href="${webRoot }/resources/css/system/baseUserList.css" />
+<base href="${basePath}">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+<title>按模板发送邮件</title>
+<style type="text/css">
+</style>
+</head>
+<body onload="removeLoad();">
+  <div>
+    <div class="co-right" style="width: 800px; margin-left: 10px;">
+      <br>
+      <div class="account-content">
+        <div class="blue radius">
+          <div class="table-operate">
+            <td><label>收件人：</label></td>
+            <td><input id="realName" value="${realName }" name="realName" class="mini-textbox"
+              required="true" /> <input id="ids" value="${ids }" name="ids" class="mini-hidden" />
+            </td>
+          </div>
+          <div id="datagrid1" class="mini-datagrid" url="/recruit/templateController/templateData"
+            idField="id" sizeList="[1,20,50,100]" pageSize="20" allowResize="true"
+            style="height: 350px;">
+            <div property="columns">
+              <div type="checkcolumn" width="30"></div>
+              <div field="title" allowSort="true" width="100">邮件模板名称</div>
+              <div field="type" width="100" allowSort="true" renderer="onTypeRenderer">模板类型</div>
+              <div field="updateDate" width="100" allowSort="true" renderer="onDateRenderer">最后修订时间</div>
+              <div field="creator" width="80" allowSort="true">修订者</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <br>
+      <div class="mini-toolbar dialogFooter">
+        <a class="mini-button" style="width: 100px;" onclick="onSend()">发送邮件</a> <span
+          style="display: inline-block; width: 25px;"></span> <a class="mini-button"
+          style="width: 100px;" onclick="onCancel()">取消发送</a>
+      </div>
+    </div>
+  </div>
+</body>
+<script type="text/javascript">
+  mini.parse();
+  var grid = mini.get("datagrid1");
+  grid.load();
+
+  var types = [ {
+    id : 1,
+    text : '邮件模板'
+  }, {
+    id : 2,
+    text : '短信模板'
+  } ];
+
+  // 模板类型渲染
+  function onTypeRenderer(e) {
+    for (var i = 0, l = types.length; i < l; i++) {
+      var g = types[i];
+      if (g.id == e.value)
+        return g.text;
+    }
+    return "";
+  }
+  function onSend() {
+
+    var row = grid.getSelected();
+    if (row) {
+      var ids = mini.get("ids").getValue();
+      var templateId = row.id;
+      $.ajax({
+        url : "/recruit/campusStudentController/sendEmailToStu?templateId=" + templateId + "&ids="
+            + ids,
+        type : 'post',
+        dataType : "json",
+        success : function(e) {
+          alert(e.msg);
+          CloseWindow("close");
+        },
+        error : function(jqXHR, textStatus, errorThrown) {
+          mini.alert(jqXHR.responseText);
+          CloseWindow("close");
+        }
+      });
+    } else {
+      mini.alert("请选择邮件模板！");
+    }
+
+  }
+
+  function onCancel(e) {
+    CloseWindow("close");
+  }
+</script>
+<%-- <script type="text/javascript" src="${webRoot}/resources/js/campus/campusStuEmailSend.js"></script> --%>
+</html>

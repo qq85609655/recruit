@@ -1,0 +1,542 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.csot.recruit.dao.original.campus.CampusTaskHistoryMapper" >
+  <resultMap id="BaseResultMap" type="com.csot.recruit.model.original.campus.CampusTaskHistory" >
+    <id column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="SITE_ID" property="siteId" jdbcType="VARCHAR" />
+    <result column="SITE_NAME" property="siteName" jdbcType="VARCHAR" />
+    <result column="POST_ID" property="postId" jdbcType="VARCHAR" />
+    <result column="POST_NAME" property="postName" jdbcType="VARCHAR" />
+    <result column="TASK_NUMBER_BA" property="taskNumberBa" jdbcType="DECIMAL" />
+    <result column="TASK_NUMBER_MA" property="taskNumberMa" jdbcType="DECIMAL" />
+    <result column="TASK_NUMBER_DO" property="taskNumberDo" jdbcType="DECIMAL" />
+    <result column="YEARTH" property="yearth" jdbcType="VARCHAR" />
+    <result column="TASK_NUMBER_SUM" property="taskNumberSum" jdbcType="DECIMAL" />
+    <result column="TASK_NUMBER_MAIL" property="taskNumberMail" jdbcType="DECIMAL" />
+    <result column="TASK_NUMBER_FEMAIL" property="taskNumberFemail" jdbcType="DECIMAL" />
+    <result column="CHANGE_DATE" property="changeDate" jdbcType="DATE" />
+    <result column="ORG_NAME" property="orgName" jdbcType="VARCHAR" />
+    <result column="ORGANIZATION" property="organization" jdbcType="VARCHAR" />
+    <result column="TASK_NUMBER_BA_NEW" property="taskNumberBaNew" jdbcType="DECIMAL" />
+    <result column="TASK_NUMBER_MA_NEW" property="taskNumberMaNew" jdbcType="DECIMAL" />
+    <result column="TASK_NUMBER_DO_NEW" property="taskNumberDoNew" jdbcType="DECIMAL" />
+    <result column="TASK_NUMBER_SUM_NEW" property="taskNumberSumNew" jdbcType="DECIMAL" />
+    <result column="TASK_NUMBER_MAIL_NEW" property="taskNumberMailNew" jdbcType="DECIMAL" />
+    <result column="TASK_NUMBER_FEMAIL_NEW" property="taskNumberFemailNew" jdbcType="DECIMAL" />
+    <result column="BIG_CENTER" property="bigCenter" jdbcType="VARCHAR" />
+    <result column="SMALL_CENTER" property="smallCenter" jdbcType="VARCHAR" />
+    <result column="DEPARTMENT" property="department" jdbcType="VARCHAR" />
+    <result column="BRANCH" property="branch" jdbcType="VARCHAR" />
+    <result column="EDUCATION" property="eduction" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    ID, SITE_ID, SITE_NAME, POST_ID, POST_NAME, TASK_NUMBER_BA, TASK_NUMBER_MA, TASK_NUMBER_DO, 
+    YEARTH, TASK_NUMBER_SUM, TASK_NUMBER_MAIL, TASK_NUMBER_FEMAIL, CHANGE_DATE, ORG_NAME, 
+    ORGANIZATION, TASK_NUMBER_BA_NEW, TASK_NUMBER_MA_NEW, TASK_NUMBER_DO_NEW, TASK_NUMBER_SUM_NEW, 
+    TASK_NUMBER_MAIL_NEW, TASK_NUMBER_FEMAIL_NEW, BIG_CENTER, SMALL_CENTER, DEPARTMENT, 
+    BRANCH
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.csot.recruit.model.original.campus.CampusTaskHistoryCriteria" >
+    <include refid="Oracle_Dialect_Pagination_Prefix" />
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from T_CAMPUS_TASK_HISTORY
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <include refid="Oracle_Dialect_Pagination_Suffix" />
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from T_CAMPUS_TASK_HISTORY
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from T_CAMPUS_TASK_HISTORY
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.csot.recruit.model.original.campus.CampusTaskHistoryCriteria" >
+    delete from T_CAMPUS_TASK_HISTORY
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.csot.recruit.model.original.campus.CampusTaskHistory" >
+    insert into T_CAMPUS_TASK_HISTORY (ID, SITE_ID, SITE_NAME, 
+      POST_ID, POST_NAME, TASK_NUMBER_BA, 
+      TASK_NUMBER_MA, TASK_NUMBER_DO, YEARTH, 
+      TASK_NUMBER_SUM, TASK_NUMBER_MAIL, TASK_NUMBER_FEMAIL, 
+      CHANGE_DATE, ORG_NAME, ORGANIZATION, 
+      TASK_NUMBER_BA_NEW, TASK_NUMBER_MA_NEW, TASK_NUMBER_DO_NEW, 
+      TASK_NUMBER_SUM_NEW, TASK_NUMBER_MAIL_NEW, TASK_NUMBER_FEMAIL_NEW, 
+      BIG_CENTER, SMALL_CENTER, DEPARTMENT, 
+      BRANCH)
+    values (#{id,jdbcType=VARCHAR}, #{siteId,jdbcType=VARCHAR}, #{siteName,jdbcType=VARCHAR}, 
+      #{postId,jdbcType=VARCHAR}, #{postName,jdbcType=VARCHAR}, #{taskNumberBa,jdbcType=DECIMAL}, 
+      #{taskNumberMa,jdbcType=DECIMAL}, #{taskNumberDo,jdbcType=DECIMAL}, #{yearth,jdbcType=VARCHAR}, 
+      #{taskNumberSum,jdbcType=DECIMAL}, #{taskNumberMail,jdbcType=DECIMAL}, #{taskNumberFemail,jdbcType=DECIMAL}, 
+      #{changeDate,jdbcType=DATE}, #{orgName,jdbcType=VARCHAR}, #{organization,jdbcType=VARCHAR}, 
+      #{taskNumberBaNew,jdbcType=DECIMAL}, #{taskNumberMaNew,jdbcType=DECIMAL}, #{taskNumberDoNew,jdbcType=DECIMAL}, 
+      #{taskNumberSumNew,jdbcType=DECIMAL}, #{taskNumberMailNew,jdbcType=DECIMAL}, #{taskNumberFemailNew,jdbcType=DECIMAL}, 
+      #{bigCenter,jdbcType=VARCHAR}, #{smallCenter,jdbcType=VARCHAR}, #{department,jdbcType=VARCHAR}, 
+      #{branch,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.csot.recruit.model.original.campus.CampusTaskHistory" >
+    insert into T_CAMPUS_TASK_HISTORY
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="siteId != null" >
+        SITE_ID,
+      </if>
+      <if test="siteName != null" >
+        SITE_NAME,
+      </if>
+      <if test="postId != null" >
+        POST_ID,
+      </if>
+      <if test="postName != null" >
+        POST_NAME,
+      </if>
+      <if test="taskNumberBa != null" >
+        TASK_NUMBER_BA,
+      </if>
+      <if test="taskNumberMa != null" >
+        TASK_NUMBER_MA,
+      </if>
+      <if test="taskNumberDo != null" >
+        TASK_NUMBER_DO,
+      </if>
+      <if test="yearth != null" >
+        YEARTH,
+      </if>
+      <if test="taskNumberSum != null" >
+        TASK_NUMBER_SUM,
+      </if>
+      <if test="taskNumberMail != null" >
+        TASK_NUMBER_MAIL,
+      </if>
+      <if test="taskNumberFemail != null" >
+        TASK_NUMBER_FEMAIL,
+      </if>
+      <if test="changeDate != null" >
+        CHANGE_DATE,
+      </if>
+      <if test="orgName != null" >
+        ORG_NAME,
+      </if>
+      <if test="organization != null" >
+        ORGANIZATION,
+      </if>
+      <if test="taskNumberBaNew != null" >
+        TASK_NUMBER_BA_NEW,
+      </if>
+      <if test="taskNumberMaNew != null" >
+        TASK_NUMBER_MA_NEW,
+      </if>
+      <if test="taskNumberDoNew != null" >
+        TASK_NUMBER_DO_NEW,
+      </if>
+      <if test="taskNumberSumNew != null" >
+        TASK_NUMBER_SUM_NEW,
+      </if>
+      <if test="taskNumberMailNew != null" >
+        TASK_NUMBER_MAIL_NEW,
+      </if>
+      <if test="taskNumberFemailNew != null" >
+        TASK_NUMBER_FEMAIL_NEW,
+      </if>
+      <if test="bigCenter != null" >
+        BIG_CENTER,
+      </if>
+      <if test="smallCenter != null" >
+        SMALL_CENTER,
+      </if>
+      <if test="department != null" >
+        DEPARTMENT,
+      </if>
+      <if test="branch != null" >
+        BRANCH,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="siteId != null" >
+        #{siteId,jdbcType=VARCHAR},
+      </if>
+      <if test="siteName != null" >
+        #{siteName,jdbcType=VARCHAR},
+      </if>
+      <if test="postId != null" >
+        #{postId,jdbcType=VARCHAR},
+      </if>
+      <if test="postName != null" >
+        #{postName,jdbcType=VARCHAR},
+      </if>
+      <if test="taskNumberBa != null" >
+        #{taskNumberBa,jdbcType=DECIMAL},
+      </if>
+      <if test="taskNumberMa != null" >
+        #{taskNumberMa,jdbcType=DECIMAL},
+      </if>
+      <if test="taskNumberDo != null" >
+        #{taskNumberDo,jdbcType=DECIMAL},
+      </if>
+      <if test="yearth != null" >
+        #{yearth,jdbcType=VARCHAR},
+      </if>
+      <if test="taskNumberSum != null" >
+        #{taskNumberSum,jdbcType=DECIMAL},
+      </if>
+      <if test="taskNumberMail != null" >
+        #{taskNumberMail,jdbcType=DECIMAL},
+      </if>
+      <if test="taskNumberFemail != null" >
+        #{taskNumberFemail,jdbcType=DECIMAL},
+      </if>
+      <if test="changeDate != null" >
+        #{changeDate,jdbcType=DATE},
+      </if>
+      <if test="orgName != null" >
+        #{orgName,jdbcType=VARCHAR},
+      </if>
+      <if test="organization != null" >
+        #{organization,jdbcType=VARCHAR},
+      </if>
+      <if test="taskNumberBaNew != null" >
+        #{taskNumberBaNew,jdbcType=DECIMAL},
+      </if>
+      <if test="taskNumberMaNew != null" >
+        #{taskNumberMaNew,jdbcType=DECIMAL},
+      </if>
+      <if test="taskNumberDoNew != null" >
+        #{taskNumberDoNew,jdbcType=DECIMAL},
+      </if>
+      <if test="taskNumberSumNew != null" >
+        #{taskNumberSumNew,jdbcType=DECIMAL},
+      </if>
+      <if test="taskNumberMailNew != null" >
+        #{taskNumberMailNew,jdbcType=DECIMAL},
+      </if>
+      <if test="taskNumberFemailNew != null" >
+        #{taskNumberFemailNew,jdbcType=DECIMAL},
+      </if>
+      <if test="bigCenter != null" >
+        #{bigCenter,jdbcType=VARCHAR},
+      </if>
+      <if test="smallCenter != null" >
+        #{smallCenter,jdbcType=VARCHAR},
+      </if>
+      <if test="department != null" >
+        #{department,jdbcType=VARCHAR},
+      </if>
+      <if test="branch != null" >
+        #{branch,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.csot.recruit.model.original.campus.CampusTaskHistoryCriteria" resultType="java.lang.Integer" >
+    select count(*) from T_CAMPUS_TASK_HISTORY
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update T_CAMPUS_TASK_HISTORY
+    <set >
+      <if test="record.id != null" >
+        ID = #{record.id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.siteId != null" >
+        SITE_ID = #{record.siteId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.siteName != null" >
+        SITE_NAME = #{record.siteName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.postId != null" >
+        POST_ID = #{record.postId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.postName != null" >
+        POST_NAME = #{record.postName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.taskNumberBa != null" >
+        TASK_NUMBER_BA = #{record.taskNumberBa,jdbcType=DECIMAL},
+      </if>
+      <if test="record.taskNumberMa != null" >
+        TASK_NUMBER_MA = #{record.taskNumberMa,jdbcType=DECIMAL},
+      </if>
+      <if test="record.taskNumberDo != null" >
+        TASK_NUMBER_DO = #{record.taskNumberDo,jdbcType=DECIMAL},
+      </if>
+      <if test="record.yearth != null" >
+        YEARTH = #{record.yearth,jdbcType=VARCHAR},
+      </if>
+      <if test="record.taskNumberSum != null" >
+        TASK_NUMBER_SUM = #{record.taskNumberSum,jdbcType=DECIMAL},
+      </if>
+      <if test="record.taskNumberMail != null" >
+        TASK_NUMBER_MAIL = #{record.taskNumberMail,jdbcType=DECIMAL},
+      </if>
+      <if test="record.taskNumberFemail != null" >
+        TASK_NUMBER_FEMAIL = #{record.taskNumberFemail,jdbcType=DECIMAL},
+      </if>
+      <if test="record.changeDate != null" >
+        CHANGE_DATE = #{record.changeDate,jdbcType=DATE},
+      </if>
+      <if test="record.orgName != null" >
+        ORG_NAME = #{record.orgName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.organization != null" >
+        ORGANIZATION = #{record.organization,jdbcType=VARCHAR},
+      </if>
+      <if test="record.taskNumberBaNew != null" >
+        TASK_NUMBER_BA_NEW = #{record.taskNumberBaNew,jdbcType=DECIMAL},
+      </if>
+      <if test="record.taskNumberMaNew != null" >
+        TASK_NUMBER_MA_NEW = #{record.taskNumberMaNew,jdbcType=DECIMAL},
+      </if>
+      <if test="record.taskNumberDoNew != null" >
+        TASK_NUMBER_DO_NEW = #{record.taskNumberDoNew,jdbcType=DECIMAL},
+      </if>
+      <if test="record.taskNumberSumNew != null" >
+        TASK_NUMBER_SUM_NEW = #{record.taskNumberSumNew,jdbcType=DECIMAL},
+      </if>
+      <if test="record.taskNumberMailNew != null" >
+        TASK_NUMBER_MAIL_NEW = #{record.taskNumberMailNew,jdbcType=DECIMAL},
+      </if>
+      <if test="record.taskNumberFemailNew != null" >
+        TASK_NUMBER_FEMAIL_NEW = #{record.taskNumberFemailNew,jdbcType=DECIMAL},
+      </if>
+      <if test="record.bigCenter != null" >
+        BIG_CENTER = #{record.bigCenter,jdbcType=VARCHAR},
+      </if>
+      <if test="record.smallCenter != null" >
+        SMALL_CENTER = #{record.smallCenter,jdbcType=VARCHAR},
+      </if>
+      <if test="record.department != null" >
+        DEPARTMENT = #{record.department,jdbcType=VARCHAR},
+      </if>
+      <if test="record.branch != null" >
+        BRANCH = #{record.branch,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update T_CAMPUS_TASK_HISTORY
+    set ID = #{record.id,jdbcType=VARCHAR},
+      SITE_ID = #{record.siteId,jdbcType=VARCHAR},
+      SITE_NAME = #{record.siteName,jdbcType=VARCHAR},
+      POST_ID = #{record.postId,jdbcType=VARCHAR},
+      POST_NAME = #{record.postName,jdbcType=VARCHAR},
+      TASK_NUMBER_BA = #{record.taskNumberBa,jdbcType=DECIMAL},
+      TASK_NUMBER_MA = #{record.taskNumberMa,jdbcType=DECIMAL},
+      TASK_NUMBER_DO = #{record.taskNumberDo,jdbcType=DECIMAL},
+      YEARTH = #{record.yearth,jdbcType=VARCHAR},
+      TASK_NUMBER_SUM = #{record.taskNumberSum,jdbcType=DECIMAL},
+      TASK_NUMBER_MAIL = #{record.taskNumberMail,jdbcType=DECIMAL},
+      TASK_NUMBER_FEMAIL = #{record.taskNumberFemail,jdbcType=DECIMAL},
+      CHANGE_DATE = #{record.changeDate,jdbcType=DATE},
+      ORG_NAME = #{record.orgName,jdbcType=VARCHAR},
+      ORGANIZATION = #{record.organization,jdbcType=VARCHAR},
+      TASK_NUMBER_BA_NEW = #{record.taskNumberBaNew,jdbcType=DECIMAL},
+      TASK_NUMBER_MA_NEW = #{record.taskNumberMaNew,jdbcType=DECIMAL},
+      TASK_NUMBER_DO_NEW = #{record.taskNumberDoNew,jdbcType=DECIMAL},
+      TASK_NUMBER_SUM_NEW = #{record.taskNumberSumNew,jdbcType=DECIMAL},
+      TASK_NUMBER_MAIL_NEW = #{record.taskNumberMailNew,jdbcType=DECIMAL},
+      TASK_NUMBER_FEMAIL_NEW = #{record.taskNumberFemailNew,jdbcType=DECIMAL},
+      BIG_CENTER = #{record.bigCenter,jdbcType=VARCHAR},
+      SMALL_CENTER = #{record.smallCenter,jdbcType=VARCHAR},
+      DEPARTMENT = #{record.department,jdbcType=VARCHAR},
+      BRANCH = #{record.branch,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.csot.recruit.model.original.campus.CampusTaskHistory" >
+    update T_CAMPUS_TASK_HISTORY
+    <set >
+      <if test="siteId != null" >
+        SITE_ID = #{siteId,jdbcType=VARCHAR},
+      </if>
+      <if test="siteName != null" >
+        SITE_NAME = #{siteName,jdbcType=VARCHAR},
+      </if>
+      <if test="postId != null" >
+        POST_ID = #{postId,jdbcType=VARCHAR},
+      </if>
+      <if test="postName != null" >
+        POST_NAME = #{postName,jdbcType=VARCHAR},
+      </if>
+      <if test="taskNumberBa != null" >
+        TASK_NUMBER_BA = #{taskNumberBa,jdbcType=DECIMAL},
+      </if>
+      <if test="taskNumberMa != null" >
+        TASK_NUMBER_MA = #{taskNumberMa,jdbcType=DECIMAL},
+      </if>
+      <if test="taskNumberDo != null" >
+        TASK_NUMBER_DO = #{taskNumberDo,jdbcType=DECIMAL},
+      </if>
+      <if test="yearth != null" >
+        YEARTH = #{yearth,jdbcType=VARCHAR},
+      </if>
+      <if test="taskNumberSum != null" >
+        TASK_NUMBER_SUM = #{taskNumberSum,jdbcType=DECIMAL},
+      </if>
+      <if test="taskNumberMail != null" >
+        TASK_NUMBER_MAIL = #{taskNumberMail,jdbcType=DECIMAL},
+      </if>
+      <if test="taskNumberFemail != null" >
+        TASK_NUMBER_FEMAIL = #{taskNumberFemail,jdbcType=DECIMAL},
+      </if>
+      <if test="changeDate != null" >
+        CHANGE_DATE = #{changeDate,jdbcType=DATE},
+      </if>
+      <if test="orgName != null" >
+        ORG_NAME = #{orgName,jdbcType=VARCHAR},
+      </if>
+      <if test="organization != null" >
+        ORGANIZATION = #{organization,jdbcType=VARCHAR},
+      </if>
+      <if test="taskNumberBaNew != null" >
+        TASK_NUMBER_BA_NEW = #{taskNumberBaNew,jdbcType=DECIMAL},
+      </if>
+      <if test="taskNumberMaNew != null" >
+        TASK_NUMBER_MA_NEW = #{taskNumberMaNew,jdbcType=DECIMAL},
+      </if>
+      <if test="taskNumberDoNew != null" >
+        TASK_NUMBER_DO_NEW = #{taskNumberDoNew,jdbcType=DECIMAL},
+      </if>
+      <if test="taskNumberSumNew != null" >
+        TASK_NUMBER_SUM_NEW = #{taskNumberSumNew,jdbcType=DECIMAL},
+      </if>
+      <if test="taskNumberMailNew != null" >
+        TASK_NUMBER_MAIL_NEW = #{taskNumberMailNew,jdbcType=DECIMAL},
+      </if>
+      <if test="taskNumberFemailNew != null" >
+        TASK_NUMBER_FEMAIL_NEW = #{taskNumberFemailNew,jdbcType=DECIMAL},
+      </if>
+      <if test="bigCenter != null" >
+        BIG_CENTER = #{bigCenter,jdbcType=VARCHAR},
+      </if>
+      <if test="smallCenter != null" >
+        SMALL_CENTER = #{smallCenter,jdbcType=VARCHAR},
+      </if>
+      <if test="department != null" >
+        DEPARTMENT = #{department,jdbcType=VARCHAR},
+      </if>
+      <if test="branch != null" >
+        BRANCH = #{branch,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.csot.recruit.model.original.campus.CampusTaskHistory" >
+    update T_CAMPUS_TASK_HISTORY
+    set SITE_ID = #{siteId,jdbcType=VARCHAR},
+      SITE_NAME = #{siteName,jdbcType=VARCHAR},
+      POST_ID = #{postId,jdbcType=VARCHAR},
+      POST_NAME = #{postName,jdbcType=VARCHAR},
+      TASK_NUMBER_BA = #{taskNumberBa,jdbcType=DECIMAL},
+      TASK_NUMBER_MA = #{taskNumberMa,jdbcType=DECIMAL},
+      TASK_NUMBER_DO = #{taskNumberDo,jdbcType=DECIMAL},
+      YEARTH = #{yearth,jdbcType=VARCHAR},
+      TASK_NUMBER_SUM = #{taskNumberSum,jdbcType=DECIMAL},
+      TASK_NUMBER_MAIL = #{taskNumberMail,jdbcType=DECIMAL},
+      TASK_NUMBER_FEMAIL = #{taskNumberFemail,jdbcType=DECIMAL},
+      CHANGE_DATE = #{changeDate,jdbcType=DATE},
+      ORG_NAME = #{orgName,jdbcType=VARCHAR},
+      ORGANIZATION = #{organization,jdbcType=VARCHAR},
+      TASK_NUMBER_BA_NEW = #{taskNumberBaNew,jdbcType=DECIMAL},
+      TASK_NUMBER_MA_NEW = #{taskNumberMaNew,jdbcType=DECIMAL},
+      TASK_NUMBER_DO_NEW = #{taskNumberDoNew,jdbcType=DECIMAL},
+      TASK_NUMBER_SUM_NEW = #{taskNumberSumNew,jdbcType=DECIMAL},
+      TASK_NUMBER_MAIL_NEW = #{taskNumberMailNew,jdbcType=DECIMAL},
+      TASK_NUMBER_FEMAIL_NEW = #{taskNumberFemailNew,jdbcType=DECIMAL},
+      BIG_CENTER = #{bigCenter,jdbcType=VARCHAR},
+      SMALL_CENTER = #{smallCenter,jdbcType=VARCHAR},
+      DEPARTMENT = #{department,jdbcType=VARCHAR},
+      BRANCH = #{branch,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <sql id="Oracle_Dialect_Pagination_Prefix" >
+    <if test="page != null" >
+      select * from ( select row_.*, rownum rownum_ from ( 
+    </if>
+  </sql>
+  <sql id="Oracle_Dialect_Pagination_Suffix" >
+    <if test="page != null" >
+      <![CDATA[ ) row_ ) where rownum_ > #{page.begin} and rownum_ <= #{page.end} ]]>
+    </if>
+  </sql>
+</mapper>

@@ -1,0 +1,40 @@
+
+.ac_results {
+    background-color: white;
+    border: 1px solid #cdcdcd;
+    overflow: hidden;
+    padding: 0;
+    text-align: left;
+    z-index: 99999;
+}
+.ac_results ul {
+    list-style: outside none none;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+}
+.ac_results li {
+    cursor: default;
+    display: block;
+    font: ;
+    font-size: 12px;
+    line-height: 28px;
+    margin: 0;
+    overflow: hidden;
+    padding: 0 5px;
+}
+.ac_results li span {
+    cursor: pointer;
+    display: block;
+    line-height: 20px;
+    width: 223px;
+}
+.ac_loading {
+    background: none repeat scroll 0 0 white;
+}
+.ac_odd {
+    background-color: #eee;
+}
+.ac_over {
+    background-color: #cddef2;
+}

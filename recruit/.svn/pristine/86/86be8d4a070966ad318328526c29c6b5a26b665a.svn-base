@@ -1,0 +1,212 @@
+package com.csot.recruit.controller.campus;
+
+import java.io.IOException;
+import java.io.OutputStream;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
+
+import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import jodd.servlet.URLDecoder;
+
+import org.amberframework.core.common.model.AjaxRtnJson;
+import org.amberframework.web.miniui.pojo.MiniGridPageSort;
+import org.amberframework.web.miniui.pojo.MiniRtn2Grid;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.dao.DataAccessException;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
+import org.springframework.web.servlet.ModelAndView;
+
+import com.csot.recruit.common.util.CampusUtils;
+import com.csot.recruit.dao.original.campus.CampusPostMapper;
+import com.csot.recruit.dao.original.campus.CampusSiteMapper;
+import com.csot.recruit.dao.original.campus.CampusStudentMapper;
+import com.csot.recruit.model.original.campus.CampusStudent;
+import com.csot.recruit.service.campus.CampusAddressbookService;
+import com.csot.recruit.service.campus.CampusStudentService;
+
+@Controller
+@RequestMapping("campusStudentController")
+public class CampusStudentController {
+  private static final Logger logger = LoggerFactory.getLogger(CampusStudentController.class);
+
+  @Resource
+  private CampusStudentService campusStudentService;
+
+  @Resource
+  private CampusAddressbookService campusAddressbookService;
+
+  @Resource
+  private CampusSiteMapper campusSiteMapper;
+
+  @Resource
+  private CampusPostMapper campusPostMapper;
+
+  @Resource
+  private CampusStudentMapper campusStudentMapper;
+
+  @RequestMapping("list")
+  public ModelAndView list() {
+    return new ModelAndView("com/csot/campus/campusStudentList");
+  }
+
+  @RequestMapping("datagrid")
+  @ResponseBody
+  public MiniRtn2Grid<CampusStudent>
+      datagrid(MiniGridPageSort pageSort, HttpServletRequest request) {
+    String siteId = request.getParameter("siteId");
+    String postId = request.getParameter("postId");
+    String stuName = request.getParameter("stuName");
+    String school = request.getParameter("school");
+    return campusStudentService.getGrid(pageSort, siteId, postId, stuName, school);
+  }
+
+  @RequestMapping("create")
+  public ModelAndView create(HttpServletRequest request) {
+    CampusStudent campusStudent = new CampusStudent();
+    campusStudent.setOffer("无");
+    campusStudent.setIdcardCopy("无");
+    campusStudent.setBreakOff("无");
+    campusStudent.setPhoto("无");
+    campusStudent.setCetTranscript("无");
+    campusStudent.setTranscript("无");
+    campusStudent.setTrilateral("无");
+    campusStudent.setReferenceForm("无");
+    request.setAttribute("campusStudent", campusStudent);
+    return new ModelAndView("com/csot/campus/campusStudentEdit");
+  }
+
+  @RequestMapping("modify/{id}")
+  public ModelAndView modify(@PathVariable String id, HttpServletRequest request) {
+    CampusStudent campusStudent = campusStudentService.getByPrimaryKey(id);
+    request.setAttribute("campusStudent", campusStudent);
+    return new ModelAndView("com/csot/campus/campusStudentEdit");
+  }
+
+  @RequestMapping("view/{id}")
+  public ModelAndView view(@PathVariable String id, HttpServletRequest request) {
+    CampusStudent campusStudent = campusStudentService.getByPrimaryKey(id);
+    request.setAttribute("campusStudent", campusStudent);
+    return new ModelAndView("com/csot/recruit/campus/campusStudentView");
+  }
+
+  @RequestMapping("remove/{id}")
+  @ResponseBody
+  public AjaxRtnJson remove(@PathVariable String id) {
+    try {
+      campusStudentService.remove(id);
+      return new AjaxRtnJson(true, "删除成功");
+    } catch (DataAccessException e) {
+      logger.error(e.getMessage(), e);
+      return new AjaxRtnJson(false, "删除失败: " + e.getMessage());
+    }
+  }
+
+  @RequestMapping("save")
+  @ResponseBody
+  public AjaxRtnJson save(CampusStudent campusStudent) {
+
+    campusStudent.setYearth(CampusUtils.getCurrentYearth());
+    //修改界面中的单选框的值如果没有选择有或者无，则设置相应的值为无
+    
+    // 若存在相同的身份证号，则更新
+    if (null != campusStudentMapper.selectByPrimaryKey(campusStudent.getId())) {
+      Date date = new Date();
+      campusStudent.setChangeTime(date);
+      try {
+        campusStudentService.updateSelective(campusStudent);
+        return new AjaxRtnJson(true, "修改成功");
+      } catch (DataAccessException e) {
+        logger.error(e.getMessage(), e);
+        return new AjaxRtnJson(false, "修改失败: " + e.getMessage());
+      }
+    } else {
+      try {
+        campusStudentService.create(campusStudent);
+        return new AjaxRtnJson(true, "新建成功");
+      } catch (DataAccessException e) {
+        logger.error(e.getMessage(), e);
+        return new AjaxRtnJson(false, "新建失败: " + e.getMessage());
+      }
+    }
+  }
+
+  @RequestMapping("importStudentInfo")
+  public ModelAndView importStudentInfo() {
+    return new ModelAndView("com/csot/campus/campusStudentImport");
+  }
+
+  @RequestMapping("importStudentInfoExcel")
+  @ResponseBody
+  public AjaxRtnJson importStudentInfoExcel(HttpServletRequest request) {
+
+    // 转型为MultipartHttpRequest：
+    MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
+    MultipartFile multipartFile = multipartRequest.getFile("myFile");
+    String basePath = request.getServletContext().getRealPath("/resources/upload");
+    try {
+      String message = campusStudentService.importStudentInfo(multipartFile, basePath);
+      System.out.println(message);
+      return new AjaxRtnJson(true, message);
+    } catch (Exception e) {
+      logger.error(e.getMessage());
+      return new AjaxRtnJson(false, e.getMessage());
+    }
+  }
+
+  /**
+   * 根据查询结果导出学生信息资料
+   * 
+   * @param request
+   * @param response
+   */
+  @RequestMapping("exportCampusStudentInfo")
+  @ResponseBody
+  public void exportCampusStudentInfo(MiniGridPageSort pageSort, HttpServletRequest request,
+      HttpServletResponse response) {
+
+    String siteId = request.getParameter("siteId");
+    String postId = request.getParameter("postId");
+    String stuName = request.getParameter("stuName");
+    String school = request.getParameter("school");
+    // 转码
+    siteId = URLDecoder.decode(siteId, "UTF-8");
+    postId = URLDecoder.decode(postId, "UTF-8");
+    stuName = URLDecoder.decode(stuName, "UTF-8");
+    school = URLDecoder.decode(school, "UTF-8");
+
+    List<CampusStudent> campusStuList = datagrid(pageSort, request).getData();
+    HSSFWorkbook wb = campusStudentService.exportCampusStuInfo(campusStuList);
+
+    SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd/HH:mm:ss");
+    String fileName = "学生资料信息" + formatter.format(new Date()) + ".xls";
+    OutputStream os;
+    try {
+      os = response.getOutputStream();
+      response.setContentType("APPLICATION/vnd.ms-excel");
+      response.setHeader("content-disposition",
+          "attachment;fileName=" + new String(fileName.getBytes("UTF-8"), "ISO8859-1"));
+
+      wb.write(os);
+      os.close();
+    } catch (IOException e) {
+      logger.error(e.getMessage(), e);
+    }
+  }
+  
+  @RequestMapping("showColumn")
+  public ModelAndView showColumn(){   
+    return new ModelAndView("com/csot/campus/campusStudentSelectForm");
+  }
+  
+}

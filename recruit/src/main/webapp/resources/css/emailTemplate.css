@@ -1,0 +1,8 @@
+.title{padding:10px;border-bottom:2px solid #888; font-size:1.4em;}
+.form-table{margin-top:20px;}
+.form-table .form-label{width:100px;text-align:right;padding-right:10px;vertical-align:top;}
+.form-table .mini-textbox{width:200px;}
+.form-table tr td{padding:6px 0;}
+.form-table #content{width:800px;height:200px;visibility:hidden;}
+.form-table .ke-container{margin-top:4px;border-radius: 5px;}
+.form-table .mini-button{width:100px;}

@@ -1,0 +1,286 @@
+package com.csot.recruit.controller.candidate;
+
+import com.csot.recruit.common.util.DataUtils;
+import com.csot.recruit.common.util.StringUtil;
+import com.csot.recruit.model.original.candidate.Candidate;
+import com.csot.recruit.model.original.candidate.CandidatePost;
+import com.csot.recruit.model.original.flow.interview.Estimate;
+import com.csot.recruit.model.original.log.OperateHistory;
+import com.csot.recruit.model.original.uniform.Job;
+import com.csot.recruit.model.resume.Resume;
+import com.csot.recruit.model.vo.ResumeApartVo;
+import com.csot.recruit.model.vo.ResumeVo;
+import com.csot.recruit.service.candidate.CandidateService;
+import com.csot.recruit.service.flow.interview.EstimateService;
+import com.csot.recruit.service.log.OperateHistoryService;
+import com.csot.recruit.service.resume.ResumeService;
+import com.csot.recruit.service.uniform.JobService;
+
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.UUID;
+
+import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.amberframework.core.bind.annotation.CurrentUser;
+import org.amberframework.core.common.model.AjaxRtnJson;
+import org.amberframework.web.miniui.pojo.MiniGridPageSort;
+import org.amberframework.web.miniui.pojo.MiniRtn2Grid;
+import org.amberframework.web.system.auth.model.original.user.SysUser;
+import org.amberframework.web.system.model.BaseUser;
+import org.amberframework.web.system.service.BaseUserService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.dao.DataAccessException;
+import org.springframework.stereotype.Controller;
+import org.springframework.util.StringUtils;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
+
+@Controller
+@RequestMapping("candidateController")
+public class CandidateController {
+    private static final Logger logger = LoggerFactory.getLogger(CandidateController.class);
+
+    @Resource
+    private CandidateService candidateService;
+    
+    @Resource
+    private OperateHistoryService operateHistoryService ;
+    
+    @Resource
+    private ResumeService resumeService ;
+    
+    @Resource
+    private JobService jobService ;
+    
+    @Resource
+    private EstimateService estimateService ;
+    
+    @Resource
+    private BaseUserService baseUserService ;
+
+    @RequestMapping("list")
+    public ModelAndView list() {
+        return new ModelAndView("com/csot/candidate/candidateList");
+    }
+
+    @RequestMapping("datagrid")
+    @ResponseBody
+    public MiniRtn2Grid<Candidate> datagrid(@CurrentUser SysUser sysuser, MiniGridPageSort page, HttpServletRequest request) {
+      String searchKey = request.getParameter("searchKey");
+      String state = request.getParameter("state");
+      if(StringUtil.isEmpty(page.getSortField())) {
+        page.setSortField("storageDate");
+        page.setSortOrder("desc");
+      }
+      Map<String, Object> map = new HashMap<String, Object>();
+      if(StringUtil.isNotEmpty(searchKey)){
+        map.put("searchKey", searchKey);
+      }
+      if(StringUtil.isNotEmpty(state)){
+        map.put("state", state);
+      }
+      map.put("workCode", sysuser.getWorkCode());
+      map.put("userId", sysuser.getId());
+      map.put("begin", page.getPageSize()*(page.getPageIndex()));
+      map.put("end", page.getPageSize()*(page.getPageIndex()+1));
+      map.put("sortField", page.getSortField());
+      map.put("sortOrder", page.getSortOrder());
+      
+       
+      return candidateService.getCandidateListGrid(map);
+    }
+
+    @RequestMapping("create")
+    public ModelAndView create() {
+        return new ModelAndView("com/csot/recruit/candidate/candidateEdit");
+    }
+
+    @RequestMapping("modify/{id}")
+    public ModelAndView modify(@PathVariable String id, HttpServletRequest request) {
+        Candidate candidate = candidateService.getByPrimaryKey(id);
+        request.setAttribute("candidate", candidate);
+        return new ModelAndView("com/csot/recruit/candidate/candidateEdit");
+    }
+
+    @RequestMapping("view/{id}")
+    public ModelAndView view(@PathVariable String id, HttpServletRequest request) {
+        Candidate candidate = candidateService.getByPrimaryKey(id);
+        request.setAttribute("candidate", candidate);
+        return new ModelAndView("com/csot/recruit/candidate/candidateView");
+    }
+
+    @RequestMapping("remove/{id}")
+    @ResponseBody
+    public AjaxRtnJson remove(@PathVariable String id) {
+        try {
+            candidateService.remove(id);
+            return new AjaxRtnJson(true, "删除成功");
+        } catch (DataAccessException e) {
+            logger.error(e.getMessage(), e);
+            return new AjaxRtnJson(false, "删除失败: " + e.getMessage());
+        }
+    }
+
+    @RequestMapping("save")
+    @ResponseBody
+    public AjaxRtnJson save(Candidate candidate) {
+        if (StringUtils.hasText(candidate.getId())) {
+            try {
+                candidateService.updateSelective(candidate);
+                return new AjaxRtnJson(true, "修改成功");
+            } catch (DataAccessException e) {
+                logger.error(e.getMessage(), e);
+                return new AjaxRtnJson(false, "修改失败: " + e.getMessage());
+            }
+        } else {
+            try {
+                candidate.setId(UUID.randomUUID().toString().replace("-", ""));
+                candidateService.create(candidate);
+                return new AjaxRtnJson(true, "新建成功");
+            } catch (DataAccessException e) {
+                logger.error(e.getMessage(), e);
+                return new AjaxRtnJson(false, "新建失败: " + e.getMessage());
+            }
+        }
+    }
+    
+    @RequestMapping("unlockCandidate")
+    @ResponseBody
+    public Map<String,Object> unlockCandidate(@CurrentUser SysUser sysUser,String ids){
+      Map<String,Object> map = new HashMap<String,Object>();
+      if(StringUtils.hasText(ids)){
+        candidateService.unlockCandidate(ids, sysUser.getId());
+        map.put("msg", "解锁成功");
+      }else{
+        map.put("msg", "候选人不能为空");
+      }
+      return map ;
+    }
+    
+    @RequestMapping("changePosition")
+    @ResponseBody
+    public Map<String,Object> changePosition(@CurrentUser SysUser sysUser, HttpServletResponse response,String candidateId,String applyPostId,String oldPositionId){
+      Map<String,Object> map = new HashMap<String,Object>();
+      Map<String,Object> param = null ;
+      if(StringUtils.hasText(candidateId)){
+        List<CandidatePost> list = new ArrayList<CandidatePost>();
+        list = candidateService.selectCandidatePostListByCandidateId(candidateId);
+        for(CandidatePost cp : list){
+          if(applyPostId.equals(cp.getPositionId())){
+            map.put("msg", "转向失败，该候选人已经在岗位需求内");
+            return map ;
+          }
+        }
+        param = new HashMap<String, Object>();
+        param.put("candidateId", candidateId);
+        param.put("positionId", oldPositionId);
+       CandidatePost candidatePost = new CandidatePost();  
+       candidatePost = candidateService.selectCandidatePostByMap(param);
+       candidatePost.setNowPositionId(applyPostId);
+       candidateService.updateCandidatePostSelective(candidatePost);
+       OperateHistory operateHistory = new OperateHistory();
+       
+       operateHistory.setId(UUID.randomUUID().toString().replace("-", ""));
+       operateHistory.setOperatorUser(sysUser.getId());
+       operateHistory.setOperatorType("候选人转向");
+       
+       Job job = jobService.selectByCode(oldPositionId);
+       Job job1 = jobService.selectByCode(applyPostId);
+       operateHistory.setOperatorContent(job.getcJobname()+"转向到"+job1.getcJobname());
+       operateHistory.setRelatedId(candidateId);
+       operateHistory.setOperatorTime(DataUtils.gettimestamp());
+       operateHistoryService.create(operateHistory);
+       
+       map.put("msg", "转向成功");
+       return map ;
+      }else{
+        map.put("msg", "转向失败，候选人不能为空");
+        return map ;
+      }
+    }
+    
+    /**
+     *  中文简历
+     * @return
+     */
+    @RequestMapping("getCandidateResume/{id}/{candidatePostId}")
+    public ModelAndView getCandidateResume(@PathVariable String id,@PathVariable String candidatePostId,HttpServletRequest request) {
+      Candidate candidate = candidateService.getByPrimaryKey(id);
+      CandidatePost candidatePost = candidateService.selectCandidatePostById(candidatePostId);
+      if(null != candidate){
+        ResumeVo rv = new ResumeVo(); 
+        
+        rv = resumeService.getResumeVo(candidate.getResumeId());
+        request.setAttribute("resumeVo", rv);
+        Job job = jobService.selectByCode(candidatePost.getPositionId());
+        rv.setJobName(job.getcJobname());
+        rv.setPositionId(candidatePost.getPositionId());
+        rv.setResumeId(candidate.getResumeId());
+        rv.setCandidateId(id);
+        rv.setLockUserAccount(candidate.getLockUserAccount());
+        rv.setCandidatePostId(id);
+        
+      }
+      List<ResumeApartVo>  list = new ArrayList<ResumeApartVo>();
+      list = resumeService.selectResumeListByCandidateId(id);
+      for(ResumeApartVo ra : list){
+        ra.setJobName(jobService.selectByCode(ra.getPositionId()).getcJobname());
+      }
+      request.setAttribute("list", list);
+      
+      List<OperateHistory> ohList = operateHistoryService.getOperateHistoryListByCandidateId(id);
+      BaseUser baseUser = null;
+      for(OperateHistory op : ohList){
+        baseUser = baseUserService.getBaseUserByPrimaryKey(op.getOperatorUser());
+        op.setOperatorUser(baseUser.getName());
+      }
+      request.setAttribute("ohList", ohList);
+      return new ModelAndView("com/csot/candidate/candidatePersonalResume");
+    }
+    
+    @RequestMapping("zh_resume/{id}")
+    public ModelAndView zh_resume(@PathVariable String id, HttpServletRequest request) {
+        Resume resume = resumeService.getZhResume(id, request);
+        request.setAttribute("resume", resume);
+        List<OperateHistory> list = operateHistoryService.getOperateHistoryListByCandidateId(id);
+        BaseUser baseUser = null;
+        for(OperateHistory op : list){
+          baseUser = baseUserService.getBaseUserByPrimaryKey(op.getOperatorUser());
+          op.setOperatorUser(baseUser.getName());
+        }
+        request.setAttribute("list", list);
+        return new ModelAndView("com/csot/candidate/zh_resume");
+    }
+    
+    @RequestMapping("estimate/{candidateId}/{positionId}")
+    public ModelAndView estimate(@PathVariable String candidateId , @PathVariable String positionId) {
+      Map<String,Object> param = new HashMap<String,Object>();
+      ModelAndView mv = new ModelAndView("com/csot/candidate/estimateEdit");
+      if(StringUtil.isNotEmpty(candidateId)){
+        param.put("candidateId", candidateId);
+      }
+      if(StringUtil.isNotEmpty(positionId)){
+        param.put("positionId", positionId);
+      }
+      
+      Estimate estimate = estimateService.selectByCandiateIdAndPositionId(param);
+      mv.addObject("estimate", estimate);
+      
+        return mv;
+    }
+    
+    @RequestMapping("opRecord/{id}")
+    public ModelAndView opRecord(@PathVariable String id, HttpServletRequest request) {
+      
+        return new ModelAndView("com/csot/candidate/opRecord");
+    }
+}

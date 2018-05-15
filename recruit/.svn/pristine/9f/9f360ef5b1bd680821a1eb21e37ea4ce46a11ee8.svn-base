@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<excelExport>
+       可配置元素：
+  <!-- 
+  showIndex  是否显示行序号  boolean类型，值为true或false；
+  indexColumnNum  行序号所在列号  如果showIndex为true，必须配置。值为数字，从0开始计算；
+  excelColumn  导出Excel的列配置，目前支持以下属性：
+          name  导出dateset对象的属性名称；
+          cellIndex  导出在Excel中的列位置，列号从0开始计算；
+          type  导出值类型，目前只有0；
+          sourceDateFormat（用于日期时间格式导出）  导出dateset对象属性的源日期格式
+          exportDateFormat（用于日期时间格式导出）  导出后需写入Excel中的目标日期格式
+   -->
+  <showIndex>false</showIndex>
+  <!--<indexColumnNum>0</indexColumnNum>-->
+  <excelColumn name="postName" cellIndex="0" type="0"></excelColumn>
+  <excelColumn name="recruitQuantity" cellIndex="1" type="0"></excelColumn>
+  <excelColumn name="reserved1" cellIndex="2" type="0"></excelColumn>
+  <excelColumn name="bigCenter" cellIndex="3" type="0"></excelColumn>
+  <excelColumn name="smallCenter" cellIndex="4" type="0"></excelColumn>
+  <excelColumn name="reserved2" cellIndex="5" type="0"></excelColumn>
+  <excelColumn name="jobClass" cellIndex="6" type="0"></excelColumn>
+  <excelColumn name="jobSubclass" cellIndex="7" type="0"></excelColumn>
+  <excelColumn name="educationAdvise" cellIndex="8" type="0"></excelColumn>
+  <excelColumn name="schoolAdvise" cellIndex="9" type="0"></excelColumn>
+  <excelColumn name="sexAdvise" cellIndex="10" type="0"></excelColumn>
+  <excelColumn name="otherDemand" cellIndex="11" type="0"></excelColumn>
+  <excelColumn name="preferredMajor" cellIndex="12" type="0"></excelColumn>
+  <excelColumn name="alternativeMajor" cellIndex="13" type="0"></excelColumn>
+  <excelColumn name="postDescribe" cellIndex="14" type="0"></excelColumn>
+  <excelColumn name="specialCondition" cellIndex="15" type="0"></excelColumn>
+</excelExport>

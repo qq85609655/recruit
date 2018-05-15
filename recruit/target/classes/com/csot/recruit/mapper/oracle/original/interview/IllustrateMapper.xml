@@ -1,0 +1,372 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.csot.recruit.dao.original.interview.IllustrateMapper" >
+  <resultMap id="BaseResultMap" type="com.csot.recruit.model.original.interview.Illustrate" >
+    <id column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="PERSON_CODE" property="personCode" jdbcType="VARCHAR" />
+    <result column="INFECTION_FLAG" property="infectionFlag" jdbcType="VARCHAR" />
+    <result column="INFECTION_TEXT" property="infectionText" jdbcType="VARCHAR" />
+    <result column="CRIMINAL_FLAG" property="criminalFlag" jdbcType="VARCHAR" />
+    <result column="CRIMINAL_TEXT" property="criminalText" jdbcType="VARCHAR" />
+    <result column="EMPLOY_FLAG" property="employFlag" jdbcType="VARCHAR" />
+    <result column="EMPLOY_TEXT" property="employText" jdbcType="VARCHAR" />
+    <result column="INVESTIGATE_FLAG" property="investigateFlag" jdbcType="VARCHAR" />
+    <result column="INVESTIGATE_TEXT" property="investigateText" jdbcType="VARCHAR" />
+    <result column="BAN_FLAG" property="banFlag" jdbcType="VARCHAR" />
+    <result column="BAN_STARTDATE" property="banStartdate" jdbcType="VARCHAR" />
+    <result column="BAN_ENDDATE" property="banEnddate" jdbcType="VARCHAR" />
+    <result column="PAYMENT" property="payment" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    ID, PERSON_CODE, INFECTION_FLAG, INFECTION_TEXT, CRIMINAL_FLAG, CRIMINAL_TEXT, EMPLOY_FLAG, 
+    EMPLOY_TEXT, INVESTIGATE_FLAG, INVESTIGATE_TEXT, BAN_FLAG, BAN_STARTDATE, BAN_ENDDATE, 
+    PAYMENT
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.csot.recruit.model.original.interview.IllustrateCriteria" >
+    <include refid="Oracle_Dialect_Pagination_Prefix" />
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from T_ILLUSTRATE
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <include refid="Oracle_Dialect_Pagination_Suffix" />
+  </select>
+  <select id="selectByPersonCode" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from T_ILLUSTRATE
+    where person_code = #{personCode,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from T_ILLUSTRATE
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from T_ILLUSTRATE
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.csot.recruit.model.original.interview.IllustrateCriteria" >
+    delete from T_ILLUSTRATE
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.csot.recruit.model.original.interview.Illustrate" >
+    insert into T_ILLUSTRATE (ID, PERSON_CODE, INFECTION_FLAG, 
+      INFECTION_TEXT, CRIMINAL_FLAG, CRIMINAL_TEXT, 
+      EMPLOY_FLAG, EMPLOY_TEXT, INVESTIGATE_FLAG, 
+      INVESTIGATE_TEXT, BAN_FLAG, BAN_STARTDATE, 
+      BAN_ENDDATE, PAYMENT)
+    values (#{id,jdbcType=VARCHAR}, #{personCode,jdbcType=VARCHAR}, #{infectionFlag,jdbcType=VARCHAR}, 
+      #{infectionText,jdbcType=VARCHAR}, #{criminalFlag,jdbcType=VARCHAR}, #{criminalText,jdbcType=VARCHAR}, 
+      #{employFlag,jdbcType=VARCHAR}, #{employText,jdbcType=VARCHAR}, #{investigateFlag,jdbcType=VARCHAR}, 
+      #{investigateText,jdbcType=VARCHAR}, #{banFlag,jdbcType=VARCHAR}, #{banStartdate,jdbcType=VARCHAR}, 
+      #{banEnddate,jdbcType=VARCHAR}, #{payment,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.csot.recruit.model.original.interview.Illustrate" >
+    insert into T_ILLUSTRATE
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="personCode != null" >
+        PERSON_CODE,
+      </if>
+      <if test="infectionFlag != null" >
+        INFECTION_FLAG,
+      </if>
+      <if test="infectionText != null" >
+        INFECTION_TEXT,
+      </if>
+      <if test="criminalFlag != null" >
+        CRIMINAL_FLAG,
+      </if>
+      <if test="criminalText != null" >
+        CRIMINAL_TEXT,
+      </if>
+      <if test="employFlag != null" >
+        EMPLOY_FLAG,
+      </if>
+      <if test="employText != null" >
+        EMPLOY_TEXT,
+      </if>
+      <if test="investigateFlag != null" >
+        INVESTIGATE_FLAG,
+      </if>
+      <if test="investigateText != null" >
+        INVESTIGATE_TEXT,
+      </if>
+      <if test="banFlag != null" >
+        BAN_FLAG,
+      </if>
+      <if test="banStartdate != null" >
+        BAN_STARTDATE,
+      </if>
+      <if test="banEnddate != null" >
+        BAN_ENDDATE,
+      </if>
+      <if test="payment != null" >
+        PAYMENT,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="personCode != null" >
+        #{personCode,jdbcType=VARCHAR},
+      </if>
+      <if test="infectionFlag != null" >
+        #{infectionFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="infectionText != null" >
+        #{infectionText,jdbcType=VARCHAR},
+      </if>
+      <if test="criminalFlag != null" >
+        #{criminalFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="criminalText != null" >
+        #{criminalText,jdbcType=VARCHAR},
+      </if>
+      <if test="employFlag != null" >
+        #{employFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="employText != null" >
+        #{employText,jdbcType=VARCHAR},
+      </if>
+      <if test="investigateFlag != null" >
+        #{investigateFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="investigateText != null" >
+        #{investigateText,jdbcType=VARCHAR},
+      </if>
+      <if test="banFlag != null" >
+        #{banFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="banStartdate != null" >
+        #{banStartdate,jdbcType=VARCHAR},
+      </if>
+      <if test="banEnddate != null" >
+        #{banEnddate,jdbcType=VARCHAR},
+      </if>
+      <if test="payment != null" >
+        #{payment,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.csot.recruit.model.original.interview.IllustrateCriteria" resultType="java.lang.Integer" >
+    select count(*) from T_ILLUSTRATE
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update T_ILLUSTRATE
+    <set >
+      <if test="record.id != null" >
+        ID = #{record.id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.personCode != null" >
+        PERSON_CODE = #{record.personCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.infectionFlag != null" >
+        INFECTION_FLAG = #{record.infectionFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="record.infectionText != null" >
+        INFECTION_TEXT = #{record.infectionText,jdbcType=VARCHAR},
+      </if>
+      <if test="record.criminalFlag != null" >
+        CRIMINAL_FLAG = #{record.criminalFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="record.criminalText != null" >
+        CRIMINAL_TEXT = #{record.criminalText,jdbcType=VARCHAR},
+      </if>
+      <if test="record.employFlag != null" >
+        EMPLOY_FLAG = #{record.employFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="record.employText != null" >
+        EMPLOY_TEXT = #{record.employText,jdbcType=VARCHAR},
+      </if>
+      <if test="record.investigateFlag != null" >
+        INVESTIGATE_FLAG = #{record.investigateFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="record.investigateText != null" >
+        INVESTIGATE_TEXT = #{record.investigateText,jdbcType=VARCHAR},
+      </if>
+      <if test="record.banFlag != null" >
+        BAN_FLAG = #{record.banFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="record.banStartdate != null" >
+        BAN_STARTDATE = #{record.banStartdate,jdbcType=VARCHAR},
+      </if>
+      <if test="record.banEnddate != null" >
+        BAN_ENDDATE = #{record.banEnddate,jdbcType=VARCHAR},
+      </if>
+      <if test="record.payment != null" >
+        PAYMENT = #{record.payment,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update T_ILLUSTRATE
+    set ID = #{record.id,jdbcType=VARCHAR},
+      PERSON_CODE = #{record.personCode,jdbcType=VARCHAR},
+      INFECTION_FLAG = #{record.infectionFlag,jdbcType=VARCHAR},
+      INFECTION_TEXT = #{record.infectionText,jdbcType=VARCHAR},
+      CRIMINAL_FLAG = #{record.criminalFlag,jdbcType=VARCHAR},
+      CRIMINAL_TEXT = #{record.criminalText,jdbcType=VARCHAR},
+      EMPLOY_FLAG = #{record.employFlag,jdbcType=VARCHAR},
+      EMPLOY_TEXT = #{record.employText,jdbcType=VARCHAR},
+      INVESTIGATE_FLAG = #{record.investigateFlag,jdbcType=VARCHAR},
+      INVESTIGATE_TEXT = #{record.investigateText,jdbcType=VARCHAR},
+      BAN_FLAG = #{record.banFlag,jdbcType=VARCHAR},
+      BAN_STARTDATE = #{record.banStartdate,jdbcType=VARCHAR},
+      BAN_ENDDATE = #{record.banEnddate,jdbcType=VARCHAR},
+      PAYMENT = #{record.payment,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.csot.recruit.model.original.interview.Illustrate" >
+    update T_ILLUSTRATE
+    <set >
+      <if test="personCode != null" >
+        PERSON_CODE = #{personCode,jdbcType=VARCHAR},
+      </if>
+      <if test="infectionFlag != null" >
+        INFECTION_FLAG = #{infectionFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="infectionText != null" >
+        INFECTION_TEXT = #{infectionText,jdbcType=VARCHAR},
+      </if>
+      <if test="criminalFlag != null" >
+        CRIMINAL_FLAG = #{criminalFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="criminalText != null" >
+        CRIMINAL_TEXT = #{criminalText,jdbcType=VARCHAR},
+      </if>
+      <if test="employFlag != null" >
+        EMPLOY_FLAG = #{employFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="employText != null" >
+        EMPLOY_TEXT = #{employText,jdbcType=VARCHAR},
+      </if>
+      <if test="investigateFlag != null" >
+        INVESTIGATE_FLAG = #{investigateFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="investigateText != null" >
+        INVESTIGATE_TEXT = #{investigateText,jdbcType=VARCHAR},
+      </if>
+      <if test="banFlag != null" >
+        BAN_FLAG = #{banFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="banStartdate != null" >
+        BAN_STARTDATE = #{banStartdate,jdbcType=VARCHAR},
+      </if>
+      <if test="banEnddate != null" >
+        BAN_ENDDATE = #{banEnddate,jdbcType=VARCHAR},
+      </if>
+      <if test="payment != null" >
+        PAYMENT = #{payment,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.csot.recruit.model.original.interview.Illustrate" >
+    update T_ILLUSTRATE
+    set PERSON_CODE = #{personCode,jdbcType=VARCHAR},
+      INFECTION_FLAG = #{infectionFlag,jdbcType=VARCHAR},
+      INFECTION_TEXT = #{infectionText,jdbcType=VARCHAR},
+      CRIMINAL_FLAG = #{criminalFlag,jdbcType=VARCHAR},
+      CRIMINAL_TEXT = #{criminalText,jdbcType=VARCHAR},
+      EMPLOY_FLAG = #{employFlag,jdbcType=VARCHAR},
+      EMPLOY_TEXT = #{employText,jdbcType=VARCHAR},
+      INVESTIGATE_FLAG = #{investigateFlag,jdbcType=VARCHAR},
+      INVESTIGATE_TEXT = #{investigateText,jdbcType=VARCHAR},
+      BAN_FLAG = #{banFlag,jdbcType=VARCHAR},
+      BAN_STARTDATE = #{banStartdate,jdbcType=VARCHAR},
+      BAN_ENDDATE = #{banEnddate,jdbcType=VARCHAR},
+      PAYMENT = #{payment,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <sql id="Oracle_Dialect_Pagination_Prefix" >
+    <if test="page != null" >
+      select * from ( select row_.*, rownum rownum_ from ( 
+    </if>
+  </sql>
+  <sql id="Oracle_Dialect_Pagination_Suffix" >
+    <if test="page != null" >
+      <![CDATA[ ) row_ ) where rownum_ > #{page.begin} and rownum_ <= #{page.end} ]]>
+    </if>
+  </sql>
+</mapper>

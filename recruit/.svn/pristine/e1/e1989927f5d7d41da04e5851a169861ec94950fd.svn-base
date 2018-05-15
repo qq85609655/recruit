@@ -1,0 +1,379 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.amberframework.web.system.dao.BaseUserMapper" >
+  <resultMap id="BaseResultMap" type="org.amberframework.web.system.model.BaseUser" >
+    <id column="ID" property="id" jdbcType="CHAR" />
+    <result column="ACCOUNT" property="account" jdbcType="VARCHAR" />
+    <result column="PASSWORD" property="password" jdbcType="VARCHAR" />
+    <result column="STATUS" property="status" jdbcType="CHAR" />
+    <result column="NAME" property="name" jdbcType="VARCHAR" />
+    <result column="TEL" property="tel" jdbcType="VARCHAR" />
+    <result column="CELLPHONE" property="cellphone" jdbcType="VARCHAR" />
+    <result column="ROLENAME" property="roleName"/>
+    <result column="deptName" property="deptName"/>
+    <result column="CREATETIME" property="createTime"/>
+    <result column="time" property="time"/>
+    <result column="EMAIL" property="email"/>
+    <result column="WORK_CODE" property="workCode"/>
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    ID, ACCOUNT, PASSWORD, STATUS, NAME, TEL, CELLPHONE, EMAIL
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="org.amberframework.web.system.model.BaseUserCriteria" >
+    <include refid="Oracle_Dialect_Pagination_Prefix" />
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from T_SYS_USER
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <include refid="Oracle_Dialect_Pagination_Suffix" />
+  </select>
+  
+  <select id="getUserInfoList" resultMap="BaseResultMap" parameterType="org.amberframework.web.system.model.BaseUserCriteria">
+    select * from (select A.*,rownum as ro from (
+      select su.id,su.ACCOUNT,su.PASSWORD,su.STATUS,SALT,su.name,su.TEL,su.CELLPHONE  ,TO_CHAR(su.CREATETIME, 'YYYY-MM-DD HH24:MI:SS ')as time,su.work_code,o.c_orgname  as deptName from t_sys_user su 
+      left join t_master_user mu on mu.c_code=su.work_code
+      left join t_organization o on mu.c_unitcode=o.c_orgcode
+    order by time desc 
+    )A where <![CDATA[ rownum<=#{page.end}]]>) where ro> #{page.begin}
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from T_SYS_USER
+    where ID = #{id,jdbcType=CHAR}
+  </select>
+  
+  <select id="validatePassowrd" resultType="java.lang.Integer">
+    select count(1) from T_SYS_USER where ID = #{0,jdbcType=CHAR} and PASSWORD = #{1,jdbcType=VARCHAR}
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from T_SYS_USER
+    where ID = #{id,jdbcType=CHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="org.amberframework.web.system.model.BaseUserCriteria" >
+    delete from T_SYS_USER
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="org.amberframework.web.system.model.BaseUser" >
+    insert into T_SYS_USER (ID, ACCOUNT, PASSWORD, STATUS, NAME, CREATETIME,TEL, CELLPHONE,EMAIL,WORK_CODE)
+    values (#{id,jdbcType=CHAR}, #{account,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
+      #{status,jdbcType=CHAR}, #{name,jdbcType=VARCHAR},#{createTime,jdbcType=TIMESTAMP}, #{tel,jdbcType=VARCHAR}, 
+      #{cellphone,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{workCode,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="org.amberframework.web.system.model.BaseUser" >
+    insert into T_SYS_USER
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="account != null" >
+        ACCOUNT,
+      </if>
+      <if test="password != null" >
+        PASSWORD,
+      </if>
+      <if test="status != null" >
+        STATUS,
+      </if>
+      <if test="name != null" >
+        NAME,
+      </if>
+      <if test="tel != null" >
+        TEL,
+      </if>
+      <if test="cellphone != null" >
+        CELLPHONE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=CHAR},
+      </if>
+      <if test="account != null" >
+        #{account,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null" >
+        #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=CHAR},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="tel != null" >
+        #{tel,jdbcType=VARCHAR},
+      </if>
+      <if test="cellphone != null" >
+        #{cellphone,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <insert id="insertUserOrg" parameterType="org.amberframework.web.system.model.BaseUser" >
+    <selectKey resultType="java.lang.Integer" keyProperty="userOrgId" order="BEFORE" >
+      select SEQ_SYS_USER_ORG_ID.NEXTVAL from dual
+    </selectKey>
+    insert into T_SYS_USER_ORG (ID, USER_ID, ORG_ID)
+    values (#{userOrgId,jdbcType=INTEGER}, #{id,jdbcType=CHAR}, #{depId,jdbcType=CHAR})
+  </insert>
+  <insert id="insertUserRole" parameterType="org.amberframework.web.system.model.BaseUser" >
+    <selectKey resultType="java.lang.Integer"  order="BEFORE" >
+      select SEQ_SYS_USER_ROLE_ID.NEXTVAL from dual
+    </selectKey>
+    insert into T_SYS_USER_ROLE (ID, USER_ID, ROLE_ID)
+    values (#{userRoleId,jdbcType=CHAR}, #{id,jdbcType=CHAR}, #{roleId,jdbcType=INTEGER})
+  </insert>
+  <select id="countByExample" parameterType="org.amberframework.web.system.model.BaseUserCriteria" resultType="java.lang.Integer" >
+    select count(1) from t_sys_user su left join t_sys_user_org uo on su.id = uo.user_id
+    left join t_org o on o.id=uo.org_id left join t_sys_user_role sur on su.id = sur.user_id left join t_sys_role sr on sur.role_id = sr.id
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <select id="selectAllRecruiter" resultMap="BaseResultMap"> 
+  	select buser.id, buser.account, buser.name from T_SYS_USER buser
+  	left join T_SYS_USER_ROLE user_role on (buser.id=user_role.user_id)
+  	left join T_SYS_ROLE role on (role.id=user_role.role_id)
+  	where role.role='recruiter' 
+  </select>
+  
+  <select id="getBaseUserInfoList" parameterType="java.util.Map" resultMap="BaseResultMap">
+   select * from (select A.*,rownum as ro from (
+     select su.id,su.ACCOUNT,su.PASSWORD,su.STATUS,SALT,su.name,su.TEL,su.CELLPHONE ,su.email ,TO_CHAR(su.CREATETIME, 'YYYY-MM-DD HH24:MI:SS ')as time,su.work_code,o.c_orgname  as deptName from t_sys_user su 
+     left join t_master_user mu on mu.c_code=su.work_code
+     left join t_organization o on mu.c_unitcode=o.c_orgcode
+   where 1=1
+    <if test="account !=null and account !=''">
+      and su.ACCOUNT like '%'|| #{account}|| '%'
+    </if>
+     <if test="name !=null and name !=''">
+      and su.name like '%'|| #{name}|| '%'
+    </if>
+    <if test="tel !=null and tel !=''">
+      and su.tel like '%'|| #{tel}|| '%'
+    </if>
+     <if test="depId !=null and depId !=''">
+      and trim(o.id) =#{depId}
+    </if>
+      <if test="roleId !=null and roleId !=''">
+      and sr.id =#{roleId}
+    </if>
+    order by time desc )A where <![CDATA[ rownum<=#{pageSize} * (#{pageIndex} + 1)]]>) where ro> #{pageSize} * #{pageIndex}
+   	 <if test="sortField != null and sortField != ''">
+    	    ,${sortField} ${sortOrder}
+     </if>
+  </select>
+  
+  <select id="countBaseUser" resultType="java.lang.Integer" parameterType="java.util.Map">
+   select count(1) from t_sys_user su left join t_sys_user_org uo on su.id = uo.user_id
+    left join t_org o on o.id=uo.org_id left join t_sys_user_role sur on su.id = sur.user_id left join t_sys_role sr on sur.role_id = sr.id where 1=1
+    <if test="account !=null and account !=''">
+      and su.ACCOUNT like '%'|| #{account}|| '%'
+    </if>
+     <if test="name !=null and name !=''">
+      and su.name like '%'|| #{name}|| '%'
+    </if>
+    <if test="tel !=null and tel !=''">
+      and su.tel like '%'|| #{tel}|| '%'
+    </if>
+     <if test="depId !=null and depId !=''">
+      and o.id =#{depId}
+    </if>
+      <if test="roleId !=null and roleId !=''">
+      and sr.id =#{roleId}
+    </if>
+  </select>
+  
+  <select id="getAllUser" resultMap="BaseResultMap">
+    select * from t_sys_user
+  </select>
+  
+  
+  <update id="updateByExampleSelective" parameterType="map" >
+    update T_SYS_USER
+    <set >
+      <if test="record.id != null" >
+        ID = #{record.id,jdbcType=CHAR},
+      </if>
+      <if test="record.account != null" >
+        ACCOUNT = #{record.account,jdbcType=VARCHAR},
+      </if>
+      <if test="record.password != null" >
+        PASSWORD = #{record.password,jdbcType=VARCHAR},
+      </if>
+      <if test="record.status != null" >
+        STATUS = #{record.status,jdbcType=CHAR},
+      </if>
+      <if test="record.name != null" >
+        NAME = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tel != null" >
+        TEL = #{record.tel,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cellphone != null" >
+        CELLPHONE = #{record.cellphone,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update T_SYS_USER
+    set ID = #{record.id,jdbcType=CHAR},
+      ACCOUNT = #{record.account,jdbcType=VARCHAR},
+      PASSWORD = #{record.password,jdbcType=VARCHAR},
+      STATUS = #{record.status,jdbcType=CHAR},
+      NAME = #{record.name,jdbcType=VARCHAR},
+      TEL = #{record.tel,jdbcType=VARCHAR},
+      CELLPHONE = #{record.cellphone,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="org.amberframework.web.system.model.BaseUser" >
+    update T_SYS_USER
+    <set >
+      <if test="account != null and account !=''" >
+        ACCOUNT = #{account,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null and password !=''" >
+        PASSWORD = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null and status !=''" >
+        STATUS = #{status,jdbcType=CHAR},
+      </if>
+      <if test="name != null and name !=''" >
+        NAME = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="tel != null and tel !=''" >
+        TEL = #{tel,jdbcType=VARCHAR},
+      </if>
+      <if test="cellphone != null and cellphone !=''" >
+        CELLPHONE = #{cellphone,jdbcType=VARCHAR},
+      </if>
+      <if test="workCode != null and workCode !=''" >
+        WORK_CODE = #{workCode,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null and email !=''" >
+        EMAIL = #{email,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=CHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="org.amberframework.web.system.model.BaseUser" >
+    update T_SYS_USER
+    set ACCOUNT = #{account,jdbcType=VARCHAR},
+      PASSWORD = #{password,jdbcType=VARCHAR},
+      STATUS = #{status,jdbcType=CHAR},
+      NAME = #{name,jdbcType=VARCHAR},
+      TEL = #{tel,jdbcType=VARCHAR},
+      CELLPHONE = #{cellphone,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=CHAR}
+  </update>
+  
+  <update id="setStatus" parameterType="java.lang.String">
+    update t_sys_user set STATUS='0' where id=#{id}
+  </update>
+  
+  <delete id="deleteBaseUserOrg" parameterType="java.lang.String">
+    delete from t_sys_user_org where user_id=#{id}
+  </delete>
+  
+  <delete id="deleteBaseUserRole" parameterType="java.lang.String">
+    delete from t_sys_user_role where user_id=#{id}
+  </delete>
+  
+  <delete id="deleteBaseUserById" parameterType="java.lang.String">
+    delete from t_sys_user where id = #{id}
+  </delete>
+  
+  <sql id="Oracle_Dialect_Pagination_Prefix" >
+    <if test="page != null" >
+      select * from ( select row_.*, rownum rownum_ from ( 
+    </if>
+  </sql>
+  <sql id="Oracle_Dialect_Pagination_Suffix" >
+    <if test="page != null" >
+      <![CDATA[ ) row_ ) where rownum_ > #{page.begin} and rownum_ <= #{page.end} ]]>
+    </if>
+  </sql>
+  
+  <select id="selectFromAccount" resultMap="BaseResultMap">
+    select t.c_name NAME,t.c_loginname ACCOUNT,t.c_code WORK_CODE,t.c_email EMAIL from t_account t
+  </select>
+  
+</mapper>

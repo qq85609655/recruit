@@ -1,0 +1,10 @@
+package com.csot.recruit.service.mail;
+
+import com.csot.recruit.model.template.Template;
+
+public interface MailSendService {
+  
+  void test();
+  
+  void sendEmail(String mailTo, Template template,Object object);
+}

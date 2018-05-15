@@ -1,0 +1,166 @@
+var sexStr = [ {
+  id : 1,
+  text : '女'
+}, {
+  id : 2,
+  text : '男'
+} ];
+
+// 日期格式渲染
+function onDateRenderer(e) {
+  var value = e.value;
+  if (value)
+    return new Date(value).format("yyyy-MM-dd hh:mm:ss");
+  return "";
+}
+
+// 模板类型渲染
+function onSexRenderer(e) {
+  for (var i = 0, l = sexStr.length; i < l; i++) {
+    var g = sexStr[i];
+    if (g.id == e.value)
+      return g.text;
+  }
+  return "";
+}
+
+function search() {
+  var siteId = mini.get("siteKey").getValue();
+  var postId = mini.get("postKey").getValue();
+  var stuName = mini.get("nameKey").getValue();
+  var school = mini.get("schoolKey").getValue();
+  var org = mini.get("orgKey").getValue();
+  var center = mini.get("centerKey").getValue();
+  var yearth = mini.get("yearthKey").getValue();
+
+  datagrid.load({
+    siteId : siteId,
+    postId : postId,
+    stuName : stuName,
+    school : school,
+    org : org,
+    center : center,
+    yearth : yearth
+  });
+}
+
+function onKeyEnter(e) {
+  search();
+}
+
+function create() {
+  OpenDialog("/recruit/campusStudentController/create/", "新建人员信息", datagrid, 780, 650);
+}
+
+function modify() {
+  var row = datagrid.getSelected();
+  if (row) {
+    OpenDialog("/recruit/campusStudentController/modify/" + row.id, "编辑人员信息", datagrid, 780, 650);
+  } else {
+    ShowWarnTip("请选择一条记录");
+  }
+}
+
+function removeStu() {
+  var data = datagrid.getSelected();
+  if (data) {
+    var id = data.id;
+    mini.confirm("确定删除记录？<br>", "删除", function(action) {
+      if (action == "ok") {
+        SaveData("/recruit/campusStudentController/remove/" + id, "", function(e) {
+          ShowActionTip(e);
+          datagrid.reload();
+        });
+      }
+    });
+  } else {
+    ShowWarnTip("请选择一条记录");
+  }
+}
+
+// 导入学生信息模板表
+function onImport() {
+  mini.open({
+    url : "/recruit/campusStudentController/importStudentInfo",
+    title : "导入学生信息模板表",
+    width : 400,
+    height : 110,
+    allowResize : false
+  });
+}
+
+// 导出学生详细信息
+function onExport() {
+
+  var siteId = mini.get("siteKey").getValue();
+  var postId = mini.get("postKey").getValue();
+  var stuName = mini.get("nameKey").getValue();
+  var school = mini.get("schoolKey").getValue();
+  var org = mini.get("orgKey").getValue();
+  var center = mini.get("centerKey").getValue();
+  var yearth = mini.get("yearthKey").getValue();
+  siteId = encodeURI(encodeURI(siteId)); // url传参非asc码必须先转码再传，否则会出现乱码
+  postId = encodeURI(encodeURI(postId));
+  stuName = encodeURI(encodeURI(stuName));
+  school = encodeURI(encodeURI(school));
+  org = encodeURI(encodeURI(org));
+  center = encodeURI(encodeURI(center));
+  yearth = encodeURI(encodeURI(yearth));
+
+  window.location.href = "/recruit/campusStudentController/exportCampusStudentInfo?siteId="
+      + siteId + "&postId=" + postId + "&stuName=" + stuName + "&school=" + school + "&org" + org
+      + "&center" + center + "&yearth" + yearth;
+}
+
+// 发送邮件
+function sendEmail() {
+  OpenDialog("/recruit/campusStudentController/sendEmail", "发送邮件", datagrid, 850, 550);
+}
+
+// 详情
+function isBreakOff() {
+
+  var row = datagrid.getSelected();
+  if (row) {
+    var id = row.id;
+    if ("无" == row.breakOff) {
+      OpenDialog("/recruit/campusStudentController/doSetBreakOffReason/" + id, "编辑违约原因",
+          datagrid, 380, 250);
+    } else {
+      ShowWarnTip("请选择违约情况为无的记录！");
+    }
+  } else {
+    ShowWarnTip("请选择违约情况为无的记录！");
+  }
+}
+
+// 设置显示的字段
+function showColumn() {
+
+  OpenDialog("/recruit/campusStudentController/showColumn", "设置显示字段", "", 480, 350,
+      function(action) {
+        if (action == "ok") {
+          var iframe = this.getIFrameEl();
+          var data = iframe.contentWindow.getData();
+          data = mini.clone(data);
+          var showData = [];
+          showData = data.split(",");
+          var dataColumn = [ "siteName", "workingPlace", "organization", "bigCenter",
+              "smallCenter", "department", "offices", "postName", "realname", "sex", "education",
+              "nativePlace", "school", "major", "phoneNo", "email", "evaluation", "moraleRisk",
+              "resultFirst", "resultSecond", "yearth", "breakOffReason", "breakOffTime" ];
+          if ("" == data || null == data) {
+            for (var j = 0; j < dataColumn.length; j++) {
+              datagrid.showColumn(dataColumn[j]);
+            }
+          } else {
+            for (var j = 0; j < dataColumn.length; j++) {
+              datagrid.hideColumn(dataColumn[j]);
+            }
+            for (var i = 0; i < showData.length; i++) {
+              datagrid.showColumn(showData[i]);
+            }
+          }
+        }
+      });
+}

@@ -1,0 +1,92 @@
+//工作经历form表单的生成
+/*function getexpForm(){
+	var d="<form method='post' id='editExperienceForm' >" +
+			"<input type='hidden' name='resumeId' value='-1582113222'>" +
+			  "<div class='expInfo bord'>" +
+			    "<table width='100%' border='0'>" +
+			      "<tbody>" +
+			        "<tr>" +
+			          " <td width='120' class='c999'><span class='red'>* </span> 公司名称：</td>" +
+			          " <td colspan='3'><input type='text' value='' name='Company' maxlength='100' id='Company' class='w222 fl input_txt'><span class='error' id='companyError'></span></td>" +
+			          "<td></td>" +
+			        "</tr>" +
+			        "<tr>" +
+			          "<td class='c999'> <span class='red'>* </span> 时间：</td>" +
+			          "<td  colspan='4' id='timeSelect'>" +
+			            "<input type='text' value='' class='mini-datepicker input_txt' name='StartDate' id='expStartDate' format='yyyy-MM-dd'>&nbsp;至" +
+			            "<input type='text' value='' class='mini-datepicker input_txt' name='EndDate' id='expEndDate' format='yyyy-MM-dd'>&nbsp;" +
+			            "<span class='red' id='expDateError'></span>" +
+			          "</td>" +
+			          "</tr>" +
+			          "<tr>" +
+			            "<td class='c999'> &nbsp;&nbsp;行业类别：</td>" +
+			            "<td><input type='button' title='选择/修改' value='选择/修改' id='industryBtn' class='choose_btn'><a style='display:none;' class='fltl rst' id='rstIndustry'>清除</a> </td>" +
+			          "</tr>" +
+			          "<tr>" +
+			            "<td width='80' class='c999'><span class='red'>* </span> 职位名称： </td>" +
+			            "<td> <input type='text' value='' name='RoleName' maxlength='100' id='RoleName' class='w150 input_txt'><span class='error' id='roleError'></span> </td>" +
+			            "<td> &nbsp;</td>" +
+			          "</tr>" +
+			          "<tr>" +
+			            "<td class='c999'>&nbsp;&nbsp;工作地点：</td>" +
+			            "<td><input type='button' value='选择/修改' title='选择/修改' id='locationBtn' class='choose_btn'></td>" +
+			          "</tr>" +
+			          "<tr>" +
+			            "<td class='c999'>&nbsp;&nbsp;公司性质：</td>" +
+			            "<td><select name='CompanyTypeId' id='CompanyTypeId'><option value=''>-选择-</option><option value='1'>外资(欧美)</option><option value='2'>外资(非欧美)</option><option value='3'>合资(欧美)</option><option value='4'>合资(非欧美)</option><option value='5'>国企/上市公司</option><option value='6'>民营/私营公司</option><option value='7'>外企代表处</option><option value='8'>其它性质</option></select></td>" +
+			            "<td>&nbsp;</td>" +
+			         "</tr>" +
+			         "<tr>" +
+			           "<td class='c999'>&nbsp;&nbsp;工作职责： </td>" +
+			           " <td colspan='4'><textarea rows='10' name='Responsibility' id='Responsibility' cols='10' class='desc'></textarea> <p class='c999'>工作职责长度不超过1000字</p><span class='error' id='descriptionError'></span></td>" +
+			         "</tr>" +
+			         "<tr>" +
+			           "<td colspan='5'><div class='imgM'><span id='plus' class='plus'>&nbsp;</span>更多信息</div>" +
+			             "<div id='moreInfo'>" +
+			             "<table border='0' width='50%'>" +
+			               "<tbody>" +
+			                 "<tr>" +
+			                   "<td width='120' class='c999'>汇报对象：</td>" +
+			                   "<td> <input type='text' value='' name='ReportObject' maxlength='50' id='ReportObject' class='fl input_txt'> </td>" +
+			                   "<td class='c999'>下属人数： </td>" +
+			                   "<td><input type='text' value='' name='Subordinate' maxlength='6' id='Subordinate' class='fl input_txt'><span class='error' id='subError'></span></td>" +
+			                 "</tr>" +
+			                 "<tr>" +
+			                   "<td class='c999'>职位薪水：</td>" +
+			                   "<td colspan='3'>" +
+			                     "<select name='CurrencyType' id='CurrencyType'><option value=''>-选择-</option><option value='1'>人民币</option><option value='2'>港币</option><option value='3'>美元</option><option value='4'>日元</option><option value='5'>欧元</option></select>" +
+			                     "<input type='text' value='' name='Salary' maxlength='8' id='Salary' class='fl ml10 input_txt'>" +
+			                     "<span class='error' id='salaryError'></span>" +
+			                   "</td>" +
+			                 "</tr>" +
+			                 "<tr>" +
+			                   "<td class='c999'>业绩描述：  </td>" +
+			                   "<td colspan='3'>" +
+			                     "<textarea rows='10' name='Achievement' id='Achievement' cols='10' class='desc'></textarea>" +
+			                     "<p class='c999'>业绩描述长度不超过1000字</p>" +
+			                       "<span class='error' id='achievementError'></span>" +
+			                   "</td>" +
+			                 "</tr>" +
+			               "</tbody>" +
+			             "</table>" +
+			           "</div>" +
+			         "</td>" +
+			       "</tr>" +
+			       "<tr style='height: 60;'>" +
+			         "<td></td>" +
+			         "<td class='pt10' colspan='4'>" +
+			         "<input type='button' class='submit_btn' value='保 存' id='editResumeExperienceSave'>&nbsp;" +
+			         "<input type='button' class='cancel_btn_pop' value='取 消' data-tip='WorkExperience'  id='editResumeExperienceCancel'></td>" +
+			       "</tr>" +
+			     "</tbody>" +
+			   "</table>" +
+			 "</div>" +
+		   "</form>";
+		   
+	return d;
+	
+	*/
+	
+	
+}*/
+

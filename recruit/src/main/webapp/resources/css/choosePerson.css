@@ -1,0 +1,76 @@
+.selPostBy-upper, .selPostBy-middle, .selPostBy-bottom, .selPostBy-footer {
+	margin-left:10px;
+}
+.selPostBy-upper-data{
+	background-color: #CDDEF2;
+	display: none;
+}
+.selPostBy-upper-data, .selPostBy-middle-data, .selPostBy-bottom-data, .selPostBy-footer-tool {
+	margin: 5px 0;
+	width: 97%;
+	height: 46px;
+}
+.selPostBy-footer-tool{
+	height: 30px;
+}
+.selPostBy-upper-content, .selPostBy-middle-content, .selPostBy-bottom-content {
+	width: 97%;
+	height: 20px;
+	border-bottom: 1px solid #CCCCCC;
+}
+.selPost-searchByNameOrAccount{
+	width: 206px;
+	height: 23px;
+	color: gray;
+}
+.selPostBy-departmentBtn{
+	width: 152px;
+	height: 23px;
+}
+.selPostBy-queryByDept{
+	width: 63px;
+	height: 23px;
+}
+.selPostBy-department-data{
+	width: 97%;
+	height:auto;
+  min-height:20px;
+	border-bottom: 1px solid #CCCCCC;
+}
+.selPostBy-background-data{
+	float: left;
+	height: 22px;
+	margin-left: 5px;
+}
+.selPostBy-background-data2{
+	float: left;
+}
+.selPostBy-department-data li{
+	cursor: pointer;
+  display: inline-block;
+  height: 25px;
+  width: 100px;
+  overflow: hidden;   
+}
+.selPostBy-footer{
+	clear:both;
+}
+.person-background{
+	background-color: #FFFDFE;
+}
+.person-img{
+	margin-top: 0px;
+	display: none;
+}
+.account-search {
+	height: 22px;
+	width: 228px;
+	border:1px solid #BABABA;
+	color: #d3d3d3;
+}
+.account-search.input-in {
+	color: #4d4d4d;
+}
+.no-data-tip {
+	color: #d3d3d3;
+}

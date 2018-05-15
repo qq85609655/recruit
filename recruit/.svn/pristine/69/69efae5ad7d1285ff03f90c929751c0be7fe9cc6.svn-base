@@ -1,0 +1,206 @@
+$(function() {
+    mini.parse();
+    
+    // 标签选择器初始化
+    TagPage.init({
+        resumeId: getResumeId(),
+        beforeClose: beforeTagPageClose
+    });
+});
+
+// resume tool 切换面板
+$(".resume-tool li.li-ul").click(function() {
+    if(!$(this).hasClass("current")) {
+      $(this).addClass("current");
+      $(this).siblings().removeClass("current");
+    }
+    $("#flag").val($(this).attr('id'));
+    addIframe($(this).attr('id'));
+  
+});
+
+//切换简历
+$(".resumelist").click(function() {
+    if(!$(this).hasClass("currentCol")) {
+      $(this).addClass("currentCol");
+      $(this).siblings().removeClass("currentCol");
+    }
+    //$("#jobName").html($(this).attr('name').split("_")[0]);
+    //$("#positionId").val($(this).attr('name').split("_")[1]);
+    addIframe($("#flag").val());
+});
+
+//添加标签
+$("#tagAdd").click(function() {
+    
+    TagPage.setSelect($(this)[0].data);
+    showAtPos('tagSelectWin','#tagAdd');
+});
+
+//删除标签
+$(document).delegate(".label-dele","click",function() {
+    var id = $(this).parent().attr("id");
+    var labelId = id.substring("label-".length,id.length);
+    var temp = $("#tagAdd")[0].data.split(",");
+    temp.removeV(labelId);
+    $("#tagAdd")[0].data = temp.join(",");
+    deleTag(getResumeId(),$("#tagAdd")[0].data,$(this).parent()[0].data);
+    $(this).parent().remove();
+}); 
+
+//获取简历id
+function getResumeId() {
+    var curl = window.location.href;
+    return curl.substring(curl.lastIndexOf("/")+1);
+}
+
+//标签选择器关闭前把页面中职位的标签更新
+function beforeTagPageClose() {
+    var append = null;
+    var labels = TagPage.getSelectTags();
+    $(".tags-tr .resume-label").remove();
+    for(var i = 0; i < labels.length; i++) {
+        append = $("<a class='resume-label' id='label-" + labels[i].id + "' pid='category-" + labels[i].categoryId + "'><span class='font-icon icon-tag'></span><span class='label-dele font-icon icon-cancel-1'></span><span>" + labels[i].name + "</span></a>");
+        $(append)[0].data = labels[i];
+        $("#tagAdd").before(append);
+    }
+    $("#tagAdd")[0].data = TagPage.getSelect();
+}
+
+//删除标签
+function deleTag(resumeId,resumeTags,tag) {
+    $.ajax({
+        url: basePath + "/resume/deleTag?resumeId=" + resumeId + "&resumeTags=" + resumeTags + "&tagId=" + tag.id,
+        dataType: "json",
+        typ: "post",
+        success: function(msg) {
+            if(!msg.success) {
+                alert("删除标签 " + tag.name + " 失败!");
+            }
+        },
+        error: function() {
+            alert("删除标签 " + tag.name + " 异常!");
+        }
+    });
+}
+
+function addIframe(flag){
+  if(flag=='zh_resume'){
+    var id = '';
+    $(".resumelist").each(function(){
+      if($(this).hasClass('currentCol')){
+        id += $(this).attr('id');
+      }
+    });
+    $("#resumeSource").attr('src',basePath+"/candidateController/"+flag+"/"+id);
+  }
+  if(flag=='estimate'){
+    $("#resumeSource").attr('src',basePath+"/candidateController/"+flag+"/"+$('#candidateId').val()+"/"+$('#positionId').val());
+  }
+  
+  if(flag=='opRecord'){
+    $("#resumeSource").attr('src',basePath+"/candidateController/"+flag+"/"+$('#candidateId').val());
+  }
+
+};
+
+function recommend(){
+      
+      if($("#lockUserAccount").val() == ''||($("#lockUserAccount").val() != null&&$("#lockUserAccount").val()==curName)){
+        $.ajax({
+          url : basePath + "/candidateRecommendController/validateCandidateRecommend",
+          type : "post",
+          data : {
+            candidatePostId:$("#candidatePostId").val()
+          },
+          dataType : 'json', //返回的数据格式：json/xml/html/script/jsonp/text
+          success : function(data) {
+             if(data.status == 200){
+               OpenDialog(basePath + "/candidateRecommendController/addRecommend?candidateId="+$("#candidateId").val()+"&candidatePostId="+$("#candidatePostId").val(), "推荐候选人", null, 600, 500,chooseDemand);
+             }else{
+               mini.alert(data.msg);
+             }
+          }
+        });
+       
+      }else{
+        mini.alert("未锁定或者锁定人是当前用户才能操作！");
+      }
+}
+
+function chooseDemand(action){
+  if(action!="close"){
+    mini.alert(action);
+  }
+}
+
+function bookInterview() {
+    if($("#lockUserAccount").val() == ''||($("#lockUserAccount").val() != null&&$("#lockUserAccount").val()==curName)){
+      window.open(basePath + "/interviewBookController/addInterviewBook?id=" + $("#candidatePostId").val());
+    }else{
+      mini.alert("未锁定或者锁定人是当前用户才能操作！");
+    }
+}
+
+function outbookInterview(){
+
+  var flag = true ;
+  if($("#lockUserAccount").val()!=''&&$("#lockUserAccount").val()!= curName){
+    flag = false ;
+  }
+  if(flag){
+    mini.prompt("请输入原因：", "请输入",
+        function (action, value) {
+            if (action == "ok") {
+              if(value.length){
+                outAjaxInterviewBook($("#candidatePostId").val(),$("#positionId").val(),value);
+              }else{
+                mini.alert("请填写原因!");
+              }
+            } 
+        },
+        true
+    );
+  }else{
+    mini.alert("未锁定或者锁定人是当前用户才能操作！");
+  }
+
+}
+
+function outAjaxInterviewBook(ids,positionIds,reason){
+  $.ajax({
+    url : basePath + "/interviewBookController/outInterviewBook?ids=" + ids +"&positionIds=" + positionIds + "&reason=" + reason,
+    type : "post",
+    success : function(data) {
+     var dataJson = eval('(' + data + ')');
+        mini.alert(dataJson.msg);
+    }
+  });
+}
+
+function changePositon(){
+    
+      if($("#lockUserAccount").val() == ''||($("#lockUserAccount").val() != null&&$("#lockUserAccount").val()==curName)){
+        OpenDialog(basePath + "/demand/chooseDemandList?candidateId="+$("#candidateId").val()+"&oldPositionId="+$("#positionId").val(), "选择需求", null, 650, 380,chooseDemand);
+      }else{
+        mini.alert("未锁定或者锁定人是当前用户才能操作！");
+      }
+   
+  
+}
+
+function attention(){
+  $.ajax({
+    url : basePath + "/attentionController/addAttention",
+    type : "post",
+    data : {
+      ids:$("#candidatePostId").val(),
+      positionIds:$("#positionId").val()
+    },
+    dataType : 'json', //返回的数据格式：json/xml/html/script/jsonp/text
+    success : function(data) {
+        mini.alert(data.msg);
+        datagrid.reload();
+    }
+  });
+}

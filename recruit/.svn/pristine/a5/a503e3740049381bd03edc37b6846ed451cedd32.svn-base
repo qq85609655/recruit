@@ -1,0 +1,49 @@
+#Database Connection
+
+db.connection.driver=oracle.jdbc.driver.OracleDriver
+db.connection.url=jdbc:oracle:thin:@10.108.230.22:1522:D1PISUPDB1
+#db.connection.url=jdbc:oracle:thin:@(DESCRIPTION = (failover = on) (ADDRESS = (PROTOCOL = TCP)(HOST = 10.108.4.191)(PORT = 1521))(ADDRESS = (PROTOCOL = TCP)(HOST = 10.108.4.193)(PORT = 1521))(LOAD_BALANCE = no)(CONNECT_DATA = (SERVER = DEDICATED)(SERVICE_NAME = p1intsrv2)(FAILOVER_MODE = (TYPE = SELECT)(METHOD = BASIC)(RETRIES = 10)(DELAY = 5))))
+db.connection.user=srmuat
+db.connection.password=pisrmuat
+
+#Proxool config
+proxool.alias=amberdb
+proxool.houseKeepingSleepTime=900000
+proxool.testBeforeUse=true
+proxool.prototypeCount=2
+proxool.maximumConnectionCount=20
+proxool.minimumConnectionCount=5
+proxool.simultaneousBuildThrottle=10
+proxool.houseKeepingTestSql=select 1 from dual
+proxool.verbose=true
+proxool.trace=true
+
+#mail send switch on/off
+mail.send.switch=on
+
+recruit.file.root.path=D:/recruit
+
+#Spring-Shiro config
+#LDAP config
+shiro.ldap.context.url=ldap://ldaptest.csot.tcl.com:1389
+shiro.ldap.context.systemUsername=uid=tongyiacltest,ou=Application,ou=People,o=csot.tcl.com,o=isp
+shiro.ldap.context.systemPassword=123456
+
+#CAS Server config
+shiro.cas.realm.casServerUrlPrefix=http://siamtest.csot.tcl.com
+shiro.cas.filter.casLoginUrl=http://siamtest.csot.tcl.com/login?service={0}/cas
+shiro.cas.filter.casRedirectUrl=http://siamtest.csot.tcl.com/logout?service={0}
+
+#CAS Web content address config
+shiro.cas.realm.defaultCasService=http://srmtest.csot.tcl.com:8080/srm/cas
+shiro.cas.filter.casServiceBasePath=http://srmtest.csot.tcl.com
+shiro.cas.realm.multiCasService={0}/cas
+
+#interviewers email template Id
+interviewers.email.templateId=a5b56db163a04f1ab823d1e17a449933
+
+#interviewers cancel email template Id
+interviewers.calcel.email.templateId=70d49425a1bc4071aca94f8fbcaa98f0
+
+#interviewers out email template Id
+interviewers.out.email.templateId=95e44513bd194639a5c0608b42aff535

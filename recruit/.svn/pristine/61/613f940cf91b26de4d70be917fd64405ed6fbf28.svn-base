@@ -1,0 +1,291 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.csot.recruit.dao.org.OrganazationMapper" >
+  <resultMap id="userResult" type="org.amberframework.web.system.model.BaseUser">
+  	<id column="ACCOUNT_ID" property="id" jdbcType="CHAR" />
+    <result column="ACCOUNT_ACCOUNT" property="account" jdbcType="VARCHAR" />
+    <result column="ACCOUNT_STATUS" property="status" jdbcType="CHAR" />
+    <result column="ACCOUNT_TEL" property="tel" jdbcType="VARCHAR" />
+    <result column="ACCOUNT_CELLPHONE" property="cellphone" jdbcType="VARCHAR" />
+    <result column="ACCOUNT_NAME" property="name" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  <resultMap id="BaseResultMap" type="com.csot.recruit.model.org.Organazation" >
+    <id column="ID" property="id" jdbcType="CHAR" />
+    <result column="ORG_NAME" property="orgName" jdbcType="CHAR" />
+    <result column="ORG_PARENT" property="orgParent" jdbcType="CHAR" />
+    <result column="LINKMAN" property="linkman" jdbcType="CHAR" />
+    <result column="TEL" property="tel" jdbcType="CHAR" />
+    <result column="EMAIL" property="email" jdbcType="VARCHAR" />
+    <result column="CREATOR" property="creator" jdbcType="CHAR" />
+    <result column="CREATETIME" property="createtime" jdbcType="TIMESTAMP" />
+  	<collection property="userList" javaType="ArrayList" ofType="org.amberframework.web.system.model.BaseUser" resultMap="userResult" />
+  </resultMap>
+  
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    ID, ORG_NAME, ORG_PARENT, LINKMAN, TEL, EMAIL, CREATOR, CREATETIME
+  </sql>
+  <sql id="Base_Column_List_Org" >
+  	org.ID, org.ORG_NAME
+  </sql>
+  <sql id="Base_Column_List_User" >
+    buser.ID as account_id, buser.ACCOUNT as account_account, buser.STATUS as account_status, buser.name as account_name, buser.TEL as account_tel, buser.CELLPHONE as account_cellphone
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.csot.recruit.model.org.OrganazationCriteria" >
+    <include refid="Oracle_Dialect_Pagination_Prefix" />
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from T_ORG
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <include refid="Oracle_Dialect_Pagination_Suffix" />
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from T_ORG
+    where ID = #{id,jdbcType=CHAR}
+  </select>
+  <select id="selectOrgAndUser" resultMap="BaseResultMap" parameterType="java.lang.String" >
+  	select 
+  	<include refid="Base_Column_List_Org" />,
+  	<include refid="Base_Column_List_User" />
+  	from T_ORG org
+  	left join T_SYS_USER_ORG user_org on(org.id=user_org.org_id )
+  	left join T_SYS_USER buser on(buser.id=user_org.user_id) where trim(org.id)=#{id,jdbcType=CHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from T_ORG
+    where ID = #{id,jdbcType=CHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.csot.recruit.model.org.OrganazationCriteria" >
+    delete from T_ORG
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.csot.recruit.model.org.Organazation" >
+    insert into T_ORG (ID, ORG_NAME, ORG_PARENT, 
+      LINKMAN, TEL, EMAIL, CREATOR, 
+      CREATETIME)
+    values (#{id,jdbcType=CHAR}, #{orgName,jdbcType=CHAR}, #{orgParent,jdbcType=CHAR}, 
+      #{linkman,jdbcType=CHAR}, #{tel,jdbcType=CHAR}, #{email,jdbcType=VARCHAR}, #{creator,jdbcType=CHAR}, 
+      #{createtime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.csot.recruit.model.org.Organazation" >
+    insert into T_ORG
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      ID,
+      <if test="orgName != null" >
+        ORG_NAME,
+      </if>
+      <if test="orgParent != null" >
+        ORG_PARENT,
+      </if>
+      <if test="linkman != null" >
+        LINKMAN,
+      </if>
+      <if test="tel != null" >
+        TEL,
+      </if>
+      <if test="email != null" >
+        EMAIL,
+      </if>
+      <if test="creator != null" >
+        CREATOR,
+      </if>
+      <if test="createtime != null" >
+        CREATETIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      #{id,jdbcType=CHAR},
+      <if test="orgName != null" >
+        #{orgName,jdbcType=CHAR},
+      </if>
+      <if test="orgParent != null" >
+        #{orgParent,jdbcType=CHAR},
+      </if>
+      <if test="linkman != null" >
+        #{linkman,jdbcType=CHAR},
+      </if>
+      <if test="tel != null" >
+        #{tel,jdbcType=CHAR},
+      </if>
+      <if test="email != null" >
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="creator != null" >
+        #{creator,jdbcType=CHAR},
+      </if>
+      <if test="createtime != null" >
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.csot.recruit.model.org.OrganazationCriteria" resultType="java.lang.Integer" >
+    select count(*) from T_ORG
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update T_ORG
+    <set >
+      <if test="record.id != null" >
+        ID = #{record.id,jdbcType=CHAR},
+      </if>
+      <if test="record.orgName != null" >
+        ORG_NAME = #{record.orgName,jdbcType=CHAR},
+      </if>
+      <if test="record.orgParent != null" >
+        ORG_PARENT = #{record.orgParent,jdbcType=CHAR},
+      </if>
+      <if test="record.linkman != null" >
+        LINKMAN = #{record.linkman,jdbcType=CHAR},
+      </if>
+      <if test="record.tel != null" >
+        TEL = #{record.tel,jdbcType=CHAR},
+      </if>
+      <if test="record.email != null" >
+        EMAIL = #{record.email,jdbcType=VARCHAR},
+      </if>
+      <if test="record.creator != null" >
+        CREATOR = #{record.creator,jdbcType=CHAR},
+      </if>
+      <if test="record.createtime != null" >
+        CREATETIME = #{record.createtime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update T_ORG
+    set ID = #{record.id,jdbcType=CHAR},
+      ORG_NAME = #{record.orgName,jdbcType=CHAR},
+      ORG_PARENT = #{record.orgParent,jdbcType=CHAR},
+      LINKMAN = #{record.linkman,jdbcType=CHAR},
+      TEL = #{record.tel,jdbcType=CHAR},
+      EMAIL = #{record.email,jdbcType=VARCHAR},
+      CREATOR = #{record.creator,jdbcType=CHAR},
+      CREATETIME = #{record.createtime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.csot.recruit.model.org.Organazation" >
+    update T_ORG
+    <set >
+      <if test="orgName != null" >
+        ORG_NAME = #{orgName,jdbcType=CHAR},
+      </if>
+      <if test="orgParent != null" >
+        ORG_PARENT = #{orgParent,jdbcType=CHAR},
+      </if>
+      <if test="linkman != null" >
+        LINKMAN = #{linkman,jdbcType=CHAR},
+      </if>
+      <if test="tel != null" >
+        TEL = #{tel,jdbcType=CHAR},
+      </if>
+      <if test="email != null" >
+        EMAIL = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="creator != null" >
+        CREATOR = #{creator,jdbcType=CHAR},
+      </if>
+      <if test="createtime != null" >
+        CREATETIME = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=CHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.csot.recruit.model.org.Organazation" >
+    update T_ORG
+    set ORG_NAME = #{orgName,jdbcType=CHAR},
+      ORG_PARENT = #{orgParent,jdbcType=CHAR},
+      LINKMAN = #{linkman,jdbcType=CHAR},
+      TEL = #{tel,jdbcType=CHAR},
+      EMAIL = #{email,jdbcType=VARCHAR},
+      CREATOR = #{creator,jdbcType=CHAR},
+      CREATETIME = #{createtime,jdbcType=TIMESTAMP}
+    where ID = #{id,jdbcType=CHAR}
+  </update>
+  <sql id="Oracle_Dialect_Pagination_Prefix" >
+    <if test="page != null" >
+      select * from ( select row_.*, rownum rownum_ from ( 
+    </if>
+  </sql>
+  <sql id="Oracle_Dialect_Pagination_Suffix" >
+    <if test="page != null" >
+      <![CDATA[ ) row_ ) where rownum_ > #{page.begin} and rownum_ <= #{page.end} ]]>
+    </if>
+  </sql>
+</mapper>

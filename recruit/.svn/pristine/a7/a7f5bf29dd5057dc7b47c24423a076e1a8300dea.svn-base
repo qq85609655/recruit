@@ -1,0 +1,175 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@include file="/webpage/common.jsp" %>
+<html>
+<head>
+  <title>站点查看</title>
+  <link rel="stylesheet" type="text/css" href="${webRoot}/resources/css/importResume.css"/>
+  <link rel="stylesheet" type="text/css" href="${webRoot }/resources/css/system/baseUserList.css"/>
+</head>
+<body onload="removeLoad();">
+<jsp:include page="/webpage/header.jsp"></jsp:include>
+<div class="co">
+  <div class="co-left">
+    <jsp:include page="/webpage/left-bar.jsp"></jsp:include>
+  </div>
+  <div class="co-right">
+    <div class="position-path co-right-center">
+      <span class="path-title">您的位置 :</span><a class="path-item a-decoration"
+                                               href="${webRoot}/loginController/main">我的首页</a><em class="path-icon">&gt;&gt;</em><a
+            class="path-item a-decoration">招聘支持</a><em class="path-icon">&gt;&gt;</em><span
+            class="path-leaf">校招看板</span>
+    </div>
+    <div class="co-right-main co-right-center">
+      <div class="con-title">站点查看</div>
+      <div class="main">
+        <div class="position-import-main blue radius">
+          <table class="position-import-tab1">
+            <tr>
+              <td>
+                <button class="posi-import-btn blue tab-up" id="site-button">
+                  <span>站点查看</span>
+                </button>
+                <button class="posi-import-btn blue " id="post-button">
+                  <span>岗位查看</span>
+                </button>
+              </td>
+            </tr>
+          </table>
+          <div class="account-content">
+            <div class="account-search">
+              <table class="tblQuery2">
+                <tbody>
+                <tr>
+                  <th>&nbsp;岗位：</th>
+                  <td><input class="mini-combobox" style="width: 90px;"
+                             textField="typeName" valueField="typeId" id="postId"
+                             url="/recruit/datadictGroupTypeController/getDictsByCode/pose_type" value=""
+                             showNullItem="true"
+                             allowInput="true" onitemclick="search()"/></td>
+                  <th>&nbsp;年份：</th>
+                  <td><input class="mini-combobox" style="width: 80px;" textField="yearth"
+                             id="yearth"
+                             valueField="yearth"
+                             url="/recruit/campusTaskController/datagrid4Yearth"
+                             showNullItem="false" allowInput="true" onitemclick="search()"/>
+                  </td>
+                  <th>&nbsp;&nbsp;&nbsp;&nbsp;</th>
+                  <td>
+                    <div id="organization" class="mini-radiobuttonlist" repeatLayout="table"
+                         repeatDirection="vertical"
+                         textField="typeName" valueField="typeId" onvaluechanged="search()"
+                         url="/recruit/datadictGroupTypeController/getDictsByCode/campus_company">
+                    </div>
+                  </td>
+                  <div style="float: right">
+                    <input type="submit" value="导出" tabindex="5"
+                           class="search_btn" id="btnExport" onclick="exportReport4SiteByTemplate()" name="btnExport">
+                  </div>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="blue radius">
+              <div id="datagrid1" class="mini-datagrid" style="height: 500px;"
+                   url="/recruit/campusReportController/datagrid4Site" idField="id"
+                   allowResize="false">
+                <div property="columns">
+                  <div type="checkcolumn"></div>
+                  <div field="siteName" width="100" allowSort="true">站点</div>
+                  <div header="任务" headerAlign="center">
+                    <div property="columns">
+                      <div field="taskBa" width="70">本科</div>
+                      <div field="taskMa" width="70">硕士</div>
+                      <div field="taskDo" width="70">博士</div>
+                      <div field="taskSum" width="70">合计</div>
+                    </div>
+                  </div>
+                  <div header="已发offer" headerAlign="center">
+                    <div property="columns">
+                      <div field="offerBa" width="70">本科</div>
+                      <div field="offerMa" width="70">硕士</div>
+                      <div field="offerDo" width="70">博士</div>
+                      <div field="offerSum" width="70">合计</div>
+                    </div>
+                  </div>
+                  <div header="三方" headerAlign="center">
+                    <div property="columns">
+                      <div field="trilateralBa" width="70">本科</div>
+                      <div field="trilateralMa" width="70">硕士</div>
+                      <div field="trilateralDo" width="70">博士</div>
+                      <div field="trilateralSum" width="70">合计</div>
+                    </div>
+                  </div>
+                  <div header="违约" headerAlign="center">
+                    <div property="columns">
+                      <div field="breakOffBa" width="70">本科</div>
+                      <div field="breakOffMa" width="70">硕士</div>
+                      <div field="breakOffDo" width="70">博士</div>
+                      <div field="breakOffSum" width="70">合计</div>
+                    </div>
+                  </div>
+                  <div header="拟入职" headerAlign="center">
+                    <div property="columns">
+                      <div field="proposedEntryBa" width="70">本科</div>
+                      <div field="proposedEntryMa" width="70">硕士</div>
+                      <div field="proposedEntryDo" width="70">博士</div>
+                      <div field="proposedEntrySum" width="70">合计</div>
+                    </div>
+                  </div>
+                  <div header="达成率" headerAlign="center">
+                    <div property="columns">
+                      <div field="achievementBa" width="70">本科</div>
+                      <div field="achievementMa" width="70">硕士</div>
+                      <div field="achievementDo" width="70">博士</div>
+                      <div field="achievementSum" width="70">合计</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<jsp:include page="/webpage/footer.jsp"></jsp:include>
+</body>
+
+<script type="text/javascript" src="${webRoot}/resources/js/jquery.form.js"></script>
+<script>
+    mini.parse();
+    $(this).toggleClass("button-out", false);
+    $(this).toggleClass("button-up", true);
+    $("#post-button").toggleClass("button-out", true);
+    // 站点查看页面
+    $("#site-button").live("click", function () {
+        window.location.href = '../campusReportController/list4Site';
+    });
+    // 岗位查看页面
+    $("#post-button").live("click", function () {
+        window.location.href = '../campusReportController/list4Post';
+    });
+
+    var datagrid = mini.get("datagrid1");
+    var yearth = mini.get("yearth");
+    var organization = mini.get("organization");
+    var postId = mini.get("postId");
+    yearth.select(0);
+    search();
+
+    function search() {
+        datagrid.load({
+            organizationId: organization.getValue(),
+            postId: postId.getValue(),
+            yearth: yearth.getValue()
+        });
+    }
+
+    function exportReport4SiteByTemplate() {
+        window.location.href = '../campusReportController/export4Site?postId=' + postId.getValue() + '&yearth=' + yearth.getValue() + '&organizationId=' + organization.getValue();
+    }
+
+</script>
+
+</html>

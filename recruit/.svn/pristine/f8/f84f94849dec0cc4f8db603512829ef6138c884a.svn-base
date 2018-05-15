@@ -1,0 +1,619 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.csot.recruit.dao.original.uniform.JobMapper" >
+  <resultMap id="BaseResultMap" type="com.csot.recruit.model.original.uniform.Job" >
+    <id column="ID" property="id" jdbcType="DECIMAL" />
+    <result column="C_JOBNAME" property="cJobname" jdbcType="VARCHAR" />
+    <result column="C_OLD_ORGCODE" property="cOldOrgcode" jdbcType="VARCHAR" />
+    <result column="C_ORGCODE" property="cOrgcode" jdbcType="VARCHAR" />
+    <result column="C_OLD_JOBCODE" property="cOldJobcode" jdbcType="VARCHAR" />
+    <result column="C_JOBCODE" property="cJobcode" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="JobOrgResultMap" type="com.csot.recruit.model.original.uniform.Job" >
+    <id column="ID" property="id" jdbcType="DECIMAL" />
+    <result column="C_JOBNAME" property="cJobname" jdbcType="VARCHAR" />
+    <result column="C_OLD_ORGCODE" property="cOldOrgcode" jdbcType="VARCHAR" />
+    <result column="C_ORGCODE" property="cOrgcode" jdbcType="VARCHAR" />
+    <result column="C_ORGNAME" property="cOrgname" jdbcType="VARCHAR" />
+    <result column="C_OLD_JOBCODE" property="cOldJobcode" jdbcType="VARCHAR" />
+    <result column="C_JOBCODE" property="cJobcode" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and j.${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and j.${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and j.${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and j.${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    ID, C_JOBNAME, C_OLD_ORGCODE, C_ORGCODE, C_OLD_JOBCODE, C_JOBCODE
+  </sql>
+  <select id="selectByExample" resultMap="JobOrgResultMap" parameterType="com.csot.recruit.model.original.uniform.JobCriteria" >
+    <include refid="Oracle_Dialect_Pagination_Prefix" />
+    select
+    j.ID, j.C_JOBNAME, j.C_OLD_ORGCODE, j.C_ORGCODE,o.C_ORGNAME, j.C_OLD_JOBCODE, j.C_JOBCODE
+    from T_JOB j left join t_organization o on j.C_ORGCODE=o.C_ORGCODE 
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <include refid="Oracle_Dialect_Pagination_Suffix" />
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.math.BigDecimal" >
+    select 
+    <include refid="Base_Column_List" />
+    from T_JOB
+    where ID = #{id,jdbcType=DECIMAL}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.math.BigDecimal" >
+    delete from T_JOB
+    where ID = #{id,jdbcType=DECIMAL}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.csot.recruit.model.original.uniform.JobCriteria" >
+    delete from T_JOB
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.csot.recruit.model.original.uniform.Job" >
+    insert into T_JOB (ID, C_JOBNAME, C_OLD_ORGCODE, 
+      C_ORGCODE, C_OLD_JOBCODE, C_JOBCODE, 
+      C_IS_RESPONSIBLE, C_AVAILABLE, C_SORT, 
+      C_KEY, C_REMARK, C_STATUS, 
+      JOBID, IS_TEMP_JOB, C_OPERATORTIME, 
+      FD_PRIMARY_KEY, FD_STATUS, FD_EXCUTE_TIME, 
+      FD_IS_UPDATED, FD_UPDATE_EMP_NO, FD_UPDATE_TIME, 
+      RESERVED_1, RESERVED_2, RESERVED_3, 
+      RESERVED_4, RESERVED_5, RESERVED_6, 
+      RESERVED_7, RESERVED_8, RESERVED_9, 
+      RESERVED_10)
+    values (#{id,jdbcType=DECIMAL}, #{cJobname,jdbcType=VARCHAR}, #{cOldOrgcode,jdbcType=VARCHAR}, 
+      #{cOrgcode,jdbcType=VARCHAR}, #{cOldJobcode,jdbcType=VARCHAR}, #{cJobcode,jdbcType=VARCHAR}, 
+      #{cIsResponsible,jdbcType=VARCHAR}, #{cAvailable,jdbcType=VARCHAR}, #{cSort,jdbcType=DECIMAL}, 
+      #{cKey,jdbcType=VARCHAR}, #{cRemark,jdbcType=VARCHAR}, #{cStatus,jdbcType=VARCHAR}, 
+      #{jobid,jdbcType=VARCHAR}, #{isTempJob,jdbcType=VARCHAR}, #{cOperatortime,jdbcType=DATE}, 
+      #{fdPrimaryKey,jdbcType=VARCHAR}, #{fdStatus,jdbcType=VARCHAR}, #{fdExcuteTime,jdbcType=DATE}, 
+      #{fdIsUpdated,jdbcType=VARCHAR}, #{fdUpdateEmpNo,jdbcType=VARCHAR}, #{fdUpdateTime,jdbcType=DATE}, 
+      #{reserved1,jdbcType=VARCHAR}, #{reserved2,jdbcType=VARCHAR}, #{reserved3,jdbcType=VARCHAR}, 
+      #{reserved4,jdbcType=VARCHAR}, #{reserved5,jdbcType=VARCHAR}, #{reserved6,jdbcType=VARCHAR}, 
+      #{reserved7,jdbcType=VARCHAR}, #{reserved8,jdbcType=VARCHAR}, #{reserved9,jdbcType=VARCHAR}, 
+      #{reserved10,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.csot.recruit.model.original.uniform.Job" >
+    insert into T_JOB
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="cJobname != null" >
+        C_JOBNAME,
+      </if>
+      <if test="cOldOrgcode != null" >
+        C_OLD_ORGCODE,
+      </if>
+      <if test="cOrgcode != null" >
+        C_ORGCODE,
+      </if>
+      <if test="cOldJobcode != null" >
+        C_OLD_JOBCODE,
+      </if>
+      <if test="cJobcode != null" >
+        C_JOBCODE,
+      </if>
+      <if test="cIsResponsible != null" >
+        C_IS_RESPONSIBLE,
+      </if>
+      <if test="cAvailable != null" >
+        C_AVAILABLE,
+      </if>
+      <if test="cSort != null" >
+        C_SORT,
+      </if>
+      <if test="cKey != null" >
+        C_KEY,
+      </if>
+      <if test="cRemark != null" >
+        C_REMARK,
+      </if>
+      <if test="cStatus != null" >
+        C_STATUS,
+      </if>
+      <if test="jobid != null" >
+        JOBID,
+      </if>
+      <if test="isTempJob != null" >
+        IS_TEMP_JOB,
+      </if>
+      <if test="cOperatortime != null" >
+        C_OPERATORTIME,
+      </if>
+      <if test="fdPrimaryKey != null" >
+        FD_PRIMARY_KEY,
+      </if>
+      <if test="fdStatus != null" >
+        FD_STATUS,
+      </if>
+      <if test="fdExcuteTime != null" >
+        FD_EXCUTE_TIME,
+      </if>
+      <if test="fdIsUpdated != null" >
+        FD_IS_UPDATED,
+      </if>
+      <if test="fdUpdateEmpNo != null" >
+        FD_UPDATE_EMP_NO,
+      </if>
+      <if test="fdUpdateTime != null" >
+        FD_UPDATE_TIME,
+      </if>
+      <if test="reserved1 != null" >
+        RESERVED_1,
+      </if>
+      <if test="reserved2 != null" >
+        RESERVED_2,
+      </if>
+      <if test="reserved3 != null" >
+        RESERVED_3,
+      </if>
+      <if test="reserved4 != null" >
+        RESERVED_4,
+      </if>
+      <if test="reserved5 != null" >
+        RESERVED_5,
+      </if>
+      <if test="reserved6 != null" >
+        RESERVED_6,
+      </if>
+      <if test="reserved7 != null" >
+        RESERVED_7,
+      </if>
+      <if test="reserved8 != null" >
+        RESERVED_8,
+      </if>
+      <if test="reserved9 != null" >
+        RESERVED_9,
+      </if>
+      <if test="reserved10 != null" >
+        RESERVED_10,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=DECIMAL},
+      </if>
+      <if test="cJobname != null" >
+        #{cJobname,jdbcType=VARCHAR},
+      </if>
+      <if test="cOldOrgcode != null" >
+        #{cOldOrgcode,jdbcType=VARCHAR},
+      </if>
+      <if test="cOrgcode != null" >
+        #{cOrgcode,jdbcType=VARCHAR},
+      </if>
+      <if test="cOldJobcode != null" >
+        #{cOldJobcode,jdbcType=VARCHAR},
+      </if>
+      <if test="cJobcode != null" >
+        #{cJobcode,jdbcType=VARCHAR},
+      </if>
+      <if test="cIsResponsible != null" >
+        #{cIsResponsible,jdbcType=VARCHAR},
+      </if>
+      <if test="cAvailable != null" >
+        #{cAvailable,jdbcType=VARCHAR},
+      </if>
+      <if test="cSort != null" >
+        #{cSort,jdbcType=DECIMAL},
+      </if>
+      <if test="cKey != null" >
+        #{cKey,jdbcType=VARCHAR},
+      </if>
+      <if test="cRemark != null" >
+        #{cRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="cStatus != null" >
+        #{cStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="jobid != null" >
+        #{jobid,jdbcType=VARCHAR},
+      </if>
+      <if test="isTempJob != null" >
+        #{isTempJob,jdbcType=VARCHAR},
+      </if>
+      <if test="cOperatortime != null" >
+        #{cOperatortime,jdbcType=DATE},
+      </if>
+      <if test="fdPrimaryKey != null" >
+        #{fdPrimaryKey,jdbcType=VARCHAR},
+      </if>
+      <if test="fdStatus != null" >
+        #{fdStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="fdExcuteTime != null" >
+        #{fdExcuteTime,jdbcType=DATE},
+      </if>
+      <if test="fdIsUpdated != null" >
+        #{fdIsUpdated,jdbcType=VARCHAR},
+      </if>
+      <if test="fdUpdateEmpNo != null" >
+        #{fdUpdateEmpNo,jdbcType=VARCHAR},
+      </if>
+      <if test="fdUpdateTime != null" >
+        #{fdUpdateTime,jdbcType=DATE},
+      </if>
+      <if test="reserved1 != null" >
+        #{reserved1,jdbcType=VARCHAR},
+      </if>
+      <if test="reserved2 != null" >
+        #{reserved2,jdbcType=VARCHAR},
+      </if>
+      <if test="reserved3 != null" >
+        #{reserved3,jdbcType=VARCHAR},
+      </if>
+      <if test="reserved4 != null" >
+        #{reserved4,jdbcType=VARCHAR},
+      </if>
+      <if test="reserved5 != null" >
+        #{reserved5,jdbcType=VARCHAR},
+      </if>
+      <if test="reserved6 != null" >
+        #{reserved6,jdbcType=VARCHAR},
+      </if>
+      <if test="reserved7 != null" >
+        #{reserved7,jdbcType=VARCHAR},
+      </if>
+      <if test="reserved8 != null" >
+        #{reserved8,jdbcType=VARCHAR},
+      </if>
+      <if test="reserved9 != null" >
+        #{reserved9,jdbcType=VARCHAR},
+      </if>
+      <if test="reserved10 != null" >
+        #{reserved10,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.csot.recruit.model.original.uniform.JobCriteria" resultType="java.lang.Integer" >
+    select count(*) from T_JOB j
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update T_JOB
+    <set >
+      <if test="record.id != null" >
+        ID = #{record.id,jdbcType=DECIMAL},
+      </if>
+      <if test="record.cJobname != null" >
+        C_JOBNAME = #{record.cJobname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cOldOrgcode != null" >
+        C_OLD_ORGCODE = #{record.cOldOrgcode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cOrgcode != null" >
+        C_ORGCODE = #{record.cOrgcode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cOldJobcode != null" >
+        C_OLD_JOBCODE = #{record.cOldJobcode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cJobcode != null" >
+        C_JOBCODE = #{record.cJobcode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cIsResponsible != null" >
+        C_IS_RESPONSIBLE = #{record.cIsResponsible,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cAvailable != null" >
+        C_AVAILABLE = #{record.cAvailable,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cSort != null" >
+        C_SORT = #{record.cSort,jdbcType=DECIMAL},
+      </if>
+      <if test="record.cKey != null" >
+        C_KEY = #{record.cKey,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cRemark != null" >
+        C_REMARK = #{record.cRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cStatus != null" >
+        C_STATUS = #{record.cStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="record.jobid != null" >
+        JOBID = #{record.jobid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isTempJob != null" >
+        IS_TEMP_JOB = #{record.isTempJob,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cOperatortime != null" >
+        C_OPERATORTIME = #{record.cOperatortime,jdbcType=DATE},
+      </if>
+      <if test="record.fdPrimaryKey != null" >
+        FD_PRIMARY_KEY = #{record.fdPrimaryKey,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fdStatus != null" >
+        FD_STATUS = #{record.fdStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fdExcuteTime != null" >
+        FD_EXCUTE_TIME = #{record.fdExcuteTime,jdbcType=DATE},
+      </if>
+      <if test="record.fdIsUpdated != null" >
+        FD_IS_UPDATED = #{record.fdIsUpdated,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fdUpdateEmpNo != null" >
+        FD_UPDATE_EMP_NO = #{record.fdUpdateEmpNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fdUpdateTime != null" >
+        FD_UPDATE_TIME = #{record.fdUpdateTime,jdbcType=DATE},
+      </if>
+      <if test="record.reserved1 != null" >
+        RESERVED_1 = #{record.reserved1,jdbcType=VARCHAR},
+      </if>
+      <if test="record.reserved2 != null" >
+        RESERVED_2 = #{record.reserved2,jdbcType=VARCHAR},
+      </if>
+      <if test="record.reserved3 != null" >
+        RESERVED_3 = #{record.reserved3,jdbcType=VARCHAR},
+      </if>
+      <if test="record.reserved4 != null" >
+        RESERVED_4 = #{record.reserved4,jdbcType=VARCHAR},
+      </if>
+      <if test="record.reserved5 != null" >
+        RESERVED_5 = #{record.reserved5,jdbcType=VARCHAR},
+      </if>
+      <if test="record.reserved6 != null" >
+        RESERVED_6 = #{record.reserved6,jdbcType=VARCHAR},
+      </if>
+      <if test="record.reserved7 != null" >
+        RESERVED_7 = #{record.reserved7,jdbcType=VARCHAR},
+      </if>
+      <if test="record.reserved8 != null" >
+        RESERVED_8 = #{record.reserved8,jdbcType=VARCHAR},
+      </if>
+      <if test="record.reserved9 != null" >
+        RESERVED_9 = #{record.reserved9,jdbcType=VARCHAR},
+      </if>
+      <if test="record.reserved10 != null" >
+        RESERVED_10 = #{record.reserved10,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update T_JOB
+    set ID = #{record.id,jdbcType=DECIMAL},
+      C_JOBNAME = #{record.cJobname,jdbcType=VARCHAR},
+      C_OLD_ORGCODE = #{record.cOldOrgcode,jdbcType=VARCHAR},
+      C_ORGCODE = #{record.cOrgcode,jdbcType=VARCHAR},
+      C_OLD_JOBCODE = #{record.cOldJobcode,jdbcType=VARCHAR},
+      C_JOBCODE = #{record.cJobcode,jdbcType=VARCHAR},
+      C_IS_RESPONSIBLE = #{record.cIsResponsible,jdbcType=VARCHAR},
+      C_AVAILABLE = #{record.cAvailable,jdbcType=VARCHAR},
+      C_SORT = #{record.cSort,jdbcType=DECIMAL},
+      C_KEY = #{record.cKey,jdbcType=VARCHAR},
+      C_REMARK = #{record.cRemark,jdbcType=VARCHAR},
+      C_STATUS = #{record.cStatus,jdbcType=VARCHAR},
+      JOBID = #{record.jobid,jdbcType=VARCHAR},
+      IS_TEMP_JOB = #{record.isTempJob,jdbcType=VARCHAR},
+      C_OPERATORTIME = #{record.cOperatortime,jdbcType=DATE},
+      FD_PRIMARY_KEY = #{record.fdPrimaryKey,jdbcType=VARCHAR},
+      FD_STATUS = #{record.fdStatus,jdbcType=VARCHAR},
+      FD_EXCUTE_TIME = #{record.fdExcuteTime,jdbcType=DATE},
+      FD_IS_UPDATED = #{record.fdIsUpdated,jdbcType=VARCHAR},
+      FD_UPDATE_EMP_NO = #{record.fdUpdateEmpNo,jdbcType=VARCHAR},
+      FD_UPDATE_TIME = #{record.fdUpdateTime,jdbcType=DATE},
+      RESERVED_1 = #{record.reserved1,jdbcType=VARCHAR},
+      RESERVED_2 = #{record.reserved2,jdbcType=VARCHAR},
+      RESERVED_3 = #{record.reserved3,jdbcType=VARCHAR},
+      RESERVED_4 = #{record.reserved4,jdbcType=VARCHAR},
+      RESERVED_5 = #{record.reserved5,jdbcType=VARCHAR},
+      RESERVED_6 = #{record.reserved6,jdbcType=VARCHAR},
+      RESERVED_7 = #{record.reserved7,jdbcType=VARCHAR},
+      RESERVED_8 = #{record.reserved8,jdbcType=VARCHAR},
+      RESERVED_9 = #{record.reserved9,jdbcType=VARCHAR},
+      RESERVED_10 = #{record.reserved10,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.csot.recruit.model.original.uniform.Job" >
+    update T_JOB
+    <set >
+      <if test="cJobname != null" >
+        C_JOBNAME = #{cJobname,jdbcType=VARCHAR},
+      </if>
+      <if test="cOldOrgcode != null" >
+        C_OLD_ORGCODE = #{cOldOrgcode,jdbcType=VARCHAR},
+      </if>
+      <if test="cOrgcode != null" >
+        C_ORGCODE = #{cOrgcode,jdbcType=VARCHAR},
+      </if>
+      <if test="cOldJobcode != null" >
+        C_OLD_JOBCODE = #{cOldJobcode,jdbcType=VARCHAR},
+      </if>
+      <if test="cJobcode != null" >
+        C_JOBCODE = #{cJobcode,jdbcType=VARCHAR},
+      </if>
+      <if test="cIsResponsible != null" >
+        C_IS_RESPONSIBLE = #{cIsResponsible,jdbcType=VARCHAR},
+      </if>
+      <if test="cAvailable != null" >
+        C_AVAILABLE = #{cAvailable,jdbcType=VARCHAR},
+      </if>
+      <if test="cSort != null" >
+        C_SORT = #{cSort,jdbcType=DECIMAL},
+      </if>
+      <if test="cKey != null" >
+        C_KEY = #{cKey,jdbcType=VARCHAR},
+      </if>
+      <if test="cRemark != null" >
+        C_REMARK = #{cRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="cStatus != null" >
+        C_STATUS = #{cStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="jobid != null" >
+        JOBID = #{jobid,jdbcType=VARCHAR},
+      </if>
+      <if test="isTempJob != null" >
+        IS_TEMP_JOB = #{isTempJob,jdbcType=VARCHAR},
+      </if>
+      <if test="cOperatortime != null" >
+        C_OPERATORTIME = #{cOperatortime,jdbcType=DATE},
+      </if>
+      <if test="fdPrimaryKey != null" >
+        FD_PRIMARY_KEY = #{fdPrimaryKey,jdbcType=VARCHAR},
+      </if>
+      <if test="fdStatus != null" >
+        FD_STATUS = #{fdStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="fdExcuteTime != null" >
+        FD_EXCUTE_TIME = #{fdExcuteTime,jdbcType=DATE},
+      </if>
+      <if test="fdIsUpdated != null" >
+        FD_IS_UPDATED = #{fdIsUpdated,jdbcType=VARCHAR},
+      </if>
+      <if test="fdUpdateEmpNo != null" >
+        FD_UPDATE_EMP_NO = #{fdUpdateEmpNo,jdbcType=VARCHAR},
+      </if>
+      <if test="fdUpdateTime != null" >
+        FD_UPDATE_TIME = #{fdUpdateTime,jdbcType=DATE},
+      </if>
+      <if test="reserved1 != null" >
+        RESERVED_1 = #{reserved1,jdbcType=VARCHAR},
+      </if>
+      <if test="reserved2 != null" >
+        RESERVED_2 = #{reserved2,jdbcType=VARCHAR},
+      </if>
+      <if test="reserved3 != null" >
+        RESERVED_3 = #{reserved3,jdbcType=VARCHAR},
+      </if>
+      <if test="reserved4 != null" >
+        RESERVED_4 = #{reserved4,jdbcType=VARCHAR},
+      </if>
+      <if test="reserved5 != null" >
+        RESERVED_5 = #{reserved5,jdbcType=VARCHAR},
+      </if>
+      <if test="reserved6 != null" >
+        RESERVED_6 = #{reserved6,jdbcType=VARCHAR},
+      </if>
+      <if test="reserved7 != null" >
+        RESERVED_7 = #{reserved7,jdbcType=VARCHAR},
+      </if>
+      <if test="reserved8 != null" >
+        RESERVED_8 = #{reserved8,jdbcType=VARCHAR},
+      </if>
+      <if test="reserved9 != null" >
+        RESERVED_9 = #{reserved9,jdbcType=VARCHAR},
+      </if>
+      <if test="reserved10 != null" >
+        RESERVED_10 = #{reserved10,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=DECIMAL}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.csot.recruit.model.original.uniform.Job" >
+    update T_JOB
+    set C_JOBNAME = #{cJobname,jdbcType=VARCHAR},
+      C_OLD_ORGCODE = #{cOldOrgcode,jdbcType=VARCHAR},
+      C_ORGCODE = #{cOrgcode,jdbcType=VARCHAR},
+      C_OLD_JOBCODE = #{cOldJobcode,jdbcType=VARCHAR},
+      C_JOBCODE = #{cJobcode,jdbcType=VARCHAR},
+      C_IS_RESPONSIBLE = #{cIsResponsible,jdbcType=VARCHAR},
+      C_AVAILABLE = #{cAvailable,jdbcType=VARCHAR},
+      C_SORT = #{cSort,jdbcType=DECIMAL},
+      C_KEY = #{cKey,jdbcType=VARCHAR},
+      C_REMARK = #{cRemark,jdbcType=VARCHAR},
+      C_STATUS = #{cStatus,jdbcType=VARCHAR},
+      JOBID = #{jobid,jdbcType=VARCHAR},
+      IS_TEMP_JOB = #{isTempJob,jdbcType=VARCHAR},
+      C_OPERATORTIME = #{cOperatortime,jdbcType=DATE},
+      FD_PRIMARY_KEY = #{fdPrimaryKey,jdbcType=VARCHAR},
+      FD_STATUS = #{fdStatus,jdbcType=VARCHAR},
+      FD_EXCUTE_TIME = #{fdExcuteTime,jdbcType=DATE},
+      FD_IS_UPDATED = #{fdIsUpdated,jdbcType=VARCHAR},
+      FD_UPDATE_EMP_NO = #{fdUpdateEmpNo,jdbcType=VARCHAR},
+      FD_UPDATE_TIME = #{fdUpdateTime,jdbcType=DATE},
+      RESERVED_1 = #{reserved1,jdbcType=VARCHAR},
+      RESERVED_2 = #{reserved2,jdbcType=VARCHAR},
+      RESERVED_3 = #{reserved3,jdbcType=VARCHAR},
+      RESERVED_4 = #{reserved4,jdbcType=VARCHAR},
+      RESERVED_5 = #{reserved5,jdbcType=VARCHAR},
+      RESERVED_6 = #{reserved6,jdbcType=VARCHAR},
+      RESERVED_7 = #{reserved7,jdbcType=VARCHAR},
+      RESERVED_8 = #{reserved8,jdbcType=VARCHAR},
+      RESERVED_9 = #{reserved9,jdbcType=VARCHAR},
+      RESERVED_10 = #{reserved10,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=DECIMAL}
+  </update>
+  <sql id="Oracle_Dialect_Pagination_Prefix" >
+    <if test="page != null" >
+      select * from ( select row_.*, rownum rownum_ from ( 
+    </if>
+  </sql>
+  <sql id="Oracle_Dialect_Pagination_Suffix" >
+    <if test="page != null" >
+      <![CDATA[ ) row_ ) where rownum_ > #{page.begin} and rownum_ <= #{page.end} ]]>
+    </if>
+  </sql>
+  
+  <select id="selectByCode" resultMap="BaseResultMap" parameterType="java.lang.String">
+   select 
+    <include refid="Base_Column_List" />
+    from T_JOB
+    where C_JOBCODE = #{cJobcode,jdbcType=VARCHAR} 
+  </select>
+</mapper>

@@ -1,0 +1,271 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.csot.recruit.dao.resume.TrainingMapper" >
+  <resultMap id="BaseResultMap" type="com.csot.recruit.model.nresume.Training" >
+    <id column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="ACHIEVEDCERTIFICATION" property="achievedCertification" jdbcType="VARCHAR" />
+    <result column="COURSE" property="course" jdbcType="VARCHAR" />
+    <result column="STARTINGDATE" property="startingDate" jdbcType="TIMESTAMP" />
+    <result column="ENDINGDATE" property="endingDate" jdbcType="TIMESTAMP" />
+    <result column="TRAININGLOCATION" property="trainingLocation" jdbcType="VARCHAR" />
+    <result column="TRAININGINSTITUTION" property="trainingInstitution" jdbcType="VARCHAR" />
+    <result column="RESUME_ID" property="resumeId" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    ID, ACHIEVEDCERTIFICATION, COURSE, STARTINGDATE, ENDINGDATE, TRAININGLOCATION, TRAININGINSTITUTION, 
+    RESUME_ID
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.csot.recruit.model.resume.TrainingCriteria" >
+    <include refid="Oracle_Dialect_Pagination_Prefix" />
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from T_RESUME_TRAINING
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <include refid="Oracle_Dialect_Pagination_Suffix" />
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from T_RESUME_TRAINING
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from T_RESUME_TRAINING
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.csot.recruit.model.resume.TrainingCriteria" >
+    delete from T_RESUME_TRAINING
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.csot.recruit.model.nresume.Training" >
+    insert into T_RESUME_TRAINING (ID, ACHIEVEDCERTIFICATION, COURSE, 
+      STARTINGDATE, ENDINGDATE, TRAININGLOCATION, 
+      TRAININGINSTITUTION, RESUME_ID)
+    values (#{id,jdbcType=VARCHAR}, #{achievedcertification,jdbcType=VARCHAR}, #{course,jdbcType=VARCHAR}, 
+      #{startingdate,jdbcType=TIMESTAMP}, #{endingdate,jdbcType=TIMESTAMP}, #{traininglocation,jdbcType=VARCHAR}, 
+      #{traininginstitution,jdbcType=VARCHAR}, #{resumeId,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.csot.recruit.model.nresume.Training" >
+    insert into T_RESUME_TRAINING
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="achievedcertification != null" >
+        ACHIEVEDCERTIFICATION,
+      </if>
+      <if test="course != null" >
+        COURSE,
+      </if>
+      <if test="startingdate != null" >
+        STARTINGDATE,
+      </if>
+      <if test="endingdate != null" >
+        ENDINGDATE,
+      </if>
+      <if test="traininglocation != null" >
+        TRAININGLOCATION,
+      </if>
+      <if test="traininginstitution != null" >
+        TRAININGINSTITUTION,
+      </if>
+      <if test="resumeId != null" >
+        RESUME_ID,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="achievedcertification != null" >
+        #{achievedcertification,jdbcType=VARCHAR},
+      </if>
+      <if test="course != null" >
+        #{course,jdbcType=VARCHAR},
+      </if>
+      <if test="startingdate != null" >
+        #{startingdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endingdate != null" >
+        #{endingdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="traininglocation != null" >
+        #{traininglocation,jdbcType=VARCHAR},
+      </if>
+      <if test="traininginstitution != null" >
+        #{traininginstitution,jdbcType=VARCHAR},
+      </if>
+      <if test="resumeId != null" >
+        #{resumeId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.csot.recruit.model.resume.TrainingCriteria" resultType="java.lang.Integer" >
+    select count(*) from T_RESUME_TRAINING
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update T_RESUME_TRAINING
+    <set >
+      <if test="record.id != null" >
+        ID = #{record.id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.achievedcertification != null" >
+        ACHIEVEDCERTIFICATION = #{record.achievedcertification,jdbcType=VARCHAR},
+      </if>
+      <if test="record.course != null" >
+        COURSE = #{record.course,jdbcType=VARCHAR},
+      </if>
+      <if test="record.startingdate != null" >
+        STARTINGDATE = #{record.startingdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.endingdate != null" >
+        ENDINGDATE = #{record.endingdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.traininglocation != null" >
+        TRAININGLOCATION = #{record.traininglocation,jdbcType=VARCHAR},
+      </if>
+      <if test="record.traininginstitution != null" >
+        TRAININGINSTITUTION = #{record.traininginstitution,jdbcType=VARCHAR},
+      </if>
+      <if test="record.resumeId != null" >
+        RESUME_ID = #{record.resumeId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update T_RESUME_TRAINING
+    set ID = #{record.id,jdbcType=VARCHAR},
+      ACHIEVEDCERTIFICATION = #{record.achievedcertification,jdbcType=VARCHAR},
+      COURSE = #{record.course,jdbcType=VARCHAR},
+      STARTINGDATE = #{record.startingdate,jdbcType=TIMESTAMP},
+      ENDINGDATE = #{record.endingdate,jdbcType=TIMESTAMP},
+      TRAININGLOCATION = #{record.traininglocation,jdbcType=VARCHAR},
+      TRAININGINSTITUTION = #{record.traininginstitution,jdbcType=VARCHAR},
+      RESUME_ID = #{record.resumeId,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.csot.recruit.model.nresume.Training" >
+    update T_RESUME_TRAINING
+    <set >
+      <if test="achievedcertification != null" >
+        ACHIEVEDCERTIFICATION = #{achievedcertification,jdbcType=VARCHAR},
+      </if>
+      <if test="course != null" >
+        COURSE = #{course,jdbcType=VARCHAR},
+      </if>
+      <if test="startingdate != null" >
+        STARTINGDATE = #{startingdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endingdate != null" >
+        ENDINGDATE = #{endingdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="traininglocation != null" >
+        TRAININGLOCATION = #{traininglocation,jdbcType=VARCHAR},
+      </if>
+      <if test="traininginstitution != null" >
+        TRAININGINSTITUTION = #{traininginstitution,jdbcType=VARCHAR},
+      </if>
+      <if test="resumeId != null" >
+        RESUME_ID = #{resumeId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.csot.recruit.model.nresume.Training" >
+    update T_RESUME_TRAINING
+    set ACHIEVEDCERTIFICATION = #{achievedcertification,jdbcType=VARCHAR},
+      COURSE = #{course,jdbcType=VARCHAR},
+      STARTINGDATE = #{startingdate,jdbcType=TIMESTAMP},
+      ENDINGDATE = #{endingdate,jdbcType=TIMESTAMP},
+      TRAININGLOCATION = #{traininglocation,jdbcType=VARCHAR},
+      TRAININGINSTITUTION = #{traininginstitution,jdbcType=VARCHAR},
+      RESUME_ID = #{resumeId,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <sql id="Oracle_Dialect_Pagination_Prefix" >
+    <if test="page != null" >
+      select * from ( select row_.*, rownum rownum_ from ( 
+    </if>
+  </sql>
+  <sql id="Oracle_Dialect_Pagination_Suffix" >
+    <if test="page != null" >
+      <![CDATA[ ) row_ ) where rownum_ > #{page.begin} and rownum_ <= #{page.end} ]]>
+    </if>
+  </sql>
+</mapper>

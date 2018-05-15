@@ -1,0 +1,7 @@
+package com.csot.recruit.common.constant;
+
+public class Constant {
+  
+  /** 路径分隔符  */
+  public static String separator = "/";
+}

@@ -1,0 +1,307 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.csot.recruit.dao.datadict.DatadictGroupTypeMapper" >
+  <resultMap id="BaseResultMap" type="com.csot.recruit.model.datadict.DatadictGroupType" >
+    <id column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="TYPE_ID" property="typeId" jdbcType="VARCHAR" />
+    <result column="TYPE_CODE" property="typeCode" jdbcType="VARCHAR" />
+    <result column="TYPE_NAME" property="typeName" jdbcType="VARCHAR" />
+    <result column="TYPE_PID" property="typePid" jdbcType="VARCHAR" />
+    <result column="GROUP_ID" property="groupId" jdbcType="VARCHAR" />
+  	<result column="TYPE_COMMEND" property="typeComment" jdbcType="VARCHAR" />
+  </resultMap>
+  <!-- 判断已有多少个一级配置项 -->
+  <select id="countGroupId" resultType="java.lang.Integer">
+  	select count(GROUP_ID) from t_datadict_group 
+  </select>
+  <!-- 查询该一级配置项下已有多少个二级配置项 -->
+  <select id="queryGroupTypeListByGroupId" parameterType="java.lang.String" resultType="com.csot.recruit.model.datadict.DatadictGroupType">
+  	select TYPE_ID as typeId from t_datadict_group_type where trim(GROUP_ID) = #{groupId}
+  </select>
+  <!-- 查询该一级配置项下已有二级配置项 的最大的类型编码（TYPE_CODE）-->
+  <select id="queryTypeCodeByGroupId" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select * from t_datadict_group_type where trim(GROUP_ID) = #{groupId} and type_code = (select  max(to_number(type_code)) from t_datadict_group_type where trim(GROUP_ID) = #{groupId})
+  </select>
+  
+  <!-- 判断该配置是否存在 -->
+  <select id="countDatadictGroupType" parameterType="com.csot.recruit.model.datadict.DatadictGroupType" resultType="java.lang.Integer" >
+    select count(*) from T_DATADICT_GROUP_TYPE
+    <where>
+      1=1
+      <if test="typeId != null and typeId != '' " >
+      		and trim(TYPE_ID) != #{typeId}
+   	  </if>
+      <if test="groupId != null and groupId != '' " >
+      		and trim(GROUP_ID) = #{groupId}
+   	  </if>
+      <if test="typeName != null and typeName != ''">
+      		and trim(TYPE_NAME) = #{typeName}
+   	  </if>
+    </where>
+  </select>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    ID, TYPE_ID, TYPE_CODE, TYPE_NAME, TYPE_PID, GROUP_ID, TYPE_COMMEND
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.csot.recruit.model.datadict.DatadictGroupTypeCriteria" >
+    <include refid="Oracle_Dialect_Pagination_Prefix" />
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from T_DATADICT_GROUP_TYPE
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <include refid="Oracle_Dialect_Pagination_Suffix" />
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from T_DATADICT_GROUP_TYPE
+    where TYPE_ID = #{typeId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from T_DATADICT_GROUP_TYPE
+    where trim(TYPE_ID) = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.csot.recruit.model.datadict.DatadictGroupTypeCriteria" >
+    delete from T_DATADICT_GROUP_TYPE
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.csot.recruit.model.datadict.DatadictGroupType" >
+    insert into T_DATADICT_GROUP_TYPE (ID, TYPE_ID, TYPE_CODE, TYPE_NAME, 
+      TYPE_PID, GROUP_ID,TYPE_COMMEND)
+    values (#{id,jdbcType=VARCHAR},#{typeId,jdbcType=VARCHAR}, #{typeCode,jdbcType=VARCHAR}, #{typeName,jdbcType=VARCHAR}, 
+      #{typePid,jdbcType=VARCHAR}, #{groupId,jdbcType=VARCHAR}, #{typeComment,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.csot.recruit.model.datadict.DatadictGroupType" >
+    insert into T_DATADICT_GROUP_TYPE
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="typeId != null" >
+        TYPE_ID,
+      </if>
+      <if test="typeCode != null" >
+        TYPE_CODE,
+      </if>
+      <if test="typeName != null" >
+        TYPE_NAME,
+      </if>
+      <if test="typePid != null" >
+        TYPE_PID,
+      </if>
+      <if test="groupId != null" >
+        GROUP_ID,
+      </if>
+      <if test="typeComment != null" >
+        TYPE_COMMEND,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="typeId != null" >
+        #{typeId,jdbcType=VARCHAR},
+      </if>
+      <if test="typeCode != null" >
+        #{typeCode,jdbcType=VARCHAR},
+      </if>
+      <if test="typeName != null" >
+        #{typeName,jdbcType=VARCHAR},
+      </if>
+      <if test="typePid != null" >
+        #{typePid,jdbcType=VARCHAR},
+      </if>
+      <if test="groupId != null" >
+        #{groupId,jdbcType=VARCHAR},
+      </if>
+       <if test="typeComment != null" >
+        #{typeComment,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.csot.recruit.model.datadict.DatadictGroupTypeCriteria" resultType="java.lang.Integer" >
+    select count(*) from T_DATADICT_GROUP_TYPE
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <select id="getDatadictGroupTypeByGroupId" resultMap="BaseResultMap" parameterType="java.lang.String">
+    select * from T_DATADICT_GROUP_TYPE where GROUP_ID = #{groupId}
+  </select>
+  
+  <update id="updateByExampleSelective" parameterType="map" >
+    update T_DATADICT_GROUP_TYPE
+    <set >
+      <if test="record.id != null" >
+        ID = #{record.id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.typeId != null" >
+        TYPE_ID = #{record.typeId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.typeCode != null" >
+        TYPE_CODE = #{record.typeCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.typeName != null" >
+        TYPE_NAME = #{record.typeName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.typePid != null" >
+        TYPE_PID = #{record.typePid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.groupId != null" >
+        GROUP_ID = #{record.groupId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update T_DATADICT_GROUP_TYPE
+    set ID = #{record.id,jdbcType=VARCHAR},
+      TYPE_ID = #{record.typeId,jdbcType=VARCHAR},
+      TYPE_CODE = #{record.typeCode,jdbcType=VARCHAR},
+      TYPE_NAME = #{record.typeName,jdbcType=VARCHAR},
+      TYPE_PID = #{record.typePid,jdbcType=VARCHAR},
+      GROUP_ID = #{record.groupId,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.csot.recruit.model.datadict.DatadictGroupType" >
+    update T_DATADICT_GROUP_TYPE
+    <set >
+      <if test="typeCode != null" >
+        TYPE_CODE = #{typeCode,jdbcType=VARCHAR},
+      </if>
+      <if test="typeName != null" >
+        TYPE_NAME = #{typeName,jdbcType=VARCHAR},
+      </if>
+      <if test="typePid != null" >
+        TYPE_PID = #{typePid,jdbcType=VARCHAR},
+      </if>
+      <if test="groupId != null" >
+        GROUP_ID = #{groupId,jdbcType=VARCHAR},
+      </if>
+      <if test="typeComment != null" >
+        TYPE_COMMEND = #{typeComment,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where trim(TYPE_ID) = #{typeId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.csot.recruit.model.datadict.DatadictGroupType" >
+    update T_DATADICT_GROUP_TYPE
+    set TYPE_ID = #{typeId,jdbcType=VARCHAR},
+      TYPE_CODE = #{typeCode,jdbcType=VARCHAR},
+      TYPE_NAME = #{typeName,jdbcType=VARCHAR},
+      TYPE_PID = #{typePid,jdbcType=VARCHAR},
+      TYPE_COMMEND = #{typeComment,jdbcType=VARCHAR},
+      GROUP_ID = #{groupId,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <sql id="Oracle_Dialect_Pagination_Prefix" >
+    <if test="page != null" >
+      select * from ( select row_.*, rownum rownum_ from ( 
+    </if>
+  </sql>
+  <sql id="Oracle_Dialect_Pagination_Suffix" >
+    <if test="page != null" >
+      <![CDATA[ ) row_ ) where rownum_ > #{page.begin} and rownum_ <= #{page.end} ]]>
+    </if>
+  </sql>
+  
+  <!-- 根据group_code查询type列表-->
+  <select id="queryTypesByGroupCode" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select t.* from t_datadict_group_type t 
+    left join t_datadict_group g on t.group_id=g.group_id 
+    where 1=1
+    <if test="groupCode != null" >
+      and g.group_code = #{groupCode,jdbcType=VARCHAR}
+    </if>
+    <if test="typeName != null" >
+      and t.type_name = #{typeName,jdbcType=VARCHAR}
+    </if>
+  </select>
+  
+  <!-- 根据group_code查询type列表-->
+  <select id="getNameByCodeValue" resultType="java.lang.String" parameterType="java.lang.String" >
+    select t.type_name from t_datadict_group_type t 
+    left join t_datadict_group g on t.group_id=g.group_id 
+    where g.group_code = #{groupCode,jdbcType=VARCHAR}
+    and t.type_code = #{typeCode,jdbcType=VARCHAR}
+  </select>
+  
+  <select id="getNameById" resultType="java.lang.String" parameterType="java.lang.String" >
+    select type_name
+    from T_DATADICT_GROUP_TYPE
+    where TYPE_ID = #{typeId,jdbcType=VARCHAR}
+  </select>
+  
+</mapper>

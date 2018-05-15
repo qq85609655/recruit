@@ -1,0 +1,13 @@
+.tip-bar{margin:30px 10px;}
+.tip-bar .tip-msg{background:#fffce9;border:1px solid #f7da8d;border-radius:5px;color:#4d4d4d;padding:15px;}
+.main-item{margin:10px;}
+.main-item > *{display:inline-block;vertical-align:top;}
+.main-item label{width:80px;font-weight:bold;overflow:visible;white-space:nowrap;}
+#passLineSave{line-height:22px;margin-left:20px;}
+#passLineSave.none{display:none;}
+.condition-add-table{display:block;margin-left:100px;}
+.table{margin-top:20px;margin-bottom:20px;}
+.mini-datagrid{margin:20px 0;}
+.table .font-icon{color:#06c;}
+.table .font-icon:hover{color:#48b8e8;}
+.condition-add{margin-top:20px;}

@@ -1,0 +1,406 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.csot.recruit.dao.original.candidate.CandidateMapper" >
+  <resultMap id="BaseResultMap" type="com.csot.recruit.model.original.candidate.Candidate" >
+    <id column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="CANDIDATE_ID" property="candidateId" jdbcType="VARCHAR" />
+    <result column="NAME" property="name" jdbcType="VARCHAR" />
+    <result column="NAME_EN" property="nameEn" jdbcType="VARCHAR" />
+    <result column="SEX" property="sex" jdbcType="VARCHAR" />
+    <result column="AGE" property="age" jdbcType="DECIMAL" />
+    <result column="POSITION_ID" property="positionid" jdbcType="VARCHAR" />
+    <result column="CURRENT_COMPANY" property="currentCompany" jdbcType="VARCHAR" />
+    <result column="CURRENT_POSITION" property="currentPosition" jdbcType="VARCHAR" />
+    <result column="WORK_EXPERIENCE" property="workExperience" jdbcType="DECIMAL" />
+    <result column="HIGHEST_EDUCATION" property="highestEducation" jdbcType="VARCHAR" />
+    <result column="GRADUATION_SCHOOL" property="graduationSchool" jdbcType="VARCHAR" />
+    <result column="PROFESSIONAL" property="professional" jdbcType="VARCHAR" />
+    <result column="PHONE" property="phone" jdbcType="VARCHAR" />
+    <result column="EMAIL" property="email" jdbcType="VARCHAR" />
+    <result column="RESUMEORIGIN" property="resumeorigin" jdbcType="VARCHAR" />
+    <result column="CHANNEL" property="channel" jdbcType="VARCHAR" />
+    <result column="STORAGE_DATE" property="storageDate" jdbcType="TIMESTAMP" />
+    <result column="RESUME_STATUS" property="resumeStatus" jdbcType="DECIMAL" />
+    <result column="POST_STATUS" property="postStatus" jdbcType="DECIMAL" />
+    <result column="CHANGE_TIME" property="changeTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  
+  <resultMap id="ApartResultMap" type="com.csot.recruit.model.vo.InterviewBookCandidateVo" >
+    <id column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="NAME" property="name" jdbcType="VARCHAR" />
+    <result column="C_JOBNAME" property="cJobName" jdbcType="VARCHAR" />
+    <result column="C_ORGNAME" property="cOrgName" jdbcType="VARCHAR" />
+    <result column="INTERVIEW_TYPE" property="interviewType" jdbcType="VARCHAR" />
+     <result column="INTERVIEW_DATE" property="interviewDate" jdbcType="DATE" />
+    <result column="INTERVIEW_B_TIME" property="interviewBTime" jdbcType="VARCHAR" />
+    <result column="INTERVIEW_E_TIME" property="interviewETime" jdbcType="VARCHAR" />
+    <result column="INTERVIEWERS" property="interviewers" jdbcType="VARCHAR" />
+    <result column="INTERVIEW_STATUS" property="interviewStatus" jdbcType="VARCHAR" />
+    <result column="INTERVIEW_ADDRESS" property="interviewAddress" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    cp.id,cp.candidate_id,cp.position_id,b.name,b.name_en,b.sex,b.phone,b.email
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.csot.recruit.model.original.candidate.CandidateCriteria" >
+    <include refid="Oracle_Dialect_Pagination_Prefix" />
+    select
+    <include refid="Base_Column_List" />
+    from t_candidate_post cp 
+    left join t_resume_candidate c on cp.candidate_id=c.id
+    left join t_resume_basicinfor b on c.resume_id=b.id
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <include refid="Oracle_Dialect_Pagination_Suffix" />
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_candidate_post cp 
+    left join t_resume_candidate c on cp.candidate_id=c.id
+    left join t_resume_basicinfor b on c.resume_id=b.id
+    where cp.ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from T_RESUME_CANDIDATE
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.csot.recruit.model.original.candidate.CandidateCriteria" >
+    delete from T_RESUME_CANDIDATE
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.csot.recruit.model.original.candidate.Candidate" >
+    insert into T_RESUME_CANDIDATE (ID, NAME, NAME_EN, 
+      SEX, AGE, POSITIONID, 
+      CURRENT_COMPANY, CURRENT_POSITION, WORK_EXPERIENCE, 
+      HIGHEST_EDUCATION, GRADUATION_SCHOOL, PROFESSIONAL, 
+      PHONE, EMAIL, RESUMEORIGIN, 
+      CHANNEL, STORAGE_DATE, RESUME_STATUS, 
+      POST_STATUS, CHANGE_TIME)
+    values (#{id,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{nameEn,jdbcType=VARCHAR}, 
+      #{sex,jdbcType=VARCHAR}, #{age,jdbcType=DECIMAL}, #{positionid,jdbcType=VARCHAR}, 
+      #{currentCompany,jdbcType=VARCHAR}, #{currentPosition,jdbcType=VARCHAR}, #{workExperience,jdbcType=DECIMAL}, 
+      #{highestEducation,jdbcType=VARCHAR}, #{graduationSchool,jdbcType=VARCHAR}, #{professional,jdbcType=VARCHAR}, 
+      #{phone,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{resumeorigin,jdbcType=VARCHAR}, 
+      #{channel,jdbcType=VARCHAR}, #{storageDate,jdbcType=TIMESTAMP}, #{resumeStatus,jdbcType=DECIMAL}, 
+      #{postStatus,jdbcType=DECIMAL}, #{changeTime,jdbcType=TIMESTAMP})
+  </insert>
+  <select id="countByExample" parameterType="com.csot.recruit.model.original.candidate.CandidateCriteria" resultType="java.lang.Integer" >
+    select count(1) from t_candidate_post cp 
+    left join t_resume_candidate c on cp.candidate_id=c.id
+    left join t_resume_basicinfor b on c.resume_id=b.id
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update T_RESUME_CANDIDATE
+    <set >
+      <if test="record.id != null" >
+        ID = #{record.id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.name != null" >
+        NAME = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.nameEn != null" >
+        NAME_EN = #{record.nameEn,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sex != null" >
+        SEX = #{record.sex,jdbcType=VARCHAR},
+      </if>
+      <if test="record.age != null" >
+        AGE = #{record.age,jdbcType=DECIMAL},
+      </if>
+      <if test="record.positionid != null" >
+        POSITIONID = #{record.positionid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.currentCompany != null" >
+        CURRENT_COMPANY = #{record.currentCompany,jdbcType=VARCHAR},
+      </if>
+      <if test="record.currentPosition != null" >
+        CURRENT_POSITION = #{record.currentPosition,jdbcType=VARCHAR},
+      </if>
+      <if test="record.workExperience != null" >
+        WORK_EXPERIENCE = #{record.workExperience,jdbcType=DECIMAL},
+      </if>
+      <if test="record.highestEducation != null" >
+        HIGHEST_EDUCATION = #{record.highestEducation,jdbcType=VARCHAR},
+      </if>
+      <if test="record.graduationSchool != null" >
+        GRADUATION_SCHOOL = #{record.graduationSchool,jdbcType=VARCHAR},
+      </if>
+      <if test="record.professional != null" >
+        PROFESSIONAL = #{record.professional,jdbcType=VARCHAR},
+      </if>
+      <if test="record.phone != null" >
+        PHONE = #{record.phone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.email != null" >
+        EMAIL = #{record.email,jdbcType=VARCHAR},
+      </if>
+      <if test="record.resumeorigin != null" >
+        RESUMEORIGIN = #{record.resumeorigin,jdbcType=VARCHAR},
+      </if>
+      <if test="record.channel != null" >
+        CHANNEL = #{record.channel,jdbcType=VARCHAR},
+      </if>
+      <if test="record.storageDate != null" >
+        STORAGE_DATE = #{record.storageDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.resumeStatus != null" >
+        RESUME_STATUS = #{record.resumeStatus,jdbcType=DECIMAL},
+      </if>
+      <if test="record.postStatus != null" >
+        POST_STATUS = #{record.postStatus,jdbcType=DECIMAL},
+      </if>
+      <if test="record.changeTime != null" >
+        CHANGE_TIME = #{record.changeTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update T_RESUME_CANDIDATE
+    set ID = #{record.id,jdbcType=VARCHAR},
+      NAME = #{record.name,jdbcType=VARCHAR},
+      NAME_EN = #{record.nameEn,jdbcType=VARCHAR},
+      SEX = #{record.sex,jdbcType=VARCHAR},
+      AGE = #{record.age,jdbcType=DECIMAL},
+      POSITIONID = #{record.positionid,jdbcType=VARCHAR},
+      CURRENT_COMPANY = #{record.currentCompany,jdbcType=VARCHAR},
+      CURRENT_POSITION = #{record.currentPosition,jdbcType=VARCHAR},
+      WORK_EXPERIENCE = #{record.workExperience,jdbcType=DECIMAL},
+      HIGHEST_EDUCATION = #{record.highestEducation,jdbcType=VARCHAR},
+      GRADUATION_SCHOOL = #{record.graduationSchool,jdbcType=VARCHAR},
+      PROFESSIONAL = #{record.professional,jdbcType=VARCHAR},
+      PHONE = #{record.phone,jdbcType=VARCHAR},
+      EMAIL = #{record.email,jdbcType=VARCHAR},
+      RESUMEORIGIN = #{record.resumeorigin,jdbcType=VARCHAR},
+      CHANNEL = #{record.channel,jdbcType=VARCHAR},
+      STORAGE_DATE = #{record.storageDate,jdbcType=TIMESTAMP},
+      RESUME_STATUS = #{record.resumeStatus,jdbcType=DECIMAL},
+      POST_STATUS = #{record.postStatus,jdbcType=DECIMAL},
+      CHANGE_TIME = #{record.changeTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.csot.recruit.model.original.candidate.Candidate" >
+    update T_RESUME_CANDIDATE
+    <set >
+      <if test="name != null" >
+        NAME = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="nameEn != null" >
+        NAME_EN = #{nameEn,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null" >
+        SEX = #{sex,jdbcType=VARCHAR},
+      </if>
+      <if test="age != null" >
+        AGE = #{age,jdbcType=DECIMAL},
+      </if>
+      <if test="positionid != null" >
+        POSITIONID = #{positionid,jdbcType=VARCHAR},
+      </if>
+      <if test="currentCompany != null" >
+        CURRENT_COMPANY = #{currentCompany,jdbcType=VARCHAR},
+      </if>
+      <if test="currentPosition != null" >
+        CURRENT_POSITION = #{currentPosition,jdbcType=VARCHAR},
+      </if>
+      <if test="workExperience != null" >
+        WORK_EXPERIENCE = #{workExperience,jdbcType=DECIMAL},
+      </if>
+      <if test="highestEducation != null" >
+        HIGHEST_EDUCATION = #{highestEducation,jdbcType=VARCHAR},
+      </if>
+      <if test="graduationSchool != null" >
+        GRADUATION_SCHOOL = #{graduationSchool,jdbcType=VARCHAR},
+      </if>
+      <if test="professional != null" >
+        PROFESSIONAL = #{professional,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null" >
+        PHONE = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null" >
+        EMAIL = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="resumeorigin != null" >
+        RESUMEORIGIN = #{resumeorigin,jdbcType=VARCHAR},
+      </if>
+      <if test="channel != null" >
+        CHANNEL = #{channel,jdbcType=VARCHAR},
+      </if>
+      <if test="storageDate != null" >
+        STORAGE_DATE = #{storageDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="resumeStatus != null" >
+        RESUME_STATUS = #{resumeStatus,jdbcType=DECIMAL},
+      </if>
+      <if test="postStatus != null" >
+        POST_STATUS = #{postStatus,jdbcType=DECIMAL},
+      </if>
+      <if test="changeTime != null" >
+        CHANGE_TIME = #{changeTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.csot.recruit.model.original.candidate.Candidate" >
+    update T_RESUME_CANDIDATE
+    set NAME = #{name,jdbcType=VARCHAR},
+      NAME_EN = #{nameEn,jdbcType=VARCHAR},
+      SEX = #{sex,jdbcType=VARCHAR},
+      AGE = #{age,jdbcType=DECIMAL},
+      POSITIONID = #{positionid,jdbcType=VARCHAR},
+      CURRENT_COMPANY = #{currentCompany,jdbcType=VARCHAR},
+      CURRENT_POSITION = #{currentPosition,jdbcType=VARCHAR},
+      WORK_EXPERIENCE = #{workExperience,jdbcType=DECIMAL},
+      HIGHEST_EDUCATION = #{highestEducation,jdbcType=VARCHAR},
+      GRADUATION_SCHOOL = #{graduationSchool,jdbcType=VARCHAR},
+      PROFESSIONAL = #{professional,jdbcType=VARCHAR},
+      PHONE = #{phone,jdbcType=VARCHAR},
+      EMAIL = #{email,jdbcType=VARCHAR},
+      RESUMEORIGIN = #{resumeorigin,jdbcType=VARCHAR},
+      CHANNEL = #{channel,jdbcType=VARCHAR},
+      STORAGE_DATE = #{storageDate,jdbcType=TIMESTAMP},
+      RESUME_STATUS = #{resumeStatus,jdbcType=DECIMAL},
+      POST_STATUS = #{postStatus,jdbcType=DECIMAL},
+      CHANGE_TIME = #{changeTime,jdbcType=TIMESTAMP}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <sql id="Oracle_Dialect_Pagination_Prefix" >
+    <if test="page != null" >
+      select * from ( select row_.*, rownum rownum_ from ( 
+    </if>
+  </sql>
+  
+   <sql id="query_by_page" >
+    <where>
+      <if test="startDate != null and startDate != ''" >
+        <![CDATA[  and ib.interview_date >= to_date(#{startDate},'yyyy-MM-dd') ]]>
+      </if>
+      <if test="endDate != null and endDate != ''" >
+        <![CDATA[  and ib.interview_date <= to_date(#{endDate},'yyyy-MM-dd') ]]>
+      </if>
+      <if test="searchKey != null and searchKey != ''" >
+        and (ib.candidate_name like '%'||#{searchKey}||'%' 
+        )
+      </if>
+    </where>
+  </sql>
+  
+  <sql id="Oracle_Dialect_Pagination_Suffix" >
+    <if test="page != null" >
+      <![CDATA[ ) row_ ) where rownum_ > #{page.begin} and rownum_ <= #{page.end} ]]>
+    </if>
+  </sql>
+  
+  <sql id="Candidate_Oracle_Dialect_Pagination_Prefix" >
+   <if test="begin != null and end != null" >
+      select * from ( select row_.*, rownum rownum_ from ( 
+    </if>
+  </sql>
+  
+  <sql id="Candidate_Oracle_Dialect_Pagination_Suffix" >
+    <if test="begin != null and end != null" >
+      <![CDATA[ ) row_ ) where rownum_ > #{begin} and rownum_ <= #{end} ]]>
+    </if>
+  </sql>
+  
+  <select id="queryCandidateListByPage" resultMap="ApartResultMap" parameterType="java.util.Map" >
+    <include refid="Candidate_Oracle_Dialect_Pagination_Prefix" />
+    select
+       ib.id,
+       ib.candidate_name name,
+       j.c_jobname,
+       o.c_orgname,
+       ib.interview_type,
+       ib.interview_date,
+       ib.interview_b_time,
+       ib.interview_e_time,
+       ib.interviewers,
+       ib.interview_status,
+       ib.interview_address
+       from t_Interview_Book ib
+       left join t_Job j on ib.position_id = j.c_jobcode
+       left join t_Organization o on j.c_orgcode = o.c_orgcode
+    <include refid="query_by_page" />
+    <include refid="Candidate_Oracle_Dialect_Pagination_Suffix" />
+  </select>
+  
+  <select id="countByPage" parameterType="java.util.Map" resultType="java.lang.Integer" >
+    select count(1) from t_Interview_Book ib
+       left join t_Job j on ib.position_id = j.c_jobcode
+       left join t_Organization o on j.c_orgcode = o.c_orgcode
+    <include refid="query_by_page" />
+  </select>
+</mapper>

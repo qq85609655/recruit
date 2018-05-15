@@ -1,0 +1,608 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.csot.recruit.dao.position.RecruitPositionMapper">
+  <resultMap id="BaseResultMap" type="com.csot.recruit.model.position.RecruitPosition">
+    <id column="recruit_position_id" property="recruitPositionId" jdbcType="CHAR" />
+    <result column="position_name" property="positionName" jdbcType="CHAR" />
+    <result column="position_code" property="positionCode" jdbcType="CHAR" />
+    <result column="position_type" property="positionType" jdbcType="CHAR" />
+    <result column="position_level" property="positionLevel" jdbcType="CHAR" />
+    <result column="position_similar" property="positionSimilar" jdbcType="CHAR" />
+    <result column="position_require" property="positionRequire" jdbcType="CHAR" />
+    <result column="position_industry" property="positionIndustry" jdbcType="CHAR" />
+    <result column="position_description" property="positionDescription" jdbcType="CLOB" />
+    <result column="POSITION_DESCRIPTION2" property="positionDescription2" jdbcType="CLOB" />
+    <result column="trench" property="trench" jdbcType="CHAR" />
+    <result column="WEBSITE_POST_NAME" property="websitePostName" jdbcType="CHAR" />
+    <result column="work_place" property="workPlace" jdbcType="CHAR" />
+    <result column="validaty" property="validaty" jdbcType="CHAR" />
+    <result column="recruit_numbers" property="recruitNumbers" jdbcType="INTEGER" />
+    <result column="salary" property="salary" jdbcType="CHAR" />
+    <result column="recruit_type" property="recruitType" jdbcType="CHAR" />
+    <result column="recruit_object" property="recruitObject" jdbcType="CHAR" />
+    <result column="secrecy" property="secrecy" jdbcType="CHAR" />
+    <result column="status" property="status" jdbcType="CHAR" />
+    <result column="label" property="label" jdbcType="CHAR" />
+    <result column="release_date" property="releaseDate" jdbcType="CHAR" />
+    <result column="expire_date" property="expireDate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" suffix=")" prefixOverrides="and">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition}
+                  #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition}
+                  #{criterion.value} and
+                  #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")"
+                    separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" suffix=")" prefixOverrides="and">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition}
+                  #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition}
+                  #{criterion.value} and
+                  #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")"
+                    separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    recruit_position_id, position_name, position_code, position_type,
+    position_level,
+    position_similar, position_require, position_industry,
+    position_description,position_description, work_place,
+    validaty, recruit_numbers, salary,
+    recruit_type, recruit_object, secrecy, status,
+    label,release_date,expire_date,trench,website_post_name
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap"
+    parameterType="com.csot.recruit.model.position.RecruitPositionCriteria">
+    <include refid="Oracle_Dialect_Pagination_Prefix" />
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from T_RECRUIT_POSITION
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+    <include refid="Oracle_Dialect_Pagination_Suffix" />
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String">
+    select
+    <include refid="Base_Column_List" />
+    from T_RECRUIT_POSITION
+    where recruit_position_id = #{recruitPositionId,jdbcType=CHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from
+    T_RECRUIT_POSITION
+    where
+    recruit_position_id = #{recruitPositionId,jdbcType=CHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.csot.recruit.model.position.RecruitPositionCriteria">
+    delete from T_RECRUIT_POSITION
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.csot.recruit.model.position.RecruitPosition">
+    insert
+    into T_RECRUIT_POSITION (recruit_position_id,
+    position_name, position_code,
+    position_type, position_level, position_similar,
+    position_require,
+    position_industry, position_description,
+    work_place, validaty, recruit_numbers,
+    salary,
+    recruit_type, recruit_object,
+    secrecy, status, label, release_date,
+    expire_date,creater,POSITION_DESCRIPTION2,WEBSITE_POST_NAME,trench
+    )
+    values
+    (#{recruitPositionId,jdbcType=CHAR}, #{positionName,jdbcType=CHAR},
+    #{positionCode,jdbcType=CHAR},
+    #{positionType,jdbcType=CHAR}, #{positionLevel,jdbcType=CHAR},
+    #{positionSimilar,jdbcType=CHAR},
+    #{positionRequire,jdbcType=CHAR},
+    #{positionIndustry,jdbcType=CHAR},
+    #{positionDescription,jdbcType=CLOB},
+    #{workPlace,jdbcType=CHAR}, #{validaty,jdbcType=CHAR}, #{recruitNumbers,jdbcType=INTEGER},
+    #{salary,jdbcType=CHAR}, #{recruitType,jdbcType=CHAR}, #{recruitObject,jdbcType=CHAR},
+    #{secrecy,jdbcType=CHAR}, #{status,jdbcType=CHAR}, #{label,jdbcType=CHAR},
+    #{releaseDate,jdbcType=TIMESTAMP},
+    #{expireDate,jdbcType=TIMESTAMP},#{creater,jdbcType=CHAR},#{positionDescription,jdbcType=CLOB},
+    #{websitePostName,jdbcType=CHAR},#{trench,jdbcType=CHAR}
+    )
+  </insert>
+  <insert id="insertSelective" parameterType="com.csot.recruit.model.position.RecruitPosition">
+    insert into T_RECRUIT_POSITION
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="recruitPositionId != null">
+        recruit_position_id,
+      </if>
+      <if test="positionName != null">
+        position_name,
+      </if>
+      <if test="positionCode != null">
+        position_code,
+      </if>
+      <if test="positionType != null">
+        position_type,
+      </if>
+      <if test="positionLevel != null">
+        position_level,
+      </if>
+      <if test="positionSimilar != null">
+        position_similar,
+      </if>
+      <if test="positionRequire != null">
+        position_require,
+      </if>
+      <if test="positionIndustry != null">
+        position_industry,
+      </if>
+      <if test="positionDescription != null">
+        position_description,
+      </if>
+      <if test="workPlace != null">
+        work_place,
+      </if>
+      <if test="validaty != null">
+        validaty,
+      </if>
+      <if test="recruitNumbers != null">
+        recruit_numbers,
+      </if>
+      <if test="salary != null">
+        salary,
+      </if>
+      <if test="recruitType != null">
+        recruit_type,
+      </if>
+      <if test="recruitObject != null">
+        recruit_object,
+      </if>
+      <if test="secrecy != null">
+        secrecy,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="label != null">
+        label,
+      </if>
+      <if test="releaseDate != null">
+        release_date,
+      </if>
+      <if test="expireDate != null">
+        expire_date,
+      </if>
+      <if test="creater !=null">
+        creater,
+      </if>
+      <if test="positionDescription2 !=null">
+        position_description2,
+      </if>
+      <if test="websitePostName !=null">
+        WEBSITE_POST_NAME,
+      </if>
+      <if test="trench !=null">
+        trench,
+      </if>
+
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="recruitPositionId != null">
+        #{recruitPositionId,jdbcType=CHAR},
+      </if>
+      <if test="positionName != null">
+        #{positionName,jdbcType=CHAR},
+      </if>
+      <if test="positionCode != null">
+        #{positionCode,jdbcType=CHAR},
+      </if>
+      <if test="positionType != null">
+        #{positionType,jdbcType=CHAR},
+      </if>
+      <if test="positionLevel != null">
+        #{positionLevel,jdbcType=CHAR},
+      </if>
+      <if test="positionSimilar != null">
+        #{positionSimilar,jdbcType=CHAR},
+      </if>
+      <if test="positionRequire != null">
+        #{positionRequire,jdbcType=CHAR},
+      </if>
+      <if test="positionIndustry != null">
+        #{positionIndustry,jdbcType=CHAR},
+      </if>
+      <if test="positionDescription != null">
+        #{positionDescription,jdbcType=CLOB},
+      </if>
+      <if test="workPlace != null">
+        #{workPlace,jdbcType=CHAR},
+      </if>
+      <if test="validaty != null">
+        #{validaty,jdbcType=CHAR},
+      </if>
+      <if test="recruitNumbers != null">
+        #{recruitNumbers,jdbcType=INTEGER},
+      </if>
+      <if test="salary != null">
+        #{salary,jdbcType=CHAR},
+      </if>
+      <if test="recruitType != null">
+        #{recruitType,jdbcType=CHAR},
+      </if>
+      <if test="recruitObject != null">
+        #{recruitObject,jdbcType=CHAR},
+      </if>
+      <if test="secrecy != null">
+        #{secrecy,jdbcType=CHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=CHAR},
+      </if>
+      <if test="label != null">
+        #{label,jdbcType=CHAR},
+      </if>
+      <if test="releaseDate != null">
+        #{release_date,jdbcType=TIMESTAMP},
+      </if>
+      <if test="expireDate != null">
+        #{expire_date,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creater !=null">
+        #{creater,jdbcType=CHAR},
+      </if>
+      <if test="positionDescription2 != null">
+        #{positionDescription2,jdbcType=CLOB},
+      </if>
+      <if test="websitePostName !=null">
+        #{websitePostName,jdbcType=CHAR},
+      </if>
+      <if test="trench !=null">
+        #{trench,jdbcType=CHAR},
+      </if>
+
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.csot.recruit.model.position.RecruitPositionCriteria"
+    resultType="java.lang.Integer">
+    select count(*) from T_RECRUIT_POSITION
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update T_RECRUIT_POSITION
+    <set>
+      <if test="record.recruitPositionId != null">
+        recruit_position_id =
+        #{record.recruitPositionId,jdbcType=CHAR},
+      </if>
+      <if test="record.positionName != null">
+        position_name =
+        #{record.positionName,jdbcType=CHAR},
+      </if>
+      <if test="record.positionCode != null">
+        position_code =
+        #{record.positionCode,jdbcType=CHAR},
+      </if>
+      <if test="record.positionType != null">
+        position_type =
+        #{record.positionType,jdbcType=CHAR},
+      </if>
+      <if test="record.positionLevel != null">
+        position_level =
+        #{record.positionLevel,jdbcType=CHAR},
+      </if>
+      <if test="record.positionSimilar != null">
+        position_similar =
+        #{record.positionSimilar,jdbcType=CHAR},
+      </if>
+      <if test="record.positionRequire != null">
+        position_require =
+        #{record.positionRequire,jdbcType=CHAR},
+      </if>
+      <if test="record.positionIndustry != null">
+        position_industry =
+        #{record.positionIndustry,jdbcType=CHAR},
+      </if>
+      <if test="record.positionDescription != null">
+        position_description =
+        #{record.positionDescription,jdbcType=CLOB},
+      </if>
+      <if test="record.workPlace != null">
+        work_place = #{record.workPlace,jdbcType=CHAR},
+      </if>
+      <if test="record.validaty != null">
+        validaty = #{record.validaty,jdbcType=CHAR},
+      </if>
+      <if test="record.recruitNumbers != null">
+        recruit_numbers =
+        #{record.recruitNumbers,jdbcType=INTEGER},
+      </if>
+      <if test="record.salary != null">
+        salary = #{record.salary,jdbcType=CHAR},
+      </if>
+      <if test="record.recruitType != null">
+        recruit_type = #{record.recruitType,jdbcType=CHAR},
+      </if>
+      <if test="record.recruitObject != null">
+        recruit_object =
+        #{record.recruitObject,jdbcType=CHAR},
+      </if>
+      <if test="record.secrecy != null">
+        secrecy = #{record.secrecy,jdbcType=CHAR},
+      </if>
+      <if test="record.status != null">
+        status = #{record.status,jdbcType=CHAR},
+      </if>
+      <if test="record.label != null">
+        label = #{record.label,jdbcType=CHAR},
+      </if>
+      <if test="record.websitePostName != null">
+        WEBSITE_POST_NAME = #{record.websitePostName,jdbcType=CHAR},
+      </if>
+      <if test="record.releaseDate != null">
+        release_date =
+        #{record.releaseDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.positionDescription2 != null">
+        position_description2 =
+        #{record.positionDescription2,jdbcType=CLOB},
+      </if>
+      <if test="record.trench != null">
+        trench =
+        #{record.trench,jdbcType=CHAR},
+      </if>
+      <if test="record.expireDate != null">
+        expire_date = #{record.expireDate,jdbcType=TIMESTAMP}
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update T_RECRUIT_POSITION
+    set recruit_position_id = #{record.recruitPositionId,jdbcType=CHAR},
+    position_name = #{record.positionName,jdbcType=CHAR},
+    position_code =
+    #{record.positionCode,jdbcType=CHAR},
+    position_type = #{record.positionType,jdbcType=CHAR},
+    position_level = #{record.positionLevel,jdbcType=CHAR},
+    position_similar =
+    #{record.positionSimilar,jdbcType=CHAR},
+    position_require =
+    #{record.positionRequire,jdbcType=CHAR},
+    position_industry =
+    #{record.positionIndustry,jdbcType=CHAR},
+    WEBSITE_POST_NAME =
+    #{record.websitePostName,jdbcType=CHAR},
+    position_description =
+    #{record.positionDescription,jdbcType=CLOB},
+    position_description2
+    =#{record.positionDescription2,jdbcType=CLOB},
+    work_place = #{record.workPlace,jdbcType=CHAR},
+    validaty = #{record.validaty,jdbcType=CHAR},
+    recruit_numbers =
+    #{record.recruitNumbers,jdbcType=INTEGER},
+    salary = #{record.salary,jdbcType=CHAR},
+    trench =
+    #{record.trench,jdbcType=CHAR},
+    recruit_type =
+    #{record.recruitType,jdbcType=CHAR},
+    recruit_object
+    = #{record.recruitObject,jdbcType=CHAR},
+    secrecy = #{record.secrecy,jdbcType=CHAR},
+    status =
+    #{record.status,jdbcType=CHAR},
+    label =
+    #{record.label,jdbcType=CHAR},
+    release_date =
+    #{record.releaseDate,jdbcType=TIMESTAMP},
+    expire_date = #{record.expireDate,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.csot.recruit.model.position.RecruitPosition">
+    update T_RECRUIT_POSITION
+    <set>
+      <if test="positionName != null">
+        position_name = #{positionName,jdbcType=CHAR},
+      </if>
+      <if test="positionCode != null">
+        position_code = #{positionCode,jdbcType=CHAR},
+      </if>
+      <if test="positionType != null">
+        position_type = #{positionType,jdbcType=CHAR},
+      </if>
+      <if test="positionLevel != null">
+        position_level = #{positionLevel,jdbcType=CHAR},
+      </if>
+      <if test="positionSimilar != null">
+        position_similar = #{positionSimilar,jdbcType=CHAR},
+      </if>
+      <if test="positionRequire != null">
+        position_require = #{positionRequire,jdbcType=CHAR},
+      </if>
+      <if test="websitePostName != null">
+        position_require = #{positionRequire,jdbcType=CHAR},
+      </if>
+      <if test="positionIndustry != null">
+        WEBSITE_POST_NAME = #{websitePostName,jdbcType=CHAR},
+      </if>
+      <if test="positionDescription != null">
+        position_description =
+        #{positionDescription,jdbcType=CLOB},
+      </if>
+      <if test="positionDescription2 != null">
+        position_description2 =
+        #{positionDescription2,jdbcType=CLOB},
+      </if>
+      <if test="workPlace != null">
+        work_place = #{workPlace,jdbcType=CHAR},
+      </if>
+      <if test="validaty != null">
+        validaty = #{validaty,jdbcType=CHAR},
+      </if>
+      <if test="recruitNumbers != null">
+        recruit_numbers = #{recruitNumbers,jdbcType=INTEGER},
+      </if>
+      <if test="salary != null">
+        salary = #{salary,jdbcType=CHAR},
+      </if>
+      <if test="recruitType != null">
+        recruit_type = #{recruitType,jdbcType=CHAR},
+      </if>
+      <if test="recruitObject != null">
+        recruit_object = #{recruitObject,jdbcType=CHAR},
+      </if>
+      <if test="secrecy != null">
+        secrecy = #{secrecy,jdbcType=CHAR},
+      </if>
+      <if test="trench != null">
+  trench = #{trench,jdbcType=CHAR},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=CHAR},
+      </if>
+      <if test="label != null">
+        label = #{label,jdbcType=CHAR},
+      </if>
+      <if test="releaseDate != null">
+        release_date = #{releaseDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="expireDate != null">
+        expire_date = #{expireDate,jdbcType=TIMESTAMP}
+      </if>
+    </set>
+    where recruit_position_id = #{recruitPositionId,jdbcType=CHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.csot.recruit.model.position.RecruitPosition">
+    update T_RECRUIT_POSITION
+    set position_name =
+    #{positionName,jdbcType=CHAR},
+    position_code = #{positionCode,jdbcType=CHAR},
+    position_type =
+    #{positionType,jdbcType=CHAR},
+    position_level = #{positionLevel,jdbcType=CHAR},
+    position_similar =
+    #{positionSimilar,jdbcType=CHAR},
+    WEBSITE_POST_NAME=
+    #{websitePostName,jdbcType=CHAR},
+    position_require = #{positionRequire,jdbcType=CHAR},
+    position_industry =
+    #{positionIndustry,jdbcType=CHAR},
+    position_description =
+    #{positionDescription,jdbcType=CLOB},
+    position_description2 =
+    #{positionDescription2,jdbcType=CLOB},
+    work_place =
+    #{workPlace,jdbcType=CHAR},
+    validaty =
+    #{validaty,jdbcType=CHAR},
+    recruit_numbers =
+    #{recruitNumbers,jdbcType=INTEGER},
+    salary =
+    #{salary,jdbcType=CHAR},
+    recruit_type =
+    #{recruitType,jdbcType=CHAR},
+    recruit_object =
+    #{recruitObject,jdbcType=CHAR},
+    secrecy =
+    #{secrecy,jdbcType=CHAR},
+    trench =
+    #{trench,jdbcType=CHAR},
+    status =
+    #{status,jdbcType=CHAR},
+    label =
+    #{label,jdbcType=CHAR},
+    release_date =
+    #{releaseDate,jdbcType=TIMESTAMP},
+    expire_date =
+    #{expireDate,jdbcType=TIMESTAMP}
+    where
+    recruit_position_id = #{recruitPositionId,jdbcType=CHAR}
+  </update>
+  <sql id="Oracle_Dialect_Pagination_Prefix">
+    <if test="page != null">
+      select * from ( select row_.*, rownum rownum_ from (
+    </if>
+  </sql>
+  <sql id="Oracle_Dialect_Pagination_Suffix">
+    <if test="page != null">
+      <![CDATA[ ) row_ ) where rownum_ > #{page.begin} and rownum_ <= #{page.end} ]]>
+    </if>
+  </sql>
+  <select id="maxPosiCode" resultType="java.lang.String">
+    select max(trim(position_code)) from T_RECRUIT_POSITION
+  </select>
+
+  <select id="getPositionByStatus" resultMap="BaseResultMap" parameterType="java.lang.String">
+    select * from
+    T_RECRUIT_POSITION where trim(STATUS)=#{status}
+  </select>
+
+  <select id="getPositionByCode" resultMap="BaseResultMap" parameterType="java.lang.String">
+    select
+    <include refid="Base_Column_List" />
+    from T_RECRUIT_POSITION
+    where trim(POSITION_CODE)=#{positionCode}
+  </select>
+
+</mapper>

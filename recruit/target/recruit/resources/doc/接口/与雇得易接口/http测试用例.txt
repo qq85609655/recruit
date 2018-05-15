@@ -1,0 +1,9 @@
+
+http://h.hiredin.cn:8022/job/posting/sites?hasCaptcha=true&appkey=70b88fb007fe
+
+http://h.hiredin.cn:8022/job/posting/cjol.com/captcha?appkey=70b88fb007fe 
+
+http://h.hiredin.cn:8022/job/posting/zhaopin.com/captcha?appkey=70b88fb007fe 
+
+
+

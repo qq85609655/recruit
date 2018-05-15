@@ -1,0 +1,145 @@
+param = new Object();
+tabState = "0";
+// 头部状态过滤数据
+function choseState(state, e) {
+  $(".posi-import-btn").removeClass("tab-up");
+  $(e).addClass("tab-up");
+  tabState = state;
+  search();
+}
+
+// 条件查询
+function search() {
+  var grid = mini.get("datagrid1");
+  param = new Object();
+  param.postName = $("#postName").val();
+  param.stateSelf = tabState;
+  param.rankId = mini.get("rankId").getValue();
+  grid.load(param);
+}
+
+// 导出招聘需求列表
+function exportDemand() {
+  window.location.href = "/recruit/demand/exportDemand?postName=" + $("#postName").val()
+      + "&stateSelf=" + tabState + "&rankId=" + mini.get("rankId").getValue();
+}
+
+// 共承岗位
+function sharePost() {
+  var grid = mini.get("datagrid1");
+  var rows = grid.getSelecteds();
+  if (rows.length > 0) {
+    var row = rows[0];
+    var id = row.id;
+    OpenDialog(basePath + "/demand/share?id=" + id, "共承岗位", null, 700, 500);
+  } else {
+    ShowWarnTip("请选择一条记录");
+  }
+}
+
+// 修改招聘需求信息
+function updateRecruitDemand() {
+  var grid = mini.get("datagrid1");
+  var rows = grid.getSelecteds();
+  if (rows.length > 0) {
+    var row = rows[0];
+    var id = row.id;
+    openUpdateView(id);
+  } else {
+    ShowWarnTip("请选择一条记录");
+  }
+}
+
+// 发布岗位
+function applyPost() {
+  var grid = mini.get("datagrid1");
+  var rows = grid.getSelecteds();
+  if (rows.length > 0) {
+    var row = rows[0];
+    var id = row.id;
+    if (row.flowState != "4") {
+      ShowWarnTip("请选择审批通过的招聘需求");
+    } else if (row.isFinish != "1") {
+      ShowWarnTip("请选择未完成的招聘需求");
+    } else {
+      window.open(basePath + "/position/positionEditByDemand/" + id)
+    }
+  } else {
+    ShowWarnTip("请选择一条记录");
+  }
+}
+
+// 打开修改页面
+function openUpdateView(id) {
+  var grid = mini.get("datagrid1");
+  OpenDialog(basePath + "/demand/modify/" + id, "招聘需求修改", grid, 960, 810);
+}
+
+// 打开新增需求页面
+function addRecruitDemand() {
+  var grid = mini.get("datagrid1");
+  OpenDialog(basePath + "/demand/create", "招聘需求申请", grid, 900, 710);
+}
+
+function onKeyEnter(e) {
+  search();
+}
+// 为数据添加超链接
+function cellclick(e) {
+  var row = e.row, column = e.column, field = e.field, value = e.value;
+  // 岗位名称
+  if (field == "applyPostName") {
+    openUpdateView(row.id);
+  }
+  if (field == "logNum") {
+    // 查看该需求的变更记录
+    OpenDialog(basePath + "/recruitDemandLogController/list?id=" + row.id, "查看需求变更记录列表", null, 800,
+        410);
+  }
+}
+
+// 流程状态字典
+var flowState = [ {
+  id : 1,
+  text : '未提交'
+}, {
+  id : 2,
+  text : '审核中'
+}, {
+  id : 3,
+  text : '废弃'
+}, {
+  id : 4,
+  text : '审核通过'
+} ];
+
+// 流程状态渲染
+function onFlowStateRenderer(e) {
+  for (var i = 0, l = flowState.length; i < l; i++) {
+    var g = flowState[i];
+    if (g.id == e.value)
+      return g.text;
+  }
+  return "";
+}
+// 招聘状态字典
+var infoState = [ {
+  id : 1,
+  text : '草稿'
+}, {
+  id : 2,
+  text : '待发布'
+}, {
+  id : 3,
+  text : '已发布'
+} ];
+
+// 招聘状态渲染
+function onInfoStateRenderer(e) {
+  for (var i = 0, l = infoState.length; i < l; i++) {
+    var g = infoState[i];
+    if (g.id == e.value)
+      return g.text;
+  }
+  return "";
+}

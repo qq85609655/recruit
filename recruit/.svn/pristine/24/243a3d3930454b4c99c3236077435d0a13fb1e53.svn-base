@@ -1,0 +1,81 @@
+package com.csot.recruit.service.impl.candidate;
+
+import java.util.List;
+import java.util.Map;
+
+import com.csot.recruit.dao.original.candidate.CandidateMapper;
+import com.csot.recruit.model.original.candidate.Candidate;
+import com.csot.recruit.model.original.candidate.CandidateColumns;
+import com.csot.recruit.model.original.candidate.CandidateCriteria;
+import com.csot.recruit.model.vo.InterviewBookCandidateVo;
+import com.csot.recruit.service.candidate.CandidateService;
+
+import javax.annotation.Resource;
+
+import org.amberframework.core.mybatis.pojo.Page;
+import org.amberframework.web.miniui.pojo.MiniGridPageSort;
+import org.amberframework.web.miniui.pojo.MiniRtn2Grid;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
+
+@Service("candidateService")
+public class CandidateServiceImpl implements CandidateService {
+    private static final Logger logger = LoggerFactory.getLogger(CandidateServiceImpl.class);
+
+    @Resource
+    private CandidateMapper candidateMapper;
+
+    @Override
+    public MiniRtn2Grid<Candidate> getGrid(MiniGridPageSort pageSort, String searchKey) {
+        MiniRtn2Grid<Candidate> grid = new MiniRtn2Grid<Candidate>();
+        CandidateCriteria criteria = new CandidateCriteria();
+        // 查询条件
+        if (StringUtils.hasText(searchKey)) {
+            criteria.createCriteria().andIdEqualTo(searchKey);
+        }
+        // 分页和排序
+         if (pageSort.isShowPager()) {
+            Page page = Page.newInstanceWithPageIndex(pageSort.getPageIndex(), pageSort.getPageSize());
+            criteria.setPage(page);
+        }
+        String sortColumn = CandidateColumns.getColumn(pageSort.getSortField());
+        if (StringUtils.hasText(sortColumn)) {
+            StringBuilder sortStrBldr = new StringBuilder(sortColumn).append(" ").append(pageSort.getSortOrder());
+            criteria.setOrderByClause(sortStrBldr.toString());
+        }
+        grid.setData(candidateMapper.selectByExample(criteria));
+        grid.setTotal(candidateMapper.countByExample(criteria));
+        return grid;
+    }
+
+    @Override
+    public Candidate getByPrimaryKey(String primaryKey) {
+        return candidateMapper.selectByPrimaryKey(primaryKey);
+    }
+
+    @Override
+    public void create(Candidate candidate) {
+        candidateMapper.insert(candidate);
+    }
+
+    @Override
+    public void updateSelective(Candidate candidate) {
+        candidateMapper.updateByPrimaryKeySelective(candidate);
+    }
+
+    @Override
+    public void remove(String primaryKey) {
+        candidateMapper.deleteByPrimaryKey(primaryKey);
+    }
+
+    @Override
+    public MiniRtn2Grid<InterviewBookCandidateVo> queryCandidateListByPage(Map<String, Object> map) {
+      MiniRtn2Grid<InterviewBookCandidateVo> miniGrid = new MiniRtn2Grid<InterviewBookCandidateVo>();
+      List<InterviewBookCandidateVo> list = candidateMapper.queryCandidateListByPage(map);
+      miniGrid.setData(list);
+      miniGrid.setTotal(candidateMapper.countByPage(map));
+      return miniGrid;
+    }
+}

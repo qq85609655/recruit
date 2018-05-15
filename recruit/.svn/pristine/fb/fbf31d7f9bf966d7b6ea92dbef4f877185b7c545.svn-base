@@ -1,0 +1,77 @@
+$(function() {
+  // 初始化页面元素对象
+  apply_post_name = mini.get("applyPostName"); // 申请岗位名称
+  apply_organization_name = mini.get("applyOrganizationName"); // 申请部门名称
+  apply_post_id = mini.get("applyPostId"); // 申请岗位id
+  apply_organization_id = mini.get("applyOrganizationId"); // 申请部门id
+  predictComeDate = mini.get("predictComeDate"); // 预计到岗时间
+  workRemark = mini.get("workRemark"); // 工作描述
+  workExperience = mini.get("workExperience"); // 工作经验
+  requiredSkill = mini.get("requiredSkill"); // 必备技能
+  abilityDemanded = mini.get("abilityDemanded"); // 素质及能力要求
+});
+// 选择岗位
+function choseJob() {
+  // 模拟选中岗位
+  // 获取选中值（岗位ID,岗位名称,部门ID,部门名称）
+  // 模拟操作
+  OpenDialog("/recruit/jobController/toSelectPage", "选择岗位", '', '680', '460', setJobData);
+}
+// 选择岗位 回调函数
+function setJobData(action, e) {
+  if (action == "ok") {
+    var iframe = e.getIFrameEl();
+    var data = iframe.contentWindow.GetData();
+    data = mini.clone(data);
+    apply_post_name.setValue(data.cJobname);
+    apply_organization_name.setValue(data.cOrgname);
+    apply_organization_id.setValue(data.cOrgcode);
+    apply_post_id.setValue(data.cJobcode);
+  }
+}
+
+// 选择历史记录回调函数 回调函数
+function setHistoryData(action, e) {
+  if (action == "ok") {
+    var iframe = e.getIFrameEl();
+    var data = iframe.contentWindow.GetData();
+    if (data.type == "1") { // 工作描述
+      workRemark.setValue(data.str);
+    } else if (data.type == "2") { // 工作经验
+      workExperience.setValue(data.str);
+    } else if (data.type == "3") { // 必备技能
+      requiredSkill.setValue(data.str);
+    } else { // 素质及能力要求
+      abilityDemanded.setValue(data.str);
+    }
+  }
+}
+
+// 工 作描述、工作经验、必备技能、素质及能力要求 选择历史记录
+function choseHistory(type) {
+  var postId = apply_post_id.getValue();
+  if (postId == null || postId == "") {
+    ShowWarnTip("请先选择岗位");
+  } else {
+    OpenDialog("/recruit/demand/history?type=" + type+"&postId="+postId, "选择历史记录", '', '680', '460', setHistoryData);
+  }
+}
+
+// 提交新增需求表单
+function submitForm(typeStr) {
+  form.validate();
+  if (form.isValid() == false) {
+    return;
+  }
+  SaveData("/recruit/demand/save?typeStr=" + typeStr, $("#form1").serialize());
+}
+
+// 选中职级自动带出预计到岗时间
+function getDateByRank(e) {
+  predictComeDate.setValue("2017-06-01");
+}
+
+// 取消按钮
+function onCancel(e) {
+  CloseWindow("close", form);
+}

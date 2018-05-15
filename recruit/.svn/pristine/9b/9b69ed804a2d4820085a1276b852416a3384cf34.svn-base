@@ -1,0 +1,118 @@
+.increase:hover {
+    color: red;
+}
+a:hover {
+	
+}
+.increase {
+    color: #ea5100;
+    cursor: pointer;
+}
+.c999 {
+    color: #999;
+}
+.pb15 {
+    padding-bottom: 15px;
+}
+.pt5 {
+    padding-top: 5px;
+}
+.editCategory {
+	color: #06c;
+}
+.editCategory:hover {
+	color: blue;
+}
+#jobManaTxt {
+    padding: 10px;
+}
+.tags_Category_title {
+    border-bottom: 1px solid #DDD;
+    padding-bottom: 5px;
+    padding-left: 5px;
+    margin: 0 15px;
+}
+.commonlyUsedTag {
+    padding: 5px 0 0;
+    display:inline-block;
+}
+.commonlyUsedTag a {
+	display: none;
+}
+.commonlyUsedTag:hover a{
+	display: inline-block;
+}
+a.deleteCommonlyUsedTag.closeTags {
+    width: 0px;
+    height: 14px;
+    cursor: pointer;
+}
+.tagsList {
+    padding-top: 3px;
+    padding-bottom: 2px;
+}
+.tagsList {
+    padding: 0px 12px 0px 3px;
+    display: inline-block;
+}
+strong {
+    font-style: normal;
+    color: #666;
+}
+.label-list {
+	color: #444;
+	padding-left: 25px;
+	padding-bottom: 20px;
+}
+#resume-category-win, #resume-label-win {
+	width: 410px !important;
+}
+.win-co {
+	margin: 20px 10px;
+	line-height: 32px;
+}
+.win-co .category-name, .win-co .label-name{
+	margin-left: 5px;
+	width: 206px;
+	height: 24px;
+}
+.win-co .label {
+	display: inline-block;
+	width: 60px;
+	text-align: right;
+}
+.win-co .label-select.mini-buttonedit {
+	margin-left: 5px;
+	overflow: visible;
+}
+.win-co .label-select .mini-buttonedit-border {
+	height: 24px;
+	border-radius: 5px;
+}
+.win-co .tr {
+	line-height: 40px;
+}
+#tipWrap, #tipWrapLabel {
+	position: fixed; 
+	background: rgb(255, 251, 228) none repeat scroll 0% 0%; 
+	border: 2px solid rgb(235, 97, 0); 
+	left: 50%; 
+	top: 191.5px; 
+	margin-top: -100px; 
+	text-align: left; 
+	padding: 15px 20px 8px; 
+	box-shadow: 0px 2px 7px rgb(204, 204, 204); 
+	font-size: 14px; 
+	font-weight: bold; 
+	z-index: 999999; 
+	margin-left: -90.5px;
+	display: none;
+}
+#oTipsWrap, #oTipsWrapLabel {
+	text-align: right; 
+	padding-top: 10px;
+}
+#tipWrap .cancel_btn_pop, #tipWrapLabel .cancel_btn_pop {
+	font-size: 12px; 
+	font-weight: normal;
+}

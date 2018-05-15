@@ -1,0 +1,35 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ include file="/webpage/common.jsp" %>
+<%@taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fun"%> 
+<html>
+  <head>
+    <link type="text/css" rel="stylesheet" href="${webRoot}/resources/css/candidate/candidatePersonalResume.css"/>
+   
+    <title>中文简历</title>
+  </head>
+  <body>
+    <div class="resume-item op-record">
+            <div class="co">
+              <ul class="ul-records">
+                <c:set var="recordCount" value="0"></c:set>
+                <c:forEach items="${list}" var="o" varStatus="status">
+                    <c:set var="recordCount" value="${recordCount+1}"></c:set>
+                    <li class="bottom-dashed">
+                      <div class="operate-infor">
+                        <div><span>${o.operatorUser}</span></div>
+                        <div><span class="operate-time"><fmt:formatDate value="${o.operatorTime}" pattern="yyyy-MM-dd hh:mm:ss"/></span></div>
+                        <div><span>${o.operatorContent}</span></div>
+                      </div>
+                    </li>
+                </c:forEach>
+              </ul>
+              <c:if test="${recordCount==0}">
+                <div class="void-tip"><span>暂时无操作记录</span></div>
+              </c:if>
+            </div>
+          </div>
+  </body>
+  <script type="text/javascript" src="${webRoot}/resources/js/jquery.form.js"></script>
+  <script type="text/javascript" src="${webRoot}/resources/js/candidate/candidatePersonalResume.js"></script>
+  <script type="text/javascript" src="${webRoot}/resources/js/public/areaData.js"></script>
+</html>

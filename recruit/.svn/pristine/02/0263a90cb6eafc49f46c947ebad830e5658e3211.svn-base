@@ -1,0 +1,93 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ include file="/resources/context/jspBase.jsp"%>
+<!DOCTYPE html>
+<html>
+<head>
+<base href="<%=basePath%>">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+<title>Insert title here</title>
+<%@ include file="/resources/context/headResource.jsp"%>
+<style>
+html, body {
+  overflow: hidden; /* overflow|overflow-x|overflow-y : visible|hidden|scroll|auto */
+}
+</style>
+</head>
+<body>
+  <div class="mini-fit">
+    <form id="mainForm" class="mainform" method="post">
+      <input id="siteName" name="siteName" class="mini-hidden" value="" />
+      <input id="postName" name="postName" class="mini-hidden" value="" />
+      <input id="organizationDesc" name="reserved2" class="mini-hidden" value="" />
+      <table class="formTable" style="table-layout: fixed;">
+        <tr>
+          <td class="formLabel">组织:</td>
+          <td class="formContent"><input class="mini-combobox" style="width: 180px;"
+                                         textField="typeName" id="organizationId" name="reserved1" valueField="typeId" required="true"
+                                         url="/recruit/datadictGroupTypeController/getDictsByCode/campus_company" /></td>
+        </tr>
+        <tr>
+          <td class="formLabel">站点:</td>
+          <td class="formContent"><input class="mini-combobox" style="width: 180px;"
+            textField="siteName" id="siteId" name="siteId" valueField="siteId" required="true"
+            url="/recruit/campusSiteController/datagrid" /></td>
+        </tr>
+        <tr>
+          <td class="formLabel">岗位:</td>
+          <td class="formContent"><input class="mini-combobox" style="width: 180px;"
+            textField="typeName" id="postId" name="postId" valueField="typeId" required="true"
+            url="/recruit/datadictGroupTypeController/getDictsByCode/pose_type" /></td>
+        </tr>
+        <tr>
+          <td class="formLabel">本科:</td>
+          <td class="formContent"><input class="mini-spinner"  name="taskNumberBa" minValue="0" maxValue="99999" style="width:180px;"/></td>
+        </tr>
+        <tr>
+          <td class="formLabel">硕士:</td>
+          <td class="formContent"><input class="mini-spinner"  name="taskNumberMa" minValue="0" maxValue="99999" style="width:180px;"/></td>
+        </tr>
+        <tr>
+          <td class="formLabel">博士:</td>
+          <td class="formContent"><input class="mini-spinner"  name="taskNumberDo" minValue="0" maxValue="99999" style="width:180px;"/></td>
+        </tr>
+        <tr>
+          <td class="formLabel">备注:</td>
+          <td class="formContent"><input name="remark" class="mini-textbox" style="width: 180px" allowInput="true"/></td>
+        </tr>
+      </table>
+    </form>
+  </div>
+  <div class="mini-toolbar dialogFooter">
+    <a class="mini-button" style="width: 60px;" onclick="onOk()">确定</a> <span
+      style="display: inline-block; width: 25px;"></span> <a class="mini-button"
+      style="width: 60px;" onclick="onCancel()">取消</a>
+  </div>
+  <script>
+      mini.parse();
+      var form = new mini.Form("#mainForm");
+      
+      function onOk(e) {
+        form.validate();
+        if (form.isValid() == false) {
+          return;
+        }
+        var siteId = mini.get("siteId");
+        var postId = mini.get("postId");
+        var siteName = mini.get("siteName");
+        var postName = mini.get("postName");
+        var organizationId = mini.get("organizationId");
+        var organizationDesc = mini.get("organizationDesc");
+        siteName.setValue(siteId.getText());
+        postName.setValue(postId.getText());
+        organizationDesc.setValue(organizationId.getText());
+        SaveData("/recruit/campusTaskController/save", $("#mainForm").serialize());
+      }
+
+      function onCancel(e) {
+        CloseWindow("close", form);
+      }
+    </script>
+  <%@ include file="/resources/context/lazyResource.jsp"%>
+</body>
+</html>

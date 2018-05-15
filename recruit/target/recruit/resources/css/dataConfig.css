@@ -1,0 +1,14 @@
+.data-tree {
+	margin: 20px 0;
+	overflow: hidden;
+	padding: 10px 30px;
+}
+.mini-treegrid .mini-panel-border {
+	border: none;
+}
+.mini-treegrid .mini-grid-rows-view {
+	height: auto;
+}
+.table-operate {
+	margin-bottom: 10px;
+}

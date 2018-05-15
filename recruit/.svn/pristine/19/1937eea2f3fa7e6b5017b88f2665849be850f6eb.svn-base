@@ -1,0 +1,346 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.csot.recruit.dao.resume.EducationExperienceMapper" >
+  <resultMap id="BaseResultMap" type="com.csot.recruit.model.resume.EducationExperience" >
+    <id column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="EDU_START_DATE" property="eduStartDate" jdbcType="TIMESTAMP" />
+    <result column="EDU_END_DATE" property="eduEndDate" jdbcType="TIMESTAMP" />
+    <result column="SCHOOL_NAME" property="schoolName" jdbcType="VARCHAR" />
+    <result column="SCHOOL_NAME_EN" property="schoolNameEn" jdbcType="VARCHAR" />
+    <result column="EDUCATION" property="education" jdbcType="VARCHAR" />
+    <result column="MAJOR" property="major" jdbcType="VARCHAR" />
+    <result column="MAJOR_EN" property="majorEn" jdbcType="VARCHAR" />
+    <result column="RESUME_ID" property="resumeId" jdbcType="VARCHAR" />
+    <result column="EDU_TYPE" property="eduType" jdbcType="VARCHAR" />
+    <result column="CERTIFICATE" property="certificate" jdbcType="VARCHAR" />
+    <result column="FK_TID" property="fkTid" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    ID, EDU_START_DATE, EDU_END_DATE, SCHOOL_NAME, SCHOOL_NAME_EN, EDUCATION, MAJOR, 
+    MAJOR_EN, RESUME_ID, EDU_TYPE, CERTIFICATE, FK_TID
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.csot.recruit.model.resume.EducationExperienceCriteria" >
+    <include refid="Oracle_Dialect_Pagination_Prefix" />
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from T_RESUME_EDUCATION_EXPERIENCE
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <include refid="Oracle_Dialect_Pagination_Suffix" />
+  </select>
+  <select id="selectByResumeId" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from T_RESUME_EDUCATION_EXPERIENCE
+    where RESUME_ID = #{resumeId,jdbcType=VARCHAR}
+  </select>
+
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from T_RESUME_EDUCATION_EXPERIENCE
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from T_RESUME_EDUCATION_EXPERIENCE
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByResumeId" parameterType="java.lang.String" >
+    delete from T_RESUME_EDUCATION_EXPERIENCE 
+    where RESUME_ID = #{resumeId,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.csot.recruit.model.resume.EducationExperienceCriteria" >
+    delete from T_RESUME_EDUCATION_EXPERIENCE
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.csot.recruit.model.resume.EducationExperience" >
+    insert into T_RESUME_EDUCATION_EXPERIENCE (ID, EDU_START_DATE, EDU_END_DATE, 
+      SCHOOL_NAME, SCHOOL_NAME_EN, EDUCATION, 
+      MAJOR, MAJOR_EN, RESUME_ID, 
+      EDU_TYPE, CERTIFICATE, FK_TID
+      )
+    values (#{id,jdbcType=VARCHAR}, #{eduStartDate,jdbcType=TIMESTAMP}, #{eduEndDate,jdbcType=TIMESTAMP}, 
+      #{schoolName,jdbcType=VARCHAR}, #{schoolNameEn,jdbcType=VARCHAR}, #{education,jdbcType=VARCHAR}, 
+      #{major,jdbcType=VARCHAR}, #{majorEn,jdbcType=VARCHAR}, #{resumeId,jdbcType=VARCHAR}, 
+      #{eduType,jdbcType=VARCHAR}, #{certificate,jdbcType=VARCHAR}, #{fkTid,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.csot.recruit.model.resume.EducationExperience" >
+    insert into T_RESUME_EDUCATION_EXPERIENCE
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="eduStartDate != null" >
+        EDU_START_DATE,
+      </if>
+      <if test="eduEndDate != null" >
+        EDU_END_DATE,
+      </if>
+      <if test="schoolName != null" >
+        SCHOOL_NAME,
+      </if>
+      <if test="schoolNameEn != null" >
+        SCHOOL_NAME_EN,
+      </if>
+      <if test="education != null" >
+        EDUCATION,
+      </if>
+      <if test="major != null" >
+        MAJOR,
+      </if>
+      <if test="majorEn != null" >
+        MAJOR_EN,
+      </if>
+      <if test="resumeId != null" >
+        RESUME_ID,
+      </if>
+      <if test="eduType != null" >
+        EDU_TYPE,
+      </if>
+      <if test="certificate != null" >
+        CERTIFICATE,
+      </if>
+      <if test="fkTid != null" >
+        FK_TID,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="eduStartDate != null" >
+        #{eduStartDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="eduEndDate != null" >
+        #{eduEndDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="schoolName != null" >
+        #{schoolName,jdbcType=VARCHAR},
+      </if>
+      <if test="schoolNameEn != null" >
+        #{schoolNameEn,jdbcType=VARCHAR},
+      </if>
+      <if test="education != null" >
+        #{education,jdbcType=VARCHAR},
+      </if>
+      <if test="major != null" >
+        #{major,jdbcType=VARCHAR},
+      </if>
+      <if test="majorEn != null" >
+        #{majorEn,jdbcType=VARCHAR},
+      </if>
+      <if test="resumeId != null" >
+        #{resumeId,jdbcType=VARCHAR},
+      </if>
+      <if test="eduType != null" >
+        #{eduType,jdbcType=VARCHAR},
+      </if>
+      <if test="certificate != null" >
+        #{certificate,jdbcType=VARCHAR},
+      </if>
+      <if test="fkTid != null" >
+        #{fkTid,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.csot.recruit.model.resume.EducationExperienceCriteria" resultType="java.lang.Integer" >
+    select count(*) from T_RESUME_EDUCATION_EXPERIENCE
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update T_RESUME_EDUCATION_EXPERIENCE
+    <set >
+      <if test="record.id != null" >
+        ID = #{record.id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.eduStartDate != null" >
+        EDU_START_DATE = #{record.eduStartDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.eduEndDate != null" >
+        EDU_END_DATE = #{record.eduEndDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.schoolName != null" >
+        SCHOOL_NAME = #{record.schoolName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.schoolNameEn != null" >
+        SCHOOL_NAME_EN = #{record.schoolNameEn,jdbcType=VARCHAR},
+      </if>
+      <if test="record.education != null" >
+        EDUCATION = #{record.education,jdbcType=VARCHAR},
+      </if>
+      <if test="record.major != null" >
+        MAJOR = #{record.major,jdbcType=VARCHAR},
+      </if>
+      <if test="record.majorEn != null" >
+        MAJOR_EN = #{record.majorEn,jdbcType=VARCHAR},
+      </if>
+      <if test="record.resumeId != null" >
+        RESUME_ID = #{record.resumeId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.eduType != null" >
+        EDU_TYPE = #{record.eduType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.certificate != null" >
+        CERTIFICATE = #{record.certificate,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fkTid != null" >
+        FK_TID = #{record.fkTid,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update T_RESUME_EDUCATION_EXPERIENCE
+    set ID = #{record.id,jdbcType=VARCHAR},
+      EDU_START_DATE = #{record.eduStartDate,jdbcType=TIMESTAMP},
+      EDU_END_DATE = #{record.eduEndDate,jdbcType=TIMESTAMP},
+      SCHOOL_NAME = #{record.schoolName,jdbcType=VARCHAR},
+      SCHOOL_NAME_EN = #{record.schoolNameEn,jdbcType=VARCHAR},
+      EDUCATION = #{record.education,jdbcType=VARCHAR},
+      MAJOR = #{record.major,jdbcType=VARCHAR},
+      MAJOR_EN = #{record.majorEn,jdbcType=VARCHAR},
+      RESUME_ID = #{record.resumeId,jdbcType=VARCHAR},
+      EDU_TYPE = #{record.eduType,jdbcType=VARCHAR},
+      CERTIFICATE = #{record.certificate,jdbcType=VARCHAR},
+      FK_TID = #{record.fkTid,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.csot.recruit.model.resume.EducationExperience" >
+    update T_RESUME_EDUCATION_EXPERIENCE
+    <set >
+      <if test="eduStartDate != null" >
+        EDU_START_DATE = #{eduStartDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="eduEndDate != null" >
+        EDU_END_DATE = #{eduEndDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="schoolName != null" >
+        SCHOOL_NAME = #{schoolName,jdbcType=VARCHAR},
+      </if>
+      <if test="schoolNameEn != null" >
+        SCHOOL_NAME_EN = #{schoolNameEn,jdbcType=VARCHAR},
+      </if>
+      <if test="education != null" >
+        EDUCATION = #{education,jdbcType=VARCHAR},
+      </if>
+      <if test="major != null" >
+        MAJOR = #{major,jdbcType=VARCHAR},
+      </if>
+      <if test="majorEn != null" >
+        MAJOR_EN = #{majorEn,jdbcType=VARCHAR},
+      </if>
+      <if test="resumeId != null" >
+        RESUME_ID = #{resumeId,jdbcType=VARCHAR},
+      </if>
+      <if test="eduType != null" >
+        EDU_TYPE = #{eduType,jdbcType=VARCHAR},
+      </if>
+      <if test="certificate != null" >
+        CERTIFICATE = #{certificate,jdbcType=VARCHAR},
+      </if>
+      <if test="fkTid != null" >
+        FK_TID = #{fkTid,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.csot.recruit.model.resume.EducationExperience" >
+    update T_RESUME_EDUCATION_EXPERIENCE
+    set EDU_START_DATE = #{eduStartDate,jdbcType=TIMESTAMP},
+      EDU_END_DATE = #{eduEndDate,jdbcType=TIMESTAMP},
+      SCHOOL_NAME = #{schoolName,jdbcType=VARCHAR},
+      SCHOOL_NAME_EN = #{schoolNameEn,jdbcType=VARCHAR},
+      EDUCATION = #{education,jdbcType=VARCHAR},
+      MAJOR = #{major,jdbcType=VARCHAR},
+      MAJOR_EN = #{majorEn,jdbcType=VARCHAR},
+      RESUME_ID = #{resumeId,jdbcType=VARCHAR},
+      EDU_TYPE = #{eduType,jdbcType=VARCHAR},
+      CERTIFICATE = #{certificate,jdbcType=VARCHAR},
+      FK_TID = #{fkTid,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <sql id="Oracle_Dialect_Pagination_Prefix" >
+    <if test="page != null" >
+      select * from ( select row_.*, rownum rownum_ from ( 
+    </if>
+  </sql>
+  <sql id="Oracle_Dialect_Pagination_Suffix" >
+    <if test="page != null" >
+      <![CDATA[ ) row_ ) where rownum_ > #{page.begin} and rownum_ <= #{page.end} ]]>
+    </if>
+  </sql>
+</mapper>

@@ -1,0 +1,99 @@
+.tag-selected {
+	margin: 20px 0;
+	padding: 0 10px;
+	min-height: 60px;
+	background-color: #cddef2;
+}
+.tag-selected .title {
+	line-height: 32px;
+}
+.tag-selected .tag-a {
+	color: #06c;
+	padding-right: 6px;
+	display: inline-block;
+	border: 1px solid transparent;
+}
+.tag-selected .tag-a:hover {
+	border: 1px dashed #aaa;
+	color: #aaa;
+}
+.tag-selected .tag-a-add {
+	padding-right: 4px;
+}
+.tag-selected .tag-a-add:before {
+	content: "x";
+	font-size: 12px;
+	visibility: hidden;
+	padding-bottom: 2px;
+}
+.tag-selected .tag-a:hover .tag-a-add:before {
+	padding-bottom: 10px;
+	visibility: visible;
+}
+.tag-list .title {
+	margin: 0 10px;
+	border-bottom: 1px solid #d3d3d3;
+}
+.tag-list .title .title-text {
+	padding-right: 20px;
+	font-size: 13px;
+}
+.tag-list .title .tag-mana-a {
+	color: #eb6100;
+	position: relative;
+}
+.tag-list .title .tag-mana-a .font-icon {
+	margin: 0;
+	display: none;
+	margin-left: -3px;
+}
+.tag-list .title .tag-mana-a:hover .font-icon{
+	display: inline-block;
+}
+.tag-list .tag-all {
+	min-height: 50px;
+	padding: 0 10px;
+}
+.tag-list .tag-all .void-tip {
+	padding-left: 20px;
+	color: #999;
+}
+.tag-list .tag-all .tag-li {
+	margin: 5px 0;
+	transition: all .6s;
+}
+.tag-li .tag-co {
+	padding-right: 6px;
+	color: #222;
+}
+.tag-li .tag-a {
+	color: #06c;
+	margin: 4px 5px;
+	padding-right: 6px;
+	display: inline-block;
+	border: 1px dashed #ccc;
+	transition: all 1s;
+}
+.tag-li .tag-a.selected {
+	display: none;
+}
+.tag-li .tag-a:hover {
+	border-color: #444;
+}
+.tag-a-add {
+	width: 1em;
+	position: relative;
+	padding-left: 4px;
+	padding-right: 2px;
+}
+.tag-a-add:before {
+	font-weight: bold;
+	font-size: 14px;
+	color: #bbb;
+}
+.tag-li .tag-a-add:before{
+	content:"+";
+}
+.tag-li .tag-a:hover .tag-a-add:before {
+	color: #06c;
+}

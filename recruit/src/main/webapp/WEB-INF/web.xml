@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee"
+  xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
+  version="3.0">
+  <display-name>recruit</display-name>
+  <context-param>
+    <param-name>webAppRootKey</param-name>
+    <param-value>maven.recruit.root</param-value>
+  </context-param>
+  <!-- 激活defaultServlet来处理静态文件 -->
+  <!-- 以下default servlet-mapping配置，要在 SpringMVC的拦截器DispatchServlet之前 -->
+  <servlet-mapping>
+    <servlet-name>default</servlet-name>
+    <url-pattern>/resources/*</url-pattern>
+  </servlet-mapping>
+  <listener>
+    <listener-class>org.springframework.web.util.Log4jConfigListener</listener-class>
+  </listener>
+  <filter>     
+  	<filter-name>urlFilter</filter-name>     
+  	<filter-class>com.csot.recruit.common.filter.UrlFilter</filter-class>     
+  	<init-param>       
+  		<param-name>DEFAULT_URI_ENCODE</param-name>       
+  		<param-value>UTF-8</param-value>     
+  	</init-param>   
+  </filter>   
+  <filter-mapping>    
+  	<filter-name>urlFilter</filter-name>     
+  	<url-pattern>/*</url-pattern>   
+  </filter-mapping>
+  
+  <!-- shiro 安全过滤器 -->
+  <filter>
+    <filter-name>shiroFilter</filter-name>
+    <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+    <async-supported>true</async-supported>
+    <init-param>
+      <param-name>targetFilterLifecycle</param-name>
+      <param-value>true</param-value>
+    </init-param>
+  </filter>
+
+  <filter-mapping>
+    <filter-name>shiroFilter</filter-name>
+    <url-pattern>/*</url-pattern>
+    <dispatcher>REQUEST</dispatcher>
+  </filter-mapping>
+  
+  <!-- 处理 提交过来的字符出现乱码 -->
+  <filter>
+    <filter-name>CharacterEncodingFilter</filter-name>
+    <filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
+    <init-param>
+      <param-name>encoding</param-name>
+      <param-value>UTF-8</param-value>
+    </init-param>
+    <init-param>
+      <param-name>forceEncoding</param-name>
+      <param-value>true</param-value>
+    </init-param>
+  </filter>
+  <filter-mapping>
+    <filter-name>CharacterEncodingFilter</filter-name>
+    <url-pattern>/*</url-pattern>
+  </filter-mapping>
+  <!-- HiddenHttpMethodFilter过滤器，可以将这些请求转换为标准的http方法，使得支持GET、POST、PUT与DELETE等HTTP请求 -->
+  <!-- form中需要类似配置 input type="hidden" name="_method" value="put" -->
+  <filter>
+    <filter-name>HiddenHttpMethodFilter</filter-name>
+    <filter-class>org.springframework.web.filter.HiddenHttpMethodFilter</filter-class>
+  </filter>
+  <filter-mapping>
+    <filter-name>HiddenHttpMethodFilter</filter-name>
+    <servlet-name>DispatcherServlet</servlet-name>
+  </filter-mapping>
+  <context-param>
+    <param-name>contextConfigLocation</param-name>
+    <param-value>classpath:spring-context.xml,classpath:spring-mybatis.xml,classpath:cxf-servlet.xml</param-value>
+  </context-param>
+  <servlet>
+    <servlet-name>DispatcherServlet</servlet-name>
+    <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+    <init-param>
+      <param-name>contextConfigLocation</param-name>
+      <param-value>classpath:spring-servlet-mvc.xml</param-value>
+    </init-param>
+    <load-on-startup>1</load-on-startup>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>DispatcherServlet</servlet-name>
+    <url-pattern>/</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+    <servlet-name>ApplicationServlet</servlet-name>
+    <servlet-class>com.csot.recruit.common.servlet.ApplicationServlet</servlet-class>
+    <load-on-startup>2</load-on-startup>
+  </servlet>
+  
+  <!-- webservice发布 -->
+  <servlet>  
+  	<description>Apache CXF Endpoint</description>  
+    <display-name>cxf</display-name>  
+    <servlet-name>cxf</servlet-name>  
+    <servlet-class>org.apache.cxf.transport.servlet.CXFServlet</servlet-class>  
+    <load-on-startup>3</load-on-startup>  
+  </servlet>  
+  <servlet-mapping>  
+    <servlet-name>cxf</servlet-name>  
+    <url-pattern>/webservice/*</url-pattern>  
+  </servlet-mapping>
+  
+  <listener>
+  	<description>spring监听器</description>
+    <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+  </listener>
+  <listener>
+    <description>request监听器</description>
+    <listener-class>org.springframework.web.context.request.RequestContextListener</listener-class>
+  </listener>
+	<listener>
+    <description>系统初始化监听器</description>
+    <listener-class>com.csot.recruit.common.listener.InitListener</listener-class>
+  </listener>
+  <listener>
+    <listener-class>com.csot.recruit.common.listener.OnlineListener</listener-class>
+  </listener>
+ 	<!--  负责将 Web 应用根目录以 webAppRootKey 上下文参数指定的属性名添加到系统参数中   -->
+	<context-param>          
+		<param-name>webAppRootKey</param-name>           
+		<param-value>webapp.root</param-value>      
+	</context-param> 
+	<listener>   
+		<listener-class>org.springframework.web.util.WebAppRootListener</listener-class>   
+	</listener>
+  <!-- 暂时不使用此方法，容器启动的加载顺序会有问题
+  <servlet>
+    <servlet-name>ServletConfigurator</servlet-name>
+    <servlet-class>org.logicalcobwebs.proxool.configuration.ServletConfigurator</servlet-class>
+    <init-param>
+      <param-name>xmlFile</param-name>
+      <param-value>/WEB-INF/classes/proxool.xml</param-value>
+    </init-param>
+    <load-on-startup>1</load-on-startup>
+  </servlet>
+  -->
+  <servlet>
+    <servlet-name>ProxoolAdmin</servlet-name>
+    <servlet-class>org.logicalcobwebs.proxool.admin.servlet.AdminServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ProxoolAdmin</servlet-name>
+    <url-pattern>/proxool/admin</url-pattern>
+  </servlet-mapping>
+  <welcome-file-list>
+    <welcome-file>/webpage/login.jsp</welcome-file>
+  </welcome-file-list>
+  <!-- 通过错误码来配置error-page ,配置了当系统发生404错误时，跳转到错误处理页面NotFound.jsp。 --> 
+  <error-page>      
+  	<error-code>404</error-code>      
+  	<location>/webpage/login.jsp</location>  
+  </error-page>
+</web-app>

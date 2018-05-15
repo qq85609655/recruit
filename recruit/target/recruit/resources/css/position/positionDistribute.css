@@ -1,0 +1,145 @@
+/* ְλ�ַ���ҳ��css */
+.main {
+	margin-top: 50px;
+}
+.position-distribute-main {
+	background-color: #FFFFFF;
+	width: 100%;
+}
+.posi-distribute-btn {
+  background-color: #F4F4F4;
+	width: 101px;
+	height: 33px;
+	cursor: pointer;
+	margin-bottom: -1px;
+	margin-left: 15px;
+	border-radius: 5px 5px 0 0;
+	color: #aebed7;
+	font-size:13px;
+}
+.posi-distribute-btn.tab-up {
+  background-color: #FFFFFF;
+	border-bottom-color: #FFFFFF;
+	color: blue;
+}
+.posi-distribute-div {
+	display: none;
+}
+.posi-distribute-div.tab-up {
+	display: block;
+}
+.position-distribute-tab1 {
+	width: 100%;
+	margin-top: -33px;
+}
+
+.position-distribute-td1 span {
+	color: blue;
+	font-size:13px;
+}
+.distribute-surface {
+	margin: 10px 15px;
+	min-height: 70px; 
+	clear:left;
+}
+.distribute-surface span {
+	color: gray;
+	font-size: 13px;
+}
+.distribute-inner-upper {
+	float:left;
+	margin: 25px 15px 0;
+}
+.distribute-inner-bottom {
+	float: left;
+	margin-top:13px;
+}
+.ganji-surface .distribute-inner-bottom {
+	margin-top: 20px;
+}
+.job51-hidden-form {
+	height:300px;
+}
+.distribute-form-tab {
+	margin-left: 30px;
+	padding-top: 20px;
+}
+.distribute-form-tab font {
+	vertical-align:middle;
+	padding-top: 2px;
+	padding-right: 2px;
+}
+.distribute-form-tab input[type='submit'] {
+	background-color: #48b8e8;
+  border: medium none;
+  color: #fff;
+  cursor: pointer;
+  font-weight: normal;
+  height: 24px;
+  line-height: 22px;
+  padding: 0 10px;
+}
+.distribute-form-tab tr {
+	height: 35px;
+}
+.distribute-form-left {
+	width: 50%;
+	margin-top: 20px;
+	display: inline-block;
+}
+.distribute-form-right {
+	display: inline-block;
+	vertical-align: top;
+	font-size: 12px;
+	color:gray;
+	background-color: #EEF2FB;
+	margin-top: 20px;
+	border-radius: 5px;
+	width: 48%;
+}
+
+.distribute-form-right .tips {
+	padding: 10px;
+}
+.distribute-form-right .tips div {
+	padding-left: 1em;
+}
+.recruit-site-hidden-form {
+  margin-top:20px;
+	clear:both;
+	margin-bottom: 10px; 
+  display:none;
+}
+#chinahr-hidden-form {
+	height: 224px;
+}
+#cjol-hidden-form {
+	height: 260px;
+}
+#zhaopin-hidden-form {
+	height: 292px;
+}
+#liepin-hidden-form {
+	height: 253px;
+}
+#ganji-hidden-form {
+	height: 224px;
+}
+.posi-distribute-div-co {
+	margin: 20px;
+}
+.border-b-dotted {
+	border-bottom: 1px dotted #898989;
+}
+.captcha-img {
+	cursor: pointer;
+	height: 23px;
+	margin-left: 6px;
+	vertical-align: bottom;
+}
+.msg-box.n-right {
+	padding-left: 10px;
+}
+.msg-box .n-error .n-msg {
+	color: red;
+}

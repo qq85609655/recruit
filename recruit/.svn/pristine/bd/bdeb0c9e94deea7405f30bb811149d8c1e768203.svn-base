@@ -1,0 +1,1 @@
+<script src="${basePath}resources/js/public/common.js"></script>

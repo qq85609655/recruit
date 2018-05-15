@@ -1,0 +1,478 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.csot.recruit.dao.original.flow.websitePost.PostWebsiteMapper" >
+  <resultMap id="BaseResultMap" type="com.csot.recruit.model.original.flow.websitePost.PostWebsite" >
+    <id column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="POST_ID" property="postId" jdbcType="VARCHAR" />
+    <result column="RECRUIT_POSITION_ID" property="recruitPositionId" jdbcType="VARCHAR" />
+    <result column="POST_NAME" property="postName" jdbcType="VARCHAR" />
+    <result column="DEPUTY_ID" property="deputyId" jdbcType="VARCHAR" />
+    <result column="DEPUTY_NAME" property="deputyName" jdbcType="VARCHAR" />
+    <result column="INSTRUCT_DATE" property="instructDate" jdbcType="TIMESTAMP" />
+    <result column="WEBSITE_POST_NAME" property="websitePostName" jdbcType="VARCHAR" />
+    <result column="STATE" property="state" jdbcType="VARCHAR" />
+    <result column="LAST_INSTRUCT" property="lastInstruct" jdbcType="VARCHAR" />
+    <result column="CREATOR_ID" property="creatorId" jdbcType="VARCHAR" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="UPDATE_DATE" property="updateDate" jdbcType="TIMESTAMP" />
+    <result column="MODIFIED_ID" property="modifiedId" jdbcType="VARCHAR" />
+    <result column="MODIFIED_NAME" property="modifiedName" jdbcType="VARCHAR" />
+    <result column="WEBSITE_TYPE" property="websiteType" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.csot.recruit.model.original.flow.websitePost.PostWebsiteWithBLOBs" extends="BaseResultMap" >
+    <result column="CONTENT" property="content" jdbcType="CLOB" />
+    <result column="CONTENT2" property="content2" jdbcType="CLOB" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    ID, POST_ID, RECRUIT_POSITION_ID, POST_NAME, DEPUTY_ID, DEPUTY_NAME, INSTRUCT_DATE, 
+    WEBSITE_POST_NAME, STATE, LAST_INSTRUCT, CREATOR_ID, CREATE_DATE, UPDATE_DATE, MODIFIED_ID, 
+    WEBSITE_TYPE,(select name from T_SYS_USER u where u.id=MODIFIED_ID) AS MODIFIED_NAME
+  </sql>
+  <sql id="Blob_Column_List" >
+    CONTENT, CONTENT2
+  </sql>
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.csot.recruit.model.original.flow.websitePost.PostWebsiteCriteria" >
+    <include refid="Oracle_Dialect_Pagination_Prefix" />
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from T_POST_WEBSITE
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <include refid="Oracle_Dialect_Pagination_Suffix" />
+  </select>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.csot.recruit.model.original.flow.websitePost.PostWebsiteCriteria" >
+    <include refid="Oracle_Dialect_Pagination_Prefix" />
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from T_POST_WEBSITE
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <include refid="Oracle_Dialect_Pagination_Suffix" />
+  </select>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from T_POST_WEBSITE
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from T_POST_WEBSITE
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.csot.recruit.model.original.flow.websitePost.PostWebsiteCriteria" >
+    delete from T_POST_WEBSITE
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.csot.recruit.model.original.flow.websitePost.PostWebsiteWithBLOBs" >
+    insert into T_POST_WEBSITE (ID, POST_ID, RECRUIT_POSITION_ID, 
+      POST_NAME, DEPUTY_ID, DEPUTY_NAME, 
+      INSTRUCT_DATE, WEBSITE_POST_NAME, STATE, 
+      LAST_INSTRUCT, CREATOR_ID, CREATE_DATE, 
+      UPDATE_DATE, MODIFIED_ID, WEBSITE_TYPE, 
+      CONTENT, CONTENT2)
+    values (#{id,jdbcType=VARCHAR}, #{postId,jdbcType=VARCHAR}, #{recruitPositionId,jdbcType=VARCHAR}, 
+      #{postName,jdbcType=VARCHAR}, #{deputyId,jdbcType=VARCHAR}, #{deputyName,jdbcType=VARCHAR}, 
+      #{instructDate,jdbcType=TIMESTAMP}, #{websitePostName,jdbcType=VARCHAR}, #{state,jdbcType=VARCHAR}, 
+      #{lastInstruct,jdbcType=VARCHAR}, #{creatorId,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, 
+      #{updateDate,jdbcType=TIMESTAMP}, #{modifiedId,jdbcType=VARCHAR}, #{websiteType,jdbcType=VARCHAR}, 
+      #{content,jdbcType=CLOB}, #{content2,jdbcType=CLOB})
+  </insert>
+  <insert id="insertSelective" parameterType="com.csot.recruit.model.original.flow.websitePost.PostWebsiteWithBLOBs" >
+    insert into T_POST_WEBSITE
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="postId != null" >
+        POST_ID,
+      </if>
+      <if test="recruitPositionId != null" >
+        RECRUIT_POSITION_ID,
+      </if>
+      <if test="postName != null" >
+        POST_NAME,
+      </if>
+      <if test="deputyId != null" >
+        DEPUTY_ID,
+      </if>
+      <if test="deputyName != null" >
+        DEPUTY_NAME,
+      </if>
+      <if test="instructDate != null" >
+        INSTRUCT_DATE,
+      </if>
+      <if test="websitePostName != null" >
+        WEBSITE_POST_NAME,
+      </if>
+      <if test="state != null" >
+        STATE,
+      </if>
+      <if test="lastInstruct != null" >
+        LAST_INSTRUCT,
+      </if>
+      <if test="creatorId != null" >
+        CREATOR_ID,
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE,
+      </if>
+      <if test="updateDate != null" >
+        UPDATE_DATE,
+      </if>
+      <if test="modifiedId != null" >
+        MODIFIED_ID,
+      </if>
+      <if test="websiteType != null" >
+        WEBSITE_TYPE,
+      </if>
+      <if test="content != null" >
+        CONTENT,
+      </if>
+      <if test="content2 != null" >
+        CONTENT2,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="postId != null" >
+        #{postId,jdbcType=VARCHAR},
+      </if>
+      <if test="recruitPositionId != null" >
+        #{recruitPositionId,jdbcType=VARCHAR},
+      </if>
+      <if test="postName != null" >
+        #{postName,jdbcType=VARCHAR},
+      </if>
+      <if test="deputyId != null" >
+        #{deputyId,jdbcType=VARCHAR},
+      </if>
+      <if test="deputyName != null" >
+        #{deputyName,jdbcType=VARCHAR},
+      </if>
+      <if test="instructDate != null" >
+        #{instructDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="websitePostName != null" >
+        #{websitePostName,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null" >
+        #{state,jdbcType=VARCHAR},
+      </if>
+      <if test="lastInstruct != null" >
+        #{lastInstruct,jdbcType=VARCHAR},
+      </if>
+      <if test="creatorId != null" >
+        #{creatorId,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifiedId != null" >
+        #{modifiedId,jdbcType=VARCHAR},
+      </if>
+      <if test="websiteType != null" >
+        #{websiteType,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null" >
+        #{content,jdbcType=CLOB},
+      </if>
+      <if test="content2 != null" >
+        #{content2,jdbcType=CLOB},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.csot.recruit.model.original.flow.websitePost.PostWebsiteCriteria" resultType="java.lang.Integer" >
+    select count(*) from T_POST_WEBSITE
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update T_POST_WEBSITE
+    <set >
+      <if test="record.id != null" >
+        ID = #{record.id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.postId != null" >
+        POST_ID = #{record.postId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.recruitPositionId != null" >
+        RECRUIT_POSITION_ID = #{record.recruitPositionId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.postName != null" >
+        POST_NAME = #{record.postName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.deputyId != null" >
+        DEPUTY_ID = #{record.deputyId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.deputyName != null" >
+        DEPUTY_NAME = #{record.deputyName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.instructDate != null" >
+        INSTRUCT_DATE = #{record.instructDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.websitePostName != null" >
+        WEBSITE_POST_NAME = #{record.websitePostName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.state != null" >
+        STATE = #{record.state,jdbcType=VARCHAR},
+      </if>
+      <if test="record.lastInstruct != null" >
+        LAST_INSTRUCT = #{record.lastInstruct,jdbcType=VARCHAR},
+      </if>
+      <if test="record.creatorId != null" >
+        CREATOR_ID = #{record.creatorId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createDate != null" >
+        CREATE_DATE = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateDate != null" >
+        UPDATE_DATE = #{record.updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.modifiedId != null" >
+        MODIFIED_ID = #{record.modifiedId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.websiteType != null" >
+        WEBSITE_TYPE = #{record.websiteType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.content != null" >
+        CONTENT = #{record.content,jdbcType=CLOB},
+      </if>
+      <if test="record.content2 != null" >
+        CONTENT2 = #{record.content2,jdbcType=CLOB},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map" >
+    update T_POST_WEBSITE
+    set ID = #{record.id,jdbcType=VARCHAR},
+      POST_ID = #{record.postId,jdbcType=VARCHAR},
+      RECRUIT_POSITION_ID = #{record.recruitPositionId,jdbcType=VARCHAR},
+      POST_NAME = #{record.postName,jdbcType=VARCHAR},
+      DEPUTY_ID = #{record.deputyId,jdbcType=VARCHAR},
+      DEPUTY_NAME = #{record.deputyName,jdbcType=VARCHAR},
+      INSTRUCT_DATE = #{record.instructDate,jdbcType=TIMESTAMP},
+      WEBSITE_POST_NAME = #{record.websitePostName,jdbcType=VARCHAR},
+      STATE = #{record.state,jdbcType=VARCHAR},
+      LAST_INSTRUCT = #{record.lastInstruct,jdbcType=VARCHAR},
+      CREATOR_ID = #{record.creatorId,jdbcType=VARCHAR},
+      CREATE_DATE = #{record.createDate,jdbcType=TIMESTAMP},
+      UPDATE_DATE = #{record.updateDate,jdbcType=TIMESTAMP},
+      MODIFIED_ID = #{record.modifiedId,jdbcType=VARCHAR},
+      WEBSITE_TYPE = #{record.websiteType,jdbcType=VARCHAR},
+      CONTENT = #{record.content,jdbcType=CLOB},
+      CONTENT2 = #{record.content2,jdbcType=CLOB}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update T_POST_WEBSITE
+    set ID = #{record.id,jdbcType=VARCHAR},
+      POST_ID = #{record.postId,jdbcType=VARCHAR},
+      RECRUIT_POSITION_ID = #{record.recruitPositionId,jdbcType=VARCHAR},
+      POST_NAME = #{record.postName,jdbcType=VARCHAR},
+      DEPUTY_ID = #{record.deputyId,jdbcType=VARCHAR},
+      DEPUTY_NAME = #{record.deputyName,jdbcType=VARCHAR},
+      INSTRUCT_DATE = #{record.instructDate,jdbcType=TIMESTAMP},
+      WEBSITE_POST_NAME = #{record.websitePostName,jdbcType=VARCHAR},
+      STATE = #{record.state,jdbcType=VARCHAR},
+      LAST_INSTRUCT = #{record.lastInstruct,jdbcType=VARCHAR},
+      CREATOR_ID = #{record.creatorId,jdbcType=VARCHAR},
+      CREATE_DATE = #{record.createDate,jdbcType=TIMESTAMP},
+      UPDATE_DATE = #{record.updateDate,jdbcType=TIMESTAMP},
+      MODIFIED_ID = #{record.modifiedId,jdbcType=VARCHAR},
+      WEBSITE_TYPE = #{record.websiteType,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.csot.recruit.model.original.flow.websitePost.PostWebsiteWithBLOBs" >
+    update T_POST_WEBSITE
+    <set >
+      <if test="postId != null" >
+        POST_ID = #{postId,jdbcType=VARCHAR},
+      </if>
+      <if test="recruitPositionId != null" >
+        RECRUIT_POSITION_ID = #{recruitPositionId,jdbcType=VARCHAR},
+      </if>
+      <if test="postName != null" >
+        POST_NAME = #{postName,jdbcType=VARCHAR},
+      </if>
+      <if test="deputyId != null" >
+        DEPUTY_ID = #{deputyId,jdbcType=VARCHAR},
+      </if>
+      <if test="deputyName != null" >
+        DEPUTY_NAME = #{deputyName,jdbcType=VARCHAR},
+      </if>
+      <if test="instructDate != null" >
+        INSTRUCT_DATE = #{instructDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="websitePostName != null" >
+        WEBSITE_POST_NAME = #{websitePostName,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null" >
+        STATE = #{state,jdbcType=VARCHAR},
+      </if>
+      <if test="lastInstruct != null" >
+        LAST_INSTRUCT = #{lastInstruct,jdbcType=VARCHAR},
+      </if>
+      <if test="creatorId != null" >
+        CREATOR_ID = #{creatorId,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateDate != null" >
+        UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifiedId != null" >
+        MODIFIED_ID = #{modifiedId,jdbcType=VARCHAR},
+      </if>
+      <if test="websiteType != null" >
+        WEBSITE_TYPE = #{websiteType,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null" >
+        CONTENT = #{content,jdbcType=CLOB},
+      </if>
+      <if test="content2 != null" >
+        CONTENT2 = #{content2,jdbcType=CLOB},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.csot.recruit.model.original.flow.websitePost.PostWebsiteWithBLOBs" >
+    update T_POST_WEBSITE
+    set POST_ID = #{postId,jdbcType=VARCHAR},
+      RECRUIT_POSITION_ID = #{recruitPositionId,jdbcType=VARCHAR},
+      POST_NAME = #{postName,jdbcType=VARCHAR},
+      DEPUTY_ID = #{deputyId,jdbcType=VARCHAR},
+      DEPUTY_NAME = #{deputyName,jdbcType=VARCHAR},
+      INSTRUCT_DATE = #{instructDate,jdbcType=TIMESTAMP},
+      WEBSITE_POST_NAME = #{websitePostName,jdbcType=VARCHAR},
+      STATE = #{state,jdbcType=VARCHAR},
+      LAST_INSTRUCT = #{lastInstruct,jdbcType=VARCHAR},
+      CREATOR_ID = #{creatorId,jdbcType=VARCHAR},
+      CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+      MODIFIED_ID = #{modifiedId,jdbcType=VARCHAR},
+      WEBSITE_TYPE = #{websiteType,jdbcType=VARCHAR},
+      CONTENT = #{content,jdbcType=CLOB},
+      CONTENT2 = #{content2,jdbcType=CLOB}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.csot.recruit.model.original.flow.websitePost.PostWebsite" >
+    update T_POST_WEBSITE
+    set POST_ID = #{postId,jdbcType=VARCHAR},
+      RECRUIT_POSITION_ID = #{recruitPositionId,jdbcType=VARCHAR},
+      POST_NAME = #{postName,jdbcType=VARCHAR},
+      DEPUTY_ID = #{deputyId,jdbcType=VARCHAR},
+      DEPUTY_NAME = #{deputyName,jdbcType=VARCHAR},
+      INSTRUCT_DATE = #{instructDate,jdbcType=TIMESTAMP},
+      WEBSITE_POST_NAME = #{websitePostName,jdbcType=VARCHAR},
+      STATE = #{state,jdbcType=VARCHAR},
+      LAST_INSTRUCT = #{lastInstruct,jdbcType=VARCHAR},
+      CREATOR_ID = #{creatorId,jdbcType=VARCHAR},
+      CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+      MODIFIED_ID = #{modifiedId,jdbcType=VARCHAR},
+      WEBSITE_TYPE = #{websiteType,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <sql id="Oracle_Dialect_Pagination_Prefix" >
+    <if test="page != null" >
+      select * from ( select row_.*, rownum rownum_ from ( 
+    </if>
+  </sql>
+  <sql id="Oracle_Dialect_Pagination_Suffix" >
+    <if test="page != null" >
+      <![CDATA[ ) row_ ) where rownum_ > #{page.begin} and rownum_ <= #{page.end} ]]>
+    </if>
+  </sql>
+</mapper>

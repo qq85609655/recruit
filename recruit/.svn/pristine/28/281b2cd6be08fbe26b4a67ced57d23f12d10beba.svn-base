@@ -1,0 +1,121 @@
+param = new Object();
+// 头部状态过滤数据
+function choseState(state, e) {
+  $(".posi-import-btn").removeClass("tab-up");
+  $(e).addClass("tab-up");
+  tabState = state;
+  search();
+}
+
+function search() {
+  var grid = mini.get("datagrid1");
+  param = new Object();
+  /*
+   * param.startDate = mini.get("startDate").getFormValue(); param.endDate =
+   * mini.get("endDate").getFormValue();
+   */
+  param.searchKey = $("#searchKey").val();
+  param.stateSelf = tabState;
+  grid.load(param);
+}
+
+// 共担岗位
+function sharePost() {
+  var grid = mini.get("datagrid1");
+  var rows = grid.getSelecteds();
+  if (rows.length > 0) {
+    var row = rows[0];
+    var id = row.id;
+    OpenDialog(basePath + "/demand/share?id=" + id, "共承岗位", null, 700, 500);
+  } else {
+    ShowWarnTip("请选择一条记录");
+  }
+}
+
+// 修改招聘需求信息
+function updateRecruitDemand() {
+  var grid = mini.get("datagrid1");
+  var rows = grid.getSelecteds();
+  if (rows.length > 0) {
+    var row = rows[0];
+    var id = row.id;
+    openUpdateView(id);
+  } else {
+    ShowWarnTip("请选择一条记录");
+  }
+}
+
+// 打开修改页面
+function openUpdateView(id) {
+  var grid = mini.get("datagrid1");
+  OpenDialog(basePath + "/demand/modify/" + id, "招聘需求修改", grid, 900, 610);
+}
+
+// 打开新增需求页面
+function addRecruitDemand() {
+  var grid = mini.get("datagrid1");
+  OpenDialog(basePath + "/demand/create", "招聘需求申请", grid, 900, 610);
+
+}
+
+function onKeyEnter(e) {
+  search();
+}
+// 为数据添加超链接
+function cellclick(e) {
+  var row = e.row, column = e.column, field = e.field, value = e.value;
+  // 岗位名称
+  if (field == "applyPostName") {
+    openUpdateView(row.id);
+  }
+  if (field == "logNum") {
+    // 查看该需求的变更记录
+    OpenDialog(basePath + "/recruitDemandLogController/list?id=" + row.id, "查看需求变更记录列表", null, 800, 410);
+  }
+}
+
+// 流程状态字典
+var flowState = [ {
+  id : 1,
+  text : '未提交'
+}, {
+  id : 2,
+  text : '审核中'
+}, {
+  id : 3,
+  text : '废弃'
+}, {
+  id : 4,
+  text : '审核通过'
+} ];
+
+// 流程状态渲染
+function onFlowStateRenderer(e) {
+  for (var i = 0, l = flowState.length; i < l; i++) {
+    var g = flowState[i];
+    if (g.id == e.value)
+      return g.text;
+  }
+  return "";
+}
+// 招聘状态字典
+var infoState = [ {
+  id : 1,
+  text : '草稿'
+}, {
+  id : 2,
+  text : '待发布'
+}, {
+  id : 3,
+  text : '已发布'
+} ];
+
+// 招聘状态渲染
+function onInfoStateRenderer(e) {
+  for (var i = 0, l = infoState.length; i < l; i++) {
+    var g = infoState[i];
+    if (g.id == e.value)
+      return g.text;
+  }
+  return "";
+}

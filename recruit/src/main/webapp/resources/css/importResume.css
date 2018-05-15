@@ -1,0 +1,396 @@
+/* �˲���ݵ���ҳ��css */
+.main {
+	margin-top: 50px;
+}
+.position-import-main {
+	/* background-color: #FFFFFF; */
+	width: 100%;
+}
+
+.position-import-div1 {
+	margin: 30px 20px;
+	font-size: 13px;
+	position: relative;
+}
+
+.posi-import-btn {
+  background-color: #F4F4F4;
+	width: 101px;
+	height: 33px;
+	cursor: pointer;
+	margin-bottom: -1px;
+	margin-left: 15px;
+	border-radius: 5px 5px 0 0;
+	color: #aebed7;
+	font-size:13px;
+}
+.posi-import-btn.tab-up {
+  background-color: #FFFFFF;
+	border-bottom-color: #FFFFFF;
+	color: blue;
+}
+
+.position-import-tab1 {
+	margin-top: -33px;
+	width: 100%;
+}
+
+.position-import-div2 {
+	margin: 30px 20px;
+}
+
+.email-import-help{
+	font-size: 13px;
+}
+
+label{
+	font-size: 13px;
+}
+
+.position-import-right {
+	height: 70px;
+	margin-left: 10px;
+}
+
+.position-import-div3 {
+	height: 65px;
+	margin-top: 10px;
+	margin-left: 10px;
+	border-bottom: 1px dotted #898989;
+	display: none;
+}
+
+.import-surface {
+	margin-top: 20px;
+	min-height: 70px;
+	border-bottom: 1px dotted #898989;
+	width: 99%;
+	clear: left;
+}
+
+.import-surface span {
+	color: gray;
+	font-size: 13px;
+}
+
+.import-inner-upper {
+	float: left;
+	margin-top: 25px;
+	width: 3%;
+}
+
+.import-inner-bottom {
+	float: left;
+	margin-top: 10px;
+	width: 3%;
+}
+
+.import-form-tab {
+	width: 70%;
+	margin-left: 30px;
+	padding-top: 20px;
+}
+
+.import-form-tab input[type='submit'] {
+	background-color: blue;
+	font-size: 12px;
+	color: white;
+	width: 40px;
+	height: 20px;
+}
+
+.import-form-tab tr {
+	height: 35px;
+}
+
+.import-form-left {
+	width: 40%;
+	float: left;
+	margin-top: 20px;
+}
+
+.import-form-right {
+	float: right;
+	font-size: 12px;
+	color: gray;
+	background-color: #EEF2FB;
+	margin-right: 100px;
+	margin-top: 20px;
+}
+
+.import-form-right p {
+	padding: 10px;
+	font-size: 13px;
+}
+.tipBar {
+    margin: 10px;
+}
+.msgBox {
+	padding: 15px;
+	border: 1px solid #F7DA8D;
+	background: #FFFCE9 none repeat scroll 0% 0%;
+	color: #4D4D4D;
+	border-radius: 5px;
+}
+.fr {
+    float: right;
+}
+.icon_close_a {
+    width: 10px;
+    margin-left: 10px;
+    background-position: 0px -200px;
+    text-indent: -9999px;
+    margin-top: -8px;
+}
+
+.upload-tab {
+    border-bottom: 1px solid #d6d6d6;
+    padding-bottom: 10px;
+    padding-left: 10px;
+}
+.upload-tab span {
+    display: inline-block;
+    height: 33px;
+    padding-top: 3px;
+    text-align: center;
+    width: 110px;
+}
+.upload-tab span > * {
+	cursor: pointer;
+}
+
+.upload-tab span.hover {
+    background: rgba(0, 0, 0, 0) url("../images/sprite_repeat.jpg") no-repeat scroll 0 -556px;
+}
+.uploadMode {
+    padding: 10px;
+}
+.red {
+    color: #F00;
+    width: 5px;
+}
+.chosen-container {
+    z-index: 999;
+}
+.chosen-container {
+    position: relative;
+    display: inline-block;
+    vertical-align: middle;
+    font-size: 13px;
+    -moz-user-select: none;
+}
+table.upload td span {
+    display: inline-block;
+    font-size: 13px;
+}
+.ml15 {
+    margin-left: 10px;
+}
+.w320 {
+    width: 320px;
+}
+.cancel_btn_pop, .ui_buttons input {
+    background-position: -68px -269px;
+}
+.cancel_btn_pop {
+    width: 64px;
+    height: 24px;
+    border: medium none;
+    color: #4D4D4D;
+    padding: 0px;
+    cursor: pointer;
+    text-align: center;
+}
+#file {
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    height: 30px;
+    opacity: 0;
+    cursor: pointer;
+}
+table.upload td, table.tblQuery td {
+    padding: 3px;
+    line-height: 30px;
+}
+#inner-content {
+    width: 100%;
+    padding: 0px;
+    overflow: hidden;
+}
+.ml10 {
+    margin-left: 10px;
+}
+table-pop tr td {
+    padding: 4px 0px;
+}
+.c999left {
+    color: #999;
+    text-align: left;
+    font-weight: normal;
+}
+.tipsLocalUpload {
+    display: none;
+    position: absolute;
+    z-index: 9999;
+}
+.tblQuery {
+    margin-top: 10px;
+}
+.tblQuery span{
+	font-size: 10px;
+}
+ option{
+	font-size: 13px;
+}
+#btnFile{
+	border-radius:5px 5px 5px 5px;
+	border:1px solid #8FBAD0;
+	width: 62px;
+	margin-left: 15px;
+}
+
+#submitBtn, #btnConfirmImportResume, #btnSubmit, .localUploadResume{
+	border-radius:7px 7px 7px 7px;
+	border:1px solid #0087AE;
+	width: 86px;
+	height: 28px;
+	color: white;
+	background-color: #00AEDB;
+	font-size: 13px;
+	cursor: pointer;
+}
+
+.tblQuery span{
+	font-size: 13px;
+}
+#viewUploadHistory{
+	position: relative;
+	top: 4px;
+	left: 2px;
+	font-size: 13px;
+}
+#excelMode span{
+	font-size: 13px;
+}
+#excelMode p{
+	font-size: 13px;
+}
+.table-pop tr{
+	height: 35px;
+}
+.table-pop span{
+	font-size: 13px;
+}
+.table-pop input[type='text'],input[type='password']{
+	width: 254px;
+	height: 28px;
+}
+.useSSL{
+	width: 20px;
+}
+#tblList .tips {
+	line-height: 30px;
+}
+#tblList span{
+	font-size: 13px;
+}
+#tblUploadList{
+	width: 100%;
+}
+#tblUploadList thead{
+	background-color: #EEF2FB;
+	height: 30px;
+	text-align: left;
+}
+#uploadTh th{
+	font-weight: normal; 
+	font-size: 13px;
+}
+.r_prompt_c{
+	position:absolute;
+	background-color: #FFF9E1;
+	padding: 10px;
+	border: 1px solid #F7DA8D;
+	border-radius:10px;
+	margin-top: 10px;
+	display: none;
+	z-index: 1000;
+}
+.r_prompt_c:before{
+	position: absolute;
+	border-left:12px solid transparent;
+	border-right:12px solid transparent;
+	border-bottom:12px solid #FFF9E1;
+	content:" ";
+	display:block;
+	width: 0;
+	height: 0;
+	top: -10px;
+	left: 35px;
+	z-index: 1000;
+}
+.r_prompt_c:after{
+	position:absolute;
+	border-left:12px solid transparent;
+	border-right:12px solid transparent;
+	border-bottom:12px solid #F7DA8D;
+	content:" ";
+	display:block;
+	width:0;
+	height:0;
+	top:-12px;
+	left: 35px;
+}
+.localUploadResume{
+	width: 100px;
+}
+#tblUploadList{
+	font-size: 13px;
+}
+#tblUploadList td{
+	height: 40px;
+	line-height: 22px;
+	border-bottom: 1px dashed #D6D6D6;
+	padding: 0px 6px;
+	word-break: break-all;
+}
+.delFileInfo,#btnClearUploadedResume{
+	color: blue;
+	cursor: pointer;
+}
+
+#resumeSource, #txtResumeSourceMultiple, #txtResumeSource, #textFile, #selJob, #selJobIdMultiple, #recruitChannelMultiple {
+	width: 250px;
+	height: 25px;
+}
+#recruitChannelMultiple {
+	width: 120px;
+}
+#submitBtn {
+	margin-top: 30px;
+}
+#btnConfirmImportResume {
+	margin-top: 15px;
+}
+#form1 {
+	margin-top: 30px;
+}
+
+#datagrid1 {
+	box-sizing: border-box;
+	padding: 20px !important;
+}
+
+.phone_yes,.phone_no,.info_yes,.info_no{position:absolute;}
+.phone_yes a,.phone_no a,.info_yes a,.info_no a{display:inline-block; width:20px; height:20px; line-height:20px; margin:3px 5px 0 0;}
+.phone_yes a{ background-position:left -702px;}
+.info_yes a{ background-position:left -736px; }
+.phone_no a{ background-position:-81px -72px;}
+.info_no a{ background-position:-81px -736px;} 
+.phone-info_tanchu{ position:absolute; left:50px; top:-100px; z-index:2;color:red;}
+.tanchu_1 {left: 90px; top: -83px;}
+.phone-info_tanchu .tanchujiantou{position: relative; left:70px; top:0px; z-index:3; height:10px; width:20px; margin-bottom:-3px;} 
+.phone-info_tanchu .tanchu_nr{background:#fff; border:1px solid #ddd; font-size:14px; font-weight:normal; text-align:center; width:230; height:30px;}
+.phone-info_tanchu .tanchu_nr a{ width:auto; background:none; line-height:30px;}
+.phone-info_tanchu .tanchu_nr_long{height: 26px; width: 330px;}

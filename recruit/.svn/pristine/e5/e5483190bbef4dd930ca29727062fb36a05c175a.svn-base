@@ -1,0 +1,38 @@
+function search() {
+    var key = mini.get("key").getValue();
+    datagrid.load({
+      searchKey : key
+    });
+  }
+
+function bookInterview() {
+  var grid = mini.get("datagrid1");
+  var rows = grid.getSelecteds();
+  if (rows.length > 0) {
+      var id = rows[0].id;
+      window.open(basePath + "/interviewBookController/addInterviewBook?id=" + id);
+   
+  }else{
+    alert("请先选中候选人！");
+  }
+}
+
+  //导入校招通讯录模板
+  function onImport() {
+    mini.open({
+      url : "/recruit/campusAddressbookController/importAddressbook",
+      title : "导入校招通讯录模板",
+      width : 400,
+      height : 100,
+      allowResize : false
+    });
+  }
+
+  //导出校招通讯录模板
+  function onExport() {
+
+    var realName = mini.get("key").getValue();
+    realName = encodeURI(encodeURI(realName)); // url传参非asc码必须先转码再传，否则会出现乱码
+    window.location.href = "/recruit/campusAddressbookController/exportCampusTemplete?realName="
+        + realName;
+  }

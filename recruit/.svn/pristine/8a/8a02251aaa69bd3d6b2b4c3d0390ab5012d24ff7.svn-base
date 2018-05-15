@@ -1,0 +1,8 @@
+package com.csot.recruit.service.mail;
+
+public interface MailSendService {
+  
+  void test();
+  
+  void sendEmail(String mailTo, String templateName,Object template);
+}

@@ -1,0 +1,383 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.csot.recruit.dao.original.flow.employ.EmployDemandMapper" >
+  <resultMap id="BaseResultMap" type="com.csot.recruit.model.original.flow.employ.EmployDemand" >
+    <id column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="EMPLOY_ID" property="employId" jdbcType="VARCHAR" />
+    <result column="DEMAND_ID" property="demandId" jdbcType="VARCHAR" />
+    <result column="EMPLOYEE_TYPE" property="employeeType" jdbcType="VARCHAR" />
+    <result column="DISTRICT" property="district" jdbcType="VARCHAR" />
+    <result column="APPLY_ORGANIZATION_NAME" property="applyOrganizationName" jdbcType="VARCHAR" />
+    <result column="APPLY_ORGANIZATION_ID" property="applyOrganizationId" jdbcType="VARCHAR" />
+    <result column="APPLY_POST_ID" property="applyPostId" jdbcType="VARCHAR" />
+    <result column="APPLY_POST_NAME" property="applyPostName" jdbcType="VARCHAR" />
+    <result column="RANK_ID" property="rankId" jdbcType="VARCHAR" />
+    <result column="RECRUIT_DEMAND_REASON" property="recruitDemandReason" jdbcType="VARCHAR" />
+    <result column="CREATOR_ID" property="creatorId" jdbcType="VARCHAR" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="MODIFIED_ID" property="modifiedId" jdbcType="VARCHAR" />
+    <result column="UPDATE_DATE" property="updateDate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    ID, EMPLOY_ID, DEMAND_ID, EMPLOYEE_TYPE, DISTRICT, APPLY_ORGANIZATION_NAME, APPLY_ORGANIZATION_ID, 
+    APPLY_POST_ID, APPLY_POST_NAME, RANK_ID, RECRUIT_DEMAND_REASON, CREATOR_ID, CREATE_DATE, 
+    MODIFIED_ID, UPDATE_DATE
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.csot.recruit.model.original.flow.employ.EmployDemandCriteria" >
+    <include refid="Oracle_Dialect_Pagination_Prefix" />
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from T_EMPLOY_DEMAND
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <include refid="Oracle_Dialect_Pagination_Suffix" />
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from T_EMPLOY_DEMAND
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from T_EMPLOY_DEMAND
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.csot.recruit.model.original.flow.employ.EmployDemandCriteria" >
+    delete from T_EMPLOY_DEMAND
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.csot.recruit.model.original.flow.employ.EmployDemand" >
+    insert into T_EMPLOY_DEMAND (ID, EMPLOY_ID, DEMAND_ID, 
+      EMPLOYEE_TYPE, DISTRICT, APPLY_ORGANIZATION_NAME, 
+      APPLY_ORGANIZATION_ID, APPLY_POST_ID, APPLY_POST_NAME, 
+      RANK_ID, RECRUIT_DEMAND_REASON, CREATOR_ID, 
+      CREATE_DATE, MODIFIED_ID, UPDATE_DATE
+      )
+    values (#{id,jdbcType=VARCHAR}, #{employId,jdbcType=VARCHAR}, #{demandId,jdbcType=VARCHAR}, 
+      #{employeeType,jdbcType=VARCHAR}, #{district,jdbcType=VARCHAR}, #{applyOrganizationName,jdbcType=VARCHAR}, 
+      #{applyOrganizationId,jdbcType=VARCHAR}, #{applyPostId,jdbcType=VARCHAR}, #{applyPostName,jdbcType=VARCHAR}, 
+      #{rankId,jdbcType=VARCHAR}, #{recruitDemandReason,jdbcType=VARCHAR}, #{creatorId,jdbcType=VARCHAR}, 
+      #{createDate,jdbcType=TIMESTAMP}, #{modifiedId,jdbcType=VARCHAR}, #{updateDate,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.csot.recruit.model.original.flow.employ.EmployDemand" >
+    insert into T_EMPLOY_DEMAND
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="employId != null" >
+        EMPLOY_ID,
+      </if>
+      <if test="demandId != null" >
+        DEMAND_ID,
+      </if>
+      <if test="employeeType != null" >
+        EMPLOYEE_TYPE,
+      </if>
+      <if test="district != null" >
+        DISTRICT,
+      </if>
+      <if test="applyOrganizationName != null" >
+        APPLY_ORGANIZATION_NAME,
+      </if>
+      <if test="applyOrganizationId != null" >
+        APPLY_ORGANIZATION_ID,
+      </if>
+      <if test="applyPostId != null" >
+        APPLY_POST_ID,
+      </if>
+      <if test="applyPostName != null" >
+        APPLY_POST_NAME,
+      </if>
+      <if test="rankId != null" >
+        RANK_ID,
+      </if>
+      <if test="recruitDemandReason != null" >
+        RECRUIT_DEMAND_REASON,
+      </if>
+      <if test="creatorId != null" >
+        CREATOR_ID,
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE,
+      </if>
+      <if test="modifiedId != null" >
+        MODIFIED_ID,
+      </if>
+      <if test="updateDate != null" >
+        UPDATE_DATE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="employId != null" >
+        #{employId,jdbcType=VARCHAR},
+      </if>
+      <if test="demandId != null" >
+        #{demandId,jdbcType=VARCHAR},
+      </if>
+      <if test="employeeType != null" >
+        #{employeeType,jdbcType=VARCHAR},
+      </if>
+      <if test="district != null" >
+        #{district,jdbcType=VARCHAR},
+      </if>
+      <if test="applyOrganizationName != null" >
+        #{applyOrganizationName,jdbcType=VARCHAR},
+      </if>
+      <if test="applyOrganizationId != null" >
+        #{applyOrganizationId,jdbcType=VARCHAR},
+      </if>
+      <if test="applyPostId != null" >
+        #{applyPostId,jdbcType=VARCHAR},
+      </if>
+      <if test="applyPostName != null" >
+        #{applyPostName,jdbcType=VARCHAR},
+      </if>
+      <if test="rankId != null" >
+        #{rankId,jdbcType=VARCHAR},
+      </if>
+      <if test="recruitDemandReason != null" >
+        #{recruitDemandReason,jdbcType=VARCHAR},
+      </if>
+      <if test="creatorId != null" >
+        #{creatorId,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifiedId != null" >
+        #{modifiedId,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.csot.recruit.model.original.flow.employ.EmployDemandCriteria" resultType="java.lang.Integer" >
+    select count(*) from T_EMPLOY_DEMAND
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update T_EMPLOY_DEMAND
+    <set >
+      <if test="record.id != null" >
+        ID = #{record.id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.employId != null" >
+        EMPLOY_ID = #{record.employId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.demandId != null" >
+        DEMAND_ID = #{record.demandId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.employeeType != null" >
+        EMPLOYEE_TYPE = #{record.employeeType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.district != null" >
+        DISTRICT = #{record.district,jdbcType=VARCHAR},
+      </if>
+      <if test="record.applyOrganizationName != null" >
+        APPLY_ORGANIZATION_NAME = #{record.applyOrganizationName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.applyOrganizationId != null" >
+        APPLY_ORGANIZATION_ID = #{record.applyOrganizationId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.applyPostId != null" >
+        APPLY_POST_ID = #{record.applyPostId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.applyPostName != null" >
+        APPLY_POST_NAME = #{record.applyPostName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.rankId != null" >
+        RANK_ID = #{record.rankId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.recruitDemandReason != null" >
+        RECRUIT_DEMAND_REASON = #{record.recruitDemandReason,jdbcType=VARCHAR},
+      </if>
+      <if test="record.creatorId != null" >
+        CREATOR_ID = #{record.creatorId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createDate != null" >
+        CREATE_DATE = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.modifiedId != null" >
+        MODIFIED_ID = #{record.modifiedId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.updateDate != null" >
+        UPDATE_DATE = #{record.updateDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update T_EMPLOY_DEMAND
+    set ID = #{record.id,jdbcType=VARCHAR},
+      EMPLOY_ID = #{record.employId,jdbcType=VARCHAR},
+      DEMAND_ID = #{record.demandId,jdbcType=VARCHAR},
+      EMPLOYEE_TYPE = #{record.employeeType,jdbcType=VARCHAR},
+      DISTRICT = #{record.district,jdbcType=VARCHAR},
+      APPLY_ORGANIZATION_NAME = #{record.applyOrganizationName,jdbcType=VARCHAR},
+      APPLY_ORGANIZATION_ID = #{record.applyOrganizationId,jdbcType=VARCHAR},
+      APPLY_POST_ID = #{record.applyPostId,jdbcType=VARCHAR},
+      APPLY_POST_NAME = #{record.applyPostName,jdbcType=VARCHAR},
+      RANK_ID = #{record.rankId,jdbcType=VARCHAR},
+      RECRUIT_DEMAND_REASON = #{record.recruitDemandReason,jdbcType=VARCHAR},
+      CREATOR_ID = #{record.creatorId,jdbcType=VARCHAR},
+      CREATE_DATE = #{record.createDate,jdbcType=TIMESTAMP},
+      MODIFIED_ID = #{record.modifiedId,jdbcType=VARCHAR},
+      UPDATE_DATE = #{record.updateDate,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.csot.recruit.model.original.flow.employ.EmployDemand" >
+    update T_EMPLOY_DEMAND
+    <set >
+      <if test="employId != null" >
+        EMPLOY_ID = #{employId,jdbcType=VARCHAR},
+      </if>
+      <if test="demandId != null" >
+        DEMAND_ID = #{demandId,jdbcType=VARCHAR},
+      </if>
+      <if test="employeeType != null" >
+        EMPLOYEE_TYPE = #{employeeType,jdbcType=VARCHAR},
+      </if>
+      <if test="district != null" >
+        DISTRICT = #{district,jdbcType=VARCHAR},
+      </if>
+      <if test="applyOrganizationName != null" >
+        APPLY_ORGANIZATION_NAME = #{applyOrganizationName,jdbcType=VARCHAR},
+      </if>
+      <if test="applyOrganizationId != null" >
+        APPLY_ORGANIZATION_ID = #{applyOrganizationId,jdbcType=VARCHAR},
+      </if>
+      <if test="applyPostId != null" >
+        APPLY_POST_ID = #{applyPostId,jdbcType=VARCHAR},
+      </if>
+      <if test="applyPostName != null" >
+        APPLY_POST_NAME = #{applyPostName,jdbcType=VARCHAR},
+      </if>
+      <if test="rankId != null" >
+        RANK_ID = #{rankId,jdbcType=VARCHAR},
+      </if>
+      <if test="recruitDemandReason != null" >
+        RECRUIT_DEMAND_REASON = #{recruitDemandReason,jdbcType=VARCHAR},
+      </if>
+      <if test="creatorId != null" >
+        CREATOR_ID = #{creatorId,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifiedId != null" >
+        MODIFIED_ID = #{modifiedId,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.csot.recruit.model.original.flow.employ.EmployDemand" >
+    update T_EMPLOY_DEMAND
+    set EMPLOY_ID = #{employId,jdbcType=VARCHAR},
+      DEMAND_ID = #{demandId,jdbcType=VARCHAR},
+      EMPLOYEE_TYPE = #{employeeType,jdbcType=VARCHAR},
+      DISTRICT = #{district,jdbcType=VARCHAR},
+      APPLY_ORGANIZATION_NAME = #{applyOrganizationName,jdbcType=VARCHAR},
+      APPLY_ORGANIZATION_ID = #{applyOrganizationId,jdbcType=VARCHAR},
+      APPLY_POST_ID = #{applyPostId,jdbcType=VARCHAR},
+      APPLY_POST_NAME = #{applyPostName,jdbcType=VARCHAR},
+      RANK_ID = #{rankId,jdbcType=VARCHAR},
+      RECRUIT_DEMAND_REASON = #{recruitDemandReason,jdbcType=VARCHAR},
+      CREATOR_ID = #{creatorId,jdbcType=VARCHAR},
+      CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      MODIFIED_ID = #{modifiedId,jdbcType=VARCHAR},
+      UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <sql id="Oracle_Dialect_Pagination_Prefix" >
+    <if test="page != null" >
+      select * from ( select row_.*, rownum rownum_ from ( 
+    </if>
+  </sql>
+  <sql id="Oracle_Dialect_Pagination_Suffix" >
+    <if test="page != null" >
+      <![CDATA[ ) row_ ) where rownum_ > #{page.begin} and rownum_ <= #{page.end} ]]>
+    </if>
+  </sql>
+</mapper>

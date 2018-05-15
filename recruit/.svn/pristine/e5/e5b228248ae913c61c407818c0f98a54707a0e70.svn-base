@@ -1,0 +1,70 @@
+html, body {
+  overflow: hidden; /* overflow|overflow-x|overflow-y : visible|hidden|scroll|auto */
+}
+fieldset {
+  border: solid 1px #aaa;
+  margin: 10px;
+  font-size: 10px;
+}
+
+.form-label {
+  color: #888;
+  display: inline-block;
+  padding-left: 10px;
+  font-size: 12px;
+  font-family: 微软雅黑;
+  width: 110px;
+  text-align: right;
+}
+
+.form-label-span {
+  color: #888;
+  display: inline-block;
+  padding-left: 10px;
+  font-size: 12px;
+  font-family: 微软雅黑;
+  width: 110px;
+}
+
+table {
+  line-height: 40px;
+  position: relative;
+}
+
+marker-color {
+  color: red;
+}
+
+td {
+  line-height: 30px;
+  height: 30px;
+}
+.copy-posi {
+  font-size : 14px;
+  color: #06c;
+  cursor: pointer;
+}
+.copy-posi:hover {
+  color: #000;
+}
+
+
+.asLabel .mini-textbox-border, .asLabel .mini-textbox-input, .asLabel .mini-buttonedit-border,
+  .asLabel .mini-buttonedit-input, .asLabel .mini-textboxlist-border {
+  border: 0;
+  background: none;
+  cursor: default;
+}
+
+.asLabel .mini-buttonedit-button, .asLabel .mini-textboxlist-close {
+  display: none;
+}
+
+
+.asLabel .mini-textboxlist-item {
+  padding-right: 8px;
+}
+
+textarea{
+  padding-top: 5px !important;
+}

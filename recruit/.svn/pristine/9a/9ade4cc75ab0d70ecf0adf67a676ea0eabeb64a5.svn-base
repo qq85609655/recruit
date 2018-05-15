@@ -1,0 +1,32 @@
+//通过模板查询
+function sendByTemplate() {
+  var row = grid.getSelecteds();
+  if (row.length > 0) {
+
+    var ids = "";
+    for (var i = 0; i < row.length; i++) {
+      ids += row[i].id + ",";
+    }
+    OpenDialog(webRoot + "/campusStudentController/sendByTemplate/" + ids, "按模板发送邮件", grid, 750,
+        600);
+  } else {
+    ShowWarnTip("请选择至少一条记录");
+  }
+}
+
+//自定义发送邮件
+function sendByDefinition(){
+  
+  var row = grid.getSelecteds();
+  if (row.length > 0) {
+
+    var ids = "";
+    for (var i = 0; i < row.length; i++) {
+      ids += row[i].id + ",";
+    }
+    OpenDialog(webRoot + "/campusStudentController/sendByDefinition/" + ids, "自定义发送邮件", grid, 780,
+        630);
+  } else {
+    ShowWarnTip("请选择至少一条记录");
+  }
+}

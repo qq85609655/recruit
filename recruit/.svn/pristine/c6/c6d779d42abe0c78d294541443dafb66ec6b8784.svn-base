@@ -1,0 +1,775 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.csot.recruit.dao.original.campus.CampusStudentMapper" >
+  <resultMap id="BaseResultMap" type="com.csot.recruit.model.original.campus.CampusStudent" >
+    <id column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="SITE_ID" property="siteId" jdbcType="VARCHAR" />
+    <result column="SITE_NAME" property="siteName" jdbcType="VARCHAR" />
+    <result column="POST_ID" property="postId" jdbcType="VARCHAR" />
+    <result column="POST_NAME" property="postName" jdbcType="VARCHAR" />
+    <result column="WORKING_PLACE" property="workingPlace" jdbcType="VARCHAR" />
+    <result column="JOB_FAMILY" property="jobFamily" jdbcType="VARCHAR" />
+    <result column="JOB_CLASS" property="jobClass" jdbcType="VARCHAR" />
+    <result column="JOB_SUBCLASS" property="jobSubclass" jdbcType="VARCHAR" />
+    <result column="ORGANIZATION" property="organization" jdbcType="VARCHAR" />
+    <result column="BIG_CENTER" property="bigCenter" jdbcType="VARCHAR" />
+    <result column="SMALL_CENTER" property="smallCenter" jdbcType="VARCHAR" />
+    <result column="DEPARTMENT" property="department" jdbcType="VARCHAR" />
+    <result column="OFFICES" property="offices" jdbcType="VARCHAR" />
+    <result column="REALNAME" property="realname" jdbcType="VARCHAR" />
+    <result column="SEX" property="sex" jdbcType="VARCHAR" />
+    <result column="EDUCATION" property="education" jdbcType="VARCHAR" />
+    <result column="SCHOOL" property="school" jdbcType="VARCHAR" />
+    <result column="MAJOR" property="major" jdbcType="VARCHAR" />
+    <result column="NATIVE_PLACE" property="nativePlace" jdbcType="VARCHAR" />
+    <result column="PHONE_NO" property="phoneNo" jdbcType="VARCHAR" />
+    <result column="EMAIL" property="email" jdbcType="VARCHAR" />
+    <result column="EVALUATION" property="evaluation" jdbcType="VARCHAR" />
+    <result column="MORALE_RISK" property="moraleRisk" jdbcType="VARCHAR" />
+    <result column="COMPETENCY" property="competency" jdbcType="VARCHAR" />
+    <result column="RESULT_FIRST" property="resultFirst" jdbcType="VARCHAR" />
+    <result column="RESULT_SECOND" property="resultSecond" jdbcType="VARCHAR" />
+    <result column="OFFER" property="offer" jdbcType="VARCHAR" />
+    <result column="TRILATERAL" property="trilateral" jdbcType="VARCHAR" />
+    <result column="TRANSCRIPT" property="transcript" jdbcType="VARCHAR" />
+    <result column="REFERENCE_FORM" property="referenceForm" jdbcType="VARCHAR" />
+    <result column="IDCARD_COPY" property="idcardCopy" jdbcType="VARCHAR" />
+    <result column="CET_TRANSCRIPT" property="cetTranscript" jdbcType="VARCHAR" />
+    <result column="PHOTO" property="photo" jdbcType="VARCHAR" />
+    <result column="BREAK_OFF" property="breakOff" jdbcType="VARCHAR" />
+    <result column="YEARTH" property="yearth" jdbcType="VARCHAR" />
+    <result column="CHANGE_TIME" property="changeTime" jdbcType="DATE" />
+    <result column="CREATE_USER" property="createUser" jdbcType="VARCHAR" />
+    <result column="ORG_ID" property="orgId" jdbcType="VARCHAR" />
+    <result column="JOB_FAMILY_NAME" property="jobFamilyName" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    ID, SITE_ID, SITE_NAME, POST_ID, POST_NAME, WORKING_PLACE, JOB_FAMILY, JOB_CLASS, 
+    JOB_SUBCLASS, ORGANIZATION, BIG_CENTER, SMALL_CENTER, DEPARTMENT, OFFICES, REALNAME, 
+    SEX, EDUCATION, SCHOOL, MAJOR, NATIVE_PLACE, PHONE_NO, EMAIL, EVALUATION, MORALE_RISK, 
+    COMPETENCY, RESULT_FIRST, RESULT_SECOND, OFFER, TRILATERAL, TRANSCRIPT, REFERENCE_FORM, 
+    IDCARD_COPY, CET_TRANSCRIPT, PHOTO, BREAK_OFF, YEARTH, CHANGE_TIME, CREATE_USER,ORG_ID,JOB_FAMILY_NAME
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.csot.recruit.model.original.campus.CampusStudentCriteria" >
+    <include refid="Oracle_Dialect_Pagination_Prefix" />
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from T_CAMPUS_STUDENT
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <include refid="Oracle_Dialect_Pagination_Suffix" />
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from T_CAMPUS_STUDENT
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from T_CAMPUS_STUDENT
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.csot.recruit.model.original.campus.CampusStudentCriteria" >
+    delete from T_CAMPUS_STUDENT
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.csot.recruit.model.original.campus.CampusStudent" >
+    insert into T_CAMPUS_STUDENT (ID, SITE_ID, SITE_NAME, 
+      POST_ID, POST_NAME, WORKING_PLACE, 
+      JOB_FAMILY, JOB_CLASS, JOB_SUBCLASS, 
+      ORGANIZATION, BIG_CENTER, SMALL_CENTER, 
+      DEPARTMENT, OFFICES, REALNAME, 
+      SEX, EDUCATION, SCHOOL, 
+      MAJOR, NATIVE_PLACE, PHONE_NO, 
+      EMAIL, EVALUATION, MORALE_RISK, 
+      COMPETENCY, RESULT_FIRST, RESULT_SECOND, 
+      OFFER, TRILATERAL, TRANSCRIPT, 
+      REFERENCE_FORM, IDCARD_COPY, CET_TRANSCRIPT, 
+      PHOTO, BREAK_OFF, YEARTH, 
+      CHANGE_TIME, CREATE_USER,ORG_ID,JOB_FAMILY_NAME)
+    values (#{id,jdbcType=VARCHAR}, #{siteId,jdbcType=VARCHAR}, #{siteName,jdbcType=VARCHAR}, 
+      #{postId,jdbcType=VARCHAR}, #{postName,jdbcType=VARCHAR}, #{workingPlace,jdbcType=VARCHAR}, 
+      #{jobFamily,jdbcType=VARCHAR}, #{jobClass,jdbcType=VARCHAR}, #{jobSubclass,jdbcType=VARCHAR}, 
+      #{organization,jdbcType=VARCHAR}, #{bigCenter,jdbcType=VARCHAR}, #{smallCenter,jdbcType=VARCHAR}, 
+      #{department,jdbcType=VARCHAR}, #{offices,jdbcType=VARCHAR}, #{realname,jdbcType=VARCHAR}, 
+      #{sex,jdbcType=VARCHAR}, #{education,jdbcType=VARCHAR}, #{school,jdbcType=VARCHAR}, 
+      #{major,jdbcType=VARCHAR}, #{nativePlace,jdbcType=VARCHAR}, #{phoneNo,jdbcType=VARCHAR}, 
+      #{email,jdbcType=VARCHAR}, #{evaluation,jdbcType=VARCHAR}, #{moraleRisk,jdbcType=VARCHAR}, 
+      #{competency,jdbcType=VARCHAR}, #{resultFirst,jdbcType=VARCHAR}, #{resultSecond,jdbcType=VARCHAR}, 
+      #{offer,jdbcType=VARCHAR}, #{trilateral,jdbcType=VARCHAR}, #{transcript,jdbcType=VARCHAR}, 
+      #{referenceForm,jdbcType=VARCHAR}, #{idcardCopy,jdbcType=VARCHAR}, #{cetTranscript,jdbcType=VARCHAR}, 
+      #{photo,jdbcType=VARCHAR}, #{breakOff,jdbcType=VARCHAR}, #{yearth,jdbcType=VARCHAR}, 
+      #{changeTime,jdbcType=DATE}, #{createUser,jdbcType=VARCHAR}, #{orgId,jdbcType=VARCHAR},
+      #{jobFamilyName,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.csot.recruit.model.original.campus.CampusStudent" >
+    insert into T_CAMPUS_STUDENT
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="siteId != null" >
+        SITE_ID,
+      </if>
+      <if test="siteName != null" >
+        SITE_NAME,
+      </if>
+      <if test="postId != null" >
+        POST_ID,
+      </if>
+      <if test="postName != null" >
+        POST_NAME,
+      </if>
+      <if test="workingPlace != null" >
+        WORKING_PLACE,
+      </if>
+      <if test="jobFamily != null" >
+        JOB_FAMILY,
+      </if>
+      <if test="jobClass != null" >
+        JOB_CLASS,
+      </if>
+      <if test="jobSubclass != null" >
+        JOB_SUBCLASS,
+      </if>
+      <if test="organization != null" >
+        ORGANIZATION,
+      </if>
+      <if test="bigCenter != null" >
+        BIG_CENTER,
+      </if>
+      <if test="smallCenter != null" >
+        SMALL_CENTER,
+      </if>
+      <if test="department != null" >
+        DEPARTMENT,
+      </if>
+      <if test="offices != null" >
+        OFFICES,
+      </if>
+      <if test="realname != null" >
+        REALNAME,
+      </if>
+      <if test="sex != null" >
+        SEX,
+      </if>
+      <if test="education != null" >
+        EDUCATION,
+      </if>
+      <if test="school != null" >
+        SCHOOL,
+      </if>
+      <if test="major != null" >
+        MAJOR,
+      </if>
+      <if test="nativePlace != null" >
+        NATIVE_PLACE,
+      </if>
+      <if test="phoneNo != null" >
+        PHONE_NO,
+      </if>
+      <if test="email != null" >
+        EMAIL,
+      </if>
+      <if test="evaluation != null" >
+        EVALUATION,
+      </if>
+      <if test="moraleRisk != null" >
+        MORALE_RISK,
+      </if>
+      <if test="competency != null" >
+        COMPETENCY,
+      </if>
+      <if test="resultFirst != null" >
+        RESULT_FIRST,
+      </if>
+      <if test="resultSecond != null" >
+        RESULT_SECOND,
+      </if>
+      <if test="offer != null" >
+        OFFER,
+      </if>
+      <if test="trilateral != null" >
+        TRILATERAL,
+      </if>
+      <if test="transcript != null" >
+        TRANSCRIPT,
+      </if>
+      <if test="referenceForm != null" >
+        REFERENCE_FORM,
+      </if>
+      <if test="idcardCopy != null" >
+        IDCARD_COPY,
+      </if>
+      <if test="cetTranscript != null" >
+        CET_TRANSCRIPT,
+      </if>
+      <if test="photo != null" >
+        PHOTO,
+      </if>
+      <if test="breakOff != null" >
+        BREAK_OFF,
+      </if>
+      <if test="yearth != null" >
+        YEARTH,
+      </if>
+      <if test="changeTime != null" >
+        CHANGE_TIME,
+      </if>
+      <if test="createUser != null" >
+        CREATE_USER,
+      </if>
+      <if test="orgId != null" >
+        ORG_ID,
+      </if>
+      <if test="jobFamilyName != null" >
+        JOB_FAMILY_NAME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="siteId != null" >
+        #{siteId,jdbcType=VARCHAR},
+      </if>
+      <if test="siteName != null" >
+        #{siteName,jdbcType=VARCHAR},
+      </if>
+      <if test="postId != null" >
+        #{postId,jdbcType=VARCHAR},
+      </if>
+      <if test="postName != null" >
+        #{postName,jdbcType=VARCHAR},
+      </if>
+      <if test="workingPlace != null" >
+        #{workingPlace,jdbcType=VARCHAR},
+      </if>
+      <if test="jobFamily != null" >
+        #{jobFamily,jdbcType=VARCHAR},
+      </if>
+      <if test="jobClass != null" >
+        #{jobClass,jdbcType=VARCHAR},
+      </if>
+      <if test="jobSubclass != null" >
+        #{jobSubclass,jdbcType=VARCHAR},
+      </if>
+      <if test="organization != null" >
+        #{organization,jdbcType=VARCHAR},
+      </if>
+      <if test="bigCenter != null" >
+        #{bigCenter,jdbcType=VARCHAR},
+      </if>
+      <if test="smallCenter != null" >
+        #{smallCenter,jdbcType=VARCHAR},
+      </if>
+      <if test="department != null" >
+        #{department,jdbcType=VARCHAR},
+      </if>
+      <if test="offices != null" >
+        #{offices,jdbcType=VARCHAR},
+      </if>
+      <if test="realname != null" >
+        #{realname,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null" >
+        #{sex,jdbcType=VARCHAR},
+      </if>
+      <if test="education != null" >
+        #{education,jdbcType=VARCHAR},
+      </if>
+      <if test="school != null" >
+        #{school,jdbcType=VARCHAR},
+      </if>
+      <if test="major != null" >
+        #{major,jdbcType=VARCHAR},
+      </if>
+      <if test="nativePlace != null" >
+        #{nativePlace,jdbcType=VARCHAR},
+      </if>
+      <if test="phoneNo != null" >
+        #{phoneNo,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null" >
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="evaluation != null" >
+        #{evaluation,jdbcType=VARCHAR},
+      </if>
+      <if test="moraleRisk != null" >
+        #{moraleRisk,jdbcType=VARCHAR},
+      </if>
+      <if test="competency != null" >
+        #{competency,jdbcType=VARCHAR},
+      </if>
+      <if test="resultFirst != null" >
+        #{resultFirst,jdbcType=VARCHAR},
+      </if>
+      <if test="resultSecond != null" >
+        #{resultSecond,jdbcType=VARCHAR},
+      </if>
+      <if test="offer != null" >
+        #{offer,jdbcType=VARCHAR},
+      </if>
+      <if test="trilateral != null" >
+        #{trilateral,jdbcType=VARCHAR},
+      </if>
+      <if test="transcript != null" >
+        #{transcript,jdbcType=VARCHAR},
+      </if>
+      <if test="referenceForm != null" >
+        #{referenceForm,jdbcType=VARCHAR},
+      </if>
+      <if test="idcardCopy != null" >
+        #{idcardCopy,jdbcType=VARCHAR},
+      </if>
+      <if test="cetTranscript != null" >
+        #{cetTranscript,jdbcType=VARCHAR},
+      </if>
+      <if test="photo != null" >
+        #{photo,jdbcType=VARCHAR},
+      </if>
+      <if test="breakOff != null" >
+        #{breakOff,jdbcType=VARCHAR},
+      </if>
+      <if test="yearth != null" >
+        #{yearth,jdbcType=VARCHAR},
+      </if>
+      <if test="changeTime != null" >
+        #{changeTime,jdbcType=DATE},
+      </if>
+      <if test="createUser != null" >
+        #{createUser,jdbcType=VARCHAR},
+      </if>
+      <if test="orgId != null" >
+        #{orgId,jdbcType=VARCHAR},
+      </if>
+      <if test="jobFamilyName != null" >
+        #{jobFamilyName,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.csot.recruit.model.original.campus.CampusStudentCriteria" resultType="java.lang.Integer" >
+    select count(*) from T_CAMPUS_STUDENT
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update T_CAMPUS_STUDENT
+    <set >
+      <if test="record.id != null" >
+        ID = #{record.id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.siteId != null" >
+        SITE_ID = #{record.siteId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.siteName != null" >
+        SITE_NAME = #{record.siteName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.postId != null" >
+        POST_ID = #{record.postId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.postName != null" >
+        POST_NAME = #{record.postName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.workingPlace != null" >
+        WORKING_PLACE = #{record.workingPlace,jdbcType=VARCHAR},
+      </if>
+      <if test="record.jobFamily != null" >
+        JOB_FAMILY = #{record.jobFamily,jdbcType=VARCHAR},
+      </if>
+      <if test="record.jobClass != null" >
+        JOB_CLASS = #{record.jobClass,jdbcType=VARCHAR},
+      </if>
+      <if test="record.jobSubclass != null" >
+        JOB_SUBCLASS = #{record.jobSubclass,jdbcType=VARCHAR},
+      </if>
+      <if test="record.organization != null" >
+        ORGANIZATION = #{record.organization,jdbcType=VARCHAR},
+      </if>
+      <if test="record.bigCenter != null" >
+        BIG_CENTER = #{record.bigCenter,jdbcType=VARCHAR},
+      </if>
+      <if test="record.smallCenter != null" >
+        SMALL_CENTER = #{record.smallCenter,jdbcType=VARCHAR},
+      </if>
+      <if test="record.department != null" >
+        DEPARTMENT = #{record.department,jdbcType=VARCHAR},
+      </if>
+      <if test="record.offices != null" >
+        OFFICES = #{record.offices,jdbcType=VARCHAR},
+      </if>
+      <if test="record.realname != null" >
+        REALNAME = #{record.realname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sex != null" >
+        SEX = #{record.sex,jdbcType=VARCHAR},
+      </if>
+      <if test="record.education != null" >
+        EDUCATION = #{record.education,jdbcType=VARCHAR},
+      </if>
+      <if test="record.school != null" >
+        SCHOOL = #{record.school,jdbcType=VARCHAR},
+      </if>
+      <if test="record.major != null" >
+        MAJOR = #{record.major,jdbcType=VARCHAR},
+      </if>
+      <if test="record.nativePlace != null" >
+        NATIVE_PLACE = #{record.nativePlace,jdbcType=VARCHAR},
+      </if>
+      <if test="record.phoneNo != null" >
+        PHONE_NO = #{record.phoneNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.email != null" >
+        EMAIL = #{record.email,jdbcType=VARCHAR},
+      </if>
+      <if test="record.evaluation != null" >
+        EVALUATION = #{record.evaluation,jdbcType=VARCHAR},
+      </if>
+      <if test="record.moraleRisk != null" >
+        MORALE_RISK = #{record.moraleRisk,jdbcType=VARCHAR},
+      </if>
+      <if test="record.competency != null" >
+        COMPETENCY = #{record.competency,jdbcType=VARCHAR},
+      </if>
+      <if test="record.resultFirst != null" >
+        RESULT_FIRST = #{record.resultFirst,jdbcType=VARCHAR},
+      </if>
+      <if test="record.resultSecond != null" >
+        RESULT_SECOND = #{record.resultSecond,jdbcType=VARCHAR},
+      </if>
+      <if test="record.offer != null" >
+        OFFER = #{record.offer,jdbcType=VARCHAR},
+      </if>
+      <if test="record.trilateral != null" >
+        TRILATERAL = #{record.trilateral,jdbcType=VARCHAR},
+      </if>
+      <if test="record.transcript != null" >
+        TRANSCRIPT = #{record.transcript,jdbcType=VARCHAR},
+      </if>
+      <if test="record.referenceForm != null" >
+        REFERENCE_FORM = #{record.referenceForm,jdbcType=VARCHAR},
+      </if>
+      <if test="record.idcardCopy != null" >
+        IDCARD_COPY = #{record.idcardCopy,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cetTranscript != null" >
+        CET_TRANSCRIPT = #{record.cetTranscript,jdbcType=VARCHAR},
+      </if>
+      <if test="record.photo != null" >
+        PHOTO = #{record.photo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.breakOff != null" >
+        BREAK_OFF = #{record.breakOff,jdbcType=VARCHAR},
+      </if>
+      <if test="record.yearth != null" >
+        YEARTH = #{record.yearth,jdbcType=VARCHAR},
+      </if>
+      <if test="record.changeTime != null" >
+        CHANGE_TIME = #{record.changeTime,jdbcType=DATE},
+      </if>
+      <if test="record.createUser != null" >
+        CREATE_USER = #{record.createUser,jdbcType=VARCHAR},
+      </if>
+      <if test="record.orgId != null" >
+        ORG_ID = #{record.orgId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.jobFamilyName != null" >
+        JOB_FAMILY_NAME = #{record.jobFamilyName,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update T_CAMPUS_STUDENT
+    set ID = #{record.id,jdbcType=VARCHAR},
+      SITE_ID = #{record.siteId,jdbcType=VARCHAR},
+      SITE_NAME = #{record.siteName,jdbcType=VARCHAR},
+      POST_ID = #{record.postId,jdbcType=VARCHAR},
+      POST_NAME = #{record.postName,jdbcType=VARCHAR},
+      WORKING_PLACE = #{record.workingPlace,jdbcType=VARCHAR},
+      JOB_FAMILY = #{record.jobFamily,jdbcType=VARCHAR},
+      JOB_CLASS = #{record.jobClass,jdbcType=VARCHAR},
+      JOB_SUBCLASS = #{record.jobSubclass,jdbcType=VARCHAR},
+      ORGANIZATION = #{record.organization,jdbcType=VARCHAR},
+      BIG_CENTER = #{record.bigCenter,jdbcType=VARCHAR},
+      SMALL_CENTER = #{record.smallCenter,jdbcType=VARCHAR},
+      DEPARTMENT = #{record.department,jdbcType=VARCHAR},
+      OFFICES = #{record.offices,jdbcType=VARCHAR},
+      REALNAME = #{record.realname,jdbcType=VARCHAR},
+      SEX = #{record.sex,jdbcType=VARCHAR},
+      EDUCATION = #{record.education,jdbcType=VARCHAR},
+      SCHOOL = #{record.school,jdbcType=VARCHAR},
+      MAJOR = #{record.major,jdbcType=VARCHAR},
+      NATIVE_PLACE = #{record.nativePlace,jdbcType=VARCHAR},
+      PHONE_NO = #{record.phoneNo,jdbcType=VARCHAR},
+      EMAIL = #{record.email,jdbcType=VARCHAR},
+      EVALUATION = #{record.evaluation,jdbcType=VARCHAR},
+      MORALE_RISK = #{record.moraleRisk,jdbcType=VARCHAR},
+      COMPETENCY = #{record.competency,jdbcType=VARCHAR},
+      RESULT_FIRST = #{record.resultFirst,jdbcType=VARCHAR},
+      RESULT_SECOND = #{record.resultSecond,jdbcType=VARCHAR},
+      OFFER = #{record.offer,jdbcType=VARCHAR},
+      TRILATERAL = #{record.trilateral,jdbcType=VARCHAR},
+      TRANSCRIPT = #{record.transcript,jdbcType=VARCHAR},
+      REFERENCE_FORM = #{record.referenceForm,jdbcType=VARCHAR},
+      IDCARD_COPY = #{record.idcardCopy,jdbcType=VARCHAR},
+      CET_TRANSCRIPT = #{record.cetTranscript,jdbcType=VARCHAR},
+      PHOTO = #{record.photo,jdbcType=VARCHAR},
+      BREAK_OFF = #{record.breakOff,jdbcType=VARCHAR},
+      YEARTH = #{record.yearth,jdbcType=VARCHAR},
+      CHANGE_TIME = #{record.changeTime,jdbcType=DATE},
+      CREATE_USER = #{record.createUser,jdbcType=VARCHAR},
+      ORG_ID = #{record.orgId,jdbcType=VARCHAR},
+      JOB_FAMILY_NAME = #{record.jobFamilyName,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.csot.recruit.model.original.campus.CampusStudent" >
+    update T_CAMPUS_STUDENT
+    <set >
+      <if test="siteId != null" >
+        SITE_ID = #{siteId,jdbcType=VARCHAR},
+      </if>
+      <if test="siteName != null" >
+        SITE_NAME = #{siteName,jdbcType=VARCHAR},
+      </if>
+      <if test="postId != null" >
+        POST_ID = #{postId,jdbcType=VARCHAR},
+      </if>
+      <if test="postName != null" >
+        POST_NAME = #{postName,jdbcType=VARCHAR},
+      </if>
+      <if test="workingPlace != null" >
+        WORKING_PLACE = #{workingPlace,jdbcType=VARCHAR},
+      </if>
+      <if test="jobFamily != null" >
+        JOB_FAMILY = #{jobFamily,jdbcType=VARCHAR},
+      </if>
+      <if test="jobClass != null" >
+        JOB_CLASS = #{jobClass,jdbcType=VARCHAR},
+      </if>
+      <if test="jobSubclass != null" >
+        JOB_SUBCLASS = #{jobSubclass,jdbcType=VARCHAR},
+      </if>
+      <if test="organization != null" >
+        ORGANIZATION = #{organization,jdbcType=VARCHAR},
+      </if>
+      <if test="bigCenter != null" >
+        BIG_CENTER = #{bigCenter,jdbcType=VARCHAR},
+      </if>
+      <if test="smallCenter != null" >
+        SMALL_CENTER = #{smallCenter,jdbcType=VARCHAR},
+      </if>
+      <if test="department != null" >
+        DEPARTMENT = #{department,jdbcType=VARCHAR},
+      </if>
+      <if test="offices != null" >
+        OFFICES = #{offices,jdbcType=VARCHAR},
+      </if>
+      <if test="realname != null" >
+        REALNAME = #{realname,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null" >
+        SEX = #{sex,jdbcType=VARCHAR},
+      </if>
+      <if test="education != null" >
+        EDUCATION = #{education,jdbcType=VARCHAR},
+      </if>
+      <if test="school != null" >
+        SCHOOL = #{school,jdbcType=VARCHAR},
+      </if>
+      <if test="major != null" >
+        MAJOR = #{major,jdbcType=VARCHAR},
+      </if>
+      <if test="nativePlace != null" >
+        NATIVE_PLACE = #{nativePlace,jdbcType=VARCHAR},
+      </if>
+      <if test="phoneNo != null" >
+        PHONE_NO = #{phoneNo,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null" >
+        EMAIL = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="evaluation != null" >
+        EVALUATION = #{evaluation,jdbcType=VARCHAR},
+      </if>
+      <if test="moraleRisk != null" >
+        MORALE_RISK = #{moraleRisk,jdbcType=VARCHAR},
+      </if>
+      <if test="competency != null" >
+        COMPETENCY = #{competency,jdbcType=VARCHAR},
+      </if>
+      <if test="resultFirst != null" >
+        RESULT_FIRST = #{resultFirst,jdbcType=VARCHAR},
+      </if>
+      <if test="resultSecond != null" >
+        RESULT_SECOND = #{resultSecond,jdbcType=VARCHAR},
+      </if>
+      <if test="offer != null" >
+        OFFER = #{offer,jdbcType=VARCHAR},
+      </if>
+      <if test="trilateral != null" >
+        TRILATERAL = #{trilateral,jdbcType=VARCHAR},
+      </if>
+      <if test="transcript != null" >
+        TRANSCRIPT = #{transcript,jdbcType=VARCHAR},
+      </if>
+      <if test="referenceForm != null" >
+        REFERENCE_FORM = #{referenceForm,jdbcType=VARCHAR},
+      </if>
+      <if test="idcardCopy != null" >
+        IDCARD_COPY = #{idcardCopy,jdbcType=VARCHAR},
+      </if>
+      <if test="cetTranscript != null" >
+        CET_TRANSCRIPT = #{cetTranscript,jdbcType=VARCHAR},
+      </if>
+      <if test="photo != null" >
+        PHOTO = #{photo,jdbcType=VARCHAR},
+      </if>
+      <if test="breakOff != null" >
+        BREAK_OFF = #{breakOff,jdbcType=VARCHAR},
+      </if>
+      <if test="yearth != null" >
+        YEARTH = #{yearth,jdbcType=VARCHAR},
+      </if>
+      <if test="changeTime != null" >
+        CHANGE_TIME = #{changeTime,jdbcType=DATE},
+      </if>
+      <if test="createUser != null" >
+        CREATE_USER = #{createUser,jdbcType=VARCHAR},
+      </if>
+      <if test="orgId != null" >
+        ORG_ID = #{orgId,jdbcType=VARCHAR},
+      </if>
+      <if test="jobFamilyName != null" >
+        JOB_FAMILY_NAME = #{jobFamilyName,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.csot.recruit.model.original.campus.CampusStudent" >
+    update T_CAMPUS_STUDENT
+    set SITE_ID = #{siteId,jdbcType=VARCHAR},
+      SITE_NAME = #{siteName,jdbcType=VARCHAR},
+      POST_ID = #{postId,jdbcType=VARCHAR},
+      POST_NAME = #{postName,jdbcType=VARCHAR},
+      WORKING_PLACE = #{workingPlace,jdbcType=VARCHAR},
+      JOB_FAMILY = #{jobFamily,jdbcType=VARCHAR},
+      JOB_CLASS = #{jobClass,jdbcType=VARCHAR},
+      JOB_SUBCLASS = #{jobSubclass,jdbcType=VARCHAR},
+      ORGANIZATION = #{organization,jdbcType=VARCHAR},
+      BIG_CENTER = #{bigCenter,jdbcType=VARCHAR},
+      SMALL_CENTER = #{smallCenter,jdbcType=VARCHAR},
+      DEPARTMENT = #{department,jdbcType=VARCHAR},
+      OFFICES = #{offices,jdbcType=VARCHAR},
+      REALNAME = #{realname,jdbcType=VARCHAR},
+      SEX = #{sex,jdbcType=VARCHAR},
+      EDUCATION = #{education,jdbcType=VARCHAR},
+      SCHOOL = #{school,jdbcType=VARCHAR},
+      MAJOR = #{major,jdbcType=VARCHAR},
+      NATIVE_PLACE = #{nativePlace,jdbcType=VARCHAR},
+      PHONE_NO = #{phoneNo,jdbcType=VARCHAR},
+      EMAIL = #{email,jdbcType=VARCHAR},
+      EVALUATION = #{evaluation,jdbcType=VARCHAR},
+      MORALE_RISK = #{moraleRisk,jdbcType=VARCHAR},
+      COMPETENCY = #{competency,jdbcType=VARCHAR},
+      RESULT_FIRST = #{resultFirst,jdbcType=VARCHAR},
+      RESULT_SECOND = #{resultSecond,jdbcType=VARCHAR},
+      OFFER = #{offer,jdbcType=VARCHAR},
+      TRILATERAL = #{trilateral,jdbcType=VARCHAR},
+      TRANSCRIPT = #{transcript,jdbcType=VARCHAR},
+      REFERENCE_FORM = #{referenceForm,jdbcType=VARCHAR},
+      IDCARD_COPY = #{idcardCopy,jdbcType=VARCHAR},
+      CET_TRANSCRIPT = #{cetTranscript,jdbcType=VARCHAR},
+      PHOTO = #{photo,jdbcType=VARCHAR},
+      BREAK_OFF = #{breakOff,jdbcType=VARCHAR},
+      YEARTH = #{yearth,jdbcType=VARCHAR},
+      CHANGE_TIME = #{changeTime,jdbcType=DATE},
+      CREATE_USER = #{createUser,jdbcType=VARCHAR},
+      ORG_ID = #{orgId,jdbcType=VARCHAR},
+      JOB_FAMILY_NAME = #{jobFamilyName,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <sql id="Oracle_Dialect_Pagination_Prefix" >
+    <if test="page != null" >
+      select * from ( select row_.*, rownum rownum_ from ( 
+    </if>
+  </sql>
+  <sql id="Oracle_Dialect_Pagination_Suffix" >
+    <if test="page != null" >
+      <![CDATA[ ) row_ ) where rownum_ > #{page.begin} and rownum_ <= #{page.end} ]]>
+    </if>
+  </sql>
+</mapper>

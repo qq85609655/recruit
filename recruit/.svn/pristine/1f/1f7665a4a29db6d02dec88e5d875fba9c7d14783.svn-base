@@ -1,0 +1,17 @@
+package com.csot.recruit.service.flow.recruitdemand;
+
+import com.csot.recruit.model.original.flow.recruitdemand.RecruitDemand;
+import org.amberframework.web.miniui.pojo.MiniGridPageSort;
+import org.amberframework.web.miniui.pojo.MiniRtn2Grid;
+
+public interface RecruitDemandService {
+    MiniRtn2Grid<RecruitDemand> getGrid(MiniGridPageSort pageSort, String searchKey);
+
+    RecruitDemand getByPrimaryKey(String primaryKey);
+
+    void create(RecruitDemand recruitDemand);
+
+    void updateSelective(RecruitDemand recruitDemand);
+
+    void remove(String primaryKey);
+}

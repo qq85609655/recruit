@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:util="http://www.springframework.org/schema/util"
+  xmlns:aop="http://www.springframework.org/schema/aop" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+       http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd
+       http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
+       
+  <!-- 缓存管理器 -->
+  <bean id="shiroCacheManager" class="org.amberframework.core.shiro.cache.SpringCacheManagerWrapper">
+    <property name="cacheManager" ref="springCacheManager" />
+  </bean>
+
+  <!-- 凭证匹配器 -->
+  <bean id="credentialsMatcher" class="org.amberframework.core.shiro.credential.RetryLimitHashedCredentialsMatcher">
+    <constructor-arg ref="shiroCacheManager" />
+    <property name="hashAlgorithmName" value="md5" />
+    <property name="hashIterations" value="2" />
+    <property name="storedCredentialsHexEncoded" value="true" />
+  </bean>
+  
+  <!-- 本地Realm实现 -->
+  <bean id="userRealm" class="org.amberframework.core.shiro.realm.UserRealm">
+    <property name="credentialsMatcher" ref="credentialsMatcher" />
+    <property name="cachingEnabled" value="true" />
+    <property name="authenticationCachingEnabled" value="false"/>
+    <!--<property name="authenticationCacheName" value="authenticationCache"/>-->
+    <property name="authorizationCachingEnabled" value="true"/>
+    <property name="authorizationCacheName" value="authorizationCache"/>
+  </bean>
+  
+  <!-- 直接访问AD的LDAP Realm 实现AD验证 -->
+  <bean id="adLdapRealm" class="org.apache.shiro.realm.ldap.JndiLdapRealm">
+    <property name="userDnTemplate" value="csot\{0}"/>
+    <property name="contextFactory" ref="adLdapContextFactory"/>
+    <property name="cachingEnabled" value="false" />
+    <property name="authenticationCachingEnabled" value="false"/>
+    <!--<property name="authenticationCacheName" value="authenticationCache"/>-->
+    <property name="authorizationCachingEnabled" value="false"/>
+    <!--property name="authorizationCacheName" value="authorizationCache"/-->
+  </bean>
+  
+  <!-- 直接访问AD的LDAP验证的ContextFactory -->
+  <bean id="adLdapContextFactory" class="org.apache.shiro.realm.ldap.JndiLdapContextFactory">
+    <property name="url" value="ldap://10.108.3.11:389"/>
+  </bean>
+  
+  <!-- LDAP Realm 实现AD验证 -->
+  <bean id="ldapRealm" class="org.amberframework.core.shiro.realm.CommonLdapRealm">
+    <!--<property name="userDnTemplate" value="csot\{0}"/>-->
+    <property name="contextFactory" ref="ldapContextFactory"/>
+    <property name="cachingEnabled" value="false" />
+    <property name="authenticationCachingEnabled" value="false"/>
+    <!--<property name="authenticationCacheName" value="authenticationCache"/>-->
+    <property name="authorizationCachingEnabled" value="false"/>
+    <!--property name="authorizationCacheName" value="authorizationCache"/-->
+  </bean>
+  
+  <!-- LDAP验证的ContextFactory -->
+  <bean id="ldapContextFactory" class="org.apache.shiro.realm.ldap.JndiLdapContextFactory">
+    <property name="url" value="${shiro.ldap.context.url}"/>
+    <property name="systemUsername" value="${shiro.ldap.context.systemUsername}"/>
+    <property name="systemPassword" value="${shiro.ldap.context.systemPassword}"/>
+  </bean>
+  
+  <!-- <bean id="casRealm" class="org.amberframework.core.shiro.realm.MultiCustomCasRealm"> -->
+  <bean id="casRealm" class="org.amberframework.core.shiro.realm.CustomCasRealm">
+    <property name="casServerUrlPrefix" value="${shiro.cas.realm.casServerUrlPrefix}"/>
+    <property name="casService" value="${shiro.cas.realm.defaultCasService}"/>
+    <!-- Multi则将casService改为以下casService和defaultCasService属性配置 -->
+    <!-- <property name="casService" value="${shiro.cas.realm.multiCasService}"/> -->
+    <!-- <property name="defaultCasService" value="${shiro.cas.realm.defaultCasService}"/> -->
+    <property name="authenticationCachingEnabled" value="false"/>
+    <property name="authorizationCachingEnabled" value="true"/>
+    <property name="authorizationCacheName" value="authorizationCache"/>
+    <property name="principalsAssembler" ref="amberPrincipalsAssembler"/>
+  </bean>
+
+  <!-- 属性加载器，用于从CAS返回的授权对象中获取作为默认principal的属性拼装成principal集合 -->
+  <bean id="amberPrincipalsAssembler"
+        class="org.amberframework.core.shiro.realm.AmberPrincipalsAssembler"/>
+  
+  <!-- 会话ID生成器 -->
+  <bean id="sessionIdGenerator" class="org.apache.shiro.session.mgt.eis.JavaUuidSessionIdGenerator" />
+  
+  <!-- 会话Cookie模板 -->
+  <bean id="sessionIdCookie" class="org.apache.shiro.web.servlet.SimpleCookie">
+    <constructor-arg value="sid" />
+    <property name="httpOnly" value="true" />
+    <property name="maxAge" value="-1" />
+  </bean>
+
+  <bean id="rememberMeCookie" class="org.apache.shiro.web.servlet.SimpleCookie">
+    <constructor-arg value="rememberMe" />
+    <property name="httpOnly" value="true" />
+    <property name="maxAge" value="2592000" /><!-- 30天 -->
+  </bean>
+  
+  <!-- rememberMe管理器 暂时没用上 -->
+  <bean id="rememberMeManager" class="org.apache.shiro.web.mgt.CookieRememberMeManager">
+    <!-- rememberMe cookie加密的密钥 建议每个项目都不一样 默认AES算法 密钥长度（128 256 512 位）-->
+    <property name="cipherKey" value="#{T(org.apache.shiro.codec.Base64).decode('4AvVhmFLUs0KTA3Kprsdag==')}" />
+    <property name="cookie" ref="rememberMeCookie" />
+  </bean>
+  
+  <!-- 会话DAO -->
+  <bean id="sessionDAO" class="org.apache.shiro.session.mgt.eis.EnterpriseCacheSessionDAO">
+    <property name="activeSessionsCacheName" value="shiro-activeSessionCache" />
+    <property name="sessionIdGenerator" ref="sessionIdGenerator" />
+  </bean>
+  
+  <!-- 会话验证调度器 -->
+  <bean id="sessionValidationScheduler" class="org.apache.shiro.session.mgt.ExecutorServiceSessionValidationScheduler">
+    <property name="interval" value="1800000" /> <!-- 30分钟 -->
+    <property name="sessionManager" ref="sessionManager" />
+  </bean>
+  
+  <!-- 会话管理器 -->
+  <bean id="sessionManager" class="org.apache.shiro.web.session.mgt.DefaultWebSessionManager">
+    <property name="globalSessionTimeout" value="1800000" /> <!-- 30分钟 -->
+    <property name="deleteInvalidSessions" value="true" />
+    <property name="sessionValidationSchedulerEnabled" value="true" />
+    <property name="sessionValidationScheduler" ref="sessionValidationScheduler" />
+    <property name="sessionDAO" ref="sessionDAO" />
+    <property name="sessionIdCookieEnabled" value="true" />
+    <property name="sessionIdCookie" ref="sessionIdCookie" />
+    <property name="cacheManager" ref="shiroCacheManager"/>
+  </bean>
+  
+  <!-- 安全管理器 -->
+  <bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
+    <property name="realms">
+      <list>
+        <ref bean="userRealm"/>
+        <!-- 已经实现LDAP验证，要用的时候去掉注释即可。带有“ad”前缀的是直接访问AD的Realm。 -->
+        <!-- 最好AD的用户信息在本地用户表中也有，不然能登录也看不到菜单，没有权限 -->
+        <ref bean="ldapRealm"/>
+        <!-- <ref bean="adLdapRealm"/> -->
+        <!-- 已经实现CAS集成验证，要用到的时候去掉注释，修改casRealm、userFilter、logoutFilter的配置和资源文件中的参数配置 -->
+        <ref bean="casRealm"/>
+      </list>
+    </property>
+    <property name="sessionManager" ref="sessionManager" />
+    <property name="cacheManager" ref="shiroCacheManager"/>
+    <!-- property name="rememberMeManager" ref="rememberMeManager" /-->
+    <property name="subjectFactory" ref="casSubjectFactory" />
+  </bean>
+  
+  <bean id="casSubjectFactory" class="org.apache.shiro.cas.CasSubjectFactory"/>
+  
+  <!-- 相当于调用SecurityUtils.setSecurityManager(securityManager) -->
+  <bean class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">
+    <property name="staticMethod" value="org.apache.shiro.SecurityUtils.setSecurityManager" />
+    <property name="arguments" ref="securityManager" />
+  </bean>
+  
+  <!-- 基于Form表单的身份验证过滤器 -->
+  <bean id="formAuthenticationFilter" class="org.amberframework.core.shiro.filter.AmberFormAuthenticationFilter">
+    <property name="usernameParam" value="username" />
+    <property name="passwordParam" value="password" />
+    <property name="loginUrl" value="/webpage/login.jsp" />
+    <property name="successExcludeGotoUrls">
+      <list>
+        <value>/</value>
+        <value>/webpage/login.jsp</value>
+      </list>
+    </property>
+  </bean>
+  
+  <!-- 将当前用户对象放入request中，以供业务处理使用 -->
+  <bean id="sysUserFilter" class="org.amberframework.core.shiro.filter.SysUserFilter" />
+  
+  <bean id="userFilter" class="org.amberframework.core.shiro.filter.CustomCasUserFilter">
+    <property name="loginUrl" value="/webpage/login.jsp"/>
+    <!-- 使用CAS验证的时候开启以下casLoginUrl和casServiceBasePath的配置，不使用的时候需要注释掉 -->
+    <property name="casLoginUrl" value="${shiro.cas.filter.casLoginUrl}"/>
+    <property name="casServiceBasePath" value="${shiro.cas.filter.casServiceBasePath}"/>
+    <!-- 以下配置方式支持系统多域名进行CAS验证，但是必须将casRealm和casFilter改为MultiCustomCasRealm和MultiAmberCasFilter -->
+    <!-- 备注：多域名支持CAS验证并不是一个好的实现，因为它使得userFilter与casRealm和casFilter产生了耦合. -->
+    <!-- 而且这种耦合不是强关联的，用户使用不当(没有搭配使用)会导致不易察觉的问题，一般不建议使用. -->
+    <!--<property name="casServiceBasePaths">
+      <list>
+        <value>http://srmtest.csot.tcl.com</value>
+        <value>http://srmtest2.csot.tcl.com:8080</value>
+      </list>
+    </property>-->
+  </bean>
+
+  <bean id="logoutFilter" class="org.amberframework.core.shiro.filter.CustomCasLogoutFilter">
+    <property name="redirectUrl" value="/"/>
+    <!-- 使用CAS验证的时候开启以下casLoginUrl和casServiceBasePath的配置，不使用的时候需要注释掉。Multi使用casServiceBasePaths -->
+    <property name="casRedirectUrl"
+              value="${shiro.cas.filter.casRedirectUrl}"/>
+    <property name="casServiceBasePath" value="${shiro.cas.filter.casServiceBasePath}"/>
+    <!--<property name="casServiceBasePaths">
+      <list>
+        <value>http://srmtest.csot.tcl.com</value>
+        <value>http://srmtest2.csot.tcl.com:8080</value>
+      </list>
+    </property>-->
+  </bean>
+
+  <!-- <bean id="casFilter" class="org.amberframework.core.shiro.filter.MultiAmberCasFilter"> -->
+  <bean id="casFilter" class="org.amberframework.core.shiro.filter.AmberCasFilter">
+    <property name="failureUrl" value="/webpage/unauthorized.jsp"/>
+  </bean>
+  
+  <!-- Shiro的Web过滤器 -->
+  <bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
+    <property name="securityManager" ref="securityManager" />
+    <!-- <property name="loginUrl" value="http://siamtest.csot.tcl.com/login?service=http://srmtest.csot.tcl.com:8080/srm/cas" /> -->
+    <property name="successUrl" value="/sys/auth/main" />
+    <property name="unauthorizedUrl" value="/webpage/unauthorized.jsp"/>
+    <property name="filters">
+      <util:map>
+        <entry key="cas" value-ref="casFilter" />
+        <entry key="authc" value-ref="formAuthenticationFilter" />
+        <entry key="sysUser" value-ref="sysUserFilter" />
+        <entry key="user" value-ref="userFilter" />
+        <entry key="logout" value-ref="logoutFilter" />
+      </util:map>
+    </property>
+    <property name="filterChainDefinitions">
+      <value>
+        /resources/** = anon
+        /sys/auth/authenticated = anon
+        /sys/auth/ajaxlogin = anon
+        /services/** = anon
+        /webpage/unauthorized.jsp = anon
+	    /srmCommonAttachment/** = anon
+        /webpage/login.jsp = authc
+        //recruitDemandChangeController/** =anon
+        /sys/auth/logout = logout
+        /cas = cas
+        /** = user,roles,perms,sysUser
+      </value>
+    </property>
+  </bean>
+  
+  <!-- Shiro生命周期处理器-->
+  <bean id="lifecycleBeanPostProcessor" class="org.apache.shiro.spring.LifecycleBeanPostProcessor" />
+</beans>

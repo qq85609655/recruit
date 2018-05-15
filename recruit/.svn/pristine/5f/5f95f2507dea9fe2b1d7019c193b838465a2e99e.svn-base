@@ -1,0 +1,53 @@
+$(function() {
+  // 初始化页面元素对象
+  apply_post_name = mini.get("applyPostName");
+  apply_organization_name = mini.get("applyOrganizationName");
+  apply_post_id = mini.get("applyPostId");
+  apply_organization_id = mini.get("applyOrganizationId");
+});
+// 选择岗位
+function choseJob() {
+  // 模拟选中岗位
+  // 获取选中值（岗位ID,岗位名称,部门ID,部门名称）
+  // 模拟操作
+  apply_post_name.setValue("工程师");
+  apply_organization_name.setValue("营运分析科");
+  apply_organization_id.setValue("50013844");
+  apply_post_id.setValue("50007990");
+}
+
+function submitForm() {
+  form.validate();
+  if (form.isValid() == false) {
+    return;
+  }
+  SaveData("/recruit/demand/save", $("#form1").serialize());
+}
+
+function onCancel(e) {
+  CloseWindow("close", form);
+}
+
+function onPostChanged() {
+  var postName = mini.get("postId").getText();
+  mini.get("postName").setValue(postName);
+  mini.get("jobClass").setValue(postName);
+}
+
+function onOrganizationChanged() {
+  var organizationDesc = mini.get("organization").getText();
+  mini.get("organizationDesc").setValue(organizationDesc);
+}
+
+function onJobFamilyChanged() {
+  var jobFamilyDesc = mini.get("jobFamily").getText();
+  mini.get("jobFamilyDesc").setValue(jobFamilyDesc);
+}
+
+function onComboValidation(e) {
+  var items = this.findItems(e.value);
+  if (!items || items.length == 0) {
+    e.isValid = false;
+    e.errorText = "[" + e.value + "]" + "不在下拉数据中";
+  }
+}

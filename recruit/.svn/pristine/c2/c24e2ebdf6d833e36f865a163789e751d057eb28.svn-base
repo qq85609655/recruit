@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.csot.recruit.dao.extension.campus.CampusTaskExtMapper" >
+  <resultMap id="BaseResultMap" type="com.csot.recruit.model.original.campus.CampusTask" >
+    <id column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="SITE_ID" property="siteId" jdbcType="VARCHAR" />
+    <result column="SITE_NAME" property="siteName" jdbcType="VARCHAR" />
+    <result column="POST_ID" property="postId" jdbcType="VARCHAR" />
+    <result column="POST_NAME" property="postName" jdbcType="VARCHAR" />
+    <result column="TASK_NUMBER_BA" property="taskNumberBa" jdbcType="DECIMAL" />
+    <result column="TASK_NUMBER_MA" property="taskNumberMa" jdbcType="DECIMAL" />
+    <result column="TASK_NUMBER_DO" property="taskNumberDo" jdbcType="DECIMAL" />
+    <result column="REMARK" property="remark" jdbcType="VARCHAR" />
+    <result column="RESERVED_1" property="reserved1" jdbcType="VARCHAR" />
+    <result column="RESERVED_2" property="reserved2" jdbcType="VARCHAR" />
+    <result column="RESERVED_3" property="reserved3" jdbcType="VARCHAR" />
+    <result column="STATUS" property="status" jdbcType="VARCHAR" />
+    <result column="YEARTH" property="yearth" jdbcType="VARCHAR" />
+    <result column="ORG_NAME" property="orgName" jdbcType="VARCHAR" />
+    <result column="ORGANIZATION" property="organization" jdbcType="VARCHAR" />
+    <result column="BIG_CENTER" property="bigCenter" jdbcType="VARCHAR" />
+    <result column="SMALL_CENTER" property="smallCenter" jdbcType="VARCHAR" />
+    <result column="DEPARTMENT" property="department" jdbcType="VARCHAR" />
+    <result column="BRANCH" property="branch" jdbcType="VARCHAR" />
+    <result column="JOB_FAMILY" property="jobFamily" jdbcType="VARCHAR" />
+    <result column="JOB_CLASS" property="jobClass" jdbcType="VARCHAR" />
+    <result column="JOB_SUBCLASS" property="jobSubclass" jdbcType="VARCHAR" />
+    <result column="JOB_DESCRIBE" property="jobDescribe" jdbcType="VARCHAR" />
+    <result column="NIGHT_SHIFT" property="nightShift" jdbcType="VARCHAR" />
+    <result column="DUST_FREE" property="dustFree" jdbcType="VARCHAR" />
+    <result column="TASK_NUMBER_SUM" property="taskNumberSum" jdbcType="DECIMAL" />
+    <result column="TASK_NUMBER_MAIL" property="taskNumberMail" jdbcType="DECIMAL" />
+    <result column="TASK_NUMBER_FEMAIL" property="taskNumberFemail" jdbcType="DECIMAL" />
+    <result column="SPECIAL_REQUIRE" property="specialRequire" jdbcType="VARCHAR" />
+    <result column="PREFERRED_MAJOR" property="preferredMajor" jdbcType="VARCHAR" />
+    <result column="ALTERNATIVE_MAJOR" property="alternativeMajor" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <select id="selectAllYearth" parameterType="map" resultMap="BaseResultMap">
+    select DISTINCT t1.YEARTH FROM T_CAMPUS_TASK t1
+    UNION select DISTINCT t2.YEARTH FROM T_CAMPUS_TASK_FIRST t2
+    UNION select DISTINCT t3.YEARTH FROM T_CAMPUS_STUDENT t3 ORDER BY YEARTH DESC
+  </select>
+  <select id="countByExample" parameterType="com.csot.recruit.model.extension.campus.CampusTaskExtCriteria" resultType="java.lang.Integer" >
+    select count(*) from T_CAMPUS_TASK
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <sql id="Oracle_Dialect_Pagination_Prefix" >
+    <if test="page != null" >
+      select * from ( select row_.*, rownum rownum_ from ( 
+    </if>
+  </sql>
+  <sql id="Oracle_Dialect_Pagination_Suffix" >
+    <if test="page != null" >
+      <![CDATA[ ) row_ ) where rownum_ > #{page.begin} and rownum_ <= #{page.end} ]]>
+    </if>
+  </sql>
+</mapper>

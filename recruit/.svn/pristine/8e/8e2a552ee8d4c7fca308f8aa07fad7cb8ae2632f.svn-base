@@ -1,0 +1,508 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.csot.recruit.dao.original.campus.CampusPostMapper" >
+  <resultMap id="BaseResultMap" type="com.csot.recruit.model.original.campus.CampusPost" >
+    <id column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="POST_ID" property="postId" jdbcType="VARCHAR" />
+    <result column="POST_NAME" property="postName" jdbcType="VARCHAR" />
+    <result column="REMARK" property="remark" jdbcType="VARCHAR" />
+    <result column="RESERVED_1" property="reserved1" jdbcType="VARCHAR" />
+    <result column="RESERVED_2" property="reserved2" jdbcType="VARCHAR" />
+    <result column="RESERVED_3" property="reserved3" jdbcType="VARCHAR" />
+    <result column="STATUS" property="status" jdbcType="VARCHAR" />
+    <result column="ORGANIZATION" property="organization" jdbcType="VARCHAR" />
+    <result column="BIG_CENTER" property="bigCenter" jdbcType="VARCHAR" />
+    <result column="SMALL_CENTER" property="smallCenter" jdbcType="VARCHAR" />
+    <result column="JOB_FAMILY" property="jobFamily" jdbcType="VARCHAR" />
+    <result column="JOB_CLASS" property="jobClass" jdbcType="VARCHAR" />
+    <result column="JOB_SUBCLASS" property="jobSubclass" jdbcType="VARCHAR" />
+    <result column="RECRUIT_QUANTITY" property="recruitQuantity" jdbcType="VARCHAR" />
+    <result column="EDUCATION_ADVISE" property="educationAdvise" jdbcType="VARCHAR" />
+    <result column="SCHOOL_ADVISE" property="schoolAdvise" jdbcType="VARCHAR" />
+    <result column="SEX_ADVISE" property="sexAdvise" jdbcType="VARCHAR" />
+    <result column="PREFERRED_MAJOR" property="preferredMajor" jdbcType="VARCHAR" />
+    <result column="ALTERNATIVE_MAJOR" property="alternativeMajor" jdbcType="VARCHAR" />
+    <result column="OTHER_DEMAND" property="otherDemand" jdbcType="VARCHAR" />
+    <result column="POST_DESCRIBE" property="postDescribe" jdbcType="VARCHAR" />
+    <result column="SPECIAL_CONDITION" property="specialCondition" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    ID, POST_ID, POST_NAME, REMARK, RESERVED_1, RESERVED_2, RESERVED_3, STATUS, ORGANIZATION, 
+    BIG_CENTER, SMALL_CENTER, JOB_FAMILY, JOB_CLASS, JOB_SUBCLASS, RECRUIT_QUANTITY, 
+    EDUCATION_ADVISE, SCHOOL_ADVISE, SEX_ADVISE, PREFERRED_MAJOR, ALTERNATIVE_MAJOR, 
+    OTHER_DEMAND, POST_DESCRIBE, SPECIAL_CONDITION
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.csot.recruit.model.original.campus.CampusPostCriteria" >
+    <include refid="Oracle_Dialect_Pagination_Prefix" />
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from T_CAMPUS_POST
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <include refid="Oracle_Dialect_Pagination_Suffix" />
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from T_CAMPUS_POST
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from T_CAMPUS_POST
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.csot.recruit.model.original.campus.CampusPostCriteria" >
+    delete from T_CAMPUS_POST
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.csot.recruit.model.original.campus.CampusPost" >
+    insert into T_CAMPUS_POST (ID, POST_ID, POST_NAME, REMARK, 
+      RESERVED_1, RESERVED_2, RESERVED_3, 
+      STATUS, ORGANIZATION, BIG_CENTER, 
+      SMALL_CENTER, JOB_FAMILY, JOB_CLASS, 
+      JOB_SUBCLASS, RECRUIT_QUANTITY, EDUCATION_ADVISE, 
+      SCHOOL_ADVISE, SEX_ADVISE, PREFERRED_MAJOR, 
+      ALTERNATIVE_MAJOR, OTHER_DEMAND, POST_DESCRIBE, 
+      SPECIAL_CONDITION)
+    values (#{id,jdbcType=VARCHAR}, #{postId,jdbcType=VARCHAR}, #{postName,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, 
+      #{reserved1,jdbcType=VARCHAR}, #{reserved2,jdbcType=VARCHAR}, #{reserved3,jdbcType=VARCHAR}, 
+      #{status,jdbcType=VARCHAR}, #{organization,jdbcType=VARCHAR}, #{bigCenter,jdbcType=VARCHAR}, 
+      #{smallCenter,jdbcType=VARCHAR}, #{jobFamily,jdbcType=VARCHAR}, #{jobClass,jdbcType=VARCHAR}, 
+      #{jobSubclass,jdbcType=VARCHAR}, #{recruitQuantity,jdbcType=VARCHAR}, #{educationAdvise,jdbcType=VARCHAR}, 
+      #{schoolAdvise,jdbcType=VARCHAR}, #{sexAdvise,jdbcType=VARCHAR}, #{preferredMajor,jdbcType=VARCHAR}, 
+      #{alternativeMajor,jdbcType=VARCHAR}, #{otherDemand,jdbcType=VARCHAR}, #{postDescribe,jdbcType=VARCHAR}, 
+      #{specialCondition,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.csot.recruit.model.original.campus.CampusPost" >
+    insert into T_CAMPUS_POST
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="postId != null" >
+        POST_ID,
+      </if>
+      <if test="postName != null" >
+        POST_NAME,
+      </if>
+      <if test="remark != null" >
+        REMARK,
+      </if>
+      <if test="reserved1 != null" >
+        RESERVED_1,
+      </if>
+      <if test="reserved2 != null" >
+        RESERVED_2,
+      </if>
+      <if test="reserved3 != null" >
+        RESERVED_3,
+      </if>
+      <if test="status != null" >
+        STATUS,
+      </if>
+      <if test="organization != null" >
+        ORGANIZATION,
+      </if>
+      <if test="bigCenter != null" >
+        BIG_CENTER,
+      </if>
+      <if test="smallCenter != null" >
+        SMALL_CENTER,
+      </if>
+      <if test="jobFamily != null" >
+        JOB_FAMILY,
+      </if>
+      <if test="jobClass != null" >
+        JOB_CLASS,
+      </if>
+      <if test="jobSubclass != null" >
+        JOB_SUBCLASS,
+      </if>
+      <if test="recruitQuantity != null" >
+        RECRUIT_QUANTITY,
+      </if>
+      <if test="educationAdvise != null" >
+        EDUCATION_ADVISE,
+      </if>
+      <if test="schoolAdvise != null" >
+        SCHOOL_ADVISE,
+      </if>
+      <if test="sexAdvise != null" >
+        SEX_ADVISE,
+      </if>
+      <if test="preferredMajor != null" >
+        PREFERRED_MAJOR,
+      </if>
+      <if test="alternativeMajor != null" >
+        ALTERNATIVE_MAJOR,
+      </if>
+      <if test="otherDemand != null" >
+        OTHER_DEMAND,
+      </if>
+      <if test="postDescribe != null" >
+        POST_DESCRIBE,
+      </if>
+      <if test="specialCondition != null" >
+        SPECIAL_CONDITION,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="postId != null" >
+        #{postId,jdbcType=VARCHAR},
+      </if>
+      <if test="postName != null" >
+        #{postName,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="reserved1 != null" >
+        #{reserved1,jdbcType=VARCHAR},
+      </if>
+      <if test="reserved2 != null" >
+        #{reserved2,jdbcType=VARCHAR},
+      </if>
+      <if test="reserved3 != null" >
+        #{reserved3,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="organization != null" >
+        #{organization,jdbcType=VARCHAR},
+      </if>
+      <if test="bigCenter != null" >
+        #{bigCenter,jdbcType=VARCHAR},
+      </if>
+      <if test="smallCenter != null" >
+        #{smallCenter,jdbcType=VARCHAR},
+      </if>
+      <if test="jobFamily != null" >
+        #{jobFamily,jdbcType=VARCHAR},
+      </if>
+      <if test="jobClass != null" >
+        #{jobClass,jdbcType=VARCHAR},
+      </if>
+      <if test="jobSubclass != null" >
+        #{jobSubclass,jdbcType=VARCHAR},
+      </if>
+      <if test="recruitQuantity != null" >
+        #{recruitQuantity,jdbcType=VARCHAR},
+      </if>
+      <if test="educationAdvise != null" >
+        #{educationAdvise,jdbcType=VARCHAR},
+      </if>
+      <if test="schoolAdvise != null" >
+        #{schoolAdvise,jdbcType=VARCHAR},
+      </if>
+      <if test="sexAdvise != null" >
+        #{sexAdvise,jdbcType=VARCHAR},
+      </if>
+      <if test="preferredMajor != null" >
+        #{preferredMajor,jdbcType=VARCHAR},
+      </if>
+      <if test="alternativeMajor != null" >
+        #{alternativeMajor,jdbcType=VARCHAR},
+      </if>
+      <if test="otherDemand != null" >
+        #{otherDemand,jdbcType=VARCHAR},
+      </if>
+      <if test="postDescribe != null" >
+        #{postDescribe,jdbcType=VARCHAR},
+      </if>
+      <if test="specialCondition != null" >
+        #{specialCondition,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.csot.recruit.model.original.campus.CampusPostCriteria" resultType="java.lang.Integer" >
+    select count(*) from T_CAMPUS_POST
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update T_CAMPUS_POST
+    <set >
+      <if test="record.id != null" >
+        ID = #{record.id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.postId != null" >
+        POST_ID = #{record.postId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.postName != null" >
+        POST_NAME = #{record.postName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.remark != null" >
+        REMARK = #{record.remark,jdbcType=VARCHAR},
+      </if>
+      <if test="record.reserved1 != null" >
+        RESERVED_1 = #{record.reserved1,jdbcType=VARCHAR},
+      </if>
+      <if test="record.reserved2 != null" >
+        RESERVED_2 = #{record.reserved2,jdbcType=VARCHAR},
+      </if>
+      <if test="record.reserved3 != null" >
+        RESERVED_3 = #{record.reserved3,jdbcType=VARCHAR},
+      </if>
+      <if test="record.status != null" >
+        STATUS = #{record.status,jdbcType=VARCHAR},
+      </if>
+      <if test="record.organization != null" >
+        ORGANIZATION = #{record.organization,jdbcType=VARCHAR},
+      </if>
+      <if test="record.bigCenter != null" >
+        BIG_CENTER = #{record.bigCenter,jdbcType=VARCHAR},
+      </if>
+      <if test="record.smallCenter != null" >
+        SMALL_CENTER = #{record.smallCenter,jdbcType=VARCHAR},
+      </if>
+      <if test="record.jobFamily != null" >
+        JOB_FAMILY = #{record.jobFamily,jdbcType=VARCHAR},
+      </if>
+      <if test="record.jobClass != null" >
+        JOB_CLASS = #{record.jobClass,jdbcType=VARCHAR},
+      </if>
+      <if test="record.jobSubclass != null" >
+        JOB_SUBCLASS = #{record.jobSubclass,jdbcType=VARCHAR},
+      </if>
+      <if test="record.recruitQuantity != null" >
+        RECRUIT_QUANTITY = #{record.recruitQuantity,jdbcType=VARCHAR},
+      </if>
+      <if test="record.educationAdvise != null" >
+        EDUCATION_ADVISE = #{record.educationAdvise,jdbcType=VARCHAR},
+      </if>
+      <if test="record.schoolAdvise != null" >
+        SCHOOL_ADVISE = #{record.schoolAdvise,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sexAdvise != null" >
+        SEX_ADVISE = #{record.sexAdvise,jdbcType=VARCHAR},
+      </if>
+      <if test="record.preferredMajor != null" >
+        PREFERRED_MAJOR = #{record.preferredMajor,jdbcType=VARCHAR},
+      </if>
+      <if test="record.alternativeMajor != null" >
+        ALTERNATIVE_MAJOR = #{record.alternativeMajor,jdbcType=VARCHAR},
+      </if>
+      <if test="record.otherDemand != null" >
+        OTHER_DEMAND = #{record.otherDemand,jdbcType=VARCHAR},
+      </if>
+      <if test="record.postDescribe != null" >
+        POST_DESCRIBE = #{record.postDescribe,jdbcType=VARCHAR},
+      </if>
+      <if test="record.specialCondition != null" >
+        SPECIAL_CONDITION = #{record.specialCondition,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update T_CAMPUS_POST
+    set ID = #{record.id,jdbcType=VARCHAR},
+      POST_ID = #{record.postId,jdbcType=VARCHAR},
+      POST_NAME = #{record.postName,jdbcType=VARCHAR},
+      REMARK = #{record.remark,jdbcType=VARCHAR},
+      RESERVED_1 = #{record.reserved1,jdbcType=VARCHAR},
+      RESERVED_2 = #{record.reserved2,jdbcType=VARCHAR},
+      RESERVED_3 = #{record.reserved3,jdbcType=VARCHAR},
+      STATUS = #{record.status,jdbcType=VARCHAR},
+      ORGANIZATION = #{record.organization,jdbcType=VARCHAR},
+      BIG_CENTER = #{record.bigCenter,jdbcType=VARCHAR},
+      SMALL_CENTER = #{record.smallCenter,jdbcType=VARCHAR},
+      JOB_FAMILY = #{record.jobFamily,jdbcType=VARCHAR},
+      JOB_CLASS = #{record.jobClass,jdbcType=VARCHAR},
+      JOB_SUBCLASS = #{record.jobSubclass,jdbcType=VARCHAR},
+      RECRUIT_QUANTITY = #{record.recruitQuantity,jdbcType=VARCHAR},
+      EDUCATION_ADVISE = #{record.educationAdvise,jdbcType=VARCHAR},
+      SCHOOL_ADVISE = #{record.schoolAdvise,jdbcType=VARCHAR},
+      SEX_ADVISE = #{record.sexAdvise,jdbcType=VARCHAR},
+      PREFERRED_MAJOR = #{record.preferredMajor,jdbcType=VARCHAR},
+      ALTERNATIVE_MAJOR = #{record.alternativeMajor,jdbcType=VARCHAR},
+      OTHER_DEMAND = #{record.otherDemand,jdbcType=VARCHAR},
+      POST_DESCRIBE = #{record.postDescribe,jdbcType=VARCHAR},
+      SPECIAL_CONDITION = #{record.specialCondition,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.csot.recruit.model.original.campus.CampusPost" >
+    update T_CAMPUS_POST
+    <set >
+      <if test="postId != null" >
+        POST_ID = #{postId,jdbcType=VARCHAR},
+      </if>
+      <if test="postName != null" >
+        POST_NAME = #{postName,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="reserved1 != null" >
+        RESERVED_1 = #{reserved1,jdbcType=VARCHAR},
+      </if>
+      <if test="reserved2 != null" >
+        RESERVED_2 = #{reserved2,jdbcType=VARCHAR},
+      </if>
+      <if test="reserved3 != null" >
+        RESERVED_3 = #{reserved3,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        STATUS = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="organization != null" >
+        ORGANIZATION = #{organization,jdbcType=VARCHAR},
+      </if>
+      <if test="bigCenter != null" >
+        BIG_CENTER = #{bigCenter,jdbcType=VARCHAR},
+      </if>
+      <if test="smallCenter != null" >
+        SMALL_CENTER = #{smallCenter,jdbcType=VARCHAR},
+      </if>
+      <if test="jobFamily != null" >
+        JOB_FAMILY = #{jobFamily,jdbcType=VARCHAR},
+      </if>
+      <if test="jobClass != null" >
+        JOB_CLASS = #{jobClass,jdbcType=VARCHAR},
+      </if>
+      <if test="jobSubclass != null" >
+        JOB_SUBCLASS = #{jobSubclass,jdbcType=VARCHAR},
+      </if>
+      <if test="recruitQuantity != null" >
+        RECRUIT_QUANTITY = #{recruitQuantity,jdbcType=VARCHAR},
+      </if>
+      <if test="educationAdvise != null" >
+        EDUCATION_ADVISE = #{educationAdvise,jdbcType=VARCHAR},
+      </if>
+      <if test="schoolAdvise != null" >
+        SCHOOL_ADVISE = #{schoolAdvise,jdbcType=VARCHAR},
+      </if>
+      <if test="sexAdvise != null" >
+        SEX_ADVISE = #{sexAdvise,jdbcType=VARCHAR},
+      </if>
+      <if test="preferredMajor != null" >
+        PREFERRED_MAJOR = #{preferredMajor,jdbcType=VARCHAR},
+      </if>
+      <if test="alternativeMajor != null" >
+        ALTERNATIVE_MAJOR = #{alternativeMajor,jdbcType=VARCHAR},
+      </if>
+      <if test="otherDemand != null" >
+        OTHER_DEMAND = #{otherDemand,jdbcType=VARCHAR},
+      </if>
+      <if test="postDescribe != null" >
+        POST_DESCRIBE = #{postDescribe,jdbcType=VARCHAR},
+      </if>
+      <if test="specialCondition != null" >
+        SPECIAL_CONDITION = #{specialCondition,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.csot.recruit.model.original.campus.CampusPost" >
+    update T_CAMPUS_POST
+    set POST_ID = #{postId,jdbcType=VARCHAR},
+      POST_NAME = #{postName,jdbcType=VARCHAR},
+      REMARK = #{remark,jdbcType=VARCHAR},
+      RESERVED_1 = #{reserved1,jdbcType=VARCHAR},
+      RESERVED_2 = #{reserved2,jdbcType=VARCHAR},
+      RESERVED_3 = #{reserved3,jdbcType=VARCHAR},
+      STATUS = #{status,jdbcType=VARCHAR},
+      ORGANIZATION = #{organization,jdbcType=VARCHAR},
+      BIG_CENTER = #{bigCenter,jdbcType=VARCHAR},
+      SMALL_CENTER = #{smallCenter,jdbcType=VARCHAR},
+      JOB_FAMILY = #{jobFamily,jdbcType=VARCHAR},
+      JOB_CLASS = #{jobClass,jdbcType=VARCHAR},
+      JOB_SUBCLASS = #{jobSubclass,jdbcType=VARCHAR},
+      RECRUIT_QUANTITY = #{recruitQuantity,jdbcType=VARCHAR},
+      EDUCATION_ADVISE = #{educationAdvise,jdbcType=VARCHAR},
+      SCHOOL_ADVISE = #{schoolAdvise,jdbcType=VARCHAR},
+      SEX_ADVISE = #{sexAdvise,jdbcType=VARCHAR},
+      PREFERRED_MAJOR = #{preferredMajor,jdbcType=VARCHAR},
+      ALTERNATIVE_MAJOR = #{alternativeMajor,jdbcType=VARCHAR},
+      OTHER_DEMAND = #{otherDemand,jdbcType=VARCHAR},
+      POST_DESCRIBE = #{postDescribe,jdbcType=VARCHAR},
+      SPECIAL_CONDITION = #{specialCondition,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <sql id="Oracle_Dialect_Pagination_Prefix" >
+    <if test="page != null" >
+      select * from ( select row_.*, rownum rownum_ from ( 
+    </if>
+  </sql>
+  <sql id="Oracle_Dialect_Pagination_Suffix" >
+    <if test="page != null" >
+      <![CDATA[ ) row_ ) where rownum_ > #{page.begin} and rownum_ <= #{page.end} ]]>
+    </if>
+  </sql>
+</mapper>

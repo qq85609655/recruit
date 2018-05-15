@@ -1,0 +1,149 @@
+var editor;
+KindEditor.ready(function(K) {
+  editor = K.create('textarea[name="emailContent"]', {
+    allowFileManager : false
+  });
+  editor.sync();
+});
+
+$(function(){
+  $('input:radio[name="isEmail"]').change(function(){
+    $(this).val();
+ });
+});
+
+mini.parse();
+function onButtonEdit(e) {
+  btnEdit = this;
+  OpenDialog(basePath + "/baseUserController/chooseBaseUserList", "选择面试官", null, 650, 380,chooseInterviews);
+}
+//回调函数
+function chooseInterviews(action,e){
+  if (action == "ok") {
+    var iframe = e.getIFrameEl();
+
+    var data = iframe.contentWindow.GetData();
+    data = mini.clone(data);
+    btnEdit.setValue(data.id);
+    btnEdit.setText(data.text);
+  }
+}
+
+function onLinkmanButtonEdit(e) {
+  btnEdit = this;
+  OpenDialog(basePath + "/baseUserController/chooseBaseUserList", "选择面试联系人", null, 650, 380,chooseLinkman);
+}
+
+
+
+//回调函数
+function chooseLinkman(action,e){
+  if (action == "ok") {
+    var iframe = e.getIFrameEl();
+
+    var data = iframe.contentWindow.GetLinkmanData();
+    data = mini.clone(data);
+    btnEdit.setValue(data.id);
+    btnEdit.setText(data.text);
+  }
+}
+
+function onEmailModelButtonEdit(e) {
+  
+  btnEdit = this;
+  OpenDialog(basePath + "/templateController/chooseTemplate", "选择邮件模板", null, 650, 380,chooseEmailModel);
+}
+
+
+
+//回调函数
+function chooseEmailModel(action,e){
+  if (action == "ok") {
+    var iframe = e.getIFrameEl();
+
+    var data = iframe.contentWindow.GetTemplateData();
+    data = mini.clone(data);
+    btnEdit.setValue(data.id);
+    btnEdit.setText(data.text);
+    //data.emailContent = editor.html(data.context);
+    editor.html(data.context);
+    getAttachmentListToView(data.id);
+  }
+}
+
+function getAttachmentListToView(id){
+  
+  $.ajax({ 
+    type: "post", 
+    dataType: "json", 
+    data:{
+        id:id
+    },
+    url: basePath + "/attachmentController/getAttachmentList", 
+    success: function(data) { 
+        var status = data.status;
+        if (status==200) {
+          var htmlStr = '';
+          var list = data.attachments ;
+          if(list){
+            for(var i = 0 ; i < list.length ; i++){
+              if(list[i].type == 'emailTemplate'){
+                htmlStr += '<div id="div_'+list[i].id+'" class="fileStyle">' 
+                        + '<input id="'+list[i].id+'" type="button" onclick="delAttach(\''+list[i].id+'\')" value="删除" />'
+                        + '&nbsp;&nbsp;'
+                        + '<a href="javascript:downloadAttach('+list[i].id+')"><span>'+list[i].showName+'</span></a></div>';
+                       
+              }
+            }
+            $("#fileArea").html(htmlStr);
+            
+          }
+          
+        }else {
+          mini.alert("网络异常！");
+        }
+    }, 
+    error: function() { 
+      mini.alert("网络异常！");
+    }
+});
+  
+  
+}
+
+function delAttach(id){
+  $('#div_'+id).remove();
+}
+
+function onUpload() {
+  
+  uploadAttachments("attachment");
+}
+
+function uploadAttachments(name) {
+  $.ajaxFileUpload({
+    url : jsWebRoot + "/attachmentController/uploadFiles?type=" + "interviewBook" + "&relateId=0",
+    secureuri : false,
+    fileElementId : name,
+    dataType : "json",
+    data : null,
+    success : function(data, status) {
+      // 得到附件ID
+      var aid = data.attributes.attachId;
+      if (aid == null || aid == "") {
+        mini.alert("请选择需上传的附件!");
+      } else {
+        var attachName = data.attributes.attachName;
+        // 添加可删除附件的链接
+        $("#fileArea").append(
+            "<div class='fileStyle' id='del_div_" + aid
+                + "'><input type='button' value='删除' onclick='delAttach(\"" + aid
+                + "\")'>&nbsp;&nbsp;<span>" + attachName + "</span></div>")
+        mini.alert(data.msg, "提示");
+      }
+    },
+    error : function(data, status, e) {
+      mini.alert(data.msg, "提示");
+    }
+  });
+}

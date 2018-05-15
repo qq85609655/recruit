@@ -1,0 +1,655 @@
+body{
+	background-color: #ECF0F1;
+}
+.backColor{
+	width: 100%;
+}
+#resume_header{
+	width: 100%;
+	height:56px;
+	background-color: #51B0E3;
+	position: relative;
+	top:0px;
+	left: 0px;
+	z-index: 10000;
+}
+.resumeContent{
+	position:relative;
+	margin-left: 80px;
+	margin-right:80px;
+	background-color: white;
+}
+.tab_title{
+	position:relative;
+	padding-top: 15px;
+	margin-left: 10px;
+	margin-left: 80px;
+}
+
+.tab_title span{
+	font-size: 20px;
+	color: white;
+}
+
+#resume_menu{
+	height: 83px;
+	margin-top:60px;
+	position: relative;
+	background-color: white;
+    margin-left: 80px;
+	margin-right: 80px;
+}
+
+#resume_menu_button{
+	width:400px;
+    margin-right:10px;
+    position: absolute;
+    right:0px;
+    bottom:0px;
+    top:20px;
+	right:1px; 
+}
+
+.menu_btn{
+	display:inline-block;
+	height: 45px;
+	width: 190px;
+	background-color: #02A4EF;
+	color: white;
+	font-size: 18px;
+	position: relative;
+}
+
+.same{
+	background-color: white;
+    margin-left: 20px;
+	margin-right: 20px;
+}
+
+.basicFormTable {
+	margin-left: 10px;
+}
+
+.basicFormTable th{
+	text-align: left;
+	width: 15%;
+}
+
+.basicFormTable td{
+	height: 30px;
+}
+
+.basicFormTable select{
+	height: 26px;
+	width: 80px;
+}
+
+select{
+	font-size: 15px;
+}
+
+.resume_basicinfo{
+	margin-top: 10px;
+}
+
+.c999 {
+    color: #999;
+}
+address, caption, cite, code, dfn, em, strong, th, var {
+    font-style: normal;
+    font-weight: normal;
+}
+
+.basicFormTable .input_txt {
+    border: 1px solid #cdcdcd;
+    border-radius: 5px;
+    margin: 5px 0;
+    padding: 5px;
+    height: 40px;
+}
+
+.w150{
+	width: 175px;
+}
+
+#Email,#IDNumber{
+	width: 270px;
+}
+
+#IDAddress,#Address{
+	width: 700px;
+}
+
+.submit_btn, .submit_btn_pop {
+    background: #11b5fa none repeat scroll 0 0;
+    border: 0 none;
+    color: #fff;
+    cursor: pointer;
+    width: 72px;
+	height: 35px;
+    padding: 5px 0;
+    text-align: center;
+}
+.cancel_btn, .cancel_btn_pop {
+    background: #73bffa none repeat scroll 0 0;
+    border: 0 none;
+    color: #fff;
+    cursor: pointer;
+    padding: 5px 0;
+    text-align: center;
+    width: 72px;
+	height: 35px;
+}
+.submit_btn:hover, .submit_btn_pop:hover {
+    background: #09acf1 none repeat scroll 0 0;
+}
+.cancel_btn:hover, .cancel_btn_pop:hover {
+    background: #65b4f2 none repeat scroll 0 0;
+}
+.choose_btn {
+    background: transparent url("../images/sprite_repeat.jpg") no-repeat scroll 0 -110px;
+    border: medium none;
+    color: #4d4d4d;
+    cursor: pointer;
+    height: 28px;
+    padding-left: 6px;
+    text-align: left;
+    width: 159px;
+}
+
+.tit_blue{
+	color: #B0B4E9;
+	margin-left: 30px;
+	font-size: 18px;
+	margin-top: 15px;
+}
+.bd_c8e4f1{
+	background-color: #F4F4F4;
+	margin-top: 5px;
+	padding: 20px;
+}
+input, select, textarea {
+    color: #4d4d4d;
+}
+textarea {
+    height: 200px;
+    width: 100%;
+}
+.pt10{
+	margin-top: 20px;
+	margin-left: 20px;
+}
+
+#workCon .input_txt,#editEducationForm .input_txt{
+    border: 1px solid #cdcdcd;
+    border-radius: 5px;
+    margin: 5px 0;
+    padding: 5px;
+    height: 40px;
+}
+
+.w222{
+	width: 222px;
+}
+.w150{
+	width: 150px;
+}
+#Responsibility,#Achievement{
+	width: 500px;
+	height: 150px;
+}
+
+#editEducationForm tr,#workCon tr,#langCon tr,#skillCon tr{
+	height: 40px;
+}
+
+.moreOparte {
+    background: #fff none repeat scroll 0 0;
+    border: 1px dashed #e1e5e9;
+    font-size: 14px;
+    margin-top: 10px;
+    padding: 20px 20px 0;
+}
+
+.moreOparte .tit_blue ,.resumeContent .tit_blue {
+	clear:both;
+	color: #00a0e9;
+    font-size: 19px;
+    font-weight: normal;
+    height: 32px;
+    line-height: 32px;
+    position: relative;
+}
+
+#moreItems {
+    border: 0 none;
+    overflow: hidden;
+}
+#moreItems li {
+    border: 1px solid #e1e5e9;
+    border-radius: 5px;
+    color: #00a0e9;
+    float: left;
+    margin: 0 10px 10px 0;
+    padding: 5px;
+}
+#moreItems li a {
+    color: #333;
+    margin-left: 5px;
+}
+#moreItems li a:hover {
+    text-decoration: none;
+}
+.moreOparte{
+	margin-left: 80px;
+	margin-right: 80px;
+}
+
+#footer {
+    clear: both;
+    color: #6d6d6d;
+    margin-bottom: 50px;
+    padding: 15px 0;
+    text-align: center;
+    margin-left: 80px;
+	margin-right: 80px;
+}
+#footer #footernav {
+    border-top: 1px solid #cadae7;
+    padding-top: 12px;
+}
+#footer #footernav a {
+    color: #6d6d6d;
+}
+.grayBg,.nobd{
+	display: none;
+}
+.increase {
+    background: transparent url("../images/sprite_repeat.jpg") no-repeat scroll -285px -203px;
+    cursor: pointer;
+    padding-left: 20px;
+}
+.edit_resume {
+    font-size: 13px;
+    font-weight: normal;
+    line-height: 17px;
+    position: relative;
+    right: 30px;
+    top: 9px;
+    float:right;
+}
+a {
+    color: #00a0e9;
+    text-decoration: none;
+}
+
+.plus, .minus {
+    cursor: pointer;
+    float: left;
+    height: 16px;
+    margin: 4px 5px 0;
+    width: 14px;
+}
+.plus {
+    background: rgba(0, 0, 0, 0) url("../images/bigplus.jpg") no-repeat scroll 0 0;
+}
+.minus {
+    background: rgba(0, 0, 0, 0) url("../images/minus.jpg") no-repeat scroll 0 0;
+}
+#moreInfo{
+	display:none;
+}
+#expStartDate,#expEndDate,#startYearMonth,#endYearMonth{
+	position: relative;
+	top:10px;
+}
+.red{
+	color: red;
+}
+
+.workConData dl {
+    border-bottom: 1px solid #e1e5e9;
+    margin-bottom: 10px;
+    padding-bottom: 10px;
+}
+
+.workConData dt {
+ 
+    margin-bottom: 10px;
+    font-size: 13px;
+}
+
+.workConData dd span {
+    color: #999;
+    display: inline-block;
+    vertical-align: top;
+    width: 90px;
+    font-size: 12px;
+    
+}
+
+.workConData .f_r{
+	float: right;
+	margin-right: 0px;
+}
+
+.edit {
+    height: 17px;
+    padding-left: 18px;
+}
+.del {
+    padding-left: 16px;
+}
+.edit, .del {
+    background-position: 0 0;
+    background-repeat: no-repeat;
+    margin: 0 0 0 6px;
+    text-decoration: none;
+}
+.error{
+	color: red;
+	font-size: 14px;
+}
+
+input[type='button']{
+	font-size: 14px;
+}
+
+#skillData{
+	width: 100%;
+}
+
+.educationExperience ul li{
+	float:left;
+	display: inline-block;
+	overflow: hidden;
+	margin-left: 5px;
+	margin-right: 5px;
+	font-size: 14px;
+}
+
+#editEducationForm,.educationExperience ul{
+	clear: both;
+}
+
+.educationExperience ul {
+    border-bottom: 1px solid #e1e5e9;
+    margin-bottom: 10px;
+    overflow: hidden;
+    padding-bottom: 10px;
+}
+.educationExperience li {
+    float: left;
+    margin-right: 10px;
+}
+.educationExperience .f_r {
+    float: right;
+    margin-right: 0;
+}
+
+.languageList {
+	font-size: 14px;
+}
+
+.languageList ul {
+    border-bottom: 1px solid #e1e5e9;
+    margin-bottom: 10px;
+    overflow: hidden;
+    padding-bottom: 10px;
+}
+
+.languageList .f_r{
+	float:right;
+	margin-right: 0px;
+}
+
+#brithday{
+	height: 25px;
+	margin: 0px;
+    padding-left: 0px;
+	
+}
+
+.resume_basicinfo tr{
+	height: 40px;
+}
+
+.resume_basicinfo .avatar {
+    float: right;
+    margin-right: 100px;
+}
+.resume_basicinfo .avatar p {
+    text-align: center;
+}
+.resume_basicinfo .basicinfoData {
+    float: left;
+    overflow: hidden;
+    width: 800px;
+    height: 300px;
+}
+.resume_basicinfo .basicinfoData li{
+    float: left;
+    width: 48%;
+    font-size: 14px;
+    margin-top: 10px;
+   
+}
+.resume_basicinfo .grayBg {
+	clear:both;
+    background: #f4f4f4 none repeat scroll 0 0;
+    padding: 20px;
+    height: 200px;
+}
+.resume_basicinfo .grayBg li span {
+    color: #999;
+    display: inline-block;
+    vertical-align: top;
+    width: 90px;
+}
+
+.resume_basicinfo span{
+	font-size: 14px;
+}
+
+.residencyData,.pData{
+	display:none;
+	position:absolute;
+	border: 2px solid #CCCCCC;
+	background-color: white;
+}
+
+.residencyData{
+	width:500px;
+	height: 200px;
+}
+
+.residencyData li,.cContent dd,.pContent li,.cContent li{
+	display: inline-block;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space:nowrap;
+	cursor: pointer; 
+	width: 100px;
+	float:left;
+}
+.residencyTitle,.pTitle{
+	position:relative;
+	height: 30px;
+	background-color: #E0EDFE;
+}
+
+.residencyTitle{
+   width: 500px;
+}
+
+.residencyTitle span{
+	position: relative;
+	top:5px;
+	left: 10px;
+}
+.closeResidency,.pClose,{
+	float: right;
+	margin-right: 20px;
+}
+.residencyContent,.pContent{
+	width:500px;
+	margin-left: 20px;
+	margin-top: 10px;
+}
+.residencyChild,.cData{
+	background-color: white;
+	min-height: 50px;
+	display: none;
+	position: absolute;
+	border:1px solid #CCCCCC;
+	z-index: 1000;
+	padding-left: 5px;
+	padding-bottom: 10px;
+}
+
+.residencyChild{
+    width: 560px;
+}
+.residencyChildTitle,.cTitle{
+	width: 560px;
+	height: 10px;
+}
+
+.residencyChildContent,.cContent{
+	position: relative;
+	width: 500px;
+}
+
+.residencyChild dd{
+	width: 140px;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space:nowrap;
+	cursor: pointer; 
+}
+
+.industryBtn {
+	width: 600px;
+}
+.industryContent li{
+	width: 150px;
+	margin-left: 10px;
+	margin-top: 5px;
+	height: 35px;
+}
+.industryTitle{
+	width: 600px;
+}
+
+.industryChildContent li{
+	float:left;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	text-align:center;
+	white-space:nowrap;
+	width:140px;
+	cursor: pointer;
+}
+
+.close{
+	position: relative;
+	float: right;
+	margin-right: 15px;
+	cursor: pointer;
+	display: inline-block;
+	padding-left: 5px;
+	padding-right: 5px;
+	padding-bottom: 10px;
+}
+
+.industryChild{
+	width: 500px;
+}
+
+.industryChildTitle{
+	width: 500px;
+}
+
+.locationData{
+	display: none;
+}
+
+.cContent dd{
+	width: 150px;
+}
+
+.skillContent{
+	width: 400px;
+}
+
+.skillContent li{
+	width: 100px;
+	color: blue;
+}
+
+.skillChildContent,.skillChildTitle{
+	width: 650px;
+}
+
+.skillChildContent li{
+	width: 160px;
+	text-align: center;
+}
+
+.skillChildTitle{
+	height: 35px;
+}
+
+.rst{
+	color:blue;
+}
+.schoolChildContent li{
+	width: 160px;
+	text-align: center;
+}
+
+.majorData{
+	width: 700px;
+}
+
+.majorContent{
+	width: 100%;
+}
+.majorContent li{
+	width: 150px;
+	text-align: center;
+}
+.majorChildData{
+	width: 560px;
+}
+.majorChildContent {
+	width:100%;
+}
+.majorChildContent li{
+	width: 150px;
+	text-align: center;
+}
+.workConData,.workConData span{
+	font-size: 14px;
+}
+#workCon dd span{
+	font-size:14px;
+}
+input[type='text']{
+	font-size:14px;
+}
+
+textarea{
+    font-size:14px;
+}
+#basicinfoData .w300{
+	display:inline-block;
+	width: 240px;
+}
+.pt8{
+	font-size: 14px;
+}
+.blockRight{
+	display: inline-block;
+    width: 600px;
+}

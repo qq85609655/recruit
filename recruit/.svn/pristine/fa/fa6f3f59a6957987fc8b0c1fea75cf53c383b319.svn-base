@@ -1,0 +1,21 @@
+package com.csot.recruit.service.flow.interview;
+
+import com.csot.recruit.model.original.flow.interview.InterviewBook;
+import com.csot.recruit.model.vo.InterviewBookVo;
+
+import org.amberframework.web.miniui.pojo.MiniGridPageSort;
+import org.amberframework.web.miniui.pojo.MiniRtn2Grid;
+
+public interface InterviewBookService {
+    MiniRtn2Grid<InterviewBook> getGrid(MiniGridPageSort pageSort, String searchKey);
+
+    InterviewBook getByPrimaryKey(String primaryKey);
+
+    void create(InterviewBook interviewBook);
+
+    void updateSelective(InterviewBook interviewBook);
+
+    void remove(String primaryKey);
+
+    String saveOrUpdate(InterviewBookVo interviewBookVo) throws Exception;
+}

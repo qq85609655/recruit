@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.csot.recruit.dao.resume.CategoryMapper" >
+  <resultMap id="BaseResultMap" type="com.csot.recruit.model.resume.Category" >
+    <id column="ID" property="id" jdbcType="CHAR" />
+    <result column="NAME" property="name" jdbcType="CHAR" />
+  </resultMap>
+  <resultMap id="BaseResultMapAll" type="com.csot.recruit.model.resume.Category" >
+    <id column="ID" property="id" jdbcType="CHAR" />
+    <result column="NAME" property="name" jdbcType="CHAR" />
+    <collection property="labelList" resultMap="labelMap"></collection>
+  </resultMap>
+    <resultMap id="labelMap" type="com.csot.recruit.model.resume.Label" >
+    <id column="LABEL_ID" property="id" jdbcType="CHAR" />
+    <result column="LABEL_NAME" property="name" jdbcType="CHAR" />
+    <result column="CATEGORY_ID" property="categoryId" jdbcType="CHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    ID, NAME
+  </sql>
+  <sql id="Base_Column_List_ca" >
+    ca.ID, ca.NAME
+  </sql>
+  <sql id="Base_Column_List_label" >
+    label.ID as LABEL_ID, label.NAME as LABEL_NAME, label.CATEGORY_ID
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.csot.recruit.model.resume.CategoryCriteria" >
+    <include refid="Oracle_Dialect_Pagination_Prefix" />
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from T_CATEGORY
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <include refid="Oracle_Dialect_Pagination_Suffix" />
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from T_CATEGORY
+    where trim(ID) = #{id,jdbcType=CHAR}
+  </select>
+  <select id="selectAllLabel" resultMap="BaseResultMapAll">
+  	select 
+  	<include refid="Base_Column_List_ca" />,
+  	<include refid="Base_Column_List_label" />
+  	from T_CATEGORY ca
+  	left join T_LABEL label on(label.category_id=ca.id)
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from T_CATEGORY
+    where trim(ID) = #{id,jdbcType=CHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.csot.recruit.model.resume.CategoryCriteria" >
+    delete from T_CATEGORY
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.csot.recruit.model.resume.Category" >
+    <selectKey resultType="java.lang.String" keyProperty="id" order="BEFORE" >
+      select SEQ_CATEGORY_ID.NEXTVAL from dual
+    </selectKey>
+    insert into T_CATEGORY (ID, NAME)
+    values (#{id,jdbcType=CHAR}, #{name,jdbcType=CHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.csot.recruit.model.resume.Category" >
+    <selectKey resultType="java.lang.String" keyProperty="id" order="BEFORE" >
+      select SEQ_CATEGORY_ID.NEXTVAL from dual
+    </selectKey>
+    insert into T_CATEGORY
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      ID,
+      <if test="name != null" >
+        NAME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      #{id,jdbcType=CHAR},
+      <if test="name != null" >
+        #{name,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.csot.recruit.model.resume.CategoryCriteria" resultType="java.lang.Integer" >
+    select count(*) from T_CATEGORY
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update T_CATEGORY
+    <set >
+      <if test="record.id != null" >
+        ID = #{record.id,jdbcType=CHAR},
+      </if>
+      <if test="record.name != null" >
+        NAME = #{record.name,jdbcType=CHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update T_CATEGORY
+    set ID = #{record.id,jdbcType=CHAR},
+      NAME = #{record.name,jdbcType=CHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.csot.recruit.model.resume.Category" >
+    update T_CATEGORY
+    <set >
+      <if test="name != null" >
+        NAME = #{name,jdbcType=CHAR},
+      </if>
+    </set>
+    where trim(ID) = #{id,jdbcType=CHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.csot.recruit.model.resume.Category" >
+    update T_CATEGORY
+    set NAME = #{name,jdbcType=CHAR}
+    where trim(ID) = #{id,jdbcType=CHAR}
+  </update>
+  <sql id="Oracle_Dialect_Pagination_Prefix" >
+    <if test="page != null" >
+      select * from ( select row_.*, rownum rownum_ from ( 
+    </if>
+  </sql>
+  <sql id="Oracle_Dialect_Pagination_Suffix" >
+    <if test="page != null" >
+      <![CDATA[ ) row_ ) where rownum_ > #{page.begin} and rownum_ <= #{page.end} ]]>
+    </if>
+  </sql>
+  <select id="countCategory" parameterType="com.csot.recruit.model.resume.Category" resultType="java.lang.Integer" >
+    select count(*) from T_CATEGORY
+    <where>
+      1=1
+      <if test="id != null and id != '' " >
+      		and trim(ID) != #{id}
+   	  </if>
+      <if test="name != null and name != ''">
+      		and trim(NAME) = #{name}
+   	  </if>
+    </where>
+  </select>
+</mapper>

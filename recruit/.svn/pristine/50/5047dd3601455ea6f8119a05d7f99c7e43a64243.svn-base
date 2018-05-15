@@ -1,0 +1,66 @@
+package com.csot.recruit.service.impl.flow.recruitdemand;
+
+import com.csot.recruit.dao.original.flow.recruitdemand.RecruitDemandMapper;
+import com.csot.recruit.model.original.flow.recruitdemand.RecruitDemand;
+import com.csot.recruit.model.original.flow.recruitdemand.RecruitDemandColumns;
+import com.csot.recruit.model.original.flow.recruitdemand.RecruitDemandCriteria;
+import com.csot.recruit.service.flow.recruitdemand.RecruitDemandService;
+import javax.annotation.Resource;
+import org.amberframework.core.mybatis.pojo.Page;
+import org.amberframework.web.miniui.pojo.MiniGridPageSort;
+import org.amberframework.web.miniui.pojo.MiniRtn2Grid;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
+
+@Service("recruitDemandService")
+public class RecruitDemandServiceImpl implements RecruitDemandService {
+    private static final Logger logger = LoggerFactory.getLogger(RecruitDemandServiceImpl.class);
+
+    @Resource
+    private RecruitDemandMapper recruitDemandMapper;
+
+    @Override
+    public MiniRtn2Grid<RecruitDemand> getGrid(MiniGridPageSort pageSort, String searchKey) {
+        MiniRtn2Grid<RecruitDemand> grid = new MiniRtn2Grid<RecruitDemand>();
+        RecruitDemandCriteria criteria = new RecruitDemandCriteria();
+        // 查询条件
+        if (StringUtils.hasText(searchKey)) {
+            criteria.createCriteria().andIdEqualTo(searchKey);
+        }
+        // 分页和排序
+         if (pageSort.isShowPager()) {
+            Page page = Page.newInstanceWithPageIndex(pageSort.getPageIndex(), pageSort.getPageSize());
+            criteria.setPage(page);
+        }
+        String sortColumn = RecruitDemandColumns.getColumn(pageSort.getSortField());
+        if (StringUtils.hasText(sortColumn)) {
+            StringBuilder sortStrBldr = new StringBuilder(sortColumn).append(" ").append(pageSort.getSortOrder());
+            criteria.setOrderByClause(sortStrBldr.toString());
+        }
+        grid.setData(recruitDemandMapper.selectByExample(criteria));
+        grid.setTotal(recruitDemandMapper.countByExample(criteria));
+        return grid;
+    }
+
+    @Override
+    public RecruitDemand getByPrimaryKey(String primaryKey) {
+        return recruitDemandMapper.selectByPrimaryKey(primaryKey);
+    }
+
+    @Override
+    public void create(RecruitDemand recruitDemand) {
+        recruitDemandMapper.insert(recruitDemand);
+    }
+
+    @Override
+    public void updateSelective(RecruitDemand recruitDemand) {
+        recruitDemandMapper.updateByPrimaryKeySelective(recruitDemand);
+    }
+
+    @Override
+    public void remove(String primaryKey) {
+        recruitDemandMapper.deleteByPrimaryKey(primaryKey);
+    }
+}

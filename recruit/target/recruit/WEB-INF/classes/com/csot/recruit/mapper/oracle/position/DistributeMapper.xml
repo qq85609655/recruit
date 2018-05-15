@@ -1,0 +1,273 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.csot.recruit.dao.position.DistributeMapper" >
+  <resultMap id="BaseResultMap" type="com.csot.recruit.model.position.Distribute" >
+    <id column="ID" property="id" jdbcType="DECIMAL" />
+    <result column="DISTRIBUTE_DATE" property="distributeDate" jdbcType="TIMESTAMP" />
+    <result column="PUBLISHER" property="publisher" jdbcType="CHAR" />
+    <result column="RESULT" property="result" jdbcType="DECIMAL" />
+    <result column="PUBLISH_SITE" property="publishSite" jdbcType="CHAR" />
+    <result column="PUBLISH_URL" property="publishUrl" jdbcType="CHAR" />
+    <result column="RECRUIT_POSITION_ID" property="recruitPositionId" jdbcType="CHAR" />
+    <result column="ERROR_MESSAGE" property="errorMessage" jdbcType="CHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    ID, DISTRIBUTE_DATE, PUBLISHER, RESULT, PUBLISH_SITE, PUBLISH_URL, RECRUIT_POSITION_ID, 
+    ERROR_MESSAGE
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.csot.recruit.model.position.DistributeCriteria" >
+    <include refid="Oracle_Dialect_Pagination_Prefix" />
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from T_POSITION_DISTRIBUTE
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <include refid="Oracle_Dialect_Pagination_Suffix" />
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.math.BigDecimal" >
+    select 
+    <include refid="Base_Column_List" />
+    from T_POSITION_DISTRIBUTE
+    where ID = #{id,jdbcType=DECIMAL}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.math.BigDecimal" >
+    delete from T_POSITION_DISTRIBUTE
+    where ID = #{id,jdbcType=DECIMAL}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.csot.recruit.model.position.DistributeCriteria" >
+    delete from T_POSITION_DISTRIBUTE
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.csot.recruit.model.position.Distribute" >
+    <selectKey resultType="java.math.BigDecimal" keyProperty="id" order="BEFORE" >
+      select SQ_PO_DI_ID.NEXTVAL from dual
+    </selectKey>
+    insert into T_POSITION_DISTRIBUTE (ID, DISTRIBUTE_DATE, PUBLISHER, 
+      RESULT, PUBLISH_SITE, PUBLISH_URL, 
+      RECRUIT_POSITION_ID, ERROR_MESSAGE)
+    values (#{id,jdbcType=DECIMAL}, #{distributeDate,jdbcType=TIMESTAMP}, #{publisher,jdbcType=CHAR}, 
+      #{result,jdbcType=DECIMAL}, #{publishSite,jdbcType=CHAR}, #{publishUrl,jdbcType=CHAR}, 
+      #{recruitPositionId,jdbcType=CHAR}, #{errorMessage,jdbcType=CHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.csot.recruit.model.position.Distribute" >
+    <selectKey resultType="java.math.BigDecimal" keyProperty="id" order="BEFORE" >
+      select SQ_PO_DI_ID.NEXTVAL from dual
+    </selectKey>
+    insert into T_POSITION_DISTRIBUTE
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      ID,
+      <if test="distributeDate != null" >
+        DISTRIBUTE_DATE,
+      </if>
+      <if test="publisher != null" >
+        PUBLISHER,
+      </if>
+      <if test="result != null" >
+        RESULT,
+      </if>
+      <if test="publishSite != null" >
+        PUBLISH_SITE,
+      </if>
+      <if test="publishUrl != null" >
+        PUBLISH_URL,
+      </if>
+      <if test="recruitPositionId != null" >
+        RECRUIT_POSITION_ID,
+      </if>
+      <if test="errorMessage != null" >
+        ERROR_MESSAGE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      #{id,jdbcType=DECIMAL},
+      <if test="distributeDate != null" >
+        #{distributeDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="publisher != null" >
+        #{publisher,jdbcType=CHAR},
+      </if>
+      <if test="result != null" >
+        #{result,jdbcType=DECIMAL},
+      </if>
+      <if test="publishSite != null" >
+        #{publishSite,jdbcType=CHAR},
+      </if>
+      <if test="publishUrl != null" >
+        #{publishUrl,jdbcType=CHAR},
+      </if>
+      <if test="recruitPositionId != null" >
+        #{recruitPositionId,jdbcType=CHAR},
+      </if>
+      <if test="errorMessage != null" >
+        #{errorMessage,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.csot.recruit.model.position.DistributeCriteria" resultType="java.lang.Integer" >
+    select count(*) from T_POSITION_DISTRIBUTE
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update T_POSITION_DISTRIBUTE
+    <set >
+      <if test="record.id != null" >
+        ID = #{record.id,jdbcType=DECIMAL},
+      </if>
+      <if test="record.distributeDate != null" >
+        DISTRIBUTE_DATE = #{record.distributeDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.publisher != null" >
+        PUBLISHER = #{record.publisher,jdbcType=CHAR},
+      </if>
+      <if test="record.result != null" >
+        RESULT = #{record.result,jdbcType=DECIMAL},
+      </if>
+      <if test="record.publishSite != null" >
+        PUBLISH_SITE = #{record.publishSite,jdbcType=CHAR},
+      </if>
+      <if test="record.publishUrl != null" >
+        PUBLISH_URL = #{record.publishUrl,jdbcType=CHAR},
+      </if>
+      <if test="record.recruitPositionId != null" >
+        RECRUIT_POSITION_ID = #{record.recruitPositionId,jdbcType=CHAR},
+      </if>
+      <if test="record.errorMessage != null" >
+        ERROR_MESSAGE = #{record.errorMessage,jdbcType=CHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update T_POSITION_DISTRIBUTE
+    set ID = #{record.id,jdbcType=DECIMAL},
+      DISTRIBUTE_DATE = #{record.distributeDate,jdbcType=TIMESTAMP},
+      PUBLISHER = #{record.publisher,jdbcType=CHAR},
+      RESULT = #{record.result,jdbcType=DECIMAL},
+      PUBLISH_SITE = #{record.publishSite,jdbcType=CHAR},
+      PUBLISH_URL = #{record.publishUrl,jdbcType=CHAR},
+      RECRUIT_POSITION_ID = #{record.recruitPositionId,jdbcType=CHAR},
+      ERROR_MESSAGE = #{record.errorMessage,jdbcType=CHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.csot.recruit.model.position.Distribute" >
+    update T_POSITION_DISTRIBUTE
+    <set >
+      <if test="distributeDate != null" >
+        DISTRIBUTE_DATE = #{distributeDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="publisher != null" >
+        PUBLISHER = #{publisher,jdbcType=CHAR},
+      </if>
+      <if test="result != null" >
+        RESULT = #{result,jdbcType=DECIMAL},
+      </if>
+      <if test="publishSite != null" >
+        PUBLISH_SITE = #{publishSite,jdbcType=CHAR},
+      </if>
+      <if test="publishUrl != null" >
+        PUBLISH_URL = #{publishUrl,jdbcType=CHAR},
+      </if>
+      <if test="recruitPositionId != null" >
+        RECRUIT_POSITION_ID = #{recruitPositionId,jdbcType=CHAR},
+      </if>
+      <if test="errorMessage != null" >
+        ERROR_MESSAGE = #{errorMessage,jdbcType=CHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=DECIMAL}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.csot.recruit.model.position.Distribute" >
+    update T_POSITION_DISTRIBUTE
+    set DISTRIBUTE_DATE = #{distributeDate,jdbcType=TIMESTAMP},
+      PUBLISHER = #{publisher,jdbcType=CHAR},
+      RESULT = #{result,jdbcType=DECIMAL},
+      PUBLISH_SITE = #{publishSite,jdbcType=CHAR},
+      PUBLISH_URL = #{publishUrl,jdbcType=CHAR},
+      RECRUIT_POSITION_ID = #{recruitPositionId,jdbcType=CHAR},
+      ERROR_MESSAGE = #{errorMessage,jdbcType=CHAR}
+    where ID = #{id,jdbcType=DECIMAL}
+  </update>
+  <sql id="Oracle_Dialect_Pagination_Prefix" >
+    <if test="page != null" >
+      select * from ( select row_.*, rownum rownum_ from ( 
+    </if>
+  </sql>
+  <sql id="Oracle_Dialect_Pagination_Suffix" >
+    <if test="page != null" >
+      <![CDATA[ ) row_ ) where rownum_ > #{page.begin} and rownum_ <= #{page.end} ]]>
+    </if>
+  </sql>
+</mapper>

@@ -1,0 +1,267 @@
+package com.csot.recruit.controller.flow.employ;
+
+import java.util.Date;
+import java.util.List;
+import java.util.UUID;
+
+import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+
+import org.amberframework.core.bind.annotation.CurrentUser;
+import org.amberframework.core.common.model.AjaxRtnJson;
+import org.amberframework.web.miniui.pojo.MiniGridPageSort;
+import org.amberframework.web.miniui.pojo.MiniRtn2Grid;
+import org.amberframework.web.system.auth.model.original.user.SysUser;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.dao.DataAccessException;
+import org.springframework.stereotype.Controller;
+import org.springframework.util.StringUtils;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
+
+import com.csot.recruit.model.original.attachment.Attachment;
+import com.csot.recruit.model.original.flow.employ.Employ;
+import com.csot.recruit.model.original.flow.employ.EmployCandidate;
+import com.csot.recruit.model.original.flow.employ.EmployDemand;
+import com.csot.recruit.model.original.flow.employ.EmployEducation;
+import com.csot.recruit.model.original.flow.employ.EmployWork;
+import com.csot.recruit.model.original.flow.recruitdemand.RecruitDemand;
+import com.csot.recruit.model.resume.EducationExperience;
+import com.csot.recruit.service.flow.employ.EmployARalationService;
+import com.csot.recruit.service.flow.employ.EmployCandidateService;
+import com.csot.recruit.service.flow.employ.EmployDemandService;
+import com.csot.recruit.service.flow.employ.EmployEducationService;
+import com.csot.recruit.service.flow.employ.EmployService;
+import com.csot.recruit.service.flow.employ.EmployWorkService;
+import com.csot.recruit.service.flow.recruitdemand.RecruitDemandService;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
+
+@Controller
+@RequestMapping("employ")
+public class EmployController {
+  private static final Logger logger = LoggerFactory.getLogger(EmployController.class);
+
+
+  @Resource
+  private EmployService employService;
+  @Resource
+  private EmployCandidateService employCandidateService;
+  @Resource
+  private EmployDemandService employDemandService;
+  @Resource
+  private RecruitDemandService recruitDemandService;
+  @Resource
+  private EmployEducationService employEducationService;
+  @Resource
+  private EmployARalationService employARalationService;
+  @Resource
+  private EmployWorkService employWorkService;
+  private static final GsonBuilder gsonBuilder = new GsonBuilder();
+  private static final Gson gson;
+
+  static {
+    gson = gsonBuilder.setDateFormat("yyyy-MM-dd").create();
+  }
+
+  /**
+   * 招聘需求
+   * 
+   * @return
+   */
+  @RequestMapping("choseDemand")
+  public ModelAndView share() {
+    return new ModelAndView("com/csot/flow/employ/demandChose");
+  }
+
+  /**
+   * 选择应聘申请单
+   * 
+   * @return
+   */
+  @RequestMapping("choseInterview")
+  public ModelAndView choseInterview() {
+    return new ModelAndView("com/csot/flow/employ/interviewChose");
+  }
+
+
+  @RequestMapping("list")
+  public ModelAndView list() {
+    return new ModelAndView("com/csot/flow/employ/employList");
+  }
+
+  @RequestMapping("datagrid")
+  @ResponseBody
+  public MiniRtn2Grid<Employ> datagrid(MiniGridPageSort pageSort, HttpServletRequest request) {
+    String searchKey = request.getParameter("searchKey");
+    return employService.getGrid(pageSort, searchKey);
+  }
+
+  @RequestMapping("create")
+  public ModelAndView create() {
+    return new ModelAndView("com/csot/recruit/flow/employ/employEdit");
+  }
+
+  @RequestMapping("modify/{id}")
+  public ModelAndView modify(@PathVariable String id, HttpServletRequest request) {
+    Employ employ = employService.getByPrimaryKey(id);
+    EmployCandidate employCandidate = employCandidateService.getByEmploy(employ.getId());
+    EmployDemand employDemand = employDemandService.getByEmploy(employ.getId());
+    // 工作经历和教育经历
+    List<EmployEducation> employEducations = employEducationService.getByEmploy(employ.getId());
+    List<EmployWork> employWorks = employWorkService.getByEmploy(employ.getId());
+    request.setAttribute("employ", employ);
+    request.setAttribute("employCandidate", employCandidate);
+    request.setAttribute("employDemand", employDemand);
+    request.setAttribute("employEducations", employEducations);
+    request.setAttribute("employWorks", employWorks);
+    request.setAttribute("employEducationsSize",
+        employEducations == null ? 0 : employEducations.size());
+    request.setAttribute("employWorksSize", employWorks == null ? 0 : employWorks.size());
+    // 附件
+    List<Attachment> list = employARalationService.getListByEmployeId(employ.getId());
+    request.setAttribute("attachments", list);
+    return new ModelAndView("com/csot/flow/employ/employEdit");
+  }
+
+  @RequestMapping("view/{id}")
+  public ModelAndView view(@PathVariable String id, HttpServletRequest request) {
+    Employ employ = employService.getByPrimaryKey(id);
+    request.setAttribute("employ", employ);
+    return new ModelAndView("com/csot/recruit/flow/employ/employView");
+  }
+
+  @RequestMapping("remove/{id}")
+  @ResponseBody
+  public AjaxRtnJson remove(@PathVariable String id) {
+    try {
+      employService.remove(id);
+      return new AjaxRtnJson(true, "删除成功");
+    } catch (DataAccessException e) {
+      logger.error(e.getMessage(), e);
+      return new AjaxRtnJson(false, "删除失败: " + e.getMessage());
+    }
+  }
+
+  @RequestMapping("save")
+  @ResponseBody
+  public AjaxRtnJson save(Employ employ) {
+    if (StringUtils.hasText(employ.getId())) {
+      try {
+        employService.updateSelective(employ);
+        return new AjaxRtnJson(true, "修改成功");
+      } catch (DataAccessException e) {
+        logger.error(e.getMessage(), e);
+        return new AjaxRtnJson(false, "修改失败: " + e.getMessage());
+      }
+    } else {
+      try {
+        employ.setId(UUID.randomUUID().toString().replace("-", ""));
+        employService.create(employ);
+        return new AjaxRtnJson(true, "新建成功");
+      } catch (DataAccessException e) {
+        logger.error(e.getMessage(), e);
+        return new AjaxRtnJson(false, "新建失败: " + e.getMessage());
+      }
+    }
+  }
+
+  // 保存录用详细信息
+  @RequestMapping("saveEmployInfo")
+  @ResponseBody
+  public AjaxRtnJson saveEmployInfo(EmployCandidate employCandidate, HttpServletRequest request,
+      @CurrentUser SysUser sysUser) {
+    String demandId = request.getParameter("demandId"); // 招聘需求id
+    String employId = request.getParameter("employId"); // 录用id
+    String employmentForm = request.getParameter("employmentForm"); // 录用申请表单号
+    String simulationEntryDate = request.getParameter("simulationEntryDate"); // 拟入职时间
+    String attchmentIds = request.getParameter("attchmentIds"); // 拟入职时间
+    Employ employ = employService.getByPrimaryKey(employId);// 录用主体信息
+    RecruitDemand recruitDemand = recruitDemandService.getByDemandId(demandId,sysUser.getId());
+    // 教育经历
+    String jiaoyu = request.getParameter("jiaoyu");
+    List<EmployEducation> edus =
+        gson.fromJson(jiaoyu, new TypeToken<List<EmployEducation>>() {}.getType());
+    // 工作经历
+    String work = request.getParameter("work");
+    List<EmployWork> works = gson.fromJson(work, new TypeToken<List<EmployWork>>() {}.getType());
+    String typeStr = request.getParameter("typeStr"); // 获取提交类型（暂存/提交/提交之后的修改）
+    if (typeStr.equals("ZC")) {
+      employ.setFlowState(Employ.flowState.UNCOMMITTED.valueStr()); // 暂存操作 未提交状态
+    } else if (typeStr.equals("TJ")) {
+      employ.setFlowState(Employ.flowState.AUDIT.valueStr()); // 提交操作 审核中状态
+    }
+    if (StringUtils.hasText(employCandidate.getId())) {
+      try {
+        // 设置录用主体信息
+        employ.setEmploymentForm(employmentForm);
+        employ.setSimulationEntryDate(simulationEntryDate);
+        employ.setUpdateDate(new Date());
+        employ.setModifiedId(sysUser.getId());
+        employService.updateEmployInfo(employCandidate, employ, recruitDemand, works, edus,
+            attchmentIds,sysUser);
+        return new AjaxRtnJson(true, "修改成功");
+      } catch (DataAccessException e) {
+        logger.error(e.getMessage(), e);
+        return new AjaxRtnJson(false, "修改失败: " + e.getMessage());
+      }
+    } else {
+      try {
+        // 设置录用主体信息
+        employ.setEmploymentForm(employmentForm);
+        employ.setDemandId(recruitDemand.getDemandId());
+        employ.setSimulationEntryDate(simulationEntryDate);
+        employ.setUpdateDate(new Date());
+        employService.saveEmployInfo(employCandidate, employ, recruitDemand, works, edus,
+            attchmentIds,sysUser);
+        return new AjaxRtnJson(true, "新建成功");
+      } catch (DataAccessException e) {
+        logger.error(e.getMessage(), e);
+        return new AjaxRtnJson(false, "新建失败: " + e.getMessage());
+      }
+    }
+  }
+
+  /**
+   * 新增录用记录
+   * 
+   * @param employ
+   * @return
+   */
+  @RequestMapping("saveEmploy")
+  @ResponseBody
+  public AjaxRtnJson addEmploy(Employ employ, @CurrentUser SysUser sysUser) {
+    if (StringUtils.hasText(employ.getId())) {
+      try {
+        employService.updateSelective(employ);
+        return new AjaxRtnJson(true, "修改成功");
+      } catch (DataAccessException e) {
+        logger.error(e.getMessage(), e);
+        return new AjaxRtnJson(false, "修改失败: " + e.getMessage());
+      }
+    } else {
+      try {
+        String employId=UUID.randomUUID().toString().replace("-", "");
+        employ.setId(employId);
+        employ.setCreateDate(new Date());
+        employ.setCreatorId(sysUser.getId());
+        if (employService.create(employ)) {
+          AjaxRtnJson ajaxRtnJson = new AjaxRtnJson();
+          ajaxRtnJson.setMsg("录用申请");
+          ajaxRtnJson.setSuccess(true);
+          ajaxRtnJson.setAttribute("id", employId);
+          return ajaxRtnJson;
+        } else {
+          return new AjaxRtnJson(false, "申请失败，该候选人已经申请");
+        }
+      } catch (DataAccessException e) {
+        logger.error(e.getMessage(), e);
+        return new AjaxRtnJson(false, "新建失败: " + e.getMessage());
+      }
+    }
+  }
+}

@@ -1,0 +1,270 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.csot.recruit.dao.original.campus.CampusSiteMapper" >
+  <resultMap id="BaseResultMap" type="com.csot.recruit.model.original.campus.CampusSite" >
+    <id column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="SITE_NAME" property="siteName" jdbcType="VARCHAR" />
+    <result column="REMARK" property="remark" jdbcType="VARCHAR" />
+    <result column="RESERVED_1" property="reserved1" jdbcType="VARCHAR" />
+    <result column="RESERVED_2" property="reserved2" jdbcType="VARCHAR" />
+    <result column="RESERVED_3" property="reserved3" jdbcType="VARCHAR" />
+    <result column="STATUS" property="status" jdbcType="VARCHAR" />
+    <result column="SITE_ID" property="siteId" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    ID, SITE_NAME, REMARK, RESERVED_1, RESERVED_2, RESERVED_3, STATUS, SITE_ID
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.csot.recruit.model.original.campus.CampusSiteCriteria" >
+    <include refid="Oracle_Dialect_Pagination_Prefix" />
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from T_CAMPUS_SITE
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <include refid="Oracle_Dialect_Pagination_Suffix" />
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from T_CAMPUS_SITE
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from T_CAMPUS_SITE
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.csot.recruit.model.original.campus.CampusSiteCriteria" >
+    delete from T_CAMPUS_SITE
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.csot.recruit.model.original.campus.CampusSite" >
+    insert into T_CAMPUS_SITE (ID, SITE_NAME, REMARK, 
+      RESERVED_1, RESERVED_2, RESERVED_3, 
+      STATUS, SITE_ID)
+    values (#{id,jdbcType=VARCHAR}, #{siteName,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, 
+      #{reserved1,jdbcType=VARCHAR}, #{reserved2,jdbcType=VARCHAR}, #{reserved3,jdbcType=VARCHAR}, 
+      #{status,jdbcType=VARCHAR}, SEQ_SITE_ID.NEXTVAL)
+  </insert>
+  <insert id="insertSelective" parameterType="com.csot.recruit.model.original.campus.CampusSite" >
+    insert into T_CAMPUS_SITE
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="siteName != null" >
+        SITE_NAME,
+      </if>
+      <if test="remark != null" >
+        REMARK,
+      </if>
+      <if test="reserved1 != null" >
+        RESERVED_1,
+      </if>
+      <if test="reserved2 != null" >
+        RESERVED_2,
+      </if>
+      <if test="reserved3 != null" >
+        RESERVED_3,
+      </if>
+      <if test="status != null" >
+        STATUS,
+      </if>
+      <if test="siteId != null" >
+        SITE_ID,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="siteName != null" >
+        #{siteName,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="reserved1 != null" >
+        #{reserved1,jdbcType=VARCHAR},
+      </if>
+      <if test="reserved2 != null" >
+        #{reserved2,jdbcType=VARCHAR},
+      </if>
+      <if test="reserved3 != null" >
+        #{reserved3,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="siteId != null" >
+        #{siteId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.csot.recruit.model.original.campus.CampusSiteCriteria" resultType="java.lang.Integer" >
+    select count(*) from T_CAMPUS_SITE
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update T_CAMPUS_SITE
+    <set >
+      <if test="record.id != null" >
+        ID = #{record.id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.siteName != null" >
+        SITE_NAME = #{record.siteName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.remark != null" >
+        REMARK = #{record.remark,jdbcType=VARCHAR},
+      </if>
+      <if test="record.reserved1 != null" >
+        RESERVED_1 = #{record.reserved1,jdbcType=VARCHAR},
+      </if>
+      <if test="record.reserved2 != null" >
+        RESERVED_2 = #{record.reserved2,jdbcType=VARCHAR},
+      </if>
+      <if test="record.reserved3 != null" >
+        RESERVED_3 = #{record.reserved3,jdbcType=VARCHAR},
+      </if>
+      <if test="record.status != null" >
+        STATUS = #{record.status,jdbcType=VARCHAR},
+      </if>
+      <if test="record.siteId != null" >
+        SITE_ID = #{record.siteId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update T_CAMPUS_SITE
+    set ID = #{record.id,jdbcType=VARCHAR},
+      SITE_NAME = #{record.siteName,jdbcType=VARCHAR},
+      REMARK = #{record.remark,jdbcType=VARCHAR},
+      RESERVED_1 = #{record.reserved1,jdbcType=VARCHAR},
+      RESERVED_2 = #{record.reserved2,jdbcType=VARCHAR},
+      RESERVED_3 = #{record.reserved3,jdbcType=VARCHAR},
+      STATUS = #{record.status,jdbcType=VARCHAR},
+      SITE_ID = #{record.siteId,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.csot.recruit.model.original.campus.CampusSite" >
+    update T_CAMPUS_SITE
+    <set >
+      <if test="siteName != null" >
+        SITE_NAME = #{siteName,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="reserved1 != null" >
+        RESERVED_1 = #{reserved1,jdbcType=VARCHAR},
+      </if>
+      <if test="reserved2 != null" >
+        RESERVED_2 = #{reserved2,jdbcType=VARCHAR},
+      </if>
+      <if test="reserved3 != null" >
+        RESERVED_3 = #{reserved3,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        STATUS = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="siteId != null" >
+        SITE_ID = #{siteId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.csot.recruit.model.original.campus.CampusSite" >
+    update T_CAMPUS_SITE
+    set SITE_NAME = #{siteName,jdbcType=VARCHAR},
+      REMARK = #{remark,jdbcType=VARCHAR},
+      RESERVED_1 = #{reserved1,jdbcType=VARCHAR},
+      RESERVED_2 = #{reserved2,jdbcType=VARCHAR},
+      RESERVED_3 = #{reserved3,jdbcType=VARCHAR},
+      STATUS = #{status,jdbcType=VARCHAR},
+      SITE_ID = #{siteId,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <sql id="Oracle_Dialect_Pagination_Prefix" >
+    <if test="page != null" >
+      select * from ( select row_.*, rownum rownum_ from ( 
+    </if>
+  </sql>
+  <sql id="Oracle_Dialect_Pagination_Suffix" >
+    <if test="page != null" >
+      <![CDATA[ ) row_ ) where rownum_ > #{page.begin} and rownum_ <= #{page.end} ]]>
+    </if>
+  </sql>
+</mapper>

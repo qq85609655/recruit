@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<excelExport>
+       可配置元素：
+  <!-- 
+  showIndex  是否显示行序号  boolean类型，值为true或false；
+  indexColumnNum  行序号所在列号  如果showIndex为true，必须配置。值为数字，从0开始计算；
+  excelColumn  导出Excel的列配置，目前支持以下属性：
+          name  导出dateset对象的属性名称；
+          cellIndex  导出在Excel中的列位置，列号从0开始计算；
+          type  导出值类型，目前只有0；
+          sourceDateFormat（用于日期时间格式导出）  导出dateset对象属性的源日期格式
+          exportDateFormat（用于日期时间格式导出）  导出后需写入Excel中的目标日期格式
+   -->
+  <showIndex>true</showIndex>
+  <indexColumnNum>0</indexColumnNum>
+  <excelColumn name="siteName" cellIndex="1" type="0"></excelColumn>
+  <excelColumn name="postName" cellIndex="2" type="0"></excelColumn>
+  <excelColumn name="taskBa" cellIndex="3" type="0"></excelColumn>
+  <excelColumn name="taskMa" cellIndex="4" type="0"></excelColumn>
+  <excelColumn name="taskDo" cellIndex="5" type="0"></excelColumn>
+  <excelColumn name="taskSum" cellIndex="6" type="0"></excelColumn>
+  <excelColumn name="offerBa" cellIndex="7" type="0"></excelColumn>
+  <excelColumn name="offerMa" cellIndex="8" type="0"></excelColumn>
+  <excelColumn name="offerDo" cellIndex="9" type="0"></excelColumn>
+  <excelColumn name="offerSum" cellIndex="10" type="0"></excelColumn>
+  <excelColumn name="trilateralBa" cellIndex="11" type="0"></excelColumn>
+  <excelColumn name="trilateralMa" cellIndex="12" type="0"></excelColumn>
+  <excelColumn name="trilateralDo" cellIndex="13" type="0"></excelColumn>
+  <excelColumn name="trilateralSum" cellIndex="14" type="0"></excelColumn>
+  <excelColumn name="breakOffBa" cellIndex="15" type="0"></excelColumn>
+  <excelColumn name="breakOffMa" cellIndex="16" type="0"></excelColumn>
+  <excelColumn name="breakOffDo" cellIndex="17" type="0"></excelColumn>
+  <excelColumn name="breakOffSum" cellIndex="18" type="0"></excelColumn>
+  <excelColumn name="proposedEntryBa" cellIndex="19" type="0"></excelColumn>
+  <excelColumn name="proposedEntryMa" cellIndex="20" type="0"></excelColumn>
+  <excelColumn name="proposedEntryDo" cellIndex="21" type="0"></excelColumn>
+  <excelColumn name="proposedEntrySum" cellIndex="22" type="0"></excelColumn>
+  <excelColumn name="achievementBa" cellIndex="23" type="0"></excelColumn>
+  <excelColumn name="achievementMa" cellIndex="24" type="0"></excelColumn>
+  <excelColumn name="achievementDo" cellIndex="25" type="0"></excelColumn>
+  <excelColumn name="achievementSum" cellIndex="26" type="0"></excelColumn>
+</excelExport>

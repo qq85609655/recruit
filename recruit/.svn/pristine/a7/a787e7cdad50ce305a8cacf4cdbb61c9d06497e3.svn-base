@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:aop="http://www.springframework.org/schema/aop" xmlns:context="http://www.springframework.org/schema/context"
+  xmlns:task="http://www.springframework.org/schema/task" 
+  xsi:schemaLocation="
+       http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+       http://www.springframework.org/schema/aop
+       http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context-4.0.xsd">
+
+  <!-- 读取properties文件的配置 -->
+  <bean id="propertyPlaceholderConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+    <property name="locations">
+      <list>
+        <value>classpath:sys-config.properties</value>
+      </list>
+    </property>
+  </bean>
+  
+  <!-- 这个Bean用于在Java中读取propertyPlaceholderConfigurer的properties配置 -->
+  <bean id="springPropertyResourceReader" class="org.amberframework.core.spring.service.impl.SpringPropertyResourceReader">
+    <constructor-arg ref="propertyPlaceholderConfigurer"/>
+  </bean>
+  
+  <!-- Freemarker配置 -->  
+  <bean id="freemarkerConfig" class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer">  
+    <property name="templateLoaderPath" value="/resources/ftl/" />  
+    <property name="freemarkerSettings">  
+      <props>  
+        <prop key="template_update_delay">0</prop>  
+        <prop key="default_encoding">UTF-8</prop>  
+        <prop key="number_format">0.##########</prop>  
+        <prop key="datetime_format">yyyy-MM-dd HH:mm:ss</prop>  
+        <prop key="classic_compatible">true</prop>  
+        <prop key="template_exception_handler">ignore</prop>  
+      </props>  
+    </property>  
+  </bean>
+
+  <bean id="passwordHelper" class="org.amberframework.web.system.auth.service.impl.user.PasswordHelper">
+    <property name="algorithmName" value="md5" />
+    <property name="hashIterations" value="2" />
+  </bean>
+  
+  <!-- Excel导出类，使用excelExportManager加载配置导出excel -->
+  <bean id="excelExportManager" class="org.amberframework.core.excel.poi.DefaultExcelExportManager">
+    <property name="excelExportService" ref="excelExportService" />
+  </bean>
+  <bean id="excelDataAnchorHandler" class="org.amberframework.core.excel.poi.anchor.DefaultExcelDataAnchorHandler">
+  </bean>
+  <bean id="excelExportService" class="org.amberframework.core.excel.poi.StandardExcelExportService">
+    <property name="excelDataAnchorHandler" ref="excelDataAnchorHandler" />
+  </bean>
+  
+  <bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+    <property name="host" value="mail.csot.tcl.com" />
+    <property name="username" value="ebus.csot" />
+    <property name="password" value="cteb.888" />
+  </bean>
+  
+  <!-- 加载service等Component,此时要排除要controller,因为controller已经spring-mvc中加载过了 -->
+  <context:component-scan base-package="org.amberframework.*">
+    <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller" />
+  </context:component-scan>
+  <context:component-scan base-package="com.csot.*">
+    <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller" />
+  </context:component-scan>
+  <context:component-scan base-package="test.*">
+    <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller" />
+  </context:component-scan>
+  
+  <import resource="spring-cache.xml" />
+  <import resource="spring-shiro.xml" />
+</beans>

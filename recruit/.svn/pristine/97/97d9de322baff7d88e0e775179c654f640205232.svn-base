@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.amberframework.web.system.auth.dao.original.user.SysUserMapper" >
+  <resultMap id="BaseResultMap" type="org.amberframework.web.system.auth.model.original.user.SysUser" >
+    <id column="ID" property="id" jdbcType="CHAR" />
+    <result column="ACCOUNT" property="account" jdbcType="VARCHAR" />
+    <result column="PASSWORD" property="password" jdbcType="VARCHAR" />
+    <result column="STATUS" property="status" jdbcType="CHAR" />
+    <result column="SALT" property="salt" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    ID, ACCOUNT, PASSWORD, STATUS, SALT
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap"
+          parameterType="org.amberframework.web.system.auth.model.original.user.SysUserCriteria"
+          useCache="false">
+    <include refid="Oracle_Dialect_Pagination_Prefix" />
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from T_SYS_USER
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <include refid="Oracle_Dialect_Pagination_Suffix" />
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from T_SYS_USER
+    where ID = #{id,jdbcType=CHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from T_SYS_USER
+    where ID = #{id,jdbcType=CHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="org.amberframework.web.system.auth.model.original.user.SysUserCriteria" >
+    delete from T_SYS_USER
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="org.amberframework.web.system.auth.model.original.user.SysUser" >
+    insert into T_SYS_USER (ID, ACCOUNT, PASSWORD, 
+      STATUS, SALT)
+    values (#{id,jdbcType=CHAR}, #{account,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
+      #{status,jdbcType=CHAR}, #{salt,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="org.amberframework.web.system.auth.model.original.user.SysUser" >
+    insert into T_SYS_USER
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="account != null" >
+        ACCOUNT,
+      </if>
+      <if test="password != null" >
+        PASSWORD,
+      </if>
+      <if test="status != null" >
+        STATUS,
+      </if>
+      <if test="salt != null" >
+        SALT,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=CHAR},
+      </if>
+      <if test="account != null" >
+        #{account,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null" >
+        #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=CHAR},
+      </if>
+      <if test="salt != null" >
+        #{salt,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="org.amberframework.web.system.auth.model.original.user.SysUserCriteria" resultType="java.lang.Integer" >
+    select count(*) from T_SYS_USER
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update T_SYS_USER
+    <set >
+      <if test="record.id != null" >
+        ID = #{record.id,jdbcType=CHAR},
+      </if>
+      <if test="record.account != null" >
+        ACCOUNT = #{record.account,jdbcType=VARCHAR},
+      </if>
+      <if test="record.password != null" >
+        PASSWORD = #{record.password,jdbcType=VARCHAR},
+      </if>
+      <if test="record.status != null" >
+        STATUS = #{record.status,jdbcType=CHAR},
+      </if>
+      <if test="record.salt != null" >
+        SALT = #{record.salt,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update T_SYS_USER
+    set ID = #{record.id,jdbcType=CHAR},
+      ACCOUNT = #{record.account,jdbcType=VARCHAR},
+      PASSWORD = #{record.password,jdbcType=VARCHAR},
+      STATUS = #{record.status,jdbcType=CHAR},
+      SALT = #{record.salt,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="org.amberframework.web.system.auth.model.original.user.SysUser" >
+    update T_SYS_USER
+    <set >
+      <if test="account != null" >
+        ACCOUNT = #{account,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null" >
+        PASSWORD = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        STATUS = #{status,jdbcType=CHAR},
+      </if>
+      <if test="salt != null" >
+        SALT = #{salt,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=CHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="org.amberframework.web.system.auth.model.original.user.SysUser" >
+    update T_SYS_USER
+    set ACCOUNT = #{account,jdbcType=VARCHAR},
+      PASSWORD = #{password,jdbcType=VARCHAR},
+      STATUS = #{status,jdbcType=CHAR},
+      SALT = #{salt,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=CHAR}
+  </update>
+  <sql id="Oracle_Dialect_Pagination_Prefix" >
+    <if test="page != null" >
+      select * from ( select row_.*, rownum rownum_ from ( 
+    </if>
+  </sql>
+  <sql id="Oracle_Dialect_Pagination_Suffix" >
+    <if test="page != null" >
+      <![CDATA[ ) row_ ) where rownum_ > #{page.begin} and rownum_ <= #{page.end} ]]>
+    </if>
+  </sql>
+</mapper>

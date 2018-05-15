@@ -1,0 +1,303 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.csot.recruit.dao.original.flow.recruitdemand.RecruitDemandChangeMapper" >
+  <resultMap id="BaseResultMap" type="com.csot.recruit.model.original.flow.recruitdemand.RecruitDemandChange" >
+    <id column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="TYPE" property="type" jdbcType="VARCHAR" />
+    <result column="OLD_STR" property="oldStr" jdbcType="VARCHAR" />
+    <result column="NEW_STR" property="newStr" jdbcType="VARCHAR" />
+    <result column="DEMAND_ID" property="demandId" jdbcType="VARCHAR" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="CREATOR_ID" property="creatorId" jdbcType="VARCHAR" />
+    <result column="UPDATE_DATE" property="updateDate" jdbcType="TIMESTAMP" />
+    <result column="IS_DEAL" property="isDeal" jdbcType="VARCHAR" />
+    <result column="IS_AGERR" property="isAgerr" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    ID, TYPE, OLD_STR, NEW_STR, DEMAND_ID, CREATE_DATE, CREATOR_ID, UPDATE_DATE, IS_DEAL, 
+    IS_AGERR
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.csot.recruit.model.original.flow.recruitdemand.RecruitDemandChangeCriteria" >
+    <include refid="Oracle_Dialect_Pagination_Prefix" />
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from T_RECRUIT_DEMAND_CHANGE
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <include refid="Oracle_Dialect_Pagination_Suffix" />
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from T_RECRUIT_DEMAND_CHANGE
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from T_RECRUIT_DEMAND_CHANGE
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.csot.recruit.model.original.flow.recruitdemand.RecruitDemandChangeCriteria" >
+    delete from T_RECRUIT_DEMAND_CHANGE
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.csot.recruit.model.original.flow.recruitdemand.RecruitDemandChange" >
+    insert into T_RECRUIT_DEMAND_CHANGE (ID, TYPE, OLD_STR, 
+      NEW_STR, DEMAND_ID, CREATE_DATE, 
+      CREATOR_ID, UPDATE_DATE, IS_DEAL, 
+      IS_AGERR)
+    values (#{id,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR}, #{oldStr,jdbcType=VARCHAR}, 
+      #{newStr,jdbcType=VARCHAR}, #{demandId,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, 
+      #{creatorId,jdbcType=VARCHAR}, #{updateDate,jdbcType=TIMESTAMP}, #{isDeal,jdbcType=VARCHAR}, 
+      #{isAgerr,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.csot.recruit.model.original.flow.recruitdemand.RecruitDemandChange" >
+    insert into T_RECRUIT_DEMAND_CHANGE
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="type != null" >
+        TYPE,
+      </if>
+      <if test="oldStr != null" >
+        OLD_STR,
+      </if>
+      <if test="newStr != null" >
+        NEW_STR,
+      </if>
+      <if test="demandId != null" >
+        DEMAND_ID,
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE,
+      </if>
+      <if test="creatorId != null" >
+        CREATOR_ID,
+      </if>
+      <if test="updateDate != null" >
+        UPDATE_DATE,
+      </if>
+      <if test="isDeal != null" >
+        IS_DEAL,
+      </if>
+      <if test="isAgerr != null" >
+        IS_AGERR,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="oldStr != null" >
+        #{oldStr,jdbcType=VARCHAR},
+      </if>
+      <if test="newStr != null" >
+        #{newStr,jdbcType=VARCHAR},
+      </if>
+      <if test="demandId != null" >
+        #{demandId,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creatorId != null" >
+        #{creatorId,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isDeal != null" >
+        #{isDeal,jdbcType=VARCHAR},
+      </if>
+      <if test="isAgerr != null" >
+        #{isAgerr,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.csot.recruit.model.original.flow.recruitdemand.RecruitDemandChangeCriteria" resultType="java.lang.Integer" >
+    select count(*) from T_RECRUIT_DEMAND_CHANGE
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update T_RECRUIT_DEMAND_CHANGE
+    <set >
+      <if test="record.id != null" >
+        ID = #{record.id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.type != null" >
+        TYPE = #{record.type,jdbcType=VARCHAR},
+      </if>
+      <if test="record.oldStr != null" >
+        OLD_STR = #{record.oldStr,jdbcType=VARCHAR},
+      </if>
+      <if test="record.newStr != null" >
+        NEW_STR = #{record.newStr,jdbcType=VARCHAR},
+      </if>
+      <if test="record.demandId != null" >
+        DEMAND_ID = #{record.demandId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createDate != null" >
+        CREATE_DATE = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.creatorId != null" >
+        CREATOR_ID = #{record.creatorId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.updateDate != null" >
+        UPDATE_DATE = #{record.updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.isDeal != null" >
+        IS_DEAL = #{record.isDeal,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isAgerr != null" >
+        IS_AGERR = #{record.isAgerr,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update T_RECRUIT_DEMAND_CHANGE
+    set ID = #{record.id,jdbcType=VARCHAR},
+      TYPE = #{record.type,jdbcType=VARCHAR},
+      OLD_STR = #{record.oldStr,jdbcType=VARCHAR},
+      NEW_STR = #{record.newStr,jdbcType=VARCHAR},
+      DEMAND_ID = #{record.demandId,jdbcType=VARCHAR},
+      CREATE_DATE = #{record.createDate,jdbcType=TIMESTAMP},
+      CREATOR_ID = #{record.creatorId,jdbcType=VARCHAR},
+      UPDATE_DATE = #{record.updateDate,jdbcType=TIMESTAMP},
+      IS_DEAL = #{record.isDeal,jdbcType=VARCHAR},
+      IS_AGERR = #{record.isAgerr,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.csot.recruit.model.original.flow.recruitdemand.RecruitDemandChange" >
+    update T_RECRUIT_DEMAND_CHANGE
+    <set >
+      <if test="type != null" >
+        TYPE = #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="oldStr != null" >
+        OLD_STR = #{oldStr,jdbcType=VARCHAR},
+      </if>
+      <if test="newStr != null" >
+        NEW_STR = #{newStr,jdbcType=VARCHAR},
+      </if>
+      <if test="demandId != null" >
+        DEMAND_ID = #{demandId,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creatorId != null" >
+        CREATOR_ID = #{creatorId,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isDeal != null" >
+        IS_DEAL = #{isDeal,jdbcType=VARCHAR},
+      </if>
+      <if test="isAgerr != null" >
+        IS_AGERR = #{isAgerr,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.csot.recruit.model.original.flow.recruitdemand.RecruitDemandChange" >
+    update T_RECRUIT_DEMAND_CHANGE
+    set TYPE = #{type,jdbcType=VARCHAR},
+      OLD_STR = #{oldStr,jdbcType=VARCHAR},
+      NEW_STR = #{newStr,jdbcType=VARCHAR},
+      DEMAND_ID = #{demandId,jdbcType=VARCHAR},
+      CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      CREATOR_ID = #{creatorId,jdbcType=VARCHAR},
+      UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+      IS_DEAL = #{isDeal,jdbcType=VARCHAR},
+      IS_AGERR = #{isAgerr,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <sql id="Oracle_Dialect_Pagination_Prefix" >
+    <if test="page != null" >
+      select * from ( select row_.*, rownum rownum_ from ( 
+    </if>
+  </sql>
+  <sql id="Oracle_Dialect_Pagination_Suffix" >
+    <if test="page != null" >
+      <![CDATA[ ) row_ ) where rownum_ > #{page.begin} and rownum_ <= #{page.end} ]]>
+    </if>
+  </sql>
+</mapper>

@@ -1,0 +1,158 @@
+
+<html>
+<head>
+    <meta content="text/html;charset=utf-8" http-equiv="content-type">
+    <title>GET job/posting/sites/?hasCaptcha={hasCaptcha}</title>
+    <style type="text/css">
+        pre.wrapped {
+    white-space: -moz-pre-wrap;
+    white-space: -pre-wrap;
+    white-space: -o-pre-wrap;
+    white-space: pre-wrap;
+}
+
+.warning-message-container {
+    margin-top: 20px;
+    padding: 0 10px;
+    color: #525252;
+    background: #EFDCA9;
+    border: 1px solid #CCCCCC;
+}
+
+.help-page-table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+    margin: 0px 0px 20px 0px;
+    border-top: 2px solid #D4D4D4;
+}
+
+    .help-page-table th {
+        text-align: left;
+        font-weight: bold;
+        border-bottom: 2px solid #D4D4D4;
+        padding: 8px 6px 8px 6px;
+    }
+
+    .help-page-table td {
+        border-bottom: 2px solid #D4D4D4;
+        padding: 15px 8px 15px 8px;
+        vertical-align: top;
+    }
+
+    .help-page-table pre, .help-page-table p {
+        margin: 0px;
+        padding: 0px;
+        font-family: inherit;
+        font-size: 100%;
+    }
+
+    .help-page-table tbody tr:hover td {
+        background-color: #F3F3F3;
+    }
+
+a:hover {
+    background-color: transparent;
+}
+
+.sample-header {
+    border: 2px solid #D4D4D4;
+    background: #76B8DB;
+    color: #FFFFFF;
+    padding: 8px 15px;
+    border-bottom: none;
+    display: inline-block;
+    margin: 10px 0px 0px 0px;
+}
+
+.sample-content {
+    display: block;
+    border-width: 0;
+    padding: 15px 20px;
+    background: #FFFFFF;
+    border: 2px solid #D4D4D4;
+    margin: 0px 0px 10px 0px;
+}
+
+.api-name {
+    width: 40%;
+}
+
+.api-documentation {
+    width: 60%;
+}
+
+.parameter-name {
+    width: 20%;
+}
+
+.parameter-documentation {
+    width: 50%;
+}
+
+.parameter-source {
+    width: 30%;
+}
+    </style>
+</head>
+<body>
+<div id="body">
+    <section class="featured">
+        <div class="content-wrapper">
+            <p>
+                <a href="HelpPage.html">Help Page Home </a>
+            </p>
+        </div>
+    </section>
+    <section class="content-wrapper main-content clear-fix">
+        <h1>GET job/posting/sites/?hasCaptcha={hasCaptcha}</h1>
+<div>
+            <p>获取有验证码的站点</p>
+    
+            <h2>Request Information</h2>
+                    <h3>Parameters</h3>
+            <table class="help-page-table">
+    <thead>
+    <meta content="text/html;charset=utf-8" http-equiv="content-type">
+    <tr><th>名称</th><th>描述</th><th>其它</th></tr>
+    </thead>
+    <tbody>
+                <tr>
+                <td><b>hasCaptcha</b></td>
+                <td><pre>是否有验证码</pre></td>
+                <td>
+                                                <p>在请求的<b>URI</b>中定义这个参数。</p>
+                                            </td>
+            </tr>
+            </tbody>
+</table>
+         
+       
+         
+        <h2>Response Information</h2> 
+        <h3>Response body formats</h3>
+                <div>
+            <h4 class="sample-header">application/json, text/json</h4>
+        <div class="sample-content">
+            <span><b>Sample:</b></span>
+                                <pre class="wrapped">[
+  &quot;sample string 1&quot;,
+  &quot;sample string 2&quot;,
+  &quot;sample string 3&quot;
+]</pre>
+                        </div>
+            <h4 class="sample-header">application/xml, text/xml</h4>
+        <div class="sample-content">
+            <span><b>Sample:</b></span>
+                                <pre class="wrapped">&lt;ArrayOfstring xmlns:i=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xmlns=&quot;http://schemas.microsoft.com/2003/10/Serialization/Arrays&quot;&gt;
+  &lt;string&gt;sample string 1&lt;/string&gt;
+  &lt;string&gt;sample string 2&lt;/string&gt;
+  &lt;string&gt;sample string 3&lt;/string&gt;
+&lt;/ArrayOfstring&gt;</pre>
+                        </div>
+    </div>
+    </div>
+    </section>
+</div>
+</body>
+</html>

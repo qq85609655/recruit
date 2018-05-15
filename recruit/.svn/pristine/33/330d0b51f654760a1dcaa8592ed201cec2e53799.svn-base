@@ -1,0 +1,1191 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.csot.recruit.dao.resume.ResumeMapper" >
+  <resultMap id="BaseResultMap" type="com.csot.recruit.model.resume.Resume" >
+    <id column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="NAME" property="name" jdbcType="VARCHAR" />
+    <result column="NAME_EN" property="nameEn" jdbcType="VARCHAR" />
+    <result column="SEX" property="sex" jdbcType="VARCHAR" />
+    <result column="BIRTHDAY" property="birthday" jdbcType="TIMESTAMP" />
+    <result column="MARITAL_STATUS" property="maritalStatus" jdbcType="VARCHAR" />
+    <result column="ADDRESS_REGISTERED" property="addressRegistered" jdbcType="VARCHAR" />
+    <result column="WORK_EXPERIENCE" property="workExperience" jdbcType="INTEGER" />
+    <result column="VOUCHER_TYPE" property="voucherType" jdbcType="VARCHAR" />
+    <result column="VOUCHER_NUMBER" property="voucherNumber" jdbcType="VARCHAR" />
+    <result column="PHONE" property="phone" jdbcType="VARCHAR" />
+    <result column="PHONE_RESERVE" property="phoneReserve" jdbcType="VARCHAR" />
+    <result column="APPLY_STATUS" property="applyStatus" jdbcType="VARCHAR" />
+    <result column="EMAIL" property="email" jdbcType="VARCHAR" />
+    <result column="RESIDENCE" property="residence" jdbcType="VARCHAR" />
+    <result column="POSTCODE" property="postcode" jdbcType="VARCHAR" />
+    <result column="ADDRESS" property="address" jdbcType="VARCHAR" />
+    <result column="ADDRESS_EN" property="addressEn" jdbcType="VARCHAR" />
+    <result column="SELF_ASSESSMENT" property="selfAssessment" jdbcType="VARCHAR" />
+    <result column="SELF_ASSESSMENT_EN" property="selfAssessmentEn" jdbcType="VARCHAR" />
+    <result column="AGE" property="age" jdbcType="INTEGER" />
+    <result column="HIGHEST_EDUCATION" property="highestEducation" jdbcType="VARCHAR" />
+    <result column="NATION" property="nation" jdbcType="VARCHAR" />
+    <result column="ID_NUMBER" property="idNumber" jdbcType="VARCHAR" />
+    <result column="ID_ADDRESS" property="idAddress" jdbcType="VARCHAR" />
+    <result column="REPORT_TIME" property="reportTime" jdbcType="VARCHAR" />
+    <result column="WORKPLACE_EXPECT" property="workplaceExpect" jdbcType="VARCHAR" />
+    <result column="POST_EXPECT" property="postExpect" jdbcType="VARCHAR" />
+    <result column="INDUSTRY_EXPECT" property="industryExpect" jdbcType="VARCHAR" />
+    <result column="JOBTYPE_EXPECT" property="jobtypeExpect" jdbcType="VARCHAR" />
+    <result column="SALARY_EXPECT" property="salaryExpect" jdbcType="VARCHAR" />
+    <result column="CURRENCY" property="currency" jdbcType="VARCHAR" />
+    <result column="HEAD_PORTRAIT" property="headPortrait" jdbcType="VARCHAR" />
+    <result column="TRAIN_INFOR" property="trainInfor" jdbcType="VARCHAR" />
+    <result column="SKILL_INFOR" property="skillInfor" jdbcType="VARCHAR" />
+    <result column="LANGUAGE_INFOR" property="languageInfor" jdbcType="VARCHAR" />
+    <result column="CERTIFICATE_INFOR" property="certificateInfor" jdbcType="VARCHAR" />
+    <result column="AWARD_INFOR" property="awardInfor" jdbcType="VARCHAR" />
+    <result column="HOBBY_INFOR" property="hobbyInfor" jdbcType="VARCHAR" />
+    <result column="SELECTION_STATUS" property="selectionStatus" jdbcType="DECIMAL" />
+    <result column="LABEL" property="label" jdbcType="VARCHAR" />
+    <result column="CURRENT_INDUSTRY" property="currentIndustry" jdbcType="VARCHAR" />
+    <result column="UPDATE_DATE" property="updateDate" jdbcType="TIMESTAMP" />
+    <result column="STORAGE_DATE" property="storageDate" jdbcType="TIMESTAMP" />
+    <result column="POSITIONID" property="positionid" jdbcType="VARCHAR" />
+    <result column="CURRENT_COMPANY" property="currentCompany" jdbcType="VARCHAR" />
+    <result column="CURRENT_POSITION" property="currentPosition" jdbcType="VARCHAR" />
+    <result column="RESUMEORIGIN" property="resumeorigin" jdbcType="VARCHAR" />
+    <result column="CHANNEL" property="channel" jdbcType="VARCHAR" />
+    <result column="RESUME_DIR" property="resumeDir" jdbcType="VARCHAR" />
+    <result column="PROVIDE_HOUSE" property="provideHouse" jdbcType="VARCHAR" />
+    <result column="SKILL_TEXT" property="skillText" jdbcType="VARCHAR" />
+    <result column="RESUME_STATUS" property="resumeStatus" jdbcType="VARCHAR" />
+    <association property="applyPosition" resultMap="positionMap" />
+    <collection property="eduExperienceList" resultMap="educationExperienceMap"></collection>
+    <collection property="workIntentionList" resultMap="workIntentionMap"></collection>
+    <collection property="workExperienceList" resultMap="workExperienceMap"> </collection>
+    <collection property="languageList" resultMap="languageMap"></collection>
+    <collection property="labelList" resultMap="labelMap"></collection>
+    <collection property="opRecords" resultMap="logMap"></collection>
+  </resultMap>
+  <resultMap id="positionMap" type="com.csot.recruit.model.position.RecruitPosition">
+  	<id column="RECRUIT_POSITION_ID" property="recruitPositionId" jdbcType="CHAR"/>
+  	<result column="POSITION_NAME" property="positionName" jdbcType="CHAR"/>
+  	<result column="POSITION_CODE" property="positionCode" jdbcType="CHAR"/>
+  </resultMap>
+  <resultMap id="educationExperienceMap" type="com.csot.recruit.model.resume.EducationExperience" >
+    <id column="eduexperience_id" property="id" jdbcType="VARCHAR" />
+    <result column="EDU_START_DATE" property="eduStartDate" jdbcType="TIMESTAMP" />
+    <result column="EDU_END_DATE" property="eduEndDate" jdbcType="TIMESTAMP" />
+    <result column="SCHOOL_NAME" property="schoolName" jdbcType="VARCHAR" />
+    <result column="SCHOOL_NAME_EN" property="schoolNameEn" jdbcType="VARCHAR" />
+    <result column="EDUCATION" property="education" jdbcType="VARCHAR" />
+    <result column="MAJOR" property="major" jdbcType="VARCHAR" />
+    <result column="MAJOR_EN" property="majorEn" jdbcType="VARCHAR" />
+    <result column="RESUME_ID" property="resumeId" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="workExperienceMap" type="com.csot.recruit.model.resume.WorkExperience" >
+    <id column="workexperience_id" property="id" jdbcType="VARCHAR" />
+    <result column="COMPANY_NAME" property="companyName" jdbcType="VARCHAR" />
+    <result column="COMPANY_NAME_EN" property="companyNameEn" jdbcType="VARCHAR" />
+    <result column="JOB_START_DATE" property="jobStartDate" jdbcType="TIMESTAMP" />
+    <result column="JOB_END_DATE" property="jobEndDate" jdbcType="TIMESTAMP" />
+    <result column="INDUSTRY" property="industry" jdbcType="VARCHAR" />
+    <result column="POSITION_NAME" property="positionName" jdbcType="VARCHAR" />
+    <result column="POSITION_NAME_EN" property="positionNameEn" jdbcType="VARCHAR" />
+    <result column="WORKPLACE" property="workplace" jdbcType="VARCHAR" />
+    <result column="COMPANY_NATURE" property="companyNature" jdbcType="VARCHAR" />
+    <result column="JOB_DUTY" property="jobDuty" jdbcType="VARCHAR" />
+    <result column="JOB_DUTY_EN" property="jobDutyEn" jdbcType="VARCHAR" />
+    <result column="DEBRIEFER" property="debriefer" jdbcType="VARCHAR" />
+    <result column="DEBRIEFER_EN" property="debrieferEn" jdbcType="VARCHAR" />
+    <result column="SUBORDINATE" property="subordinate" jdbcType="DECIMAL" />
+    <result column="SALARY" property="salary" jdbcType="VARCHAR" />
+    <result column="W_CURRENCY" property="currency" jdbcType="VARCHAR" />
+    <result column="WORK_PERFORMACE" property="workPerformace" jdbcType="VARCHAR" />
+    <result column="WORK_PERFORMACE_EN" property="workPerformaceEn" jdbcType="VARCHAR" />
+    <result column="RESUME_ID" property="resumeId" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="workIntentionMap" type="com.csot.recruit.model.resume.WorkIntention" >
+    <id column="workintention_id" property="id" jdbcType="VARCHAR" />
+    <result column="WORKPLACE_EXPECT" property="workplaceExpect" jdbcType="VARCHAR" />
+    <result column="INDUSTRY_EXPECT" property="industryExpect" jdbcType="VARCHAR" />
+    <result column="JOBTYPE_EXPECT" property="jobtypeExpect" jdbcType="VARCHAR" />
+    <result column="POST_EXPECT" property="postExpect" jdbcType="VARCHAR" />
+    <result column="SALARY_EXPECT" property="salaryExpect" jdbcType="VARCHAR" />
+    <result column="RPEORT_TIME" property="rpeortTime" jdbcType="VARCHAR" />
+    <result column="I_CURRENCY" property="currency" jdbcType="VARCHAR" />
+    <result column="RESUME_ID" property="resumeId" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="languageMap" type="com.csot.recruit.model.resume.LanguageSkill" >
+    <id column="language_id" property="id" jdbcType="VARCHAR" />
+    <result column="LANGUAGE_NAME" property="languageName" jdbcType="VARCHAR" />
+    <result column="LANGUAGE_LEVEL" property="languageLevel" jdbcType="VARCHAR" />
+    <result column="ORAL_LEVEL" property="oralLevel" jdbcType="VARCHAR" />
+    <result column="RESUME_ID" property="resumeId" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="labelMap" type="com.csot.recruit.model.resume.Label" >
+    <id column="label_id" property="id" jdbcType="CHAR" />
+    <result column="label_name" property="name" jdbcType="CHAR" />
+    <result column="CATEGORY_ID" property="categoryId" jdbcType="CHAR" />
+  </resultMap>
+  <resultMap id="logMap" type="com.csot.recruit.model.log.Log" >
+    <result column="LOGCONTENT" property="logcontent" jdbcType="VARCHAR" />
+    <result column="LOG_ACCOUNT" property="account" jdbcType="VARCHAR" />
+    <result column="PRIVACYLEVEL" property="privacylevel" jdbcType="INTEGER" />
+    <result column="OPERATE_TYPE" property="operatetype" jdbcType="VARCHAR" />
+    <result column="OPERATETIME" property="operatetime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  
+  <resultMap type="com.csot.recruit.model.vo.ResumeApartVo" id="ApartResultMap">
+     <id column="ID" property="id" jdbcType="VARCHAR" />
+     <result column="POSITIONID" property="positionId" jdbcType="VARCHAR" />
+     <result column="STORAGEDATE" property="storageDate" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    resume.ID, resume.NAME, resume.NAME_EN, resume.SEX, resume.BIRTHDAY, resume.MARITAL_STATUS, resume.ADDRESS_REGISTERED, resume.WORK_EXPERIENCE, 
+    resume.VOUCHER_TYPE, resume.VOUCHER_NUMBER, resume.PHONE, resume.PHONE_RESERVE, resume.APPLY_STATUS, resume.EMAIL, resume.RESIDENCE, 
+    resume.POSTCODE, resume.ADDRESS, resume.ADDRESS_EN, resume.SELF_ASSESSMENT, resume.SELF_ASSESSMENT_EN, resume.AGE, resume.HIGHEST_EDUCATION, 
+    resume.NATION, resume.ID_NUMBER, resume.ID_ADDRESS, resume.REPORT_TIME, resume.WORKPLACE_EXPECT, resume.POST_EXPECT, resume.INDUSTRY_EXPECT, 
+    resume.JOBTYPE_EXPECT, resume.SALARY_EXPECT, resume.CURRENCY, resume.HEAD_PORTRAIT, resume.TRAIN_INFOR, resume.SKILL_INFOR, 
+    resume.LANGUAGE_INFOR, resume.CERTIFICATE_INFOR, resume.AWARD_INFOR, resume.HOBBY_INFOR, resume.SELECTION_STATUS, resume.LABEL, 
+    resume.CURRENT_INDUSTRY, resume.UPDATE_DATE, resume.STORAGE_DATE, resume.POSITIONID, resume.CURRENT_COMPANY, resume.CURRENT_POSITION, resume.RESUMEORIGIN, 
+    resume.CHANNEL, resume.RESUME_DIR, resume.PROVIDE_HOUSE, resume.SKILL_TEXT, resume.RESUME_STATUS
+  </sql>
+  <sql id="position">
+  	position.RECRUIT_POSITION_ID, position.POSITION_NAME, position.POSITION_CODE 
+  </sql>
+  <sql id="Education_Experience_List" >
+    eduexperience.id as eduexperience_id, eduexperience.EDU_START_DATE, eduexperience.EDU_END_DATE, eduexperience.SCHOOL_NAME, eduexperience.SCHOOL_NAME_EN, eduexperience.EDUCATION, eduexperience.MAJOR, 
+    eduexperience.MAJOR_EN, eduexperience.RESUME_ID
+  </sql>
+  <sql id="Work_Experience_List" >
+    workexperience.ID workexperience_id, workexperience.COMPANY_NAME, workexperience.COMPANY_NAME_EN, workexperience.JOB_START_DATE, workexperience.JOB_END_DATE, workexperience.INDUSTRY, workexperience.POSITION_NAME, 
+    workexperience.POSITION_NAME_EN, workexperience.WORKPLACE, workexperience.COMPANY_NATURE, workexperience.JOB_DUTY, workexperience.JOB_DUTY_EN, workexperience.DEBRIEFER, workexperience.DEBRIEFER_EN, 
+    workexperience.SUBORDINATE, workexperience.SALARY, workexperience.CURRENCY as W_CURRENCY, workexperience.WORK_PERFORMACE, workexperience.WORK_PERFORMACE_EN, workexperience.RESUME_ID
+  </sql>
+  <sql id="Work_Intention_List" >
+    workintention.workintention_id, workintention.WORKPLACE_EXPECT, workintention.INDUSTRY_EXPECT, workintention.JOBTYPE_EXPECT, workintention.POST_EXPECT, workintention.SALARY_EXPECT, 
+    workintention.RPEORT_TIME, workintention.CURRENCY as I_CURRENCY, workintention.RESUME_ID
+  </sql>
+  <sql id="Language_List" >
+    language.ID as language_id, language.LANGUAGE_NAME, language.LANGUAGE_LEVEL, language.ORAL_LEVEL, language.RESUME_ID
+  </sql>
+  <sql id="Label_List" >
+    trim(label.ID) as label_id, trim(label.NAME) as label_name, trim(label.CATEGORY_ID) as CATEGORY_ID
+  </sql>
+  <sql id="log_list">
+  	log.LOGCONTENT, log.PRIVACYLEVEL as PRIVACYLEVEL, log.userid as LOG_ACCOUNT, log.OPERATETYPE as OPERATE_TYPE, log.OPERATETIME
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.csot.recruit.model.resume.ResumeCriteria" >
+    <include refid="Oracle_Dialect_Pagination_Prefix" />
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from T_RESUME_BASICINFOR
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <include refid="Oracle_Dialect_Pagination_Suffix" />
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />,
+    <include refid="position" />,
+    <include refid="Education_Experience_List" />,
+    <include refid="Work_Intention_List" />,
+    <include refid="Work_Experience_List" />,
+    <include refid="Language_List" />,
+    <include refid="Label_List" />,
+    <include refid="log_list" />
+    from T_RESUME_BASICINFOR resume
+    left join T_RECRUIT_POSITION position on(resume.positionid=trim(position.recruit_position_id))
+    left join T_RESUME_EDUCATION_EXPERIENCE eduexperience on(resume.id=eduexperience.resume_id )
+  	left join T_RESUME_WORK_EXPERIENCE workexperience on(resume.id=workexperience.resume_id)
+    left join T_RESUME_WORK_INTENTION workintention on(resume.id=workintention.resume_id)
+    left join T_RESUME_LANGUAGE language on(resume.id=language.resume_id)
+    left join T_LABEL_RESUME label_resume on (resume.id=label_resume.resume_id)
+    left join T_LABEL label on (label_resume.label_id=trim(label.id))
+    left join T_SYS_LOG log on (resume.id=log.operand)
+    where resume.ID = #{id,jdbcType=VARCHAR} order by resume.id,eduexperience.EDU_END_DATE desc,workexperience.JOB_END_DATE desc,log.OPERATETIME
+  </select>
+  <update id="updateResumeLabel" parameterType="map">
+  	update T_RESUME_BASICINFOR 
+  	set label = #{resumeTags,jdbcType=VARCHAR}
+  	where id = #{resumeId,jdbcType=VARCHAR}
+  </update>
+  <delete id="removeResumeLabel" parameterType="map">
+  	delete from T_LABEL_RESUME 
+  	where resume_id = #{resumeId,jdbcType=VARCHAR} and label_id = #{tagId,jdbcType=VARCHAR}
+  </delete>
+  <delete id="removeResumeLabels" parameterType="map">
+  	delete from T_LABEL_RESUME 
+  	where resume_id = #{resumeId,jdbcType=VARCHAR} and label_id in 
+  	<foreach collection="tagIds" index="index" item="item" open="(" separator="," close=")">
+  		#{item}
+  	</foreach>
+  </delete>
+  <delete id="deleteByPrimaryKey" parameterType="map" >
+    delete from T_RESUME_BASICINFOR
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.csot.recruit.model.resume.ResumeCriteria" >
+    delete from T_RESUME_BASICINFOR
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="addResumeLabels" parameterType="java.util.List">  
+    INSERT INTO T_LABEL_RESUME (label_resume_id,label_id,resume_id)  
+    <foreach collection="tags" item="item" index="index" separator=" union all ">  
+        select #{item.labelResumeId,jdbcType=VARCHAR},#{item.labelId,jdbcType=VARCHAR},#{item.resumeId,jdbcType=VARCHAR} from dual
+    </foreach> 
+	</insert>
+  <insert id="insert" parameterType="com.csot.recruit.model.resume.Resume" >
+    insert into T_RESUME_BASICINFOR (ID, NAME, NAME_EN, 
+      SEX, BIRTHDAY, MARITAL_STATUS, 
+      ADDRESS_REGISTERED, WORK_EXPERIENCE, VOUCHER_TYPE, 
+      VOUCHER_NUMBER, PHONE, PHONE_RESERVE, 
+      APPLY_STATUS, EMAIL, RESIDENCE, 
+      POSTCODE, ADDRESS, ADDRESS_EN, 
+      SELF_ASSESSMENT, SELF_ASSESSMENT_EN, AGE, 
+      HIGHEST_EDUCATION, NATION, ID_NUMBER, 
+      ID_ADDRESS, REPORT_TIME, WORKPLACE_EXPECT, 
+      POST_EXPECT, INDUSTRY_EXPECT, JOBTYPE_EXPECT, 
+      SALARY_EXPECT, CURRENCY, HEAD_PORTRAIT, 
+      TRAIN_INFOR, SKILL_INFOR, LANGUAGE_INFOR, 
+      CERTIFICATE_INFOR, AWARD_INFOR, HOBBY_INFOR, 
+      SELECTION_STATUS, LABEL, CURRENT_INDUSTRY, 
+      UPDATE_DATE, POSITIONID, CURRENT_COMPANY, 
+      RESUMEORIGIN, CHANNEL)
+    values (#{id,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{nameEn,jdbcType=VARCHAR}, 
+      #{sex,jdbcType=VARCHAR}, #{birthday,jdbcType=TIMESTAMP}, #{maritalStatus,jdbcType=VARCHAR}, 
+      #{addressRegistered,jdbcType=VARCHAR}, #{workExperience,jdbcType=INTEGER}, #{voucherType,jdbcType=VARCHAR}, 
+      #{voucherNumber,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, #{phoneReserve,jdbcType=VARCHAR}, 
+      #{applyStatus,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{residence,jdbcType=VARCHAR}, 
+      #{postcode,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, #{addressEn,jdbcType=VARCHAR}, 
+      #{selfAssessment,jdbcType=VARCHAR}, #{selfAssessmentEn,jdbcType=VARCHAR}, #{age,jdbcType=INTEGER}, 
+      #{highestEducation,jdbcType=VARCHAR}, #{nation,jdbcType=VARCHAR}, #{idNumber,jdbcType=VARCHAR}, 
+      #{idAddress,jdbcType=VARCHAR}, #{reportTime,jdbcType=VARCHAR}, #{workplaceExpect,jdbcType=VARCHAR}, 
+      #{postExpect,jdbcType=VARCHAR}, #{industryExpect,jdbcType=VARCHAR}, #{jobtypeExpect,jdbcType=VARCHAR}, 
+      #{salaryExpect,jdbcType=VARCHAR}, #{currency,jdbcType=VARCHAR}, #{headPortrait,jdbcType=VARCHAR}, 
+      #{trainInfor,jdbcType=VARCHAR}, #{skillInfor,jdbcType=VARCHAR}, #{languageInfor,jdbcType=VARCHAR}, 
+      #{certificateInfor,jdbcType=VARCHAR}, #{awardInfor,jdbcType=VARCHAR}, #{hobbyInfor,jdbcType=VARCHAR}, 
+      #{selectionStatus,jdbcType=DECIMAL}, #{label,jdbcType=VARCHAR}, #{currentIndustry,jdbcType=VARCHAR}, 
+      #{updateDate,jdbcType=DATE}, #{positionid,jdbcType=VARCHAR}, #{currentCompany,jdbcType=VARCHAR}, 
+      #{resumeorigin,jdbcType=VARCHAR}, #{channel,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.csot.recruit.model.resume.Resume" >
+    insert into T_RESUME_BASICINFOR
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="name != null and name !=''" >
+        NAME,
+      </if>
+      <if test="nameEn != null and nameEn !=''" >
+        NAME_EN,
+      </if>
+      <if test="sex != null and sex !=''" >
+        SEX,
+      </if>
+      <if test="birthday != null and birthday !=''" >
+        BIRTHDAY,
+      </if>
+      <if test="maritalStatus != null and maritalStatus !=''" >
+        MARITAL_STATUS,
+      </if>
+      <if test="addressRegistered != null and addressRegistered !=''" >
+        ADDRESS_REGISTERED,
+      </if>
+      <if test="workExperience != null and workExperience !=''" >
+        WORK_EXPERIENCE,
+      </if>
+      <if test="voucherType != null and voucherType !=''" >
+        VOUCHER_TYPE,
+      </if>
+      <if test="voucherNumber != null and voucherNumber !=''" >
+        VOUCHER_NUMBER,
+      </if>
+      <if test="phone != null and phone !=''" >
+        PHONE,
+      </if>
+      <if test="phoneReserve != null and phoneReserve !=''" >
+        PHONE_RESERVE,
+      </if>
+      <if test="applyStatus != null and applyStatus !=''" >
+        APPLY_STATUS,
+      </if>
+      <if test="email != null and email !=''" >
+        EMAIL,
+      </if>
+      <if test="residence != null and residence !=''" >
+        RESIDENCE,
+      </if>
+      <if test="postcode != null and postcode !=''" >
+        POSTCODE,
+      </if>
+      <if test="address != null and address !=''" >
+        ADDRESS,
+      </if>
+      <if test="addressEn != null and addressEn !=''" >
+        ADDRESS_EN,
+      </if>
+      <if test="selfAssessment != null and selfAssessment !=''" >
+        SELF_ASSESSMENT,
+      </if>
+      <if test="selfAssessmentEn != null and selfAssessmentEn !=''" >
+        SELF_ASSESSMENT_EN,
+      </if>
+      <if test="age != null and age !=''" >
+        AGE,
+      </if>
+      <if test="highestEducation != null and highestEducation !=''" >
+        HIGHEST_EDUCATION,
+      </if>
+      <if test="nation != null and nation !=''" >
+        NATION,
+      </if>
+      <if test="idNumber != null and idNumber !=''" >
+        ID_NUMBER,
+      </if>
+      <if test="idAddress != null and idAddress !=''" >
+        ID_ADDRESS,
+      </if>
+      <if test="reportTime != null and reportTime !=''" >
+        REPORT_TIME,
+      </if>
+      <if test="workplaceExpect != null and workplaceExpect !=''" >
+        WORKPLACE_EXPECT,
+      </if>
+      <if test="postExpect != null and postExpect !=''" >
+        POST_EXPECT,
+      </if>
+      <if test="industryExpect != null and industryExpect !=''" >
+        INDUSTRY_EXPECT,
+      </if>
+      <if test="jobtypeExpect != null and jobtypeExpect !=''" >
+        JOBTYPE_EXPECT,
+      </if>
+      <if test="salaryExpect != null and salaryExpect !=''" >
+        SALARY_EXPECT,
+      </if>
+      <if test="currency != null and currency !=''" >
+        CURRENCY,
+      </if>
+      <if test="headPortrait != null and headPortrait !=''" >
+        HEAD_PORTRAIT,
+      </if>
+      <if test="trainInfor != null and trainInfor !=''" >
+        TRAIN_INFOR,
+      </if>
+      <if test="skillInfor != null and skillInfor !=''" >
+        SKILL_INFOR,
+      </if>
+      <if test="languageInfor != null and languageInfor !=''" >
+        LANGUAGE_INFOR,
+      </if>
+      <if test="certificateInfor != null and certificateInfor !=''" >
+        CERTIFICATE_INFOR,
+      </if>
+      <if test="awardInfor != null and awardInfor !=''" >
+        AWARD_INFOR,
+      </if>
+      <if test="hobbyInfor != null and hobbyInfor !=''" >
+        HOBBY_INFOR,
+      </if>
+      <if test="selectionStatus != null and selectionStatus !=''" >
+        SELECTION_STATUS,
+      </if>
+      <if test="label != null and label !=''" >
+        LABEL,
+      </if>
+      <if test="currentIndustry != null and currentIndustry !=''" >
+        CURRENT_INDUSTRY,
+      </if>
+      <if test="updateDate != null and updateDate !=''" >
+        UPDATE_DATE,
+      </if>
+      <if test="positionid != null and positionid !=''" >
+        POSITIONID,
+      </if>
+      <if test="currentCompany != null and currentCompany !=''" >
+        CURRENT_COMPANY,
+      </if>
+      <if test="resumeorigin != null and resumeorigin !=''" >
+        RESUMEORIGIN,
+      </if>
+      <if test="channel != null and channel !=''" >
+        CHANNEL,
+      </if>
+      <if test="graduationSchool != null and graduationSchool !=''" >
+        GRADUATION_SCHOOL,
+      </if>
+      <if test="professional != null and professional !=''" >
+        PROFESSIONAL,
+      </if>
+      <if test="resumeLanguage != null and resumeLanguage !=''" >
+        RESUME_LANGUAGE,
+      </if>
+      <if test="recommendEmail != null and recommendEmail !=''" >
+        RECOMMEND_EMAIL,
+      </if>
+      <if test="recommend != null and recommend !=''" >
+        RECOMMEND,
+      </if>
+      <if test="cardId != null and cardId !=''" >
+        CARD_ID,
+      </if>
+      <if test="currentSalary != null and currentSalary !=''" >
+        SALARY_CURRENT,
+      </if>
+      <if test="currentPosition != null and currentPosition !=''" >
+        CURRENT_POSITION,
+      </if>
+      <if test="selfEvaluation !=null and selfEvaluation !=''">
+        SELF_EVALUATION,
+      </if>
+      <if test="careerObject !=null and careerObject !=''">
+        CAREER_OBJECT,
+      </if>
+      <if test="experienceDetail !=null and experienceDetail !=''">
+        EXPERIENCE_DETAIL,
+      </if>
+      <if test="projectExperience !=null and projectExperience !=''">
+        PROJECT_EXPERIENCE,
+      </if>
+      <if test="languageSkill !=null and languageSkill !=''">
+        LANGUAGE_SKILL,
+      </if>
+      <if test="skillText !=null  and skillText !=''">
+        SKILL_TEXT,
+      </if>
+      <if test="resumeDir != null and resumeDir !=''" >
+        RESUME_DIR,
+      </if>
+      <if test="storageDate != null and storageDate !=''" >
+        STORAGE_DATE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null  and name!='' " >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="nameEn != null and nameEn!='' " >
+        #{nameEn,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null and sex!='' " >
+        #{sex,jdbcType=VARCHAR},
+      </if>
+      <if test="birthday != null and birthday!='' " >
+        #{birthday,jdbcType=TIMESTAMP},
+      </if>
+      <if test="maritalStatus != null and maritalStatus!='' " >
+        #{maritalStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="addressRegistered != null and addressRegistered !='' " >
+        #{addressRegistered,jdbcType=VARCHAR},
+      </if>
+      <if test="workExperience != null and workExperience !='' " >
+        #{workExperience,jdbcType=INTEGER},
+      </if>
+      <if test="voucherType != null and voucherType !='' " >
+        #{voucherType,jdbcType=VARCHAR},
+      </if>
+      <if test="voucherNumber != null and voucherNumber !='' " >
+        #{voucherNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null and phone !='' " >
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="phoneReserve != null and phoneReserve !='' " >
+        #{phoneReserve,jdbcType=VARCHAR},
+      </if>
+      <if test="applyStatus != null and applyStatus !='' " >
+        #{applyStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null and email !='' " >
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="residence != null and residence !=''" >
+        #{residence,jdbcType=VARCHAR},
+      </if>
+      <if test="postcode != null and postcode !=''" >
+        #{postcode,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null and address !='' " >
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="addressEn != null and addressEn !=''" >
+        #{addressEn,jdbcType=VARCHAR},
+      </if>
+      <if test="selfAssessment != null and selfAssessment !=''" >
+        #{selfAssessment,jdbcType=VARCHAR},
+      </if>
+      <if test="selfAssessmentEn != null and selfAssessmentEn !=''" >
+        #{selfAssessmentEn,jdbcType=VARCHAR},
+      </if>
+      <if test="age != null and age !=''" >
+        #{age,jdbcType=INTEGER},
+      </if>
+      <if test="highestEducation != null and highestEducation !=''" >
+        #{highestEducation,jdbcType=VARCHAR},
+      </if>
+      <if test="nation != null and nation !=''" >
+        #{nation,jdbcType=VARCHAR},
+      </if>
+      <if test="idNumber != null and idNumber !=''" >
+        #{idNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="idAddress != null and idAddress !=''" >
+        #{idAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="reportTime != null and reportTime !=''" >
+        #{reportTime,jdbcType=VARCHAR},
+      </if>
+      <if test="workplaceExpect != null and workplaceExpect !=''" >
+        #{workplaceExpect,jdbcType=VARCHAR},
+      </if>
+      <if test="postExpect != null and postExpect !=''" >
+        #{postExpect,jdbcType=VARCHAR},
+      </if>
+      <if test="industryExpect != null and industryExpect !=''" >
+        #{industryExpect,jdbcType=VARCHAR},
+      </if>
+      <if test="jobtypeExpect != null and jobtypeExpect !=''" >
+        #{jobtypeExpect,jdbcType=VARCHAR},
+      </if>
+      <if test="salaryExpect != null and salaryExpect !=''" >
+        #{salaryExpect,jdbcType=VARCHAR},
+      </if>
+      <if test="currency != null and currency !=''" >
+        #{currency,jdbcType=VARCHAR},
+      </if>
+      <if test="headPortrait != null and headPortrait !=''" >
+        #{headPortrait,jdbcType=VARCHAR},
+      </if>
+      <if test="trainInfor != null and trainInfor !=''" >
+        #{trainInfor,jdbcType=VARCHAR},
+      </if>
+      <if test="skillInfor != null and skillInfor !=''" >
+        #{skillInfor,jdbcType=VARCHAR},
+      </if>
+      <if test="languageInfor != null and languageInfor !=''" >
+        #{languageInfor,jdbcType=VARCHAR},
+      </if>
+      <if test="certificateInfor != null and certificateInfor !=''" >
+        #{certificateInfor,jdbcType=VARCHAR},
+      </if>
+      <if test="awardInfor != null and awardInfor !=''" >
+        #{awardInfor,jdbcType=VARCHAR},
+      </if>
+      <if test="hobbyInfor != null and hobbyInfor !=''" >
+        #{hobbyInfor,jdbcType=VARCHAR},
+      </if>
+      <if test="selectionStatus != null and selectionStatus !=''" >
+        #{selectionStatus,jdbcType=DECIMAL},
+      </if>
+      <if test="label != null and label !=''" >
+        #{label,jdbcType=VARCHAR},
+      </if>
+      <if test="currentIndustry != null and currentIndustry !=''" >
+        #{currentIndustry,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null and updateDate !=''" >
+        #{updateDate,jdbcType=DATE},
+      </if>
+      <if test="positionid != null and positionid !=''" >
+        #{positionid,jdbcType=VARCHAR},
+      </if>
+      <if test="currentCompany != null and currentCompany !=''" >
+        #{currentCompany,jdbcType=VARCHAR},
+      </if>
+      <if test="resumeorigin != null and resumeorigin !=''" >
+        #{resumeorigin,jdbcType=VARCHAR},
+      </if>
+      <if test="channel != null and channel !=''" >
+        #{channel,jdbcType=VARCHAR},
+      </if>
+      <if test="graduationSchool != null and graduationSchool !=''" >
+        #{graduationSchool,jdbcType=VARCHAR},
+      </if>
+      <if test="professional != null and professional !=''" >
+        #{professional,jdbcType=VARCHAR},
+      </if>
+      <if test="resumeLanguage != null and resumeLanguage !=''" >
+        #{resumeLanguage,jdbcType=VARCHAR},
+      </if>
+      <if test="recommendEmail != null and recommendEmail !=''" >
+        #{recommendEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="recommend != null and recommend !=''" >
+        #{recommend,jdbcType=VARCHAR},
+      </if>
+      <if test="cardId != null and cardId !=''" >
+        #{cardId,jdbcType=VARCHAR},
+      </if>
+      <if test="currentSalary != null and currentSalary !=''" >
+        #{currentSalary,jdbcType=VARCHAR},
+      </if>
+      <if test="currentPosition != null and currentPosition !=''" >
+        #{currentPosition,jdbcType=VARCHAR},
+      </if>
+      <if test="selfEvaluation !=null and selfEvaluation !=''">
+         #{selfEvaluation,jdbcType=VARCHAR},
+      </if>
+      <if test="careerObject !=null and careerObject !=''">
+        #{careerObject,jdbcType=VARCHAR},
+      </if>
+      <if test="experienceDetail !=null and experienceDetail !=''">
+        #{experienceDetail,jdbcType=VARCHAR},
+      </if>
+      <if test="projectExperience !=null and projectExperience !=''">
+        #{projectExperience,jdbcType=VARCHAR},
+      </if>
+      <if test="languageSkill !=null and languageSkill !=''">
+       #{languageSkill,jdbcType=VARCHAR},
+      </if>
+      <if test="skillText !=null and skillText !=''">
+       #{skillText,jdbcType=VARCHAR},
+      </if>
+      <if test="resumeDir != null and resumeDir !=''" >
+        #{resumeDir,jdbcType=VARCHAR},
+      </if>
+      <if test="storageDate != null and storageDate !=''" >
+        #{storageDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.csot.recruit.model.resume.ResumeCriteria" resultType="java.lang.Integer" >
+    select count(*) from T_RESUME_BASICINFOR
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <select id="getResumeDir" parameterType="java.lang.String" resultType="java.lang.String">
+  	select resume_dir from T_RESUME_BASICINFOR
+  	where id = #{resumeId,jdbcType=VARCHAR}
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update T_RESUME_BASICINFOR
+    <set >
+      <if test="record.id != null" >
+        ID = #{record.id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.name != null" >
+        NAME = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.nameEn != null" >
+        NAME_EN = #{record.nameEn,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sex != null" >
+        SEX = #{record.sex,jdbcType=VARCHAR},
+      </if>
+      <if test="record.birthday != null" >
+        BIRTHDAY = #{record.birthday,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.maritalStatus != null" >
+        MARITAL_STATUS = #{record.maritalStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="record.addressRegistered != null" >
+        ADDRESS_REGISTERED = #{record.addressRegistered,jdbcType=VARCHAR},
+      </if>
+      <if test="record.workExperience != null" >
+        WORK_EXPERIENCE = #{record.workExperience,jdbcType=INTEGER},
+      </if>
+      <if test="record.voucherType != null" >
+        VOUCHER_TYPE = #{record.voucherType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.voucherNumber != null" >
+        VOUCHER_NUMBER = #{record.voucherNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="record.phone != null" >
+        PHONE = #{record.phone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.phoneReserve != null" >
+        PHONE_RESERVE = #{record.phoneReserve,jdbcType=VARCHAR},
+      </if>
+      <if test="record.applyStatus != null" >
+        APPLY_STATUS = #{record.applyStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="record.email != null" >
+        EMAIL = #{record.email,jdbcType=VARCHAR},
+      </if>
+      <if test="record.residence != null" >
+        RESIDENCE = #{record.residence,jdbcType=VARCHAR},
+      </if>
+      <if test="record.postcode != null" >
+        POSTCODE = #{record.postcode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.address != null" >
+        ADDRESS = #{record.address,jdbcType=VARCHAR},
+      </if>
+      <if test="record.addressEn != null" >
+        ADDRESS_EN = #{record.addressEn,jdbcType=VARCHAR},
+      </if>
+      <if test="record.selfAssessment != null" >
+        SELF_ASSESSMENT = #{record.selfAssessment,jdbcType=VARCHAR},
+      </if>
+      <if test="record.selfAssessmentEn != null" >
+        SELF_ASSESSMENT_EN = #{record.selfAssessmentEn,jdbcType=VARCHAR},
+      </if>
+      <if test="record.age != null" >
+        AGE = #{record.age,jdbcType=INTEGER},
+      </if>
+      <if test="record.highestEducation != null" >
+        HIGHEST_EDUCATION = #{record.highestEducation,jdbcType=VARCHAR},
+      </if>
+      <if test="record.nation != null" >
+        NATION = #{record.nation,jdbcType=VARCHAR},
+      </if>
+      <if test="record.idNumber != null" >
+        ID_NUMBER = #{record.idNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="record.idAddress != null" >
+        ID_ADDRESS = #{record.idAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="record.reportTime != null" >
+        REPORT_TIME = #{record.reportTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.workplaceExpect != null" >
+        WORKPLACE_EXPECT = #{record.workplaceExpect,jdbcType=VARCHAR},
+      </if>
+      <if test="record.postExpect != null" >
+        POST_EXPECT = #{record.postExpect,jdbcType=VARCHAR},
+      </if>
+      <if test="record.industryExpect != null" >
+        INDUSTRY_EXPECT = #{record.industryExpect,jdbcType=VARCHAR},
+      </if>
+      <if test="record.jobtypeExpect != null" >
+        JOBTYPE_EXPECT = #{record.jobtypeExpect,jdbcType=VARCHAR},
+      </if>
+      <if test="record.salaryExpect != null" >
+        SALARY_EXPECT = #{record.salaryExpect,jdbcType=VARCHAR},
+      </if>
+      <if test="record.currency != null" >
+        CURRENCY = #{record.currency,jdbcType=VARCHAR},
+      </if>
+      <if test="record.headPortrait != null" >
+        HEAD_PORTRAIT = #{record.headPortrait,jdbcType=VARCHAR},
+      </if>
+      <if test="record.trainInfor != null" >
+        TRAIN_INFOR = #{record.trainInfor,jdbcType=VARCHAR},
+      </if>
+      <if test="record.skillInfor != null" >
+        SKILL_INFOR = #{record.skillInfor,jdbcType=VARCHAR},
+      </if>
+      <if test="record.languageInfor != null" >
+        LANGUAGE_INFOR = #{record.languageInfor,jdbcType=VARCHAR},
+      </if>
+      <if test="record.certificateInfor != null" >
+        CERTIFICATE_INFOR = #{record.certificateInfor,jdbcType=VARCHAR},
+      </if>
+      <if test="record.awardInfor != null" >
+        AWARD_INFOR = #{record.awardInfor,jdbcType=VARCHAR},
+      </if>
+      <if test="record.hobbyInfor != null" >
+        HOBBY_INFOR = #{record.hobbyInfor,jdbcType=VARCHAR},
+      </if>
+      <if test="record.selectionStatus != null" >
+        SELECTION_STATUS = #{record.selectionStatus,jdbcType=DECIMAL},
+      </if>
+      <if test="record.label != null" >
+        LABEL = #{record.label,jdbcType=VARCHAR},
+      </if>
+      <if test="record.currentIndustry != null" >
+        CURRENT_INDUSTRY = #{record.currentIndustry,jdbcType=VARCHAR},
+      </if>
+      <if test="record.updateDate != null" >
+        UPDATE_DATE = #{record.updateDate,jdbcType=DATE},
+      </if>
+      <if test="record.positionid != null" >
+        POSITIONID = #{record.positionid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.currentCompany != null" >
+        CURRENT_COMPANY = #{record.currentCompany,jdbcType=VARCHAR},
+      </if>
+      <if test="record.resumeorigin != null" >
+        RESUMEORIGIN = #{record.resumeorigin,jdbcType=VARCHAR},
+      </if>
+      <if test="record.channel != null" >
+        CHANNEL = #{record.channel,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update T_RESUME_BASICINFOR
+    set ID = #{record.id,jdbcType=VARCHAR},
+      NAME = #{record.name,jdbcType=VARCHAR},
+      NAME_EN = #{record.nameEn,jdbcType=VARCHAR},
+      SEX = #{record.sex,jdbcType=VARCHAR},
+      BIRTHDAY = #{record.birthday,jdbcType=TIMESTAMP},
+      MARITAL_STATUS = #{record.maritalStatus,jdbcType=VARCHAR},
+      ADDRESS_REGISTERED = #{record.addressRegistered,jdbcType=VARCHAR},
+      WORK_EXPERIENCE = #{record.workExperience,jdbcType=INTEGER},
+      VOUCHER_TYPE = #{record.voucherType,jdbcType=VARCHAR},
+      VOUCHER_NUMBER = #{record.voucherNumber,jdbcType=VARCHAR},
+      PHONE = #{record.phone,jdbcType=VARCHAR},
+      PHONE_RESERVE = #{record.phoneReserve,jdbcType=VARCHAR},
+      APPLY_STATUS = #{record.applyStatus,jdbcType=VARCHAR},
+      EMAIL = #{record.email,jdbcType=VARCHAR},
+      RESIDENCE = #{record.residence,jdbcType=VARCHAR},
+      POSTCODE = #{record.postcode,jdbcType=VARCHAR},
+      ADDRESS = #{record.address,jdbcType=VARCHAR},
+      ADDRESS_EN = #{record.addressEn,jdbcType=VARCHAR},
+      SELF_ASSESSMENT = #{record.selfAssessment,jdbcType=VARCHAR},
+      SELF_ASSESSMENT_EN = #{record.selfAssessmentEn,jdbcType=VARCHAR},
+      AGE = #{record.age,jdbcType=INTEGER},
+      HIGHEST_EDUCATION = #{record.highestEducation,jdbcType=VARCHAR},
+      NATION = #{record.nation,jdbcType=VARCHAR},
+      ID_NUMBER = #{record.idNumber,jdbcType=VARCHAR},
+      ID_ADDRESS = #{record.idAddress,jdbcType=VARCHAR},
+      REPORT_TIME = #{record.reportTime,jdbcType=VARCHAR},
+      WORKPLACE_EXPECT = #{record.workplaceExpect,jdbcType=VARCHAR},
+      POST_EXPECT = #{record.postExpect,jdbcType=VARCHAR},
+      INDUSTRY_EXPECT = #{record.industryExpect,jdbcType=VARCHAR},
+      JOBTYPE_EXPECT = #{record.jobtypeExpect,jdbcType=VARCHAR},
+      SALARY_EXPECT = #{record.salaryExpect,jdbcType=VARCHAR},
+      CURRENCY = #{record.currency,jdbcType=VARCHAR},
+      HEAD_PORTRAIT = #{record.headPortrait,jdbcType=VARCHAR},
+      TRAIN_INFOR = #{record.trainInfor,jdbcType=VARCHAR},
+      SKILL_INFOR = #{record.skillInfor,jdbcType=VARCHAR},
+      LANGUAGE_INFOR = #{record.languageInfor,jdbcType=VARCHAR},
+      CERTIFICATE_INFOR = #{record.certificateInfor,jdbcType=VARCHAR},
+      AWARD_INFOR = #{record.awardInfor,jdbcType=VARCHAR},
+      HOBBY_INFOR = #{record.hobbyInfor,jdbcType=VARCHAR},
+      SELECTION_STATUS = #{record.selectionStatus,jdbcType=DECIMAL},
+      LABEL = #{record.label,jdbcType=VARCHAR},
+      CURRENT_INDUSTRY = #{record.currentIndustry,jdbcType=VARCHAR},
+      UPDATE_DATE = #{record.updateDate,jdbcType=DATE},
+      POSITIONID = #{record.positionid,jdbcType=VARCHAR},
+      CURRENT_COMPANY = #{record.currentCompany,jdbcType=VARCHAR},
+      RESUMEORIGIN = #{record.resumeorigin,jdbcType=VARCHAR},
+      CHANNEL = #{record.channel,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.csot.recruit.model.resume.Resume" >
+    update T_RESUME_BASICINFOR
+    <set >
+      <if test="name != null  and name!='' " >
+        NAME = #{name,jdbcType=VARCHAR}, 
+      </if>
+      <if test="nameEn != null and nameEn!='' " >
+        NAME_EN=#{nameEn,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null and sex!='' " >
+        SEX = #{sex,jdbcType=VARCHAR},
+      </if>
+      <if test="birthday != null and birthday!='' " >
+         BIRTHDAY = #{birthday,jdbcType=TIMESTAMP},
+      </if>
+      <if test="maritalStatus != null and maritalStatus!='' " >
+          MARITAL_STATUS = #{maritalStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="addressRegistered != null and addressRegistered !='' " >
+        ADDRESS_REGISTERED = #{addressRegistered,jdbcType=VARCHAR},
+      </if>
+      <if test="workExperience != null and workExperience !='' " >
+        WORK_EXPERIENCE = #{workExperience,jdbcType=INTEGER},
+      </if>
+      <if test="voucherType != null and voucherType !='' " >
+        VOUCHER_TYPE = #{voucherType,jdbcType=VARCHAR},
+      </if>
+      <if test="voucherNumber != null and voucherNumber !='' " >
+        VOUCHER_NUMBER = #{voucherNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null and phone !='' " >
+        PHONE = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="phoneReserve != null and phoneReserve !='' " >
+        PHONE_RESERVE = #{phoneReserve,jdbcType=VARCHAR},
+      </if>
+      <if test="applyStatus != null and applyStatus !='' " >
+        APPLY_STATUS = #{applyStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null and email !='' " >
+         EMAIL = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="residence != null and residence !=''" >
+        RESIDENCE = #{residence,jdbcType=VARCHAR},
+      </if>
+      <if test="postcode != null and postcode !=''" >
+        POSTCODE = #{postcode,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null and address !='' " >
+        ADDRESS = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="addressEn != null and addressEn !=''" >
+        ADDRESS_EN = #{addressEn,jdbcType=VARCHAR},
+      </if>
+      <if test="selfAssessment != null and selfAssessment !=''" >
+        SELF_ASSESSMENT = #{selfAssessment,jdbcType=VARCHAR},
+      </if>
+      <if test="selfAssessmentEn != null and selfAssessmentEn !=''" >
+        SELF_ASSESSMENT_EN = #{selfAssessmentEn,jdbcType=VARCHAR},
+      </if>
+      <if test="age != null and age !=''" >
+        AGE = #{age,jdbcType=INTEGER},
+      </if>
+      <if test="highestEducation != null and highestEducation !=''" >
+         HIGHEST_EDUCATION = #{highestEducation,jdbcType=VARCHAR},
+      </if>
+      <if test="nation != null and nation !=''" >
+        NATION = #{nation,jdbcType=VARCHAR},
+      </if>
+      <if test="idNumber != null and idNumber !=''" >
+        ID_NUMBER = #{idNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="idAddress != null and idAddress !=''" >
+        ID_ADDRESS = #{idAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="reportTime != null and reportTime !=''" >
+        REPORT_TIME = #{reportTime,jdbcType=VARCHAR},
+      </if>
+      <if test="workplaceExpect != null and workplaceExpect !=''" >
+        WORKPLACE_EXPECT = #{workplaceExpect,jdbcType=VARCHAR},
+      </if>
+      <if test="postExpect != null and postExpect !=''" >
+         POST_EXPECT = #{postExpect,jdbcType=VARCHAR},
+      </if>
+      <if test="industryExpect != null and industryExpect !=''" >
+        INDUSTRY_EXPECT = #{industryExpect,jdbcType=VARCHAR},
+      </if>
+      <if test="jobtypeExpect != null and jobtypeExpect !=''" >
+       JOBTYPE_EXPECT = #{jobtypeExpect,jdbcType=VARCHAR},
+      </if>
+      <if test="salaryExpect != null and salaryExpect !=''" >
+         SALARY_EXPECT = #{salaryExpect,jdbcType=VARCHAR},
+      </if>
+      <if test="currency != null and currency !=''" >
+       CURRENCY = #{currency,jdbcType=VARCHAR},
+      </if>
+      <if test="headPortrait != null and headPortrait !=''" >
+        HEAD_PORTRAIT = #{headPortrait,jdbcType=VARCHAR},
+      </if>
+      <if test="trainInfor != null and trainInfor !=''" >
+         TRAIN_INFOR = #{trainInfor,jdbcType=VARCHAR},
+      </if>
+      <if test="skillInfor != null and skillInfor !=''" >
+        SKILL_INFOR = #{skillInfor,jdbcType=VARCHAR},
+      </if>
+      <if test="languageInfor != null and languageInfor !=''" >
+        LANGUAGE_INFOR = #{languageInfor,jdbcType=VARCHAR},
+      </if>
+    
+      <if test="certificateInfor != null and certificateInfor !=''" >
+         CERTIFICATE_INFOR = #{certificateInfor,jdbcType=VARCHAR},
+      </if>
+      <if test="awardInfor != null and awardInfor !=''" >
+         AWARD_INFOR = #{awardInfor,jdbcType=VARCHAR},
+      </if>
+      <if test="hobbyInfor != null and hobbyInfor !=''" >
+        HOBBY_INFOR = #{hobbyInfor,jdbcType=VARCHAR},
+      </if>
+      <if test="selectionStatus != null and selectionStatus !=''" >
+       SELECTION_STATUS = #{selectionStatus,jdbcType=DECIMAL},
+      </if>
+      <if test="label != null and label !=''" >
+       LABEL = #{label,jdbcType=VARCHAR},
+      </if>
+      <if test="currentIndustry != null and currentIndustry !=''" >
+        CURRENT_INDUSTRY = #{currentIndustry,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null and updateDate !=''" >
+         UPDATE_DATE = #{updateDate,jdbcType=DATE},
+      </if>
+      <if test="positionid != null and positionid !=''" >
+        POSITIONID = #{positionid,jdbcType=VARCHAR},
+      </if>
+      <if test="currentCompany != null and currentCompany !=''" >
+         CURRENT_COMPANY = #{currentCompany,jdbcType=VARCHAR},
+      </if>
+      <if test="resumeorigin != null and resumeorigin !=''" >
+       RESUMEORIGIN = #{resumeorigin,jdbcType=VARCHAR},
+      </if>
+      <if test="channel != null and channel !=''" >
+        CHANNEL = #{channel,jdbcType=VARCHAR},
+      </if>
+      <if test="graduationSchool != null and graduationSchool !=''" >
+        GRADUATION_SCHOOL = #{graduationSchool,jdbcType=VARCHAR},
+      </if>
+      <if test="professional != null and professional !=''" >
+        PROFESSIONAL = #{professional,jdbcType=VARCHAR},
+      </if>
+      <if test="resumeLanguage != null and resumeLanguage !=''" >
+        RESUME_LANGUAGE = #{resumeLanguage,jdbcType=VARCHAR},
+      </if>
+      <if test="resumeStatus != null and resumeStatus !=''" >
+        RESUME_STATUS = #{resumeStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="recommendEmail != null and recommendEmail !=''" >
+        RECOMMEND_EMAIL = #{recommendEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="recommend != null and recommend !=''" >
+        RECOMMEND = #{recommend,jdbcType=VARCHAR},
+      </if>
+      <if test="cardId != null and cardId !=''" >
+        CARD_ID = #{cardId,jdbcType=VARCHAR},
+      </if>
+      <if test="currentSalary != null and currentSalary !=''" >
+       SALARY_CURRENT =  #{currentSalary,jdbcType=VARCHAR},
+      </if>
+      <if test="currentPosition != null and currentPosition !=''" >
+         CURRENT_POSITION = #{currentPosition,jdbcType=VARCHAR},
+      </if>
+      <if test="selfEvaluation !=null and selfEvaluation !=''">
+         SELF_EVALUATION = #{selfEvaluation,jdbcType=VARCHAR},
+      </if>
+      <if test="careerObject !=null and careerObject !=''">
+         CAREER_OBJECT = #{careerObject,jdbcType=VARCHAR},
+      </if>
+      <if test="experienceDetail !=null and experienceDetail !=''">
+        EXPERIENCE_DETAIL = #{experienceDetail,jdbcType=VARCHAR},
+      </if>
+      <if test="projectExperience !=null and projectExperience !=''">
+         PROJECT_EXPERIENCE = #{projectExperience,jdbcType=VARCHAR},
+      </if>
+      <if test="languageSkill !=null and languageSkill !=''">
+       LANGUAGE_SKILL = #{languageSkill,jdbcType=VARCHAR},
+      </if>
+      <if test="skillText !=null and skillText !=''">
+       SKILL_TEXT = #{skillText,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where trim(ID) = #{id,jdbcType=VARCHAR}
+  </update>
+  
+  
+  <update id="updateByPrimaryKey" parameterType="com.csot.recruit.model.resume.Resume" >
+    update T_RESUME_BASICINFOR
+    set NAME = #{name,jdbcType=VARCHAR},
+      NAME_EN = #{nameEn,jdbcType=VARCHAR},
+      SEX = #{sex,jdbcType=VARCHAR},
+      BIRTHDAY = #{birthday,jdbcType=TIMESTAMP},
+      MARITAL_STATUS = #{maritalStatus,jdbcType=VARCHAR},
+      ADDRESS_REGISTERED = #{addressRegistered,jdbcType=VARCHAR},
+      WORK_EXPERIENCE = #{workExperience,jdbcType=INTEGER},
+      VOUCHER_TYPE = #{voucherType,jdbcType=VARCHAR},
+      VOUCHER_NUMBER = #{voucherNumber,jdbcType=VARCHAR},
+      PHONE = #{phone,jdbcType=VARCHAR},
+      PHONE_RESERVE = #{phoneReserve,jdbcType=VARCHAR},
+      APPLY_STATUS = #{applyStatus,jdbcType=VARCHAR},
+      EMAIL = #{email,jdbcType=VARCHAR},
+      RESIDENCE = #{residence,jdbcType=VARCHAR},
+      POSTCODE = #{postcode,jdbcType=VARCHAR},
+      ADDRESS = #{address,jdbcType=VARCHAR},
+      ADDRESS_EN = #{addressEn,jdbcType=VARCHAR},
+      SELF_ASSESSMENT = #{selfAssessment,jdbcType=VARCHAR},
+      SELF_ASSESSMENT_EN = #{selfAssessmentEn,jdbcType=VARCHAR},
+      AGE = #{age,jdbcType=INTEGER},
+      HIGHEST_EDUCATION = #{highestEducation,jdbcType=VARCHAR},
+      NATION = #{nation,jdbcType=VARCHAR},
+      ID_NUMBER = #{idNumber,jdbcType=VARCHAR},
+      ID_ADDRESS = #{idAddress,jdbcType=VARCHAR},
+      REPORT_TIME = #{reportTime,jdbcType=VARCHAR},
+      WORKPLACE_EXPECT = #{workplaceExpect,jdbcType=VARCHAR},
+      POST_EXPECT = #{postExpect,jdbcType=VARCHAR},
+      INDUSTRY_EXPECT = #{industryExpect,jdbcType=VARCHAR},
+      JOBTYPE_EXPECT = #{jobtypeExpect,jdbcType=VARCHAR},
+      SALARY_EXPECT = #{salaryExpect,jdbcType=VARCHAR},
+      CURRENCY = #{currency,jdbcType=VARCHAR},
+      HEAD_PORTRAIT = #{headPortrait,jdbcType=VARCHAR},
+      TRAIN_INFOR = #{trainInfor,jdbcType=VARCHAR},
+      SKILL_INFOR = #{skillInfor,jdbcType=VARCHAR},
+      LANGUAGE_INFOR = #{languageInfor,jdbcType=VARCHAR},
+      CERTIFICATE_INFOR = #{certificateInfor,jdbcType=VARCHAR},
+      AWARD_INFOR = #{awardInfor,jdbcType=VARCHAR},
+      HOBBY_INFOR = #{hobbyInfor,jdbcType=VARCHAR},
+      SELECTION_STATUS = #{selectionStatus,jdbcType=DECIMAL},
+      LABEL = #{label,jdbcType=VARCHAR},
+      CURRENT_INDUSTRY = #{currentIndustry,jdbcType=VARCHAR},
+      UPDATE_DATE = #{updateDate,jdbcType=DATE},
+      POSITIONID = #{positionid,jdbcType=VARCHAR},
+      CURRENT_COMPANY = #{currentCompany,jdbcType=VARCHAR},
+      RESUMEORIGIN = #{resumeorigin,jdbcType=VARCHAR},
+      CHANNEL = #{channel,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <sql id="Oracle_Dialect_Pagination_Prefix" >
+    <if test="page != null" >
+      select * from ( select row_.*, rownum rownum_ from ( 
+    </if>
+  </sql>
+  <sql id="Oracle_Dialect_Pagination_Suffix" >
+    <if test="page != null" >
+      <![CDATA[ ) row_ ) where rownum_ > #{page.begin} and rownum_ <= #{page.end} ]]>
+    </if>
+  </sql>
+  
+  <select id="selectByCandidateId" resultMap="ApartResultMap" parameterType="java.lang.String" >
+    select ID,POSITIONID,TO_CHAR(STORAGE_DATE, 'YYYY-MM-DD') AS STORAGEDATE from T_RESUME_BASICINFOR
+  	where CANDIDATE_ID = #{candidateId,jdbcType=VARCHAR} order by STORAGE_DATE desc
+  </select>
+  
+</mapper>

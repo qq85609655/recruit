@@ -1,0 +1,14 @@
+package com.csot.recruit.dao.extension.campus;
+
+import java.util.List;
+
+import com.csot.recruit.model.extension.campus.CampusTaskExt;
+import com.csot.recruit.model.extension.campus.CampusTaskExtCriteria;
+
+import org.amberframework.core.mybatis.dao.MyBatisBaseMapper;
+
+public interface CampusTaskExtMapper extends MyBatisBaseMapper {
+    int countByExample(CampusTaskExtCriteria example);
+    
+    List<CampusTaskExt> selectAllYearth();
+}

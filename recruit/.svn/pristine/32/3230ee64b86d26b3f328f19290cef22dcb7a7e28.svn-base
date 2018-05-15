@@ -1,0 +1,47 @@
+var editor;
+KindEditor.ready(function(K) {
+  editor = K.create('textarea[name="emailContent"]', {
+    allowFileManager : false
+  });
+  editor.sync();
+});
+
+$(function(){
+  $('input:radio[name="isEmail"]').change(function(){
+    $(this).val();
+ });
+});
+
+mini.parse();
+function onButtonEdit(e) {
+  btnEdit = this;
+  OpenDialog(basePath + "/baseUserController/chooseBaseUserList", "选择面试官", null, 650, 380,chooseInterviews);
+}
+//回调函数
+function chooseInterviews(action,e){
+  if (action == "ok") {
+    var iframe = e.getIFrameEl();
+
+    var data = iframe.contentWindow.GetData();
+    data = mini.clone(data);
+    btnEdit.setValue(data.id);
+    btnEdit.setText(data.text);
+  }
+}
+
+function onLinkmanButtonEdit(e) {
+  btnEdit = this;
+  OpenDialog(basePath + "/baseUserController/chooseBaseUserList", "选择面试联系人", null, 650, 380,chooseLinkman);
+}
+
+//回调函数
+function chooseLinkman(action,e){
+  if (action == "ok") {
+    var iframe = e.getIFrameEl();
+
+    var data = iframe.contentWindow.GetLinkmanData();
+    data = mini.clone(data);
+    btnEdit.setValue(data.id);
+    btnEdit.setText(data.text);
+  }
+}

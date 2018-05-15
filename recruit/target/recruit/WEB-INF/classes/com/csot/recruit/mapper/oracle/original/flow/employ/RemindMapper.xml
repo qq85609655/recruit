@@ -1,0 +1,288 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.csot.recruit.dao.original.flow.employ.RemindMapper" >
+  <resultMap id="BaseResultMap" type="com.csot.recruit.model.original.flow.employ.Remind" >
+    <id column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="REMIND_DATE" property="remindDate" jdbcType="VARCHAR" />
+    <result column="REMIND_CONTENT" property="remindContent" jdbcType="VARCHAR" />
+    <result column="REMIND_USER" property="remindUser" jdbcType="VARCHAR" />
+    <result column="REMIND_USER_NAME" property="remindUserName" jdbcType="VARCHAR" />
+    <result column="CREATOR_ID" property="creatorId" jdbcType="VARCHAR" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="MODIFIED_ID" property="modifiedId" jdbcType="VARCHAR" />
+    <result column="UPDATE_DATE" property="updateDate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    ID, REMIND_DATE, REMIND_CONTENT, REMIND_USER, REMIND_USER_NAME, CREATOR_ID, CREATE_DATE, 
+    MODIFIED_ID, UPDATE_DATE
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.csot.recruit.model.original.flow.employ.RemindCriteria" >
+    <include refid="Oracle_Dialect_Pagination_Prefix" />
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from T_REMIND
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <include refid="Oracle_Dialect_Pagination_Suffix" />
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from T_REMIND
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from T_REMIND
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.csot.recruit.model.original.flow.employ.RemindCriteria" >
+    delete from T_REMIND
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.csot.recruit.model.original.flow.employ.Remind" >
+    insert into T_REMIND (ID, REMIND_DATE, REMIND_CONTENT, 
+      REMIND_USER, REMIND_USER_NAME, CREATOR_ID, 
+      CREATE_DATE, MODIFIED_ID, UPDATE_DATE
+      )
+    values (#{id,jdbcType=VARCHAR}, #{remindDate,jdbcType=VARCHAR}, #{remindContent,jdbcType=VARCHAR}, 
+      #{remindUser,jdbcType=VARCHAR}, #{remindUserName,jdbcType=VARCHAR}, #{creatorId,jdbcType=VARCHAR}, 
+      #{createDate,jdbcType=TIMESTAMP}, #{modifiedId,jdbcType=VARCHAR}, #{updateDate,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.csot.recruit.model.original.flow.employ.Remind" >
+    insert into T_REMIND
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="remindDate != null" >
+        REMIND_DATE,
+      </if>
+      <if test="remindContent != null" >
+        REMIND_CONTENT,
+      </if>
+      <if test="remindUser != null" >
+        REMIND_USER,
+      </if>
+      <if test="remindUserName != null" >
+        REMIND_USER_NAME,
+      </if>
+      <if test="creatorId != null" >
+        CREATOR_ID,
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE,
+      </if>
+      <if test="modifiedId != null" >
+        MODIFIED_ID,
+      </if>
+      <if test="updateDate != null" >
+        UPDATE_DATE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="remindDate != null" >
+        #{remindDate,jdbcType=VARCHAR},
+      </if>
+      <if test="remindContent != null" >
+        #{remindContent,jdbcType=VARCHAR},
+      </if>
+      <if test="remindUser != null" >
+        #{remindUser,jdbcType=VARCHAR},
+      </if>
+      <if test="remindUserName != null" >
+        #{remindUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="creatorId != null" >
+        #{creatorId,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifiedId != null" >
+        #{modifiedId,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.csot.recruit.model.original.flow.employ.RemindCriteria" resultType="java.lang.Integer" >
+    select count(*) from T_REMIND
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update T_REMIND
+    <set >
+      <if test="record.id != null" >
+        ID = #{record.id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.remindDate != null" >
+        REMIND_DATE = #{record.remindDate,jdbcType=VARCHAR},
+      </if>
+      <if test="record.remindContent != null" >
+        REMIND_CONTENT = #{record.remindContent,jdbcType=VARCHAR},
+      </if>
+      <if test="record.remindUser != null" >
+        REMIND_USER = #{record.remindUser,jdbcType=VARCHAR},
+      </if>
+      <if test="record.remindUserName != null" >
+        REMIND_USER_NAME = #{record.remindUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.creatorId != null" >
+        CREATOR_ID = #{record.creatorId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createDate != null" >
+        CREATE_DATE = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.modifiedId != null" >
+        MODIFIED_ID = #{record.modifiedId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.updateDate != null" >
+        UPDATE_DATE = #{record.updateDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update T_REMIND
+    set ID = #{record.id,jdbcType=VARCHAR},
+      REMIND_DATE = #{record.remindDate,jdbcType=VARCHAR},
+      REMIND_CONTENT = #{record.remindContent,jdbcType=VARCHAR},
+      REMIND_USER = #{record.remindUser,jdbcType=VARCHAR},
+      REMIND_USER_NAME = #{record.remindUserName,jdbcType=VARCHAR},
+      CREATOR_ID = #{record.creatorId,jdbcType=VARCHAR},
+      CREATE_DATE = #{record.createDate,jdbcType=TIMESTAMP},
+      MODIFIED_ID = #{record.modifiedId,jdbcType=VARCHAR},
+      UPDATE_DATE = #{record.updateDate,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.csot.recruit.model.original.flow.employ.Remind" >
+    update T_REMIND
+    <set >
+      <if test="remindDate != null" >
+        REMIND_DATE = #{remindDate,jdbcType=VARCHAR},
+      </if>
+      <if test="remindContent != null" >
+        REMIND_CONTENT = #{remindContent,jdbcType=VARCHAR},
+      </if>
+      <if test="remindUser != null" >
+        REMIND_USER = #{remindUser,jdbcType=VARCHAR},
+      </if>
+      <if test="remindUserName != null" >
+        REMIND_USER_NAME = #{remindUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="creatorId != null" >
+        CREATOR_ID = #{creatorId,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifiedId != null" >
+        MODIFIED_ID = #{modifiedId,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.csot.recruit.model.original.flow.employ.Remind" >
+    update T_REMIND
+    set REMIND_DATE = #{remindDate,jdbcType=VARCHAR},
+      REMIND_CONTENT = #{remindContent,jdbcType=VARCHAR},
+      REMIND_USER = #{remindUser,jdbcType=VARCHAR},
+      REMIND_USER_NAME = #{remindUserName,jdbcType=VARCHAR},
+      CREATOR_ID = #{creatorId,jdbcType=VARCHAR},
+      CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      MODIFIED_ID = #{modifiedId,jdbcType=VARCHAR},
+      UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <sql id="Oracle_Dialect_Pagination_Prefix" >
+    <if test="page != null" >
+      select * from ( select row_.*, rownum rownum_ from ( 
+    </if>
+  </sql>
+  <sql id="Oracle_Dialect_Pagination_Suffix" >
+    <if test="page != null" >
+      <![CDATA[ ) row_ ) where rownum_ > #{page.begin} and rownum_ <= #{page.end} ]]>
+    </if>
+  </sql>
+</mapper>

@@ -1,0 +1,34 @@
+/**
+ * 新增判重条件窗口
+ */
+function resumeRuleAdd() {
+  mini.open({
+    url : basePath + "/webpage/com/csot/resume/resumeRuleAdd.jsp", 
+    title : "新增判重条件(最多可选三项)", // 标题
+    width : 800, // 宽度
+    height : 500, // 高度
+    allowResize : true, // 允许尺寸调节
+    allowDrag : true, // 允许拖拽位置
+    showCloseButton : true, // 显示关闭按钮
+    showMaxButton : true, // 显示最大化按钮
+    showModal : true, // 显示遮罩
+    loadOnRefresh : true, // true每次刷新都激发onload事件
+    onload : function() { // 弹出页面加载完成
+    },
+    ondestroy : function(action) { // 弹出页面关闭前
+      if (action == "ok") { // 如果点击"确定"
+        var iframe = this.getIFrameEl();
+        var data = iframe.contentWindow.GetData();
+        data = mini.clone(data); // 必须
+        var param=new Object();
+        param.id=id;
+        param.permissions=data;
+        /*SaveDataAsync(basePath + "/system/sysRoleT/buildPermission", param, function(e) {
+          if (e.success != null) {
+            ShowSuccessTip(e.msg);
+          }
+        });*/
+      }
+    }
+  });
+}

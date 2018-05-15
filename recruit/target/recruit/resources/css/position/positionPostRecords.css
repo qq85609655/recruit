@@ -1,0 +1,78 @@
+@CHARSET "UTF-8";
+
+.mini-datepicker.mini-buttonedit {
+	height: auto !important;
+	width: 154px !important;
+}
+
+.jobPost-form{
+	padding: 12px 35px 10px;
+}
+.jobPost-table {
+	margin-top: 10px;
+}
+
+.jobPost-tr {
+  height: 30px;	
+}
+
+.jobPost-td {
+	width:70px;
+}
+
+.jobPost-td-l {
+	width: 200px;
+}
+
+.jobPost-select, .jobPost-input {
+	width:151px;
+}
+
+.jobPost-input {
+	box-sizing : border-box;
+}
+
+.date-split {
+	padding : 0 18px;
+}
+
+.choose_btn {
+    /* background-color: #c3e7fa; */
+    border: 1px solid #aebed7;
+    cursor: pointer;
+    height: 26px;
+    padding-left: 6px;
+    text-align: left;
+    width: 152px;
+}
+
+.mini-datepicker{
+	width:90px;
+	height:23px;
+	line-height: 23px;
+	border: 1px solid #CDCDCD;
+}
+
+.jobPost-post{
+	height:40px;
+}
+
+thead{
+	font-size: 12px;
+	height: 20px;
+}
+
+.jobPost-data-tab{
+	width:100%;
+	margin-top:10px;
+	border-top: 1px solid #aebed7;
+}
+
+font{
+	font-size: 12px;
+	color: gray;
+}
+
+.table-operate .jobPost-disable {
+	background-color: #aaa;
+}

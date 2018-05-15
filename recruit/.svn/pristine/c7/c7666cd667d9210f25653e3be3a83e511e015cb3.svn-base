@@ -1,0 +1,134 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<!DOCTYPE html>
+<html>
+<head>
+  <%@ include file="/webpage/common.jsp" %>
+  <link rel="stylesheet" type="text/css" href="${webRoot}/resources/css/importResume.css"/>
+  <link rel="stylesheet" type="text/css" href="${webRoot }/resources/css/system/baseUserList.css"/>
+  <title>任务管理</title>
+  <style type="text/css">
+  </style>
+</head>
+<body onload="removeLoad();">
+<jsp:include page="/webpage/header.jsp"></jsp:include>
+<div class="co">
+  <div class="co-right">
+    <div class="position-path co-right-center">
+      <span class="path-title">您的位置 :</span><a class="path-item a-decoration"
+                                               href="${webRoot}/loginController/main">我的首页</a><em
+            class="path-icon">&gt;&gt;</em><span
+            class="path-leaf">系统管理</span><em class="path-icon">&gt;&gt;</em><span class="path-leaf">任务管理</span>
+    </div>
+    <div class="co-right-main co-right-center">
+      <div class="con-title">任务管理</div>
+      <div class="main">
+        <div class="position-import-main blue radius">
+          <table class="position-import-tab1">
+            <tr>
+              <td>
+                <button class="posi-import-btn blue tab-up" id="task-button">
+                  <span>任务总览</span>
+                </button>
+                <button class="posi-import-btn blue " id="detail-button">
+                  <span>任务明细</span>
+                </button>
+              </td>
+            </tr>
+          </table>
+          <div class="account-content">
+            <div class="account-search">
+              <table class="tblQuery2">
+                <tbody>
+                <tr>
+                  <th>&nbsp;年份：</th>
+                  <td><input id="yearth" class="mini-combobox" name="yearth"
+                             style="width: 80px;" valueField="yearth" showNullItem="true"
+                             url="/recruit/campusTaskController/datagrid4Yearth" nullItemText="全部"
+                             allowInput="true" textField="yearth" pinyinField="tag"
+                             onitemclick="search()"/></td>
+                  <th>&nbsp;组织:</th>
+                  <td>
+                    <input id="organizationId" class="mini-combobox" name="organizationId"
+                           style="width: 120px;" valueField="typeId" showNullItem="true" nullItemText="全部"
+                           url="/recruit/datadictGroupTypeController/getDictsByCode/campus_company"
+                           allowInput="true" textField="typeName" pinyinField="tag"
+                           onitemclick="search()">
+                  </td>
+                  <th>&nbsp;站点:</th>
+                  <td>
+                    <input
+                            id="siteId" class="mini-combobox" name="siteId"
+                            style="width: 120px;" valueField="siteId" showNullItem="true"
+                            url="/recruit/campusSiteController/datagrid" nullItemText="全部"
+                            allowInput="true" textField="siteName" pinyinField="tag"
+                            onitemclick="search()">
+                  </td>
+                  <th>&nbsp;岗位:</th>
+                  <td>
+                    <input
+                            id="postId" class="mini-combobox" name="postId" nullItemText="全部"
+                            style="width: 120px;" valueField="typeId" showNullItem="true"
+                            url="/recruit/datadictGroupTypeController/getDictsByCode/pose_type"
+                            allowInput="true" textField="typeName" pinyinField="tag"
+                            onitemclick="search()">
+                  </td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="blue radius">
+              <div id="datagrid1" class="mini-datagrid" url="/recruit/campusTaskController/datagrid?showPager=true"
+                   idField="id" sizeList="[1,2,50,100]" pageSize="10" allowResize="false"
+                   style="height: 350px;">
+                <div property="columns">
+                  <div type="checkcolumn"></div>
+                  <div field="yearth" width="120" allowSort="true">年份</div>
+                  <div field="orgName" width="120" allowSort="true">所属组织</div>
+                  <div field="siteName" width="120" allowSort="true">站点名称</div>
+                  <div field="postName" width="120" allowSort="true">岗位名称</div>
+                  <div header="任务" headerAlign="center">
+                    <div property="columns">
+                      <div field="taskNumberBa" width="70">本科</div>
+                      <div field="taskNumberMa" width="70">硕士</div>
+                      <div field="taskNumberDo" width="70">博士</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<jsp:include page="/webpage/footer.jsp"></jsp:include>
+</body>
+<script>
+  mini.parse();
+  var datagrid = mini.get("datagrid1");
+  $(this).toggleClass("button-out", false);
+  $(this).toggleClass("button-up", true);
+  $("#detail-button").toggleClass("button-out", true);
+  $("#task-button").live("click", function () {
+    window.location.href = '/recruit/campusTaskController/list';
+  });
+  $("#detail-button").live("click", function () {
+    window.location.href = '/recruit/campusTaskController/detailList';
+  });
+  search();
+  function search() {
+    var yearth = mini.get("yearth").getValue();
+    var organizationId = mini.get("organizationId").getValue();
+    var siteId = mini.get("siteId").getValue();
+    var postId = mini.get("postId").getValue();
+    datagrid.load({
+      yearth: yearth,
+      organizationId: organizationId,
+      siteId: siteId,
+      postId: postId
+    });
+  }
+
+</script>
+</html>

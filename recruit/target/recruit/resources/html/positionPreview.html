@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	  <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+	  <title>首页</title>
+	  <link type="text/css" rel="stylesheet" href="../css/public/reset.css"/>
+		<link type="text/css" rel="stylesheet" href="../css/public/common.css"/>
+  	<link rel="stylesheet" type="text/css" href="../css/position/positionPreview.css"/>
+		<script type="text/javascript" src="../js/public/jquery-1.8.3.min.js"></script>
+	  <base target="_self"/>
+  </head>
+  <body>
+    <div class="position-info"> 
+	        <div class="position-info-baseInfo blue radius">
+	          <table class="position-info-tab">
+	            <thead>
+	              <tr>
+	                <td width="33%" colspan="6">
+	                  <span class="font-14 strong positionName"></span>
+	                </td>
+	              </tr>
+	            </thead>
+	            <tbody>
+	              <tr>
+	                <td width="35"><span>招聘专员:</span></td>
+	                <td width="60"><span id="recruitPerson" class="co-po"></span></td>
+	                <td width="35"><span>其他招聘专员:</span></td>
+	                <td width="60"><span id="otherRecruitPerson" class="co-po"></span></td>
+	                <td width="35"><span>更新时间:</span></td>
+	              	<td width="60"><span id="modifyTime" class="co-po"></span></td>
+	              </tr>
+	              <tr>
+	                <td><span>用人部门主管:</span></td>
+	                <td><span id="demandDepMa" class="co-po"></span></td>
+	                <td><span>简历接收邮箱:</span></td>
+	                <td><span id="receiveEmail" class="co-po"></span></td>
+	                <td><span>保密类型:</span></td>
+	              	<td><span id="secrecyType" class="co-po"></span></td>
+	              </tr>
+	              <tr>
+	                <td><span>需求人数:</span></td>
+	                <td><span id="demands" class="co-po"></span></td>
+	                <td><span>需求类型:</span></td>
+	                <td><span id="demandType" class="co-po"></span></td>
+	                <td><span>职位生效日期:</span></td>
+	              	<td><span id="effectDate" class="co-po"></span></td>
+	              </tr>
+	              <tr>
+	                <td><span>期望到岗日期:</span></td>
+	                <td><span id="expecDate" class="co-po"></span></td>
+	                <td><span>是否是专车职位:</span><span id="" class="co-po"></span></td>
+	                <td><span id="" class="co-po"></span></td>
+	                <td><span></span></td>
+	                <td><span></span></td>
+	              </tr>
+	            </tbody>
+	          </table>
+	        </div>
+	        
+	        <div class="position-info-all blue radius">
+	          <!-- 基本信息 -->
+	          <h3 class="baseInfo-title font-14">基本信息</h3>
+	          <div class="baseInfo baseInfo-item">
+	            <table class="position-info-all-tab">
+	              <tr>
+	                <td width="70px"><span>职位名称:</span></td>
+	                <td width="300px"><span class="positionName co-po"></span></td>
+	                <td width="70px"><span>职位编码:</span></td>
+	                <td width="300px"><span id="positionCode" class="co-po"></span></td>
+	              </tr>
+	              <tr>
+	                <td><span>内部编码:</span></td>
+	                <td><span id="innerCode" class="co-po"></span></td>
+	                <td><span>部门:</span></td>
+	                <td><span id="department" class="co-po"></span></td>
+	              </tr>
+	              <tr>
+	                <td><span>招聘对象</span></td>
+	                <td><span id="recruitObject" class="co-po"></span></td>
+	                <td><span>工作地点</span></td>
+	                <td><span id="workPlace" class="co-po"></span></td>
+	              </tr>
+	              <tr>
+	                <td><span>职位类别:</span></td>
+	                <td><span id="positionType" class="co-po"></span></td>
+	                <td><span>职能类别:</span></td>
+	                <td><span id="positionSimilar" class="co-po"></span></td>
+	              </tr><tr>
+	                <td><span>职位级别:</span></td>
+	                <td><span id="positionLevel" class="co-po"></span></td>
+	                <td><span>招聘人数:</span></td>
+	                <td><span id="recruitNumbers" class="co-po"></span></td>
+	              </tr>
+	              <tr>
+	                <td><span>发布人:</span></td>
+	                <td><span id="publisher" class="co-po"></span></td>
+	                <td><span>月薪:</span></td>
+	                <td><span id="salary" class="co-po"></span></td>
+	              </tr>
+	              <tr>
+	                <td><span>发布日期:</span></td>
+	                <td><span id="publishDate" class="co-po"></span></td>
+	                <td><span>招聘类型:</span></td>
+	                <td><span id="recruitType" class="co-po"></span></td>
+	              </tr>
+	              <tr>
+	                <td><span>截止日期:</span></td>
+	                <td><span id="deadline" class="co-po"></span></td>
+	                <td><span>所属行业:</span></td>
+	                <td><span id="positionIndustry" class="co-po"></span></td>
+	              </tr>
+	            </table>
+	          </div>
+	          
+	          <!-- 基本要求 -->
+	          <h3 class="baseInfo-title">基本要求</h3>
+	          <div class="baseRequirement baseInfo-item">
+	            <table class="position-info-all-tab">
+	             <tr>
+	                <td width="70px"><span>年龄:</span></td>
+	                <td width="300px"><span id="age" class="co-po"></span></td>
+	                <td width="70px"><span>工作年限:</span></td>
+	                <td width="300px"><span id="workExperience" class="co-po"></span></td>
+	              </tr>
+	              <tr>
+	                <td><span>英语等级:</span></td>
+	                <td><span id="englishLevel" class="co-po"></span></td>
+	                <td><span>学历:</span></td>
+	                <td><span id="education" class="co-po"></span></td>
+	              </tr>
+	              <tr>
+	                <td><span>性别:</span></td>
+	                <td><span id="gender" class="co-po"></span></td>
+	                <td><span></span></td>
+	                <td></td>
+	              </tr>
+	            </table>
+	          </div>
+	          
+	          <!-- 职位描述 -->
+	          <h3 class="baseInfo-title">职位描述</h3>
+	          <div class="positionDescribe baseInfo-item">
+	            <table class="position-info-all-tab">
+	              <tr>
+	                <td><span id="positionDescription" class="co-po"></span></td>
+	              </tr>
+	            </table>
+	          </div>
+	        </div>
+    </div>
+  </body>
+	<script type="text/javascript" src="../js/position/positionPreview.js"></script>
+</html>

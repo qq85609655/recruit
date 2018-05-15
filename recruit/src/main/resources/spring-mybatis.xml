@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:tx="http://www.springframework.org/schema/tx" 
+  xmlns:aop="http://www.springframework.org/schema/aop"
+  xmlns:context="http://www.springframework.org/schema/context"
+  xsi:schemaLocation="
+       http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+       http://www.springframework.org/schema/aop
+       http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context-4.0.xsd
+       http://www.springframework.org/schema/tx 
+       http://www.springframework.org/schema/tx/spring-tx-4.0.xsd">
+
+	<context:component-scan base-package="com.csot.recruit">
+  	<context:exclude-filter type="regex" expression="com.csot.recruit.controller.*" />
+  </context:component-scan>
+
+  <!-- Data source -->
+  <bean id="dataSource" class="org.logicalcobwebs.proxool.ProxoolDataSource">
+    <property name="driver">
+      <value>oracle.jdbc.driver.OracleDriver</value>
+    </property>
+    
+    <!--
+    <property name="driverUrl">
+      <value>jdbc:oracle:thin:@(DESCRIPTION = (failover = on) (ADDRESS = (PROTOCOL = TCP)(HOST = 10.108.4.191)(PORT = 1521))(ADDRESS = (PROTOCOL = TCP)(HOST = 10.108.4.193)(PORT = 1521))(LOAD_BALANCE = no)(CONNECT_DATA = (SERVER = DEDICATED)(SERVICE_NAME = p1intsrv2)(FAILOVER_MODE = (TYPE = SELECT)(METHOD = BASIC)(RETRIES = 10)(DELAY = 5))))</value> 
+    </property>
+    <property name="user" value="recprd" />
+    <property name="password" value="csot#rec0601" />
+    -->
+    <property name="driverUrl">
+      <value>jdbc:oracle:thin:@10.108.29.78:1521:recd</value>
+    </property>
+    <property name="user" value="root" />
+    <property name="password" value="123456" />
+    
+    <property name="alias" value="recruitdb" />
+    <property name="houseKeepingSleepTime" value="900000" />
+    <property name="testBeforeUse" value="true" />
+    <property name="prototypeCount" value="10" />
+    <property name="maximumConnectionCount" value="100" />
+    <property name="minimumConnectionCount" value="5" />
+    <property name="simultaneousBuildThrottle" value="10" />
+    <!-- <property name="maximumConnectionLifetime" value="14400000" /> -->
+    <property name="houseKeepingTestSql" value="select 1 from dual" />
+    <property name="verbose" value="true" />
+    <property name="trace" value="true" />
+    <!-- property name="driverClassName" value="org.logicalcobwebs.proxool.ProxoolDriver" / -->
+    <!-- url中“.”后面的部分需要配置为proxool配置文件中的别名alias -->
+    <!-- property name="url" value="proxool.recruitdb" / -->
+  </bean>
+  
+  <!-- dao接口注入自动扫描，如果添加模块，需要到这里配置basePackage，逗号隔开 -->
+  <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+    <property name="basePackage" value="org.amberframework,test,com.csot,haha.test" />
+    <!-- 扫描basePackage下所有以@MyBatisRepository注解标识的接口或继承于MyBatisBaseMapper接口的接口（两者取并集），用于缩小搜索范围 ，防止搜索到其他bean -->
+    <property name="annotationClass" value="org.amberframework.core.mybatis.annotation.MyBatisRepository" />
+    <property name="markerInterface" value="org.amberframework.core.mybatis.dao.MyBatisBaseMapper" />
+    <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"></property>
+  </bean>
+  
+  <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+    <property name="dataSource" ref="dataSource" />
+
+    <!-- mapper.xml自动扫描，如果添加模块，需要到这里配置 -->
+    <!-- mapperLocations表示我们的Mapper文件存放的位置，当我们的Mapper文件跟对应的Mapper接口处于同一位置的时候可以不用指定该属性的值 -->
+    <property name="mapperLocations">
+      <list>
+        <value>classpath:org/amberframework/**/system/**/*Mapper.xml</value>
+        <value>classpath:test/**/mapper/**/*Mapper.xml</value>
+        <value>classpath:com/csot/**/*Mapper.xml</value>
+        <value>classpath:haha/test/**/oracle/**/*Mapper.xml</value>
+      </list>
+    </property>
+  </bean>
+  
+  <!-- Transaction 配置事物管理器，在*ServiceImpl里写@Transactional就可以启用事物管理 -->
+  <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+    <property name="dataSource" ref="dataSource" />
+  </bean>
+  
+  <!-- 开启事务注解驱动 -->
+  <tx:annotation-driven transaction-manager="transactionManager" />
+
+</beans>

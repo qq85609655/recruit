@@ -1,0 +1,451 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.csot.recruit.dao.position.PositionManaMapper">
+  
+  <!-- 职位管理列表 -->
+  <select id="queryPositionManaList" parameterType="com.csot.recruit.model.position.PositionMana"
+    resultType="com.csot.recruit.model.position.PositionMana">
+    select po.recruit_position_id as recruitPositionId,
+    po.position_name as positionName,
+    po.position_code as positionCode,
+    po.creater as publisher,
+    po.recruit_object as recruitObject,
+    po.position_industry as positionIndustry,
+    po.position_similar as positionSimilar,
+    po.salary as
+    salary,
+    po.validaty as validaty,
+    po.trench,
+    po.label as label,
+    po.position_description as positionDescription,
+    po.position_description2 as positionDescription2,
+    po.website_post_name as websitePostName,
+    po.secrecy as secrecy,
+    po.recruit_numbers as recruitNumbers,
+    po.work_place as
+    workPlace,
+    po.status
+    as status,
+    po.position_type as positionType,
+    po.recruit_type as recruitType,
+    po.POSITION_LEVEL as
+    positionLevel,
+    po.release_date as releaseDate,
+    po.MODIFY_DATE as modifyDate,
+    po.expire_date as
+    expireDate,
+    de.position_code as departmentCode,
+    de.department as department,
+    de.demands as demands,
+    de.demand_type as demandType,
+    de.effective_date as effectiveDate,
+    de.expect_date as expectDate,
+    us.name as publisherName,
+    org.org_name as departmentName,
+    ri.age_min
+    as ageMin,
+    ri.age_max as
+    ageMax,
+    ri.work_experience_min as workExperienceMin,
+    ri.work_experience_max as workExperienceMax,
+    ri.english_level as englishLevel,
+    ri.education_min as
+    educationMin,
+    ri.education_max as
+    educationMax,
+    ri.gender as gender,
+    ri.age_not as ageNot,
+    ri.work_experience_not as
+    workExperienceNot,
+    ri.education_not as educationNot,
+    ri.english_level_not as englishLevelNot,
+    ri.agender_not as agenderNot
+    from
+    T_RECRUIT_POSITION po
+    left join T_SYS_USER us on us.id =
+    po.creater,
+    T_POSITION_DEPARTMENT_REQUIRE de left join T_ORG
+    org on org.id = de.department,
+    T_POSITION_REQUIRE_INFOR ri
+    <where>
+      po.recruit_position_id = de.recruit_position_id
+      and po.recruit_position_id =
+      ri.recruit_position_id
+      <if test="recruitPositionId !='' and recruitPositionId != null">
+        and po.recruit_position_id = #{recruitPositionId}
+      </if>
+      <if test="positionName !='' and positionName != null">
+        and po.position_name like '%'||#{positionName}||'%'
+      </if>
+      <if test="publisher !='' and publisher != null">
+        and po.creater =#{publisher}
+      </if>
+      <if test="recruiter !='' and recruiter != null">
+        and re.recruiter = #{recruiter}
+      </if>
+      <if test="label !='' and label != null">
+        and po.label like '%'||#{label}||'%'
+      </if>
+      <if test="startDistributeDate != null and startDistributeDate != ''">
+        and to_date(to_char(Trunc(po.release_date),' yyyy-mm-dd'),'yyyy-mm-dd') >=
+        to_date(#{startDistributeDate},'yyyy-mm-dd')
+      </if>
+      <if test="endDistributeDate != null and endDistributeDate != ''">
+        and to_date(#{endDistributeDate},'yyyy-mm-dd') >=
+        to_date(to_char(Trunc(po.release_date),' yyyy-mm-dd'),'yyyy-mm-dd')
+      </if>
+      <if test="department !='' and department != null">
+        and trim(de.department) =#{department}
+      </if>
+      <if test="positionCode !='' and positionCode != null">
+        and po.position_code like '%'||#{positionCode}||'%'
+      </if>
+      <if test="departmentCode !='' and departmentCode != null">
+        and de.position_code like '%'||#{departmentCode}||'%'
+      </if>
+      <if test="status != null and status != ''">
+        and po.status like '%'||#{status}||'%'
+      </if>
+      <if test="workPlace !='' and workPlace != null">
+        and po.work_place like '%'||#{workPlace}||'%'
+      </if>
+      <if test="startExpireDate != null and startExpireDate != ''">
+        and to_date(to_char(Trunc(po.expire_date),' yyyy-mm-dd'),'yyyy-mm-dd') >=
+        to_date(#{startExpireDate},'yyyy-mm-dd')
+      </if>
+      <if test="endExpireDate != null and endExpireDate != ''">
+        and to_date(#{endExpireDate},'yyyy-mm-dd') >=
+        to_date(to_char(Trunc(po.expire_date),' yyyy-mm-dd'),'yyyy-mm-dd')
+      </if>
+      <if test="recruitType != null and recruitType !=''">
+        and po.recruit_type like '%'||#{recruitType}||'%'
+      </if>
+      <if test="positionType !='' and positionType != null">
+        and po.position_type like '%'||#{positionType}||'%'
+      </if>
+      <if test="positionLevel !='' and positionLevel != null">
+        and po.POSITION_LEVEL like '%'||#{positionLevel}||'%'
+      </if>
+      order by releaseDate desc
+    </where>
+  </select>
+  
+  <!-- 职位管理列表(带分页) -->
+  <select id="queryPositionManaListByPage" parameterType="java.util.Map"
+    resultType="com.csot.recruit.model.position.PositionMana">
+    select * from
+    (select A.*,rownum rowno from
+    (select
+    po.recruit_position_id as recruitPositionId,
+    po.position_name as positionName,
+    po.position_code as positionCode,
+    po.creater as publisher,
+    po.recruit_object as recruitObject,
+    po.position_industry as positionIndustry,
+    po.position_similar
+    as positionSimilar,
+    po.salary as salary,
+    po.validaty as validaty,
+    po.trench,
+    po.label as label,
+    po.position_description as positionDescription,
+    po.position_description2 as positionDescription2,
+    po.website_post_name as websitePostName,
+    po.secrecy as secrecy,
+    po.recruit_numbers as
+    recruitNumbers,
+    po.work_place as workPlace,
+    po.status as status,
+    po.position_type as positionType,
+    po.recruit_type as recruitType,
+    po.POSITION_LEVEL as positionLevel,
+    po.release_date as
+    releaseDate,
+    po.MODIFY_DATE as modifyDate,
+    po.expire_date as expireDate,
+    us.name as publisherName,
+    org.org_name as departmentName,
+    ri.age_min as ageMin,
+    ri.age_max as ageMax,
+    ri.work_experience_min
+    as workExperienceMin,
+    ri.work_experience_max as workExperienceMax,
+    ri.english_level as
+    englishLevel,
+    ri.education_min as educationMin,
+    ri.education_max as educationMax,
+    ri.gender as
+    gender,
+    ri.age_not as ageNot,
+    ri.work_experience_not as workExperienceNot,
+    ri.education_not as
+    educationNot,
+    ri.english_level_not as englishLevelNot,
+    ri.agender_not as agenderNot,
+    de.position_code as departmentCode,
+    de.department as department,
+    de.demands as demands,
+    de.demand_type as demandType,
+    de.effective_date as effectiveDate,
+    de.expect_date as expectDate
+    from
+    T_RECRUIT_POSITION po left join T_SYS_USER us on us.id = po.creater,
+    T_POSITION_DEPARTMENT_REQUIRE de left join T_ORG org on org.id = de.department,
+    T_POSITION_REQUIRE_INFOR ri
+    <where>
+      po.recruit_position_id = de.recruit_position_id
+      and po.recruit_position_id =
+      ri.recruit_position_id
+      <if test="recruitPositionId !='' and recruitPositionId != null">
+        and po.recruit_position_id = #{recruitPositionId}
+      </if>
+      <if test="positionName !='' and positionName != null">
+        and po.position_name like '%'||#{positionName}||'%'
+      </if>
+      <if test="publisher !='' and publisher != null">
+        and po.creater =#{publisher}
+      </if>
+      <if test="recruiter !='' and recruiter != null">
+        and re.recruiter = #{recruiter}
+      </if>
+      <if test="label !='' and label != null">
+        and po.label like '%'||#{label}||'%'
+      </if>
+      <if test="startDistributeDate != null and startDistributeDate != ''">
+        and to_date(to_char(Trunc(po.release_date),' yyyy-mm-dd'),'yyyy-mm-dd') >=
+        to_date(#{startDistributeDate},'yyyy-mm-dd')
+      </if>
+      <if test="endDistributeDate != null and endDistributeDate != ''">
+        and to_date(#{endDistributeDate},'yyyy-mm-dd') >=
+        to_date(to_char(Trunc(po.release_date),' yyyy-mm-dd'),'yyyy-mm-dd')
+      </if>
+      <if test="department !='' and department != null">
+        and trim(de.department) =#{department}
+      </if>
+      <if test="positionCode !='' and positionCode != null">
+        and po.position_code like '%'||#{positionCode}||'%'
+      </if>
+      <if test="departmentCode !='' and departmentCode != null">
+        and de.position_code like '%'||#{departmentCode}||'%'
+      </if>
+      <if test="status != null and status != ''">
+        and po.status like '%'||#{status}||'%'
+      </if>
+      <if test="workPlace !='' and workPlace != null">
+        and po.work_place like '%'||#{workPlace}||'%'
+      </if>
+      <if test="startExpireDate != null and startExpireDate != ''">
+        and to_date(to_char(Trunc(po.expire_date),' yyyy-mm-dd'),'yyyy-mm-dd') >=
+        to_date(#{startExpireDate},'yyyy-mm-dd')
+      </if>
+      <if test="endExpireDate != null and endExpireDate != ''">
+        and to_date(#{endExpireDate},'yyyy-mm-dd') >=
+        to_date(to_char(Trunc(po.expire_date),' yyyy-mm-dd'),'yyyy-mm-dd')
+      </if>
+      <if test="recruitType != null and recruitType !=''">
+        and po.recruit_type like '%'||#{recruitType}||'%'
+      </if>
+      <if test="positionType !='' and positionType != null">
+        and po.position_type like '%'||#{positionType}||'%'
+      </if>
+      <if test="positionLevel !='' and positionLevel != null">
+        and po.POSITION_LEVEL like '%'||#{positionLevel}||'%'
+      </if>
+      <if test="sortField != null and sortField != ''">
+        order by ${sortField} ${sortOrder}
+      </if>
+      ) A
+      where rownum <![CDATA[<=#{pageSize} * (#{pageIndex} + 1)]]>)
+      table_alias
+      where table_alias.rowno > #{pageSize} * #{pageIndex}
+    </where>
+  </select>
+  
+  <!-- 统计职位管理列表个数 -->
+  <select id="countPositionMana" parameterType="com.csot.recruit.model.position.PositionMana"
+    resultType="java.lang.Integer">
+    select count(po.recruit_position_id)
+    from
+    T_RECRUIT_POSITION po left join T_SYS_USER us on us.id =
+    po.creater,
+    T_POSITION_DEPARTMENT_REQUIRE de left join T_ORG org on org.id = de.department,
+    T_POSITION_RECRUIT_INFOR re left join T_SYS_USER u on u.id = re.recruiter,
+    T_POSITION_REQUIRE_INFOR ri
+    <where>
+      po.recruit_position_id = de.recruit_position_id
+      and po.recruit_position_id =
+      re.recruit_position_id
+      and po.recruit_position_id = ri.recruit_position_id
+      <if test="recruitPositionId !='' and recruitPositionId != null">
+        and po.recruit_position_id = #{recruitPositionId}
+      </if>
+      <if test="positionName !='' and positionName != null">
+        and po.position_name like '%'||#{positionName}||'%'
+      </if>
+      <if test="publisher !='' and publisher != null">
+        and po.creater =#{publisher}
+      </if>
+      <if test="recruiter !='' and recruiter != null">
+        and re.recruiter = #{recruiter}
+      </if>
+      <if test="label !='' and label != null">
+        and po.label like '%'||#{label}||'%'
+      </if>
+      <if test="startDistributeDate != null and startDistributeDate != ''">
+        and to_date(to_char(Trunc(po.release_date),' yyyy-mm-dd'),'yyyy-mm-dd') >=
+        to_date(#{startDistributeDate},'yyyy-mm-dd')
+      </if>
+      <if test="endDistributeDate != null and endDistributeDate != ''">
+        and to_date(#{endDistributeDate},'yyyy-mm-dd') >=
+        to_date(to_char(Trunc(po.release_date),' yyyy-mm-dd'),'yyyy-mm-dd')
+      </if>
+      <if test="department !='' and department != null">
+        and trim(de.department) =#{department}
+      </if>
+      <if test="positionCode !='' and positionCode != null">
+        and po.position_code like '%'||#{positionCode}||'%'
+      </if>
+      <if test="departmentCode !='' and departmentCode != null">
+        and de.position_code like '%'||#{departmentCode}||'%'
+      </if>
+      <if test="status != null and status != ''">
+        and po.status like '%'||#{status}||'%'
+      </if>
+      <if test="workPlace !='' and workPlace != null">
+        and po.work_place like '%'||#{workPlace}||'%'
+      </if>
+      <if test="startExpireDate != null and startExpireDate != ''">
+        and to_date(to_char(Trunc(po.expire_date),' yyyy-mm-dd'),'yyyy-mm-dd') >=
+        to_date(#{startExpireDate},'yyyy-mm-dd')
+      </if>
+      <if test="endExpireDate != null and endExpireDate != ''">
+        and to_date(#{endExpireDate},'yyyy-mm-dd') >=
+        to_date(to_char(Trunc(po.expire_date),' yyyy-mm-dd'),'yyyy-mm-dd')
+      </if>
+      <if test="recruitType != null and recruitType !=''">
+        and po.recruit_type like '%'||#{recruitType}||'%'
+      </if>
+      <if test="positionType !='' and positionType != null">
+        and po.position_type like '%'||#{positionType}||'%'
+      </if>
+      <if test="positionLevel !='' and positionLevel != null">
+        and po.POSITION_LEVEL like '%'||#{positionLevel}||'%'
+      </if>
+    </where>
+  </select>
+  
+  <!-- 职位分发记录列表(带分页) -->
+  <select id="queryPositionDistributeListByPage" parameterType="java.util.Map"
+    resultType="com.csot.recruit.model.position.PositionDistributeRecords">
+    select * from
+    (select A.*,rownum rowno from
+    (select
+    po.recruit_position_id as recruitPositionId,
+    po.position_code as positionCode,
+    po.position_name as positionName,
+    po.work_place as workPlace,
+    po.release_date as releaseDate,
+    po.expire_date as expireDate,
+    de.position_code as departmentCode,
+    us.name as publisher,
+    di.publish_site as publishSite,
+    di.distribute_date as distributeDate,
+    di.result as publishResult,
+    di.error_message as errorMessage,
+    di.publish_url as publishUrl
+    from
+    T_RECRUIT_POSITION po,
+    T_POSITION_DEPARTMENT_REQUIRE de,
+    T_POSITION_DISTRIBUTE di left join
+    T_SYS_USER us on us.id = di.publisher
+    <where>
+      po.recruit_position_id = de.recruit_position_id
+      and po.recruit_position_id =
+      di.recruit_position_id
+      <if test="department !='' and department != null">
+        and trim(de.department) =#{department}
+      </if>
+      <if test="publisher !='' and publisher != null">
+        and us.id =#{publisher}
+      </if>
+      <if test="publishSite !='' and publishSite != null">
+        and di.publish_site like '%'||#{publishSite}||'%'
+      </if>
+      <if test="publishResult !='' and publishResult != null">
+        and di.result =#{publishResult}
+      </if>
+      <if test="positionName !='' and positionName != null">
+        and po.position_name like '%'||#{positionName}||'%'
+      </if>
+      <if test="startDistributeDate != null and startDistributeDate != ''">
+        and to_date(to_char(Trunc(di.distribute_date),' yyyy-mm-dd'),'yyyy-mm-dd') >=
+        to_date(#{startDistributeDate},'yyyy-mm-dd')
+      </if>
+      <if test="endDistributeDate != null and endDistributeDate != ''">
+        and to_date(#{endDistributeDate},'yyyy-mm-dd') >=
+        to_date(to_char(Trunc(di.distribute_date),' yyyy-mm-dd'),'yyyy-mm-dd')
+      </if>
+      <if test="startExpireDate != null and startExpireDate != ''">
+        and to_date(to_char(Trunc(po.expire_date),' yyyy-mm-dd'),'yyyy-mm-dd') >=
+        to_date(#{startExpireDate},'yyyy-mm-dd')
+      </if>
+      <if test="endExpireDate != null and endExpireDate != ''">
+        and to_date(#{endExpireDate},'yyyy-mm-dd') >=
+        to_date(to_char(Trunc(po.expire_date),' yyyy-mm-dd'),'yyyy-mm-dd')
+      </if>
+      <if test="sortField != null and sortField != ''">
+        order by ${sortField} ${sortOrder}
+      </if>
+      ) A
+      where rownum <![CDATA[<=#{pageSize} * (#{pageIndex} + 1)]]>)
+      table_alias
+      where table_alias.rowno > #{pageSize} * #{pageIndex}
+    </where>
+  </select>
+  
+  <!-- 统计职位分发列表个数 -->
+  <select id="countPositionDistribute" parameterType="com.csot.recruit.model.position.PositionDistributeRecords"
+    resultType="java.lang.Integer">
+    select count(po.recruit_position_id)
+    from T_RECRUIT_POSITION po,
+    T_POSITION_DEPARTMENT_REQUIRE de,
+    T_POSITION_DISTRIBUTE di left join T_SYS_USER us on us.id = di.publisher
+    <where>
+      po.recruit_position_id = de.recruit_position_id
+      and po.recruit_position_id =
+      di.recruit_position_id
+      <if test="department !='' and department != null">
+        and trim(de.department) =#{department}
+      </if>
+      <if test="publisher !='' and publisher != null">
+        and us.id =#{publisher}
+      </if>
+      <if test="publishSite !='' and publishSite != null">
+        and di.publish_site =#{publishSite}
+      </if>
+      <if test="publishResult !='' and publishResult != null">
+        and di.result =#{publishResult}
+      </if>
+      <if test="positionName !='' and positionName != null">
+        and po.position_name like '%'||#{positionName}||'%'
+      </if>
+      <if test="startDistributeDate != null and startDistributeDate != ''">
+        and to_date(to_char(Trunc(di.distribute_date),' yyyy-mm-dd'),'yyyy-mm-dd') >=
+        to_date(#{startDistributeDate},'yyyy-mm-dd')
+      </if>
+      <if test="endDistributeDate != null and endDistributeDate != ''">
+        and to_date(#{endDistributeDate},'yyyy-mm-dd') >=
+        to_date(to_char(Trunc(di.distribute_date),' yyyy-mm-dd'),'yyyy-mm-dd')
+      </if>
+      <if test="startExpireDate != null and startExpireDate != ''">
+        and to_date(to_char(Trunc(po.expire_date),' yyyy-mm-dd'),'yyyy-mm-dd') >=
+        to_date(#{startExpireDate},'yyyy-mm-dd')
+      </if>
+      <if test="endExpireDate != null and endExpireDate != ''">
+        to_date(#{endExpireDate},'yyyy-mm-dd') >=
+        and
+        to_date(to_char(Trunc(po.expire_date),' yyyy-mm-dd'),'yyyy-mm-dd')
+      </if>
+    </where>
+  </select>
+</mapper>

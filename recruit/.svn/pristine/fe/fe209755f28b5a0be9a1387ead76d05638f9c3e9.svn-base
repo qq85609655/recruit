@@ -1,0 +1,8 @@
+# JDBC Config
+# OS path of JDBC Driver JAR
+#db.jdbcDriverClassPath=/E:/JavaWorkspace/ee_spring/ojdbc14-10.2.0.1.0.jar
+db.jdbcDriverClassPath=/D:/Program Files/csot_repository/com/oracle/ojdbc14/10.2.0.1.0/ojdbc14-10.2.0.1.0.jar
+db.driverClass=oracle.jdbc.driver.OracleDriver
+db.connectionURL=jdbc:oracle:thin:@10.108.29.78:1521:recd
+db.username=root
+db.password=123456

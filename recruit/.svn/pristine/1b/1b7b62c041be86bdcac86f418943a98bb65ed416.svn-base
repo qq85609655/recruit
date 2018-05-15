@@ -1,0 +1,156 @@
+package com.csot.recruit.controller.flow.recruitdemand;
+
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
+
+import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+
+import org.amberframework.core.bind.annotation.CurrentUser;
+import org.amberframework.core.common.model.AjaxRtnJson;
+import org.amberframework.web.miniui.pojo.MiniGridPageSort;
+import org.amberframework.web.miniui.pojo.MiniRtn2Grid;
+import org.amberframework.web.system.auth.model.original.user.SysUser;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.dao.DataAccessException;
+import org.springframework.stereotype.Controller;
+import org.springframework.util.StringUtils;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
+
+import com.csot.recruit.common.util.DataUtils;
+import com.csot.recruit.model.original.flow.recruitdemand.RecruitDemand;
+import com.csot.recruit.service.flow.recruitdemand.RecruitDemandService;
+
+@Controller
+@RequestMapping("demand")
+public class RecruitDemandController {
+  private static final Logger logger = LoggerFactory.getLogger(RecruitDemandController.class);
+
+  @Resource
+  private RecruitDemandService recruitDemandService;
+
+  @RequestMapping("list")
+  public ModelAndView list() {
+    return new ModelAndView("com/csot/flow/recruitdemand/recruitDemandList");
+  }
+
+  /**
+   * 查询招聘需求列表
+   * 
+   * @param pageSort
+   * @param request
+   * @return
+   */
+  @RequestMapping("datagrid")
+  @ResponseBody
+  public MiniRtn2Grid<RecruitDemand>
+      datagrid(MiniGridPageSort pageSort, HttpServletRequest request) {
+    String searchKey = request.getParameter("searchKey");
+    String stateSelf = request.getParameter("stateSelf");
+    Map<String, String> searchMap = new HashMap<String, String>();
+    searchMap.put("searchKey", searchKey);
+    searchMap.put("stateSelf", stateSelf);
+    return recruitDemandService.getGrid(pageSort, searchMap);
+  }
+
+  /**
+   * 进去新增招聘需求页面
+   * 
+   * @return
+   */
+  @RequestMapping("create")
+  public ModelAndView create() {
+    return new ModelAndView("com/csot/flow/recruitdemand/recruitDemandEdit");
+  }
+
+  @RequestMapping("modify/{id}")
+  public ModelAndView modify(@PathVariable String id, HttpServletRequest request) {
+    RecruitDemand recruitDemand = recruitDemandService.getByPrimaryKey(id);
+    request.setAttribute("recruitDemand", recruitDemand);
+    if (RecruitDemand.flowState.UNCOMMITTED.valueStr().equals(recruitDemand.getFlowState())) {
+      return new ModelAndView("com/csot/flow/recruitdemand/recruitDemandEdit");
+    }
+    return new ModelAndView("com/csot/flow/recruitdemand/recruitDemandUpdateAstrict");
+  }
+
+  @RequestMapping("view/{id}")
+  public ModelAndView view(@PathVariable String id, HttpServletRequest request) {
+    RecruitDemand recruitDemand = recruitDemandService.getByPrimaryKey(id);
+    request.setAttribute("recruitDemand", recruitDemand);
+    return new ModelAndView("com/csot/recruit/flow/recruitdemand/recruitDemandView");
+  }
+
+  @RequestMapping("remove/{id}")
+  @ResponseBody
+  public AjaxRtnJson remove(@PathVariable String id) {
+    try {
+      recruitDemandService.remove(id);
+      return new AjaxRtnJson(true, "删除成功");
+    } catch (DataAccessException e) {
+      logger.error(e.getMessage(), e);
+      return new AjaxRtnJson(false, "删除失败: " + e.getMessage());
+    }
+  }
+
+  /**
+   * 招聘需求申请/修改
+   * 
+   * @param sysUser 当前登录人
+   * @param recruitDemand 招聘需求对象
+   * @return
+   */
+  @RequestMapping("save")
+  @ResponseBody
+  public AjaxRtnJson save(@CurrentUser SysUser sysUser, RecruitDemand recruitDemand,
+      HttpServletRequest request) {
+    String typeStr = request.getParameter("typeStr"); // 获取提交类型（暂存/提交/提交之后的修改）
+    if (typeStr.equals("ZC")) {
+      recruitDemand.setFlowState(RecruitDemand.flowState.UNCOMMITTED.valueStr()); // 暂存操作 未提交状态
+    } else if (typeStr.equals("TJ")) {
+      recruitDemand.setFlowState(RecruitDemand.flowState.AUDIT.valueStr()); // 提交操作 审核中状态
+    }
+    if (StringUtils.isEmpty(recruitDemand.getApplyDate())) { // 没有填写申请时间 默认为当前时间
+      recruitDemand.setApplyDate(DataUtils.getDate("yyyy-MM-dd"));
+    }
+    if (StringUtils.hasText(recruitDemand.getId())) {
+      try {
+        recruitDemand.setUpdateDate(new Date()); // 修改时间
+        recruitDemand.setModifiedId(sysUser.getId()); // 修改人
+        if (typeStr.equals("XG")) {
+          // 提交之后的修改只修改岗位工作描述和任职条件
+          RecruitDemand recruitDemandOld =
+              recruitDemandService.getByPrimaryKey(recruitDemand.getId());
+          recruitDemandService.updateSelectiveSelf(recruitDemand, recruitDemandOld,sysUser);
+        } else {
+          recruitDemandService.updateSelective(recruitDemand);
+        }
+        return new AjaxRtnJson(true, "修改成功");
+      } catch (DataAccessException e) {
+        logger.error(e.getMessage(), e);
+        return new AjaxRtnJson(false, "修改失败: " + e.getMessage());
+      }
+    } else {
+      try {
+        recruitDemand.setId(UUID.randomUUID().toString().replace("-", ""));
+        recruitDemand.setDutyPersonId(sysUser.getWorkCode() == null ? "0000" : sysUser
+            .getWorkCode()); // 负责人员工编号（无法取值设置为0000）
+        recruitDemand.setDemandId(UUID.randomUUID().toString().replace("-", ""));// 招聘流程ID
+        recruitDemand.setCreateDate(new Date()); // 创建世间
+        recruitDemand.setCreatorId(sysUser.getId()); // 创建人
+        recruitDemand.setInfoState(RecruitDemand.infoState.ANNOUNCED.valueStr()); // 默认待发布编辑状态
+        recruitDemand.setIsFinish(RecruitDemand.isFinish.NOTFINISHED.valueStr()); // 默认招聘需求未完成状态
+        recruitDemandService.create(recruitDemand);
+        return new AjaxRtnJson(true, "新建成功");
+      } catch (DataAccessException e) {
+        logger.error(e.getMessage(), e);
+        return new AjaxRtnJson(false, "新建失败: " + e.getMessage());
+      }
+    }
+  }
+}

@@ -1,0 +1,202 @@
+var candidateId;
+function search() {
+    var key = mini.get("key").getValue();
+    datagrid.load({
+      searchKey : key
+    });
+  }
+
+function bookInterview() {
+  var grid = mini.get("datagrid1");
+  var rows = grid.getSelecteds();
+  if (rows.length == 1) {
+    if(rows[0].lockUserAccount == null||(rows[0].lockUserAccount != null&&rows[0].lockUserAccount==curName)){
+      var id = rows[0].id;
+      window.open(basePath + "/interviewBookController/addInterviewBook?id=" + id);
+    }else{
+      mini.alert("未锁定或者锁定人是当前用户才能操作！");
+    }
+      
+   
+  }else{
+    alert("请先选中候选人！");
+  }
+}
+
+function outbookInterview(){
+
+  var grid = mini.get("datagrid1");
+  var rows = grid.getSelecteds();
+  var flag = true ;
+  
+  if (rows.length > 0) {
+    var ids="";
+    var positionIds = "" ;
+    for(var i=0;i<rows.length&&flag;i++){
+      ids+=rows[i].id;
+      positionIds+=rows[i].positionid;
+      if(i!=rows.length){
+        ids+=",";
+        positionIds+=",";
+        
+      }
+      if(rows[i].lockUserAccount!=null&&rows[i].lockUserAccount != curName){
+        
+        flag = false ;
+      }
+    }
+    if(flag){
+      mini.prompt("请输入原因：", "请输入",
+          function (action, value) {
+              if (action == "ok") {
+                if(value.length){
+                  outAjaxInterviewBook(ids,positionIds,value);
+                }else{
+                  mini.alert("请填写原因!");
+                }
+              } 
+          },
+          true
+      );
+    }else{
+      mini.alert("未锁定或者锁定人是当前用户才能操作！");
+    }
+
+   
+  }else{
+    mini.alert("请先选中候选人！");
+  }
+
+}
+
+function outAjaxInterviewBook(ids,positionIds,reason){
+  $.ajax({
+    url : basePath + "/interviewBookController/outInterviewBook?ids=" + ids +"&positionIds=" + positionIds + "&reason=" + reason,
+    type : "post",
+    success : function(data) {
+     var dataJson = eval('(' + data + ')');
+        mini.alert(dataJson.msg);
+        datagrid.reload();
+    }
+  });
+  
+}
+
+  function unlocked(){
+
+    var grid = mini.get("datagrid1");
+    var rows = grid.getSelecteds();
+    if (rows.length > 0) {
+      var ids="";
+      for(var i=0;i<rows.length;i++){
+        ids+=rows[i].candidateId;
+        if(i!=rows.length){
+          ids+=",";
+        }
+        if(rows[i].lockUserAccount != null&&rows[i].lockUserAccount==curName){
+          $.ajax({
+            url : basePath + "/candidateController/unlockCandidate",
+            type : "post",
+            data : {
+              ids:ids
+            },
+            dataType : 'json', //返回的数据格式：json/xml/html/script/jsonp/text
+            success : function(data) {
+                mini.alert(data.msg);
+                datagrid.reload();
+            }
+          });
+        }else{
+          mini.alert("数据只能已锁定且是当前用户才能解锁!");
+        }
+      }
+
+     
+    }else{
+      alert("请先选中候选人！");
+    }
+
+    
+  }
+  
+  function changePositon(){
+    var grid = mini.get("datagrid1");
+    var rows = grid.getSelecteds();
+    if (rows.length == 1) {
+        var id = rows[0].candidateId;
+        candidateId = id ;
+        if(rows[0].lockUserAccount == null||(rows[0].lockUserAccount != null&&rows[0].lockUserAccount==curName)){
+          OpenDialog(basePath + "/demand/chooseDemandList?candidateId="+candidateId+"&oldPositionId="+rows[0].positionid, "选择需求", null, 650, 380,chooseDemand);
+        }else{
+          mini.alert("未锁定或者锁定人是当前用户才能操作！");
+        }
+     
+    }else{
+      mini.alert("请选择一条数据");
+    }
+  }
+  
+  function chooseDemand(action){
+    if(action!="close"){
+      mini.alert(action);
+    }
+    datagrid.reload();
+  }
+  
+  function recommend(){
+    var grid = mini.get("datagrid1");
+    var rows = grid.getSelecteds();
+    if (rows.length == 1) {
+        var id = rows[0].candidateId;
+        candidateId = id ;
+        if(rows[0].lockUserAccount == null||(rows[0].lockUserAccount != null&&rows[0].lockUserAccount==curName)){
+          OpenDialog(basePath + "/candidateRecommendController/addRecommend?candidateId="+candidateId+"&candidatePostId="+rows[0].id, "推荐候选人", null, 600, 500,chooseDemand);
+        }else{
+          mini.alert("未锁定或者锁定人是当前用户才能操作！");
+        }
+     
+    }else{
+      mini.alert("请选择一条数据");
+    }
+  
+  }
+  
+  function attention(){
+    var grid = mini.get("datagrid1");
+    var rows = grid.getSelecteds();
+    if (rows.length > 0) {
+      var ids="";
+      var positionIds="";
+      for(var i=0;i<rows.length;i++){
+        ids+=rows[i].candidateId;
+        positionIds+=rows[i].positionid;
+        if(i!=rows.length){
+          ids+=",";
+          positionIds+=",";
+        }
+        if(rows[i].lockUserAccount != null&&rows[i].lockUserAccount==curName){
+          $.ajax({
+            url : basePath + "/attentionController/addAttention",
+            type : "post",
+            data : {
+              ids:ids,
+              positionIds:positionIds
+            },
+            dataType : 'json', //返回的数据格式：json/xml/html/script/jsonp/text
+            success : function(data) {
+                mini.alert(data.msg);
+                datagrid.reload();
+            }
+          });
+        }else{
+          mini.alert("数据只能已锁定且是当前用户才能解锁!");
+        }
+      }
+
+     
+    }else{
+      alert("请先选中候选人！");
+    }
+  }
+  
+  

@@ -1,0 +1,66 @@
+package com.csot.recruit.service.impl.flow.interview;
+
+import com.csot.recruit.dao.original.flow.interview.InterviewBookMapper;
+import com.csot.recruit.model.original.flow.interview.InterviewBook;
+import com.csot.recruit.model.original.flow.interview.InterviewBookColumns;
+import com.csot.recruit.model.original.flow.interview.InterviewBookCriteria;
+import com.csot.recruit.service.flow.interview.InterviewBookService;
+import javax.annotation.Resource;
+import org.amberframework.core.mybatis.pojo.Page;
+import org.amberframework.web.miniui.pojo.MiniGridPageSort;
+import org.amberframework.web.miniui.pojo.MiniRtn2Grid;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
+
+@Service("interviewBookService")
+public class InterviewBookServiceImpl implements InterviewBookService {
+    private static final Logger logger = LoggerFactory.getLogger(InterviewBookServiceImpl.class);
+
+    @Resource
+    private InterviewBookMapper interviewBookMapper;
+
+    @Override
+    public MiniRtn2Grid<InterviewBook> getGrid(MiniGridPageSort pageSort, String searchKey) {
+        MiniRtn2Grid<InterviewBook> grid = new MiniRtn2Grid<InterviewBook>();
+        InterviewBookCriteria criteria = new InterviewBookCriteria();
+        // 查询条件
+        if (StringUtils.hasText(searchKey)) {
+            criteria.createCriteria().andIdEqualTo(searchKey);
+        }
+        // 分页和排序
+         if (pageSort.isShowPager()) {
+            Page page = Page.newInstanceWithPageIndex(pageSort.getPageIndex(), pageSort.getPageSize());
+            criteria.setPage(page);
+        }
+        String sortColumn = InterviewBookColumns.getColumn(pageSort.getSortField());
+        if (StringUtils.hasText(sortColumn)) {
+            StringBuilder sortStrBldr = new StringBuilder(sortColumn).append(" ").append(pageSort.getSortOrder());
+            criteria.setOrderByClause(sortStrBldr.toString());
+        }
+        grid.setData(interviewBookMapper.selectByExample(criteria));
+        grid.setTotal(interviewBookMapper.countByExample(criteria));
+        return grid;
+    }
+
+    @Override
+    public InterviewBook getByPrimaryKey(String primaryKey) {
+        return interviewBookMapper.selectByPrimaryKey(primaryKey);
+    }
+
+    @Override
+    public void create(InterviewBook interviewBook) {
+        interviewBookMapper.insert(interviewBook);
+    }
+
+    @Override
+    public void updateSelective(InterviewBook interviewBook) {
+        interviewBookMapper.updateByPrimaryKeySelective(interviewBook);
+    }
+
+    @Override
+    public void remove(String primaryKey) {
+        interviewBookMapper.deleteByPrimaryKey(primaryKey);
+    }
+}

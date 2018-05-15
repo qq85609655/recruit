@@ -1,0 +1,306 @@
+package com.csot.recruit.service.impl.campus;
+
+import java.text.NumberFormat;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
+import com.csot.recruit.common.util.CommonConstant;
+import com.csot.recruit.dao.original.campus.CampusPostMapper;
+import com.csot.recruit.dao.original.campus.CampusSiteMapper;
+import com.csot.recruit.dao.original.campus.CampusStudentMapper;
+import com.csot.recruit.model.datadict.DatadictGroupType;
+import com.csot.recruit.model.extension.campus.CampusJobFamilyAchievement;
+import com.csot.recruit.model.extension.campus.CampusReportExt;
+import com.csot.recruit.model.original.campus.CampusPost;
+import com.csot.recruit.model.original.campus.CampusSite;
+import com.csot.recruit.model.original.campus.CampusStudent;
+import com.csot.recruit.model.original.campus.CampusStudentCriteria;
+import com.csot.recruit.model.original.campus.CampusTask;
+import com.csot.recruit.service.campus.CampusPostService;
+import com.csot.recruit.service.campus.CampusReportService;
+import com.csot.recruit.service.campus.CampusSiteService;
+import com.csot.recruit.service.campus.CampusTaskService;
+
+import javax.annotation.Resource;
+
+import com.csot.recruit.service.datadict.DatadictGroupTypeService;
+import org.amberframework.core.excel.poi.ExcelExportManager;
+import org.amberframework.core.excel.poi.mapping.ClasspathXmlExcelDataMappingResolver;
+import org.amberframework.core.excel.poi.mapping.ExcelDataMappingResolver;
+import org.amberframework.core.excel.poi.template.ClasspathExcelTemplateProvider;
+import org.amberframework.core.excel.poi.template.ExcelTemplateProvider;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
+
+@Service("campusReportService")
+public class CampusReportServiceImpl implements CampusReportService {
+  private static final Logger logger = LoggerFactory.getLogger(CampusReportServiceImpl.class);
+  private static final NumberFormat percentFormat = NumberFormat.getPercentInstance();
+
+  @Resource
+  private CampusPostMapper campusPostMapper;
+  @Resource
+  private CampusSiteMapper campusSiteMapper;
+  @Resource
+  private CampusStudentMapper campusStudentMapper;
+  @Resource
+  private CampusSiteService campusSiteService;
+  @Resource
+  private CampusTaskService campusTaskService;
+  @Resource
+  private DatadictGroupTypeService datadictGroupTypeService;
+  @Resource
+  private CampusPostService campusPostService;
+  @Resource
+  private ExcelExportManager excelExportManager;
+
+  @Override
+  public List<CampusReportExt> getGrid4Site(String yearth, String postId, String organizationId) {
+    List<CampusReportExt> list = new ArrayList<CampusReportExt>();
+    List<CampusSite> siteList =  campusSiteMapper.selectByExample(null);
+    for(CampusSite cs : siteList) {
+      String siteId = cs.getSiteId();
+      CampusReportExt cre = getReportByOrganizationSitePostYearth(organizationId, siteId, postId, yearth);
+      list.add(cre);
+    }
+    return list;
+  }
+
+  @Override
+  public List<CampusReportExt> getGrid4Post(String yearth, String siteId, String organizationId) {
+    List<CampusReportExt> list = new ArrayList<CampusReportExt>();
+    List<CampusPost> postList = campusPostMapper.selectByExample(null);
+    for (CampusPost cp : postList) {
+      String postId = cp.getPostId();
+      CampusReportExt cre = getReportByOrganizationSitePostYearth(organizationId, siteId, postId, yearth);
+      list.add(cre);
+    }
+    return list;
+  }
+
+  public int getOffer(String yearth, String postId, String siteId, String education, String hasOffer, String orgId) {
+    CampusStudentCriteria criteria = new CampusStudentCriteria();
+    CampusStudentCriteria.Criteria criter = criteria.or();
+    if (StringUtils.hasText(yearth)) {
+      criter.andYearthEqualTo(yearth);
+    }
+    if (StringUtils.hasText(postId)) {
+      criter.andPostIdEqualTo(postId);
+    }
+    if (StringUtils.hasText(siteId)) {
+      criter.andSiteIdEqualTo(siteId);
+    }
+    if (StringUtils.hasText(education)) {
+      criter.andEducationEqualTo(education);
+    }
+    if (StringUtils.hasText(hasOffer)) {
+      criter.andOfferEqualTo(hasOffer);
+    }
+    if (StringUtils.hasText(orgId)) {
+      criter.andOrgIdEqualTo(orgId);
+    }
+    List<CampusStudent> list = campusStudentMapper.selectByExample(criteria);
+    return list.size();
+  }
+
+  public int getTrilateral(String yearth, String postId, String siteId, String education, String hasTrilateral, String orgId) {
+    CampusStudentCriteria criteria = new CampusStudentCriteria();
+    CampusStudentCriteria.Criteria criter = criteria.or();
+    if (StringUtils.hasText(yearth)) {
+      criter.andYearthEqualTo(yearth);
+    }
+    if (StringUtils.hasText(postId)) {
+      criter.andPostIdEqualTo(postId);
+    }
+    if (StringUtils.hasText(siteId)) {
+      criter.andSiteIdEqualTo(siteId);
+    }
+    if (StringUtils.hasText(education)) {
+      criter.andEducationEqualTo(education);
+    }
+    if (StringUtils.hasText(hasTrilateral)) {
+      criter.andTrilateralEqualTo(hasTrilateral);
+    }
+    if (StringUtils.hasText(orgId)) {
+      criter.andOrgIdEqualTo(orgId);
+    }
+    List<CampusStudent> list = campusStudentMapper.selectByExample(criteria);
+    return list.size();
+  }
+
+  public int getBreakOff(String yearth, String postId, String siteId, String education, String hasBreakOff, String orgId) {
+    CampusStudentCriteria criteria = new CampusStudentCriteria();
+    CampusStudentCriteria.Criteria criter = criteria.or();
+    if (StringUtils.hasText(yearth)) {
+      criter.andYearthEqualTo(yearth);
+    }
+    if (StringUtils.hasText(postId)) {
+      criter.andPostIdEqualTo(postId);
+    }
+    if (StringUtils.hasText(siteId)) {
+      criter.andSiteIdEqualTo(siteId);
+    }
+    if (StringUtils.hasText(education)) {
+      criter.andEducationEqualTo(education);
+    }
+    if (StringUtils.hasText(hasBreakOff)) {
+      criter.andBreakOffEqualTo(hasBreakOff);
+    }
+    if (StringUtils.hasText(orgId)) {
+      criter.andOrgIdEqualTo(orgId);
+    }
+    List<CampusStudent> list = campusStudentMapper.selectByExample(criteria);
+    return list.size();
+  }
+  @Override
+  public CampusReportExt getReportByOrganizationSitePostYearth(String organizationId, String siteId, String postId, String yearth) {
+    CampusReportExt cre = new CampusReportExt();
+    String postName = "";
+    DatadictGroupType post = datadictGroupTypeService.getByPrimaryKey(postId);
+    if (null != post) {
+      postName = post.getTypeName();
+    }
+    String siteName = "";
+    CampusSite site = campusSiteService.getBySiteIdOrName(siteId, "");
+    if (null != site) {
+      siteName = site.getSiteName();
+    }
+
+    Integer taskBa = 0;
+    Integer taskMa = 0;
+    Integer taskDo = 0;
+    Integer taskSum = 0;
+    List<CampusTask> taskList = campusTaskService.getTaskByOrganizationSitePostYearth(organizationId, siteId, postId, yearth);
+    if (!taskList.isEmpty()) {
+      for (CampusTask ct : taskList) {
+        taskBa = taskBa + ct.getTaskNumberBa();
+        taskMa = taskBa + ct.getTaskNumberMa();
+        taskDo = taskDo + ct.getTaskNumberDo();
+      }
+      taskSum = taskBa + taskMa + taskDo;
+    }
+
+    Integer offerBa = getOffer(yearth, postId, siteId, CommonConstant.EDUCATION_BA, CommonConstant.YES, organizationId);
+    Integer offerMa = getOffer(yearth, postId, siteId, CommonConstant.EDUCATION_MA, CommonConstant.YES, organizationId);
+    Integer offerDo = getOffer(yearth, postId, siteId, CommonConstant.EDUCATION_DO, CommonConstant.YES, organizationId);
+    Integer offerSum = offerBa + offerMa + offerDo;
+
+    Integer trilateralBa = getTrilateral(yearth, postId, siteId, CommonConstant.EDUCATION_BA, CommonConstant.YES, organizationId);
+    Integer trilateralMa = getTrilateral(yearth, postId, siteId, CommonConstant.EDUCATION_MA, CommonConstant.YES, organizationId);
+    Integer trilateralDo = getTrilateral(yearth, postId, siteId, CommonConstant.EDUCATION_DO, CommonConstant.YES, organizationId);
+    Integer trilateralSum = trilateralBa + trilateralMa + trilateralDo;
+
+    Integer breakOffBa = getBreakOff(yearth, postId, siteId, CommonConstant.EDUCATION_BA, CommonConstant.YES, organizationId);
+    Integer breakOffMa = getBreakOff(yearth, postId, siteId, CommonConstant.EDUCATION_MA, CommonConstant.YES, organizationId);
+    Integer breakOffDo = getBreakOff(yearth, postId, siteId, CommonConstant.EDUCATION_DO, CommonConstant.YES, organizationId);
+    Integer breakOffSum = breakOffBa + breakOffMa + breakOffDo;
+
+    // 拟入职 = 三方  - 违约
+    Integer proposedEntryBa = trilateralBa - breakOffBa;
+    Integer proposedEntryMa = trilateralMa - breakOffMa;
+    Integer proposedEntryDo = trilateralDo - breakOffDo;
+    Integer proposedEntrySum = proposedEntryBa + proposedEntryMa + proposedEntryDo;
+
+    // 达成率 = offer/任务
+    // 检查任务为0，达成率为0
+    String achievementBa = "0";
+    String achievementMa = "0";
+    String achievementDo = "0";
+    String achievementSum = "0";
+    float achievementPercentSum = 0;
+    percentFormat.setMaximumFractionDigits(2);
+    if (taskBa != 0) {
+      achievementBa = percentFormat.format((float)offerBa/(float)taskBa);
+    }
+    if (taskMa != 0) {
+      achievementMa = percentFormat.format((float)offerMa/(float)taskMa);
+    }
+    if (taskDo != 0) {
+      achievementDo = percentFormat.format((float)offerDo/(float)taskDo);
+    }
+    if (taskSum != 0) {
+      achievementSum = percentFormat.format((float)offerSum/(float)taskSum);
+      achievementPercentSum = (float)offerSum/(float)taskSum * 100;
+      achievementPercentSum = (float)(Math.round(achievementPercentSum*100))/100; // 保留两位小数
+    }
+
+    cre.setYearth(yearth);
+    cre.setPostId(postId);
+    cre.setPostName(postName);
+    cre.setSiteId(siteId);
+    cre.setSiteName(siteName);
+    cre.setTaskBa(taskBa);
+    cre.setTaskMa(taskMa);
+    cre.setTaskDo(taskDo);
+    cre.setTaskSum(taskSum);
+    cre.setOfferBa(offerBa);
+    cre.setOfferMa(offerMa);
+    cre.setOfferDo(offerDo);
+    cre.setOfferSum(offerSum);
+    cre.setTrilateralBa(trilateralBa);
+    cre.setTrilateralMa(trilateralMa);
+    cre.setTrilateralDo(trilateralDo);
+    cre.setTrilateralSum(trilateralSum);
+    cre.setBreakOffBa(breakOffBa);
+    cre.setBreakOffMa(breakOffMa);
+    cre.setBreakOffDo(breakOffDo);
+    cre.setBreakOffSum(breakOffSum);
+    cre.setProposedEntryBa(proposedEntryBa);
+    cre.setProposedEntryMa(proposedEntryMa);
+    cre.setProposedEntryDo(proposedEntryDo);
+    cre.setProposedEntrySum(proposedEntrySum);
+    cre.setAchievementBa(achievementBa);
+    cre.setAchievementMa(achievementMa);
+    cre.setAchievementDo(achievementDo);
+    cre.setAchievementSum(achievementSum);
+    cre.setAchievementPercentSum(achievementPercentSum);
+    return cre;
+  }
+
+  @Override
+  public Workbook exportCampusReport(List<CampusReportExt> list) {
+    ExcelTemplateProvider classpathExcelTemplateProvider =
+            ClasspathExcelTemplateProvider.newInstance("excelTemplate/CampusReportExportTemplate.xls", 0);
+
+    ExcelDataMappingResolver classpathXmlExcelDataMappingResolver =
+            ClasspathXmlExcelDataMappingResolver.newInstance("excelTemplate/CampusReportExportTemplate.xml");
+
+    return excelExportManager.exportExcel(list, null, classpathExcelTemplateProvider,
+            classpathXmlExcelDataMappingResolver);
+  }
+
+  @Override
+  public List<CampusJobFamilyAchievement> getJobFamilyAchievementByYearth(String yearth) {
+    List<CampusJobFamilyAchievement> list =  new ArrayList<CampusJobFamilyAchievement>();
+    Map<String, String> map = datadictGroupTypeService.getTypeId2NameMapByGroupCode("post_family");
+    for (Map.Entry<String, String> entry : map.entrySet()) {
+      String jobFamilyId = entry.getKey();
+      String jobFamilyName = entry.getValue();
+      Integer taskSum = 0;
+      Integer offerSum = 0;
+      String achievementSum = "0";
+      List<CampusPost> posts = campusPostService.getPostByJobFamily(jobFamilyId);
+      if (!posts.isEmpty()) {
+        for (CampusPost post : posts) {
+          String postId = post.getPostId();
+          CampusReportExt cre = getReportByOrganizationSitePostYearth("", "", postId, yearth);
+          taskSum += cre.getTaskSum();
+          offerSum += cre.getOfferSum();
+        }
+      }
+      percentFormat.setMaximumFractionDigits(2);
+      if (taskSum != 0) {
+        achievementSum = percentFormat.format((float)offerSum/(float)taskSum);
+      }
+      CampusJobFamilyAchievement jobFamilyAchievement = new CampusJobFamilyAchievement();
+      jobFamilyAchievement.setJobFamily(jobFamilyName);
+      jobFamilyAchievement.setAchievement(achievementSum);
+      list.add(jobFamilyAchievement);
+    }
+    return list;
+  }
+}

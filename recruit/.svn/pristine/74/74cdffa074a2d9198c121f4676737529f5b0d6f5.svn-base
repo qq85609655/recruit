@@ -1,0 +1,388 @@
+package com.csot.recruit.controller.campus;
+
+import java.io.IOException;
+import java.io.OutputStream;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.UUID;
+
+import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.amberframework.core.bind.annotation.CurrentUser;
+import org.amberframework.core.common.model.AjaxRtnJson;
+import org.amberframework.web.miniui.pojo.MiniGridPageSort;
+import org.amberframework.web.miniui.pojo.MiniRtn2Grid;
+import org.amberframework.web.system.auth.model.original.user.SysUser;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.elasticsearch.common.collect.Lists;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.dao.DataAccessException;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
+import org.springframework.web.servlet.ModelAndView;
+
+import com.csot.recruit.common.util.CampusUtils;
+import com.csot.recruit.dao.original.campus.CampusPostMapper;
+import com.csot.recruit.dao.original.campus.CampusSiteMapper;
+import com.csot.recruit.dao.original.campus.CampusStudentMapper;
+import com.csot.recruit.model.original.attachment.Attachment;
+import com.csot.recruit.model.original.campus.CampusStudent;
+import com.csot.recruit.model.template.Template;
+import com.csot.recruit.service.attachment.AttachmentService;
+import com.csot.recruit.service.campus.CampusAddressbookService;
+import com.csot.recruit.service.campus.CampusStudentService;
+import com.csot.recruit.service.mail.MailSendService;
+import com.csot.recruit.service.template.TemplateService;
+
+@Controller
+@RequestMapping("campusStudentController")
+public class CampusStudentController {
+  private static final Logger logger = LoggerFactory.getLogger(CampusStudentController.class);
+
+  @Resource
+  private CampusStudentService campusStudentService;
+
+  @Resource
+  private CampusAddressbookService campusAddressbookService;
+
+  @Resource
+  private MailSendService mailSendService;
+
+  @Resource
+  private TemplateService templateService;
+
+  @Resource
+  private AttachmentService AttachmentService;
+
+  @Resource
+  private CampusSiteMapper campusSiteMapper;
+
+  @Resource
+  private CampusPostMapper campusPostMapper;
+
+  @Resource
+  private CampusStudentMapper campusStudentMapper;
+
+  @RequestMapping("list")
+  public ModelAndView list() {
+    return new ModelAndView("com/csot/campus/campusStudentList");
+  }
+
+  @RequestMapping("datagrid")
+  @ResponseBody
+  public MiniRtn2Grid<CampusStudent>
+      datagrid(MiniGridPageSort pageSort, HttpServletRequest request) {
+    String siteId = request.getParameter("siteId");
+    String postId = request.getParameter("postId");
+    String stuName = request.getParameter("stuName");
+    String school = request.getParameter("school");
+    String org = request.getParameter("org");
+    String center = request.getParameter("center");
+    String yearth = request.getParameter("yearth");
+    String showType = request.getParameter("showType");
+
+    return campusStudentService.getGrid(pageSort, siteId, postId, stuName, school, org, center,
+        yearth, showType);
+  }
+
+  @RequestMapping("create")
+  public ModelAndView create(HttpServletRequest request) {
+    // 创建时设置以下字段的默认值为无
+    CampusStudent campusStudent = new CampusStudent();
+    campusStudent.setOffer("无");
+    campusStudent.setIdcardCopy("无");
+    campusStudent.setBreakOff("无");
+    campusStudent.setPhoto("无");
+    campusStudent.setCetTranscript("无");
+    campusStudent.setTranscript("无");
+    campusStudent.setTrilateral("无");
+    campusStudent.setReferenceForm("无");
+    request.setAttribute("campusStudent", campusStudent);
+    return new ModelAndView("com/csot/campus/campusStudentEdit");
+  }
+
+  @RequestMapping("modify/{id}")
+  public ModelAndView modify(@PathVariable String id, HttpServletRequest request) {
+    CampusStudent campusStudent = campusStudentService.getByPrimaryKey(id);
+    request.setAttribute("campusStudent", campusStudent);
+    return new ModelAndView("com/csot/campus/campusStudentEdit");
+  }
+
+  @RequestMapping("view/{id}")
+  public ModelAndView view(@PathVariable String id, HttpServletRequest request) {
+    CampusStudent campusStudent = campusStudentService.getByPrimaryKey(id);
+    request.setAttribute("campusStudent", campusStudent);
+    return new ModelAndView("com/csot/recruit/campus/campusStudentView");
+  }
+
+  @RequestMapping("remove/{id}")
+  @ResponseBody
+  public AjaxRtnJson remove(@PathVariable String id) {
+    AjaxRtnJson ajaxRtn = new AjaxRtnJson();
+    int count = 0;
+    try {
+      String[] idStr = id.split(",");
+      for (int i = 0; i < idStr.length; i++) {
+        String stuId = idStr[i];
+        campusStudentService.remove(stuId);
+        count++;
+      }
+      if (count == idStr.length) {
+        ajaxRtn = new AjaxRtnJson(true, "成功删除" + count + "条数据。");
+      } else {
+        ajaxRtn =
+            new AjaxRtnJson(true, "删除" + count + "条数据,有" + (idStr.length - count) + "条数据删除失败");
+      }
+    } catch (DataAccessException e) {
+      logger.error(e.getMessage(), e);
+      ajaxRtn = new AjaxRtnJson(false, "删除失败: " + e.getMessage());
+    }
+    return ajaxRtn;
+  }
+
+  @RequestMapping("save")
+  @ResponseBody
+  public AjaxRtnJson save(CampusStudent campusStudent) {
+
+    campusStudent.setYearth(CampusUtils.getCurrentYearth());
+    // 修改界面中的单选框的值如果没有选择有或者无，则设置相应的值为无
+
+    Date date = new Date();
+    campusStudent.setBreakOffTime(date);
+    // 若存在相同的身份证号，则更新
+    if (null != campusStudentMapper.selectByPrimaryKey(campusStudent.getId())) {
+      campusStudent.setChangeTime(date);
+      try {
+        campusStudentService.updateSelective(campusStudent);
+        return new AjaxRtnJson(true, "修改成功");
+      } catch (DataAccessException e) {
+        logger.error(e.getMessage(), e);
+        return new AjaxRtnJson(false, "修改失败: " + e.getMessage());
+      }
+    } else {
+      try {
+        campusStudentService.create(campusStudent);
+        return new AjaxRtnJson(true, "新建成功");
+      } catch (DataAccessException e) {
+        logger.error(e.getMessage(), e);
+        return new AjaxRtnJson(false, "新建失败: " + e.getMessage());
+      }
+    }
+  }
+
+  @RequestMapping("importStudentInfo")
+  public ModelAndView importStudentInfo() {
+    return new ModelAndView("com/csot/campus/campusStudentImport");
+  }
+
+  @RequestMapping("importStudentInfoExcel")
+  @ResponseBody
+  public AjaxRtnJson importStudentInfoExcel(HttpServletRequest request) {
+
+    // 转型为MultipartHttpRequest：
+    MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
+    MultipartFile multipartFile = multipartRequest.getFile("myFile");
+    String basePath = request.getServletContext().getRealPath("/resources/upload");
+    try {
+      String message = campusStudentService.importStudentInfo(multipartFile, basePath);
+      return new AjaxRtnJson(true, message);
+    } catch (Exception e) {
+      logger.error(e.getMessage());
+      return new AjaxRtnJson(false, e.getMessage());
+    }
+  }
+
+  /**
+   * 根据查询结果导出学生信息资料
+   * 
+   * @param request
+   * @param response
+   */
+  @RequestMapping("exportCampusStudentInfo")
+  @ResponseBody
+  public void exportCampusStudentInfo(MiniGridPageSort pageSort, HttpServletRequest request,
+      HttpServletResponse response) {
+
+    List<CampusStudent> campusStuList = datagrid(pageSort, request).getData();
+    HSSFWorkbook wb = campusStudentService.exportCampusStuInfo(campusStuList);
+
+    SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd/HH:mm:ss");
+    String fileName = "学生资料信息" + formatter.format(new Date()) + ".xls";
+    OutputStream os;
+    try {
+      os = response.getOutputStream();
+      response.setContentType("APPLICATION/vnd.ms-excel");
+      response.setHeader("content-disposition",
+          "attachment;fileName=" + new String(fileName.getBytes("UTF-8"), "ISO8859-1"));
+
+      wb.write(os);
+      os.close();
+    } catch (IOException e) {
+      logger.error(e.getMessage(), e);
+    }
+  }
+
+  /**
+   * 发送email
+   * 
+   * @return
+   */
+  @RequestMapping("sendEmail/{ids}")
+  public ModelAndView sendEmail(@PathVariable String ids) {
+
+    ModelAndView mav = new ModelAndView("com/csot/campus/campusStuEmailSend");
+
+    mav.addObject("ids", ids);
+    return mav;
+  }
+
+  /**
+   * 按模板发送email
+   * 
+   * @return
+   */
+  @RequestMapping("sendByTemplate/{ids}")
+  public ModelAndView sendByTemplate(@PathVariable String ids, HttpServletRequest request) {
+    String[] idArr = ids.split(",");
+    List<CampusStudent> campusStuList = Lists.newArrayList();
+    String realName = "";
+    for (int i = 0; i < idArr.length; i++) {
+      CampusStudent campusStudent = campusStudentService.getByPrimaryKey(idArr[i]);
+      campusStuList.add(campusStudent);
+    }
+    for (int j = 0; j < campusStuList.size(); j++) {
+      realName += campusStuList.get(j).getRealname() + ";";
+    }
+
+    request.setAttribute("realName", realName);
+    request.setAttribute("ids", ids);
+
+    return new ModelAndView("com/csot/campus/campusStuEmailSendByTemp");
+  }
+
+  // 自定义发送邮件
+  @RequestMapping("sendByDefinition/{ids}")
+  public ModelAndView sendByDefinition(@CurrentUser SysUser sysUser, @PathVariable String ids,
+      HttpServletRequest request) {
+
+    String[] idArr = ids.split(",");
+    List<CampusStudent> campusStuList = Lists.newArrayList();
+    String realName = "";
+    String type = "create";
+    String id = "0";
+    List<Attachment> attachments = new ArrayList<Attachment>();
+    Template template = null;
+    if (!"create".equals(type) && !("0".equals(id))) {
+      template = templateService.getByPrimaryKey(id);
+      // 查询出关联的附件
+      attachments = AttachmentService.findAttachsByRelateId(id);
+    } else {
+      // 通过登录用户，找到供应商名称或编号
+      template = new Template();
+      // id填充，用作页面保存附件关联
+      template.setId(UUID.randomUUID().toString().replace("-", ""));
+      template.setCreator(sysUser.getAccount());
+      template.setCreateDate(new Date());
+    }
+    for (int i = 0; i < idArr.length; i++) {
+      CampusStudent campusStudent = campusStudentService.getByPrimaryKey(idArr[i]);
+      campusStuList.add(campusStudent);
+    }
+    for (int j = 0; j < campusStuList.size(); j++) {
+      realName += campusStuList.get(j).getRealname() + ";";
+    }
+
+    request.setAttribute("realName", realName);
+    request.setAttribute("ids", ids);
+    request.setAttribute("template", template);
+    request.setAttribute("attachments", attachments);
+    request.setAttribute("type", type);
+
+    return new ModelAndView("com/csot/campus/campusStuEmailSendByDefinite");
+
+  }
+
+
+  @RequestMapping("sendEmailToStu")
+  @ResponseBody
+  public AjaxRtnJson sendEmailToStuByTemp(HttpServletRequest request) {
+
+    // 获取前端传过来的参数
+    String templateId = request.getParameter("templateId");
+    String ids = request.getParameter("ids");
+    Template template = templateService.getByPrimaryKey(templateId);
+    String[] idArr = ids.split(",");
+    List<CampusStudent> campusStuList = Lists.newArrayList();
+    for (int i = 0; i < idArr.length; i++) {
+      CampusStudent campusStudent = campusStudentService.getByPrimaryKey(idArr[i]);
+      campusStuList.add(campusStudent);
+    }
+
+    try {
+      for (int i = 0; i < campusStuList.size(); i++) {
+        mailSendService.sendEmail(campusStuList.get(i).getEmail(), template, campusStuList.get(i));
+      }
+      return new AjaxRtnJson(true, "发送成功");
+    } catch (Exception e) {
+      logger.error(e.getMessage());
+      return new AjaxRtnJson(false, e.getMessage());
+    }
+  }
+
+  // ByDef
+  @RequestMapping("sendEmailToStuByDef")
+  @ResponseBody
+  public AjaxRtnJson sendEmailToStuByDef(Template template, HttpServletRequest request) {
+
+    // 获取前端传过来的参数
+    String ids = request.getParameter("ids");
+    String[] idArr = ids.split(",");
+    List<CampusStudent> campusStuList = Lists.newArrayList();
+    for (int i = 0; i < idArr.length; i++) {
+      CampusStudent campusStudent = campusStudentService.getByPrimaryKey(idArr[i]);
+      campusStuList.add(campusStudent);
+    }
+    try {
+      for (int i = 0; i < campusStuList.size(); i++) {
+        mailSendService.sendEmail(campusStuList.get(i).getEmail(), template, campusStuList.get(i));
+      }
+      return new AjaxRtnJson(true, "发送成功");
+    } catch (Exception e) {
+      logger.error(e.getMessage());
+      return new AjaxRtnJson(false, e.getMessage());
+    }
+  }
+
+  /**
+   * 填写违约原因
+   * 
+   * @return
+   */
+  @RequestMapping("doSetBreakOffReason/{id}")
+  public ModelAndView doSetBreakOffReason(@PathVariable String id, HttpServletRequest request) {
+    CampusStudent campusStudent = campusStudentService.getByPrimaryKey(id);
+    request.setAttribute("campusStudent", campusStudent);
+    return new ModelAndView("com/csot/campus/stuBreakOffReason");
+  }
+
+
+  /**
+   * 设置显示字段
+   * 
+   * @return
+   */
+  @RequestMapping("showColumn")
+  public ModelAndView showColumn() {
+    return new ModelAndView("com/csot/campus/campusStudentSelectForm");
+  }
+
+}

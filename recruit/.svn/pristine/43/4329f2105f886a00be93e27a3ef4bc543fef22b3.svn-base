@@ -1,0 +1,80 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="t" uri="/recruit-tags"%>
+<!DOCTYPE html>
+<%@include file="/webpage/common.jsp"%>
+
+<head>
+<link rel="stylesheet" type="text/css" href="${webRoot }/resources/css/system/baseUserList.css" />
+<base href="${basePath}">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+<title>学生资料</title>
+<style type="text/css">
+</style>
+</head>
+<body onload="removeLoad();">
+
+  <div class="co-right" style="width: 830px;">
+
+    <div class="con-title">发送邮件</div>
+    <br>
+    <div class="account-content">
+      <div class="blue radius">
+        <div class="table-operate">
+          <input type="button" id="sendOne" value="按模板发送邮件" onclick="sendByTemplate()" />&nbsp;&nbsp;
+          <input type="button" id="sendTwo" value="自定义发送邮件" onclick="sendByDefinition()" />
+        </div>
+        <div id="datagrid1" class="mini-datagrid" url="/recruit/campusStudentController/datagrid"
+          idField="id" sizeList="[1,20,50,100]" pageSize="20" allowResize="true" multiSelect="true"
+          style="height: 350px;">
+          <div property="columns">
+            <div type="checkcolumn" width="30"></div>
+            <div name="siteName" field="siteName" width="40" allowSort="true">站点</div>
+            <div name="workingPlace" field="workingPlace" width="60" headerAlign="center"
+              allowSort="true">工作地点</div>
+            <div name="organization" field="organization" width="40" allowSort="true">组织</div>
+            <div name="bigCenter" field="bigCenter" width="45" allowSort="true">大中心</div>
+            <div name="smallCenter" field="smallCenter" width="65" allowSort="true">厂/小中心</div>
+            <div name="department" field="department" width="40" allowSort="false">部门</div>
+            <div name="offices" field="offices" width="40" allowSort="false">科室</div>
+            <div name="postName" field="postName" width="40" allowSort="true">岗位</div>
+            <div name="realname" field="realname" width="40" allowSort="true">姓名</div>
+            <div name="sex" field="sex" width="40" allowSort="true" renderer="onSexRenderer">性别</div>
+            <div name="education" field="education" width="40" allowSort="true">学历</div>
+            <div name="nativePlace" field="nativePlace" width="40" allowSort="true">籍贯</div>
+            <div name="school" field="school" width="40" allowSort="false">学校</div>
+            <div name="major" field="major" width="40" allowSort="false">专业</div>
+            <div name="phoneNo" field="phoneNo" width="60" allowSort="true">联系方式</div>
+            <div name="email" field="email" width="40" allowSort="true">邮箱</div>
+            <div name="evaluation" field="evaluation" width="60" allowSort="true">测评成绩</div>
+            <div name="moraleRisk" field="moraleRisk" width="60" allowSort="true">心理风险</div>
+            <div name="resultFirst" field="resultFirst" width="60" allowSort="true">一面得分</div>
+            <div name="resultSecond" field="resultSecond" width="60" allowSort="false">二面得分</div>
+            <div name="offer" field="offer" width="40" allowSort="false">Offer</div>
+            <div name="idcardCopy" field="idcardCopy" width="85" allowSort="true">身份证复印件</div>
+            <div name="trilateral" field="trilateral" width="60" allowSort="true">三方协议</div>
+            <div name="referenceForm" field="referenceForm" width="70" allowSort="true">就业推荐表</div>
+            <div name="transcript" field="transcript" width="45" allowSort="true">成绩单</div>
+            <div name="cetTranscript" field="cetTranscript" width="80" allowSort="false">四六级成绩单</div>
+            <div name="photo" field="photo" width="40" allowSort="false">照片</div>
+            <div name="breakOff" field="breakOff" width="60" allowSort="false">违约情况</div>
+            <div name="yearth" field="yearth" width="60" allowSort="false">招聘年份期数</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</body>
+<script type="text/javascript">
+  mini.parse();
+  var grid = mini.get("datagrid1");
+  grid.load();
+
+  var webRoot = "${webRoot}";
+
+  
+</script>
+ <script type="text/javascript" src="${webRoot}/resources/js/campus/campusStuEmailSend.js"></script>
+</html>

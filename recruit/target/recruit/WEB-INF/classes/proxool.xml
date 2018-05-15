@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- the proxool configuration can be embedded within your own application's. Anything 
+  outside the "proxool" tag is ignored. -->
+
+<!-- 可以使用在spring配置文件中直接配置，此配置文件是另一种配置方式，需要在web.xml中配置ServletConfigurator -->
+<!-- 暂时不使用此方法，容器启动的加载顺序会有问题，用的是在spring配置文件中直接配置 -->
+
+<something-else-entirely>
+  <proxool>
+    <alias>recruitdb</alias>
+    <driver-url>jdbc:oracle:thin:@10.108.29.78:1521:recd</driver-url>
+    <!-- <driver-url>jdbc:oracle:thin:@10.108.29.79:1521:recd</driver-url> -->
+    <driver-class>oracle.jdbc.driver.OracleDriver</driver-class>
+    <driver-properties>
+      <property
+        name="user"
+        value="root" />
+      <property
+        name="password"
+        value="123456" />
+    </driver-properties>
+    <maximum-connection-count>100</maximum-connection-count>
+    <minimum-connection-count>5</minimum-connection-count>
+    <house-keeping-sleep-time>900000</house-keeping-sleep-time>
+    <maximum-new-connections>20</maximum-new-connections>
+    <prototype-count>5</prototype-count>
+    <test-before-use>true</test-before-use>
+    <house-keeping-test-sql>select 1 from dual</house-keeping-test-sql>
+    <simultaneous-build-throttle>10</simultaneous-build-throttle>
+    <verbose>true</verbose>
+    <trace>true</trace>
+  </proxool>
+  <!-- 可以配置多个数据库，多个proxool标签 -->
+</something-else-entirely>

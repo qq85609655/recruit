@@ -1,0 +1,202 @@
+// 日期格式渲染
+function onDateRenderer(e) {
+  var value = e.value;
+  if (value)
+    return new Date(value).format("yyyy-MM-dd hh:mm:ss");
+  return "";
+}
+
+var siteIdKey = mini.get("siteKey");
+var postIdKey = mini.get("postKey");
+var stuNameKey = mini.get("nameKey");
+var schoolKey = mini.get("schoolKey");
+var orgKey = mini.get("orgKey");
+var centerKey = mini.get("centerKey");
+var yearthKey = mini.get("yearthKey");
+var showTypeKey = mini.get("show");
+
+function search() {
+
+  var siteId = siteIdKey.getValue();
+  var postId = postIdKey.getValue();
+  var stuName = stuNameKey.getValue();
+  var school = schoolKey.getValue();
+  var org = orgKey.getValue();
+  var center = centerKey.getValue();
+  var yearth = yearthKey.getValue();
+  var showType = showTypeKey.setValue("");
+
+  datagrid.load({
+    siteId : siteId,
+    postId : postId,
+    stuName : stuName,
+    school : school,
+    org : org,
+    center : center,
+    yearth : yearth,
+    showType : showType
+  });
+}
+
+function dataChange() {
+  var showType = showTypeKey.getValue();
+  var siteId = siteIdKey.setValue("");
+  var postId = postIdKey.setValue("");
+  var stuName = stuNameKey.setValue("");
+  var school = schoolKey.setValue("");
+  var org = orgKey.setValue("");
+  var center = centerKey.setValue("");
+  var yearth = yearthKey.setValue("");
+
+  datagrid.load({
+    siteId : siteId,
+    postId : postId,
+    stuName : stuName,
+    school : school,
+    org : org,
+    center : center,
+    yearth : yearth,
+    showType : showType
+  });
+
+}
+
+function onKeyEnter(e) {
+  search();
+}
+
+function create() {
+
+  OpenDialog("/recruit/campusStudentController/create/", "新建人员信息", datagrid, 780, 650);
+}
+
+function modify() {
+
+  var row = datagrid.getSelected();
+  if (row) {
+    OpenDialog("/recruit/campusStudentController/modify/" + row.id, "编辑人员信息", datagrid, 780, 650);
+  } else {
+    ShowWarnTip("请选择一条记录");
+  }
+}
+
+function removeStu() {
+
+  var data = datagrid.getSelecteds();
+  if (data.length > 0) {
+
+    mini.confirm("确定删除记录？<br>", "删除", function(action) {
+      if (action == "ok") {
+        var ids = [];
+        for (var i = 0, l = data.length; i < l; i++) {
+          var r = data[i];
+          ids.push(r.id);
+        }
+        var id = ids.join(',');
+        SaveData("/recruit/campusStudentController/remove/" + id, "", function(e) {
+          mini.alert(e.msg);
+          datagrid.reload();
+        });
+      }
+    });
+  } else {
+    ShowWarnTip("请选择一条记录");
+  }
+}
+
+// 导入学生信息模板表
+function onImport() {
+  mini.open({
+    url : "/recruit/campusStudentController/importStudentInfo",
+    title : "导入学生信息模板表",
+    width : 400,
+    height : 110,
+    allowResize : false
+  });
+}
+
+// 导出学生详细信息
+function onExport() {
+  var siteId = siteIdKey.getValue();
+  var postId = postIdKey.getValue();
+  var stuName = stuNameKey.getValue();
+  var school = schoolKey.getValue();
+  var org = orgKey.getValue();
+  var center = centerKey.getValue();
+  var yearth = yearthKey.getValue();
+
+  window.location.href = "/recruit/campusStudentController/exportCampusStudentInfo?siteId="
+      + siteId + "&postId=" + postId + "&stuName=" + stuName + "&school=" + school + "&org=" + org
+      + "&center=" + center + "&yearth=" + yearth;
+}
+
+// 发送邮件
+function sendEmail() {
+
+  debugger;
+  var rows = datagrid.getSelecteds();
+  if (rows.length > 0) {
+    var idStr = [];
+    var ids = "";
+    for (var i = 0, l = rows.length; i < l; i++) {
+      var r = rows[i];
+      idStr.push(r.id);
+    }
+    var ids = idStr.join(',');
+    OpenDialog("/recruit/campusStudentController/sendEmail/" + ids, "发送邮件", datagrid, 300, 150);
+  } else {
+    ShowWarnTip("请选择至少一条记录！");
+  }
+}
+
+// 详情
+function isBreakOff() {
+
+  var row = datagrid.getSelected();
+  if (row) {
+    var id = row.id;
+    if ("无" == row.breakOff) {
+      if ("有" == row.trilateral) {
+        OpenDialog("/recruit/campusStudentController/doSetBreakOffReason/" + id, "编辑违约原因",
+            datagrid, 380, 250);
+      } else {
+        ShowWarnTip("请选择三方为有的记录！");
+      }
+    } else {
+      ShowWarnTip("请选择违约情况为无的记录！");
+    }
+  } else {
+    ShowWarnTip("请选择违约情况为无且三方为有的记录！");
+  }
+}
+
+// 设置显示的字段
+function showColumn() {
+
+  OpenDialog("/recruit/campusStudentController/showColumn", "设置显示字段", "", 480, 350,
+      function(action) {
+        if (action == "ok") {
+          var iframe = this.getIFrameEl();
+          var data = iframe.contentWindow.getData();
+          data = mini.clone(data);
+          var showData = [];
+          showData = data.split(",");
+          var dataColumn = [ "siteName", "workingPlace", "organization", "bigCenter",
+              "smallCenter", "department", "offices", "postName", "realname", "sex", "education",
+              "nativePlace", "school", "major", "phoneNo", "email", "evaluation", "moraleRisk",
+              "resultFirst", "resultSecond", "yearth", "breakOffReason", "breakOffTime" ];
+          if ("" == data || null == data) {
+            for (var j = 0; j < dataColumn.length; j++) {
+              datagrid.showColumn(dataColumn[j]);
+            }
+          } else {
+            for (var j = 0; j < dataColumn.length; j++) {
+              datagrid.hideColumn(dataColumn[j]);
+            }
+            for (var i = 0; i < showData.length; i++) {
+              datagrid.showColumn(showData[i]);
+            }
+          }
+        }
+      });
+}

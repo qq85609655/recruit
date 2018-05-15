@@ -1,0 +1,676 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.csot.recruit.dao.original.flow.employ.EmployCandidateMapper">
+  <resultMap id="BaseResultMap" type="com.csot.recruit.model.original.flow.employ.EmployCandidate">
+    <id column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="NAME" property="name" jdbcType="VARCHAR" />
+    <result column="PINYIN" property="pinyin" jdbcType="VARCHAR" />
+    <result column="ENGLISH_NAME" property="englishName" jdbcType="VARCHAR" />
+    <result column="EMAIL_NAME" property="emailName" jdbcType="VARCHAR" />
+    <result column="IS_DEVOTE" property="isDevote" jdbcType="VARCHAR" />
+    <result column="GENDER" property="gender" jdbcType="VARCHAR" />
+    <result column="BIRTHDAY" property="birthday" jdbcType="VARCHAR" />
+    <result column="PHONE" property="phone" jdbcType="VARCHAR" />
+    <result column="EMAIL" property="email" jdbcType="VARCHAR" />
+    <result column="CANDIDATE_POST_ID" property="candidatePostId" jdbcType="VARCHAR" />
+    <result column="CANDIDATE_POST_NAME" property="candidatePostName" jdbcType="VARCHAR" />
+    <result column="CANDIDATE_ORG_ID" property="candidateOrgId" jdbcType="VARCHAR" />
+    <result column="CANDIDATE_ORG_NAME" property="candidateOrgName" jdbcType="VARCHAR" />
+    <result column="RECRUIT_SOURCE" property="recruitSource" jdbcType="VARCHAR" />
+    <result column="REFERRER_ID" property="referrerId" jdbcType="VARCHAR" />
+    <result column="REFERRER_NAME" property="referrerName" jdbcType="VARCHAR" />
+    <result column="REFERRER_ORG_ID" property="referrerOrgId" jdbcType="VARCHAR" />
+    <result column="REFERRER_ORG_NAME" property="referrerOrgName" jdbcType="VARCHAR" />
+    <result column="CANDIDATE_TYPE" property="candidateType" jdbcType="VARCHAR" />
+    <result column="IS_BEIDIAO" property="isBeidiao" jdbcType="VARCHAR" />
+    <result column="IS_EVALUATING" property="isEvaluating" jdbcType="VARCHAR" />
+    <result column="CREATOR_ID" property="creatorId" jdbcType="VARCHAR" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="MODIFIED_ID" property="modifiedId" jdbcType="VARCHAR" />
+    <result column="UPDATE_DATE" property="updateDate" jdbcType="TIMESTAMP" />
+    <result column="EMPLOY_ID" property="employId" jdbcType="VARCHAR" />
+    <result column="EMPLOY_RANK_ID" property="employRankId" jdbcType="VARCHAR" />
+    <result column="GRADE" property="grade" jdbcType="VARCHAR" />
+    <result column="ABROAD" property="abroad" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" suffix=")" prefixOverrides="and">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition}
+                  #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition}
+                  #{criterion.value} and
+                  #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")"
+                    separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" suffix=")" prefixOverrides="and">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition}
+                  #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition}
+                  #{criterion.value} and
+                  #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")"
+                    separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    ID, NAME, PINYIN, ENGLISH_NAME, EMAIL_NAME, IS_DEVOTE, GENDER,
+    BIRTHDAY, PHONE, EMAIL,
+    CANDIDATE_POST_ID, CANDIDATE_POST_NAME, CANDIDATE_ORG_ID, CANDIDATE_ORG_NAME, RECRUIT_SOURCE,
+    REFERRER_ID, REFERRER_NAME, REFERRER_ORG_ID, REFERRER_ORG_NAME, CANDIDATE_TYPE, IS_BEIDIAO,
+    IS_EVALUATING, CREATOR_ID, CREATE_DATE, MODIFIED_ID, UPDATE_DATE, EMPLOY_ID, EMPLOY_RANK_ID,
+    GRADE,ABROAD
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap"
+    parameterType="com.csot.recruit.model.original.flow.employ.EmployCandidateCriteria">
+    <include refid="Oracle_Dialect_Pagination_Prefix" />
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from T_EMPLOY_CANDIDATE
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+    <include refid="Oracle_Dialect_Pagination_Suffix" />
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String">
+    select
+    <include refid="Base_Column_List" />
+    from T_EMPLOY_CANDIDATE
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from
+    T_EMPLOY_CANDIDATE
+    where ID =
+    #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.csot.recruit.model.original.flow.employ.EmployCandidateCriteria">
+    delete from T_EMPLOY_CANDIDATE
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.csot.recruit.model.original.flow.employ.EmployCandidate">
+    insert into T_EMPLOY_CANDIDATE (ID, NAME, PINYIN,
+    ENGLISH_NAME, EMAIL_NAME, IS_DEVOTE,
+    GENDER, BIRTHDAY, PHONE,
+    EMAIL, CANDIDATE_POST_ID,
+    CANDIDATE_POST_NAME,
+    CANDIDATE_ORG_ID, CANDIDATE_ORG_NAME, RECRUIT_SOURCE,
+    REFERRER_ID,
+    REFERRER_NAME, REFERRER_ORG_ID,
+    REFERRER_ORG_NAME, CANDIDATE_TYPE, IS_BEIDIAO,
+    IS_EVALUATING,
+    CREATOR_ID, CREATE_DATE,
+    MODIFIED_ID, UPDATE_DATE, EMPLOY_ID, EMPLOY_RANK_ID, GRADE,ABROAD
+    )
+    values (#{id,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{pinyin,jdbcType=VARCHAR},
+    #{englishName,jdbcType=VARCHAR}, #{emailName,jdbcType=VARCHAR}, #{isDevote,jdbcType=VARCHAR},
+    #{gender,jdbcType=VARCHAR}, #{birthday,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR},
+    #{email,jdbcType=VARCHAR}, #{candidatePostId,jdbcType=VARCHAR},
+    #{candidatePostName,jdbcType=VARCHAR},
+    #{candidateOrgId,jdbcType=VARCHAR},
+    #{candidateOrgName,jdbcType=VARCHAR}, #{recruitSource,jdbcType=VARCHAR},
+    #{referrerId,jdbcType=VARCHAR}, #{referrerName,jdbcType=VARCHAR},
+    #{referrerOrgId,jdbcType=VARCHAR},
+    #{referrerOrgName,jdbcType=VARCHAR},
+    #{candidateType,jdbcType=VARCHAR}, #{isBeidiao,jdbcType=VARCHAR},
+    #{isEvaluating,jdbcType=VARCHAR}, #{creatorId,jdbcType=VARCHAR},
+    #{createDate,jdbcType=TIMESTAMP},
+    #{modifiedId,jdbcType=VARCHAR},
+    #{updateDate,jdbcType=TIMESTAMP}, #{employId,jdbcType=VARCHAR}
+    ,
+    #{employRankId,jdbcType=VARCHAR}, #{grade,jdbcType=VARCHAR}, #{abroad,jdbcType=VARCHAR}
+    )
+  </insert>
+  <insert id="insertSelective" parameterType="com.csot.recruit.model.original.flow.employ.EmployCandidate">
+    insert into T_EMPLOY_CANDIDATE
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="name != null">
+        NAME,
+      </if>
+      <if test="pinyin != null">
+        PINYIN,
+      </if>
+      <if test="englishName != null">
+        ENGLISH_NAME,
+      </if>
+      <if test="emailName != null">
+        EMAIL_NAME,
+      </if>
+      <if test="isDevote != null">
+        IS_DEVOTE,
+      </if>
+      <if test="gender != null">
+        GENDER,
+      </if>
+      <if test="birthday != null">
+        BIRTHDAY,
+      </if>
+      <if test="phone != null">
+        PHONE,
+      </if>
+      <if test="email != null">
+        EMAIL,
+      </if>
+      <if test="candidatePostId != null">
+        CANDIDATE_POST_ID,
+      </if>
+      <if test="candidatePostName != null">
+        CANDIDATE_POST_NAME,
+      </if>
+      <if test="candidateOrgId != null">
+        CANDIDATE_ORG_ID,
+      </if>
+      <if test="candidateOrgName != null">
+        CANDIDATE_ORG_NAME,
+      </if>
+      <if test="recruitSource != null">
+        RECRUIT_SOURCE,
+      </if>
+      <if test="referrerId != null">
+        REFERRER_ID,
+      </if>
+      <if test="referrerName != null">
+        REFERRER_NAME,
+      </if>
+      <if test="referrerOrgId != null">
+        REFERRER_ORG_ID,
+      </if>
+      <if test="referrerOrgName != null">
+        REFERRER_ORG_NAME,
+      </if>
+      <if test="candidateType != null">
+        CANDIDATE_TYPE,
+      </if>
+      <if test="isBeidiao != null">
+        IS_BEIDIAO,
+      </if>
+      <if test="isEvaluating != null">
+        IS_EVALUATING,
+      </if>
+      <if test="creatorId != null">
+        CREATOR_ID,
+      </if>
+      <if test="createDate != null">
+        CREATE_DATE,
+      </if>
+      <if test="modifiedId != null">
+        MODIFIED_ID,
+      </if>
+      <if test="updateDate != null">
+        UPDATE_DATE,
+      </if>
+      <if test="employId != null">
+        EMPLOY_ID,
+      </if>
+      <if test="employRankId != null">
+        EMPLOY_RANK_ID,
+      </if>
+      <if test="grade != null">
+        GRADE,
+      </if>
+      <if test="abroad != null">
+        ABROAD,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="pinyin != null">
+        #{pinyin,jdbcType=VARCHAR},
+      </if>
+      <if test="englishName != null">
+        #{englishName,jdbcType=VARCHAR},
+      </if>
+      <if test="emailName != null">
+        #{emailName,jdbcType=VARCHAR},
+      </if>
+      <if test="isDevote != null">
+        #{isDevote,jdbcType=VARCHAR},
+      </if>
+      <if test="gender != null">
+        #{gender,jdbcType=VARCHAR},
+      </if>
+      <if test="birthday != null">
+        #{birthday,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null">
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null">
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="candidatePostId != null">
+        #{candidatePostId,jdbcType=VARCHAR},
+      </if>
+      <if test="candidatePostName != null">
+        #{candidatePostName,jdbcType=VARCHAR},
+      </if>
+      <if test="candidateOrgId != null">
+        #{candidateOrgId,jdbcType=VARCHAR},
+      </if>
+      <if test="candidateOrgName != null">
+        #{candidateOrgName,jdbcType=VARCHAR},
+      </if>
+      <if test="recruitSource != null">
+        #{recruitSource,jdbcType=VARCHAR},
+      </if>
+      <if test="referrerId != null">
+        #{referrerId,jdbcType=VARCHAR},
+      </if>
+      <if test="referrerName != null">
+        #{referrerName,jdbcType=VARCHAR},
+      </if>
+      <if test="referrerOrgId != null">
+        #{referrerOrgId,jdbcType=VARCHAR},
+      </if>
+      <if test="referrerOrgName != null">
+        #{referrerOrgName,jdbcType=VARCHAR},
+      </if>
+      <if test="candidateType != null">
+        #{candidateType,jdbcType=VARCHAR},
+      </if>
+      <if test="isBeidiao != null">
+        #{isBeidiao,jdbcType=VARCHAR},
+      </if>
+      <if test="isEvaluating != null">
+        #{isEvaluating,jdbcType=VARCHAR},
+      </if>
+      <if test="creatorId != null">
+        #{creatorId,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null">
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifiedId != null">
+        #{modifiedId,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null">
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="employId != null">
+        #{employId,jdbcType=VARCHAR},
+      </if>
+      <if test="employRankId != null">
+        #{employRankId,jdbcType=VARCHAR},
+      </if>
+      <if test="grade != null">
+        #{grade,jdbcType=VARCHAR},
+      </if>
+      <if test="abroad != null">
+        #{abroad,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.csot.recruit.model.original.flow.employ.EmployCandidateCriteria"
+    resultType="java.lang.Integer">
+    select count(*) from T_EMPLOY_CANDIDATE
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update T_EMPLOY_CANDIDATE
+    <set>
+      <if test="record.id != null">
+        ID = #{record.id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.name != null">
+        NAME = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pinyin != null">
+        PINYIN = #{record.pinyin,jdbcType=VARCHAR},
+      </if>
+      <if test="record.englishName != null">
+        ENGLISH_NAME =
+        #{record.englishName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.emailName != null">
+        EMAIL_NAME = #{record.emailName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isDevote != null">
+        IS_DEVOTE = #{record.isDevote,jdbcType=VARCHAR},
+      </if>
+      <if test="record.gender != null">
+        GENDER = #{record.gender,jdbcType=VARCHAR},
+      </if>
+      <if test="record.birthday != null">
+        BIRTHDAY = #{record.birthday,jdbcType=VARCHAR},
+      </if>
+      <if test="record.phone != null">
+        PHONE = #{record.phone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.email != null">
+        EMAIL = #{record.email,jdbcType=VARCHAR},
+      </if>
+      <if test="record.candidatePostId != null">
+        CANDIDATE_POST_ID =
+        #{record.candidatePostId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.candidatePostName != null">
+        CANDIDATE_POST_NAME =
+        #{record.candidatePostName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.candidateOrgId != null">
+        CANDIDATE_ORG_ID =
+        #{record.candidateOrgId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.candidateOrgName != null">
+        CANDIDATE_ORG_NAME =
+        #{record.candidateOrgName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.recruitSource != null">
+        RECRUIT_SOURCE =
+        #{record.recruitSource,jdbcType=VARCHAR},
+      </if>
+      <if test="record.referrerId != null">
+        REFERRER_ID = #{record.referrerId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.referrerName != null">
+        REFERRER_NAME =
+        #{record.referrerName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.referrerOrgId != null">
+        REFERRER_ORG_ID =
+        #{record.referrerOrgId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.referrerOrgName != null">
+        REFERRER_ORG_NAME =
+        #{record.referrerOrgName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.candidateType != null">
+        CANDIDATE_TYPE =
+        #{record.candidateType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isBeidiao != null">
+        IS_BEIDIAO = #{record.isBeidiao,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isEvaluating != null">
+        IS_EVALUATING =
+        #{record.isEvaluating,jdbcType=VARCHAR},
+      </if>
+      <if test="record.creatorId != null">
+        CREATOR_ID = #{record.creatorId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createDate != null">
+        CREATE_DATE = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.modifiedId != null">
+        MODIFIED_ID = #{record.modifiedId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.updateDate != null">
+        UPDATE_DATE = #{record.updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.employId != null">
+        EMPLOY_ID = #{record.employId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.employRankId != null">
+        EMPLOY_RANK_ID =
+        #{record.employRankId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.grade != null">
+        GRADE = #{record.grade,jdbcType=VARCHAR},
+      </if>
+      <if test="record.abroad != null">
+        ABROAD = #{record.abroad,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update T_EMPLOY_CANDIDATE
+    set ID = #{record.id,jdbcType=VARCHAR},
+    NAME =
+    #{record.name,jdbcType=VARCHAR},
+    PINYIN = #{record.pinyin,jdbcType=VARCHAR},
+    ENGLISH_NAME =
+    #{record.englishName,jdbcType=VARCHAR},
+    EMAIL_NAME = #{record.emailName,jdbcType=VARCHAR},
+    IS_DEVOTE = #{record.isDevote,jdbcType=VARCHAR},
+    GENDER = #{record.gender,jdbcType=VARCHAR},
+    BIRTHDAY = #{record.birthday,jdbcType=VARCHAR},
+    PHONE = #{record.phone,jdbcType=VARCHAR},
+    EMAIL =
+    #{record.email,jdbcType=VARCHAR},
+    CANDIDATE_POST_ID = #{record.candidatePostId,jdbcType=VARCHAR},
+    CANDIDATE_POST_NAME = #{record.candidatePostName,jdbcType=VARCHAR},
+    CANDIDATE_ORG_ID =
+    #{record.candidateOrgId,jdbcType=VARCHAR},
+    CANDIDATE_ORG_NAME =
+    #{record.candidateOrgName,jdbcType=VARCHAR},
+    RECRUIT_SOURCE =
+    #{record.recruitSource,jdbcType=VARCHAR},
+    REFERRER_ID = #{record.referrerId,jdbcType=VARCHAR},
+    REFERRER_NAME = #{record.referrerName,jdbcType=VARCHAR},
+    REFERRER_ORG_ID =
+    #{record.referrerOrgId,jdbcType=VARCHAR},
+    REFERRER_ORG_NAME =
+    #{record.referrerOrgName,jdbcType=VARCHAR},
+    CANDIDATE_TYPE =
+    #{record.candidateType,jdbcType=VARCHAR},
+    IS_BEIDIAO = #{record.isBeidiao,jdbcType=VARCHAR},
+    IS_EVALUATING = #{record.isEvaluating,jdbcType=VARCHAR},
+    CREATOR_ID =
+    #{record.creatorId,jdbcType=VARCHAR},
+    CREATE_DATE = #{record.createDate,jdbcType=TIMESTAMP},
+    MODIFIED_ID = #{record.modifiedId,jdbcType=VARCHAR},
+    UPDATE_DATE =
+    #{record.updateDate,jdbcType=TIMESTAMP},
+    EMPLOY_ID = #{record.employId,jdbcType=VARCHAR},
+    EMPLOY_RANK_ID = #{record.employRankId,jdbcType=VARCHAR},
+    GRADE =
+    #{record.grade,jdbcType=VARCHAR},
+    ABROAD = #{record.abroad,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.csot.recruit.model.original.flow.employ.EmployCandidate">
+    update T_EMPLOY_CANDIDATE
+    <set>
+      <if test="name != null">
+        NAME = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="pinyin != null">
+        PINYIN = #{pinyin,jdbcType=VARCHAR},
+      </if>
+      <if test="englishName != null">
+        ENGLISH_NAME = #{englishName,jdbcType=VARCHAR},
+      </if>
+      <if test="emailName != null">
+        EMAIL_NAME = #{emailName,jdbcType=VARCHAR},
+      </if>
+      <if test="isDevote != null">
+        IS_DEVOTE = #{isDevote,jdbcType=VARCHAR},
+      </if>
+      <if test="gender != null">
+        GENDER = #{gender,jdbcType=VARCHAR},
+      </if>
+      <if test="birthday != null">
+        BIRTHDAY = #{birthday,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null">
+        PHONE = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null">
+        EMAIL = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="candidatePostId != null">
+        CANDIDATE_POST_ID = #{candidatePostId,jdbcType=VARCHAR},
+      </if>
+      <if test="candidatePostName != null">
+        CANDIDATE_POST_NAME =
+        #{candidatePostName,jdbcType=VARCHAR},
+      </if>
+      <if test="candidateOrgId != null">
+        CANDIDATE_ORG_ID = #{candidateOrgId,jdbcType=VARCHAR},
+      </if>
+      <if test="candidateOrgName != null">
+        CANDIDATE_ORG_NAME =
+        #{candidateOrgName,jdbcType=VARCHAR},
+      </if>
+      <if test="recruitSource != null">
+        RECRUIT_SOURCE = #{recruitSource,jdbcType=VARCHAR},
+      </if>
+      <if test="referrerId != null">
+        REFERRER_ID = #{referrerId,jdbcType=VARCHAR},
+      </if>
+      <if test="referrerName != null">
+        REFERRER_NAME = #{referrerName,jdbcType=VARCHAR},
+      </if>
+      <if test="referrerOrgId != null">
+        REFERRER_ORG_ID = #{referrerOrgId,jdbcType=VARCHAR},
+      </if>
+      <if test="referrerOrgName != null">
+        REFERRER_ORG_NAME = #{referrerOrgName,jdbcType=VARCHAR},
+      </if>
+      <if test="candidateType != null">
+        CANDIDATE_TYPE = #{candidateType,jdbcType=VARCHAR},
+      </if>
+      <if test="isBeidiao != null">
+        IS_BEIDIAO = #{isBeidiao,jdbcType=VARCHAR},
+      </if>
+      <if test="isEvaluating != null">
+        IS_EVALUATING = #{isEvaluating,jdbcType=VARCHAR},
+      </if>
+      <if test="creatorId != null">
+        CREATOR_ID = #{creatorId,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null">
+        CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifiedId != null">
+        MODIFIED_ID = #{modifiedId,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null">
+        UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="employId != null">
+        EMPLOY_ID = #{employId,jdbcType=VARCHAR},
+      </if>
+      <if test="employRankId != null">
+        EMPLOY_RANK_ID = #{employRankId,jdbcType=VARCHAR},
+      </if>
+      <if test="grade != null">
+        GRADE = #{grade,jdbcType=VARCHAR},
+      </if>
+      <if test="abroad != null">
+        ABROAD = #{abroad,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.csot.recruit.model.original.flow.employ.EmployCandidate">
+    update T_EMPLOY_CANDIDATE
+    set NAME =
+    #{name,jdbcType=VARCHAR},
+    PINYIN = #{pinyin,jdbcType=VARCHAR},
+    ENGLISH_NAME =
+    #{englishName,jdbcType=VARCHAR},
+    EMAIL_NAME = #{emailName,jdbcType=VARCHAR},
+    IS_DEVOTE =
+    #{isDevote,jdbcType=VARCHAR},
+    GENDER = #{gender,jdbcType=VARCHAR},
+    BIRTHDAY =
+    #{birthday,jdbcType=VARCHAR},
+    PHONE = #{phone,jdbcType=VARCHAR},
+    EMAIL =
+    #{email,jdbcType=VARCHAR},
+    CANDIDATE_POST_ID = #{candidatePostId,jdbcType=VARCHAR},
+    CANDIDATE_POST_NAME = #{candidatePostName,jdbcType=VARCHAR},
+    CANDIDATE_ORG_ID =
+    #{candidateOrgId,jdbcType=VARCHAR},
+    CANDIDATE_ORG_NAME = #{candidateOrgName,jdbcType=VARCHAR},
+    RECRUIT_SOURCE = #{recruitSource,jdbcType=VARCHAR},
+    REFERRER_ID = #{referrerId,jdbcType=VARCHAR},
+    REFERRER_NAME = #{referrerName,jdbcType=VARCHAR},
+    REFERRER_ORG_ID =
+    #{referrerOrgId,jdbcType=VARCHAR},
+    REFERRER_ORG_NAME = #{referrerOrgName,jdbcType=VARCHAR},
+    CANDIDATE_TYPE = #{candidateType,jdbcType=VARCHAR},
+    IS_BEIDIAO = #{isBeidiao,jdbcType=VARCHAR},
+    IS_EVALUATING = #{isEvaluating,jdbcType=VARCHAR},
+    CREATOR_ID = #{creatorId,jdbcType=VARCHAR},
+    CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+    MODIFIED_ID = #{modifiedId,jdbcType=VARCHAR},
+    UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+    EMPLOY_ID = #{employId,jdbcType=VARCHAR},
+    EMPLOY_RANK_ID = #{employRankId,jdbcType=VARCHAR},
+    GRADE = #{grade,jdbcType=VARCHAR},
+    ABROAD = #{abroad,jdbcType=VARCHAR}
+    where ID =
+    #{id,jdbcType=VARCHAR}
+  </update>
+  <sql id="Oracle_Dialect_Pagination_Prefix">
+    <if test="page != null">
+      select * from ( select row_.*, rownum rownum_ from (
+    </if>
+  </sql>
+  <sql id="Oracle_Dialect_Pagination_Suffix">
+    <if test="page != null">
+      <![CDATA[ ) row_ ) where rownum_ > #{page.begin} and rownum_ <= #{page.end} ]]>
+    </if>
+  </sql>
+</mapper>

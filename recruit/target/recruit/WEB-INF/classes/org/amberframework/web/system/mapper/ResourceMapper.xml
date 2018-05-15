@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.amberframework.web.system.dao.ResourceMapper" >
+ 
+ <resultMap type="org.amberframework.web.system.model.PageResource" id="BaseMapper">
+   <id column="id" property="id" jdbcType="CHAR"/>
+   <result column="NAME" property="name"/>
+   <result column="MENU_NAME" property="menuName"/>
+   <result column="URL" property="url"/>
+   <result column="PARENT_ID" property="parentId"/>   
+   <result column="PARENT_IDS" property="parentIds"/>
+   <result column="ICON" property="icon"/>
+   <result column="SHOW_AS_MENU" property="showAsMenu"/>
+   <result column="IDENTIFER" property="identifer"/>
+   <result column="WEIGHT" property="weight"/>
+   <result column="permission" property="permission"/>
+ </resultMap>
+ 
+ <select id="getResourcesUserId" resultMap="BaseMapper" parameterType="java.lang.String">
+   select * 
+   from t_sys_Resource t 
+   where id in(
+   	select resource_id 
+   	from t_sys_role_resource_permission 
+   	where role_id in(
+   		select role_id 
+   		from t_sys_user_role 
+   		where user_id =#{0} 
+   	)
+   ) 
+   and parent_id=#{1} 
+   and SHOW_AS_MENU = '1' 
+   order by t.weight
+ </select>
+ 
+ <select id="getParentResources" resultMap="BaseMapper">
+      select r.id as id,r.MENU_NAME as menuName,p.id as permission from t_sys_resource  r  left join t_sys_resource_permission rp  on r.id = rp.resource_id left join t_sys_permission p 
+   on p.id = rp.permission_id  where  parent_id='0' 
+ </select>
+ 
+ <select id="getMenuResource" resultMap="BaseMapper">
+ 
+ </select>
+ 
+ <select id="getResourcesByFlag" resultMap="BaseMapper" parameterType="java.lang.String">
+   select r.id as id,r.MENU_NAME as menuName,p.id as permission from t_sys_resource  r  left join t_sys_resource_permission rp  on r.id = rp.resource_id left join t_sys_permission p 
+   on p.id = rp.permission_id  where p.name = trim(#{0})and parent_id=#{1} 
+</select>
+
+<select id="getRRPByRoleIdAndFlag" parameterType="java.lang.String" resultType="java.lang.String">
+  select t.resource_id from (select * from t_sys_role_resource_permission rrp where rrp.role_id = #{0} ) t  left join t_sys_permission sp on sp.id = t.permission_id  
+where sp.name=#{1}
+</select>
+</mapper>

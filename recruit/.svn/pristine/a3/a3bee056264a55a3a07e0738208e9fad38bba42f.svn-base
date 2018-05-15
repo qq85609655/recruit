@@ -1,0 +1,50 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ include file="/resources/context/jspBase.jsp"%>
+<!DOCTYPE html>
+<html>
+<head>
+<base href="<%=basePath%>">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+<title>显示字段选择</title>
+<%@ include file="/resources/context/headResource.jsp"%>
+<style>
+html, body {
+  overflow: hidden; /* overflow|overflow-x|overflow-y : visible|hidden|scroll|auto */
+}
+</style>
+</head>
+<body>
+  <div class="mini-fit">
+    <form id="mainForm" class="mainform" AutoScroll="true" method="post">
+      <h2>显示字段选择</h2>
+      <hr></hr>
+      <div id="select" class="mini-checkboxlist" repeatItems="5" repeatLayout="table"
+        textField="text" valueField="id" value="" url="/recruit/resources/data/stuSelectValue.txt"></div>
+
+    </form>
+  </div>
+  <div class="mini-toolbar dialogFooter">
+    <a class="mini-button" style="width: 100px;" onclick="onOk()">提交</a> <span
+      style="display: inline-block; width: 25px;">
+  </div>
+</body>
+<script>
+  mini.parse();
+  var form = new mini.Form("#mainForm");
+
+  //选择数据
+  function getData(){
+    var data = mini.get("select").getValue();
+	return data;
+  }
+  
+  function onOk() {
+    CloseWindow("ok");
+    
+  }
+
+</script>
+<%@ include file="/resources/context/lazyResource.jsp"%>
+
+</html>

@@ -1,0 +1,398 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.csot.recruit.dao.original.resumelibrary.addressbook.AddressbookMapper" >
+  <resultMap id="BaseResultMap" type="com.csot.recruit.model.original.resumelibrary.addressbook.Addressbook" >
+    <id column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="PERSON_NAME" property="personName" jdbcType="VARCHAR" />
+    <result column="EMAIL" property="email" jdbcType="VARCHAR" />
+    <result column="COMPANY" property="company" jdbcType="VARCHAR" />
+    <result column="CURRENT_POSITION" property="currentPosition" jdbcType="VARCHAR" />
+    <result column="PHONE_NO" property="phoneNo" jdbcType="VARCHAR" />
+    <result column="TELLPHONE_NO" property="tellphoneNo" jdbcType="VARCHAR" />
+    <result column="ORGANIZATION" property="organization" jdbcType="VARCHAR" />
+    <result column="REMARK" property="remark" jdbcType="VARCHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="DATE" />
+    <result column="CHANGE_TIME" property="changeTime" jdbcType="DATE" />
+    <result column="CREATE_USER_ID" property="createUserId" jdbcType="VARCHAR" />
+    <result column="CHANGE_USER_ID" property="changeUserId" jdbcType="VARCHAR" />
+    <result column="RESERVED_1" property="reserved1" jdbcType="VARCHAR" />
+    <result column="RESERVED_2" property="reserved2" jdbcType="VARCHAR" />
+    <result column="RESERVED_3" property="reserved3" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    ID, PERSON_NAME, EMAIL, COMPANY, CURRENT_POSITION, PHONE_NO, TELLPHONE_NO, ORGANIZATION, 
+    REMARK, CREATE_TIME, CHANGE_TIME, CREATE_USER_ID, CHANGE_USER_ID, RESERVED_1, RESERVED_2, 
+    RESERVED_3
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.csot.recruit.model.original.resumelibrary.addressbook.AddressbookCriteria" >
+    <include refid="Oracle_Dialect_Pagination_Prefix" />
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from T_PERSION_ADDRESSBOOK
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <include refid="Oracle_Dialect_Pagination_Suffix" />
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from T_PERSION_ADDRESSBOOK
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from T_PERSION_ADDRESSBOOK
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.csot.recruit.model.original.resumelibrary.addressbook.AddressbookCriteria" >
+    delete from T_PERSION_ADDRESSBOOK
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.csot.recruit.model.original.resumelibrary.addressbook.Addressbook" >
+    insert into T_PERSION_ADDRESSBOOK (ID, PERSON_NAME, EMAIL, 
+      COMPANY, CURRENT_POSITION, PHONE_NO, 
+      TELLPHONE_NO, ORGANIZATION, REMARK, 
+      CREATE_TIME, CHANGE_TIME, CREATE_USER_ID, 
+      CHANGE_USER_ID, RESERVED_1, RESERVED_2, 
+      RESERVED_3)
+    values (#{id,jdbcType=VARCHAR}, #{personName,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, 
+      #{company,jdbcType=VARCHAR}, #{currentPosition,jdbcType=VARCHAR}, #{phoneNo,jdbcType=VARCHAR}, 
+      #{tellphoneNo,jdbcType=VARCHAR}, #{organization,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=DATE}, #{changeTime,jdbcType=DATE}, #{createUserId,jdbcType=VARCHAR}, 
+      #{changeUserId,jdbcType=VARCHAR}, #{reserved1,jdbcType=VARCHAR}, #{reserved2,jdbcType=VARCHAR}, 
+      #{reserved3,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.csot.recruit.model.original.resumelibrary.addressbook.Addressbook" >
+    insert into T_PERSION_ADDRESSBOOK
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="personName != null" >
+        PERSON_NAME,
+      </if>
+      <if test="email != null" >
+        EMAIL,
+      </if>
+      <if test="company != null" >
+        COMPANY,
+      </if>
+      <if test="currentPosition != null" >
+        CURRENT_POSITION,
+      </if>
+      <if test="phoneNo != null" >
+        PHONE_NO,
+      </if>
+      <if test="tellphoneNo != null" >
+        TELLPHONE_NO,
+      </if>
+      <if test="organization != null" >
+        ORGANIZATION,
+      </if>
+      <if test="remark != null" >
+        REMARK,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+      <if test="changeTime != null" >
+        CHANGE_TIME,
+      </if>
+      <if test="createUserId != null" >
+        CREATE_USER_ID,
+      </if>
+      <if test="changeUserId != null" >
+        CHANGE_USER_ID,
+      </if>
+      <if test="reserved1 != null" >
+        RESERVED_1,
+      </if>
+      <if test="reserved2 != null" >
+        RESERVED_2,
+      </if>
+      <if test="reserved3 != null" >
+        RESERVED_3,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="personName != null" >
+        #{personName,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null" >
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="company != null" >
+        #{company,jdbcType=VARCHAR},
+      </if>
+      <if test="currentPosition != null" >
+        #{currentPosition,jdbcType=VARCHAR},
+      </if>
+      <if test="phoneNo != null" >
+        #{phoneNo,jdbcType=VARCHAR},
+      </if>
+      <if test="tellphoneNo != null" >
+        #{tellphoneNo,jdbcType=VARCHAR},
+      </if>
+      <if test="organization != null" >
+        #{organization,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=DATE},
+      </if>
+      <if test="changeTime != null" >
+        #{changeTime,jdbcType=DATE},
+      </if>
+      <if test="createUserId != null" >
+        #{createUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="changeUserId != null" >
+        #{changeUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="reserved1 != null" >
+        #{reserved1,jdbcType=VARCHAR},
+      </if>
+      <if test="reserved2 != null" >
+        #{reserved2,jdbcType=VARCHAR},
+      </if>
+      <if test="reserved3 != null" >
+        #{reserved3,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.csot.recruit.model.original.resumelibrary.addressbook.AddressbookCriteria" resultType="java.lang.Integer" >
+    select count(*) from T_PERSION_ADDRESSBOOK
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update T_PERSION_ADDRESSBOOK
+    <set >
+      <if test="record.id != null" >
+        ID = #{record.id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.personName != null" >
+        PERSON_NAME = #{record.personName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.email != null" >
+        EMAIL = #{record.email,jdbcType=VARCHAR},
+      </if>
+      <if test="record.company != null" >
+        COMPANY = #{record.company,jdbcType=VARCHAR},
+      </if>
+      <if test="record.currentPosition != null" >
+        CURRENT_POSITION = #{record.currentPosition,jdbcType=VARCHAR},
+      </if>
+      <if test="record.phoneNo != null" >
+        PHONE_NO = #{record.phoneNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tellphoneNo != null" >
+        TELLPHONE_NO = #{record.tellphoneNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.organization != null" >
+        ORGANIZATION = #{record.organization,jdbcType=VARCHAR},
+      </if>
+      <if test="record.remark != null" >
+        REMARK = #{record.remark,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null" >
+        CREATE_TIME = #{record.createTime,jdbcType=DATE},
+      </if>
+      <if test="record.changeTime != null" >
+        CHANGE_TIME = #{record.changeTime,jdbcType=DATE},
+      </if>
+      <if test="record.createUserId != null" >
+        CREATE_USER_ID = #{record.createUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.changeUserId != null" >
+        CHANGE_USER_ID = #{record.changeUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.reserved1 != null" >
+        RESERVED_1 = #{record.reserved1,jdbcType=VARCHAR},
+      </if>
+      <if test="record.reserved2 != null" >
+        RESERVED_2 = #{record.reserved2,jdbcType=VARCHAR},
+      </if>
+      <if test="record.reserved3 != null" >
+        RESERVED_3 = #{record.reserved3,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update T_PERSION_ADDRESSBOOK
+    set ID = #{record.id,jdbcType=VARCHAR},
+      PERSON_NAME = #{record.personName,jdbcType=VARCHAR},
+      EMAIL = #{record.email,jdbcType=VARCHAR},
+      COMPANY = #{record.company,jdbcType=VARCHAR},
+      CURRENT_POSITION = #{record.currentPosition,jdbcType=VARCHAR},
+      PHONE_NO = #{record.phoneNo,jdbcType=VARCHAR},
+      TELLPHONE_NO = #{record.tellphoneNo,jdbcType=VARCHAR},
+      ORGANIZATION = #{record.organization,jdbcType=VARCHAR},
+      REMARK = #{record.remark,jdbcType=VARCHAR},
+      CREATE_TIME = #{record.createTime,jdbcType=DATE},
+      CHANGE_TIME = #{record.changeTime,jdbcType=DATE},
+      CREATE_USER_ID = #{record.createUserId,jdbcType=VARCHAR},
+      CHANGE_USER_ID = #{record.changeUserId,jdbcType=VARCHAR},
+      RESERVED_1 = #{record.reserved1,jdbcType=VARCHAR},
+      RESERVED_2 = #{record.reserved2,jdbcType=VARCHAR},
+      RESERVED_3 = #{record.reserved3,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.csot.recruit.model.original.resumelibrary.addressbook.Addressbook" >
+    update T_PERSION_ADDRESSBOOK
+    <set >
+      <if test="personName != null" >
+        PERSON_NAME = #{personName,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null" >
+        EMAIL = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="company != null" >
+        COMPANY = #{company,jdbcType=VARCHAR},
+      </if>
+      <if test="currentPosition != null" >
+        CURRENT_POSITION = #{currentPosition,jdbcType=VARCHAR},
+      </if>
+      <if test="phoneNo != null" >
+        PHONE_NO = #{phoneNo,jdbcType=VARCHAR},
+      </if>
+      <if test="tellphoneNo != null" >
+        TELLPHONE_NO = #{tellphoneNo,jdbcType=VARCHAR},
+      </if>
+      <if test="organization != null" >
+        ORGANIZATION = #{organization,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime,jdbcType=DATE},
+      </if>
+      <if test="changeTime != null" >
+        CHANGE_TIME = #{changeTime,jdbcType=DATE},
+      </if>
+      <if test="createUserId != null" >
+        CREATE_USER_ID = #{createUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="changeUserId != null" >
+        CHANGE_USER_ID = #{changeUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="reserved1 != null" >
+        RESERVED_1 = #{reserved1,jdbcType=VARCHAR},
+      </if>
+      <if test="reserved2 != null" >
+        RESERVED_2 = #{reserved2,jdbcType=VARCHAR},
+      </if>
+      <if test="reserved3 != null" >
+        RESERVED_3 = #{reserved3,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.csot.recruit.model.original.resumelibrary.addressbook.Addressbook" >
+    update T_PERSION_ADDRESSBOOK
+    set PERSON_NAME = #{personName,jdbcType=VARCHAR},
+      EMAIL = #{email,jdbcType=VARCHAR},
+      COMPANY = #{company,jdbcType=VARCHAR},
+      CURRENT_POSITION = #{currentPosition,jdbcType=VARCHAR},
+      PHONE_NO = #{phoneNo,jdbcType=VARCHAR},
+      TELLPHONE_NO = #{tellphoneNo,jdbcType=VARCHAR},
+      ORGANIZATION = #{organization,jdbcType=VARCHAR},
+      REMARK = #{remark,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=DATE},
+      CHANGE_TIME = #{changeTime,jdbcType=DATE},
+      CREATE_USER_ID = #{createUserId,jdbcType=VARCHAR},
+      CHANGE_USER_ID = #{changeUserId,jdbcType=VARCHAR},
+      RESERVED_1 = #{reserved1,jdbcType=VARCHAR},
+      RESERVED_2 = #{reserved2,jdbcType=VARCHAR},
+      RESERVED_3 = #{reserved3,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <sql id="Oracle_Dialect_Pagination_Prefix" >
+    <if test="page != null" >
+      select * from ( select row_.*, rownum rownum_ from ( 
+    </if>
+  </sql>
+  <sql id="Oracle_Dialect_Pagination_Suffix" >
+    <if test="page != null" >
+      <![CDATA[ ) row_ ) where rownum_ > #{page.begin} and rownum_ <= #{page.end} ]]>
+    </if>
+  </sql>
+</mapper>

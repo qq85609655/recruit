@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.csot.recruit.dao.original.interview.EmergentContactsMapper" >
+  <resultMap id="BaseResultMap" type="com.csot.recruit.model.original.interview.EmergentContacts" >
+    <id column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="PERSON_CODE" property="personCode" jdbcType="VARCHAR" />
+    <result column="EMERGENT_NAME" property="emergentName" jdbcType="VARCHAR" />
+    <result column="EMERGENT_RELATION" property="emergentRelation" jdbcType="VARCHAR" />
+    <result column="EMERGENT_PHONE" property="emergentPhone" jdbcType="VARCHAR" />
+    <result column="EMERGENT_ADDRESS" property="emergentAddress" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    ID, PERSON_CODE, EMERGENT_NAME, EMERGENT_RELATION, EMERGENT_PHONE, EMERGENT_ADDRESS
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.csot.recruit.model.original.interview.EmergentContactsCriteria" >
+    <include refid="Oracle_Dialect_Pagination_Prefix" />
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from T_EMERGENT_CONTACTS
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <include refid="Oracle_Dialect_Pagination_Suffix" />
+  </select>
+  <select id="selectByPersonCode" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from T_EMERGENT_CONTACTS
+    where PERSON_CODE = #{personCode,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from T_EMERGENT_CONTACTS
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from T_EMERGENT_CONTACTS
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.csot.recruit.model.original.interview.EmergentContactsCriteria" >
+    delete from T_EMERGENT_CONTACTS
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.csot.recruit.model.original.interview.EmergentContacts" >
+    insert into T_EMERGENT_CONTACTS (ID, PERSON_CODE, EMERGENT_NAME, 
+      EMERGENT_RELATION, EMERGENT_PHONE, EMERGENT_ADDRESS
+      )
+    values (#{id,jdbcType=VARCHAR}, #{personCode,jdbcType=VARCHAR}, #{emergentName,jdbcType=VARCHAR}, 
+      #{emergentRelation,jdbcType=VARCHAR}, #{emergentPhone,jdbcType=VARCHAR}, #{emergentAddress,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.csot.recruit.model.original.interview.EmergentContacts" >
+    insert into T_EMERGENT_CONTACTS
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="personCode != null" >
+        PERSON_CODE,
+      </if>
+      <if test="emergentName != null" >
+        EMERGENT_NAME,
+      </if>
+      <if test="emergentRelation != null" >
+        EMERGENT_RELATION,
+      </if>
+      <if test="emergentPhone != null" >
+        EMERGENT_PHONE,
+      </if>
+      <if test="emergentAddress != null" >
+        EMERGENT_ADDRESS,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="personCode != null" >
+        #{personCode,jdbcType=VARCHAR},
+      </if>
+      <if test="emergentName != null" >
+        #{emergentName,jdbcType=VARCHAR},
+      </if>
+      <if test="emergentRelation != null" >
+        #{emergentRelation,jdbcType=VARCHAR},
+      </if>
+      <if test="emergentPhone != null" >
+        #{emergentPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="emergentAddress != null" >
+        #{emergentAddress,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.csot.recruit.model.original.interview.EmergentContactsCriteria" resultType="java.lang.Integer" >
+    select count(*) from T_EMERGENT_CONTACTS
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update T_EMERGENT_CONTACTS
+    <set >
+      <if test="record.id != null" >
+        ID = #{record.id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.personCode != null" >
+        PERSON_CODE = #{record.personCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.emergentName != null" >
+        EMERGENT_NAME = #{record.emergentName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.emergentRelation != null" >
+        EMERGENT_RELATION = #{record.emergentRelation,jdbcType=VARCHAR},
+      </if>
+      <if test="record.emergentPhone != null" >
+        EMERGENT_PHONE = #{record.emergentPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.emergentAddress != null" >
+        EMERGENT_ADDRESS = #{record.emergentAddress,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update T_EMERGENT_CONTACTS
+    set ID = #{record.id,jdbcType=VARCHAR},
+      PERSON_CODE = #{record.personCode,jdbcType=VARCHAR},
+      EMERGENT_NAME = #{record.emergentName,jdbcType=VARCHAR},
+      EMERGENT_RELATION = #{record.emergentRelation,jdbcType=VARCHAR},
+      EMERGENT_PHONE = #{record.emergentPhone,jdbcType=VARCHAR},
+      EMERGENT_ADDRESS = #{record.emergentAddress,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.csot.recruit.model.original.interview.EmergentContacts" >
+    update T_EMERGENT_CONTACTS
+    <set >
+      <if test="personCode != null" >
+        PERSON_CODE = #{personCode,jdbcType=VARCHAR},
+      </if>
+      <if test="emergentName != null" >
+        EMERGENT_NAME = #{emergentName,jdbcType=VARCHAR},
+      </if>
+      <if test="emergentRelation != null" >
+        EMERGENT_RELATION = #{emergentRelation,jdbcType=VARCHAR},
+      </if>
+      <if test="emergentPhone != null" >
+        EMERGENT_PHONE = #{emergentPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="emergentAddress != null" >
+        EMERGENT_ADDRESS = #{emergentAddress,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.csot.recruit.model.original.interview.EmergentContacts" >
+    update T_EMERGENT_CONTACTS
+    set PERSON_CODE = #{personCode,jdbcType=VARCHAR},
+      EMERGENT_NAME = #{emergentName,jdbcType=VARCHAR},
+      EMERGENT_RELATION = #{emergentRelation,jdbcType=VARCHAR},
+      EMERGENT_PHONE = #{emergentPhone,jdbcType=VARCHAR},
+      EMERGENT_ADDRESS = #{emergentAddress,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <sql id="Oracle_Dialect_Pagination_Prefix" >
+    <if test="page != null" >
+      select * from ( select row_.*, rownum rownum_ from ( 
+    </if>
+  </sql>
+  <sql id="Oracle_Dialect_Pagination_Suffix" >
+    <if test="page != null" >
+      <![CDATA[ ) row_ ) where rownum_ > #{page.begin} and rownum_ <= #{page.end} ]]>
+    </if>
+  </sql>
+</mapper>

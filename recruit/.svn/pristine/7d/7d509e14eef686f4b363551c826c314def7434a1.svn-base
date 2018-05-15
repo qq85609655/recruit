@@ -1,0 +1,401 @@
+//列表中学历转换
+var qualifications; 
+function qualificationsRenderer(e) {
+  for (var i = 0, l = qualifications.length; i < l; i++) {
+      var g = qualifications[i];
+      if (g.typeId == e.value) return g.typeName;
+  }
+  return "";
+}
+
+var candidateId;
+function search() {
+    var key = mini.get("key").getValue();
+    datagrid.load({
+      searchKey : key,
+      state:$("#state").val()
+    });
+  }
+
+$(function() {
+  // = education
+  $.ajax({
+    url : basePath + "/datadictGroupTypeController/getDictsByCode/education",
+    type : "post",
+    async: false,
+    dataType: "json",
+    success : function(data) {
+      qualifications = data.data ;
+    }
+  });
+  $("#cancelAttention").hide();
+});
+
+//为数据添加超链接
+function ondrawcell(e) {
+    var row = e.row,
+        column = e.column,
+        field = e.field,
+        value = e.value;
+    //超链接任务
+    if (field == "feedbackStatus") {
+        e.cellHtml = '<a id="' + row.id + '" class="showCellTooltip color-blue">' + value + '</a>';
+    }
+    if(field =="name"){
+      e.cellHtml = '<a id="name_' + row.id + '" href="' + basePath + "/candidateController/getCandidateResume/" + row.candidateId +"/"+row.id+ '" target="_Blank" style="display:block;width:100px;height:20px;color:blue;" data-placement="right" >' + value + '</a>';
+    }
+}
+
+$(".showCellTooltip").live("mouseenter",function() {
+  $("#comments").html('');
+  $("#interviewerName").html('');
+  $("#status").html("");
+  $("#userName").html('');
+  $("#createTime").html('');
+  $("#jobName").html('');
+  $("#feedbackTime").html('');
+  var lt = $(this).offset();
+  var l=lt.left,
+      t=lt.top;
+  $.ajax({
+    url : basePath + "/candidateRecommendController/getCandidateRecommend",
+    type : "post",
+    data : {
+      id : $(this).attr('id')
+    },
+    dataType : 'json', // 返回的数据格式：json/xml/html/script/jsonp/text
+    success : function(data) {
+      $("#comments").html(data.comments);
+      $("#interviewerName").html(data.interviewerName);
+      
+      //0:未反馈,1:安排面试,2:转岗,3:淘汰
+      if(data.status == 0){
+        $("#status").html("未反馈");
+        $("#jobName_tr").hide();
+      }
+      if(data.status == 1){
+        $("#status").html("安排面试");
+        $("#jobName_tr").hide();
+      }
+      if(data.status == 2){
+        $("#status").html("转岗");
+        $("#jobName").html(data.jobName);
+        $("#jobName_tr").show();
+      }
+      if(data.status == 3){
+        $("#status").html("淘汰");
+        $("#jobName_tr").hide();
+      }
+      $("#userName").html(data.userName);
+      $("#createTime").html(data.createTime);
+      $("#feedbackTime").html(data.feedbackTime);
+      $(".position-candidate-operate").show();
+      $(".position-candidate-operate").css({
+          top:t-60,
+          left:l+90
+      });
+    }
+  });
+  
+ 
+}).live("mouseleave",function() {
+  $(".position-candidate-operate").hide()
+})
+
+function bookInterview() {
+  var grid = mini.get("datagrid1");
+  var rows = grid.getSelecteds();
+  if (rows.length == 1) {
+    if(rows[0].lockUserAccount == null||(rows[0].lockUserAccount != null&&rows[0].lockUserAccount==curName)){
+      var id = rows[0].id;
+      window.open(basePath + "/interviewBookController/addInterviewBook?id=" + id);
+    }else{
+      mini.alert("未锁定或者锁定人是当前用户才能操作！");
+    }
+      
+   
+  }else{
+    alert("请先选中候选人！");
+  }
+}
+
+function choseState(state, e) {
+  $(".posi-import-btn").removeClass("tab-up");
+  $(e).addClass("tab-up");
+  if(state == 1 ){
+    $("#attention").show();
+    $("#cancelAttention").hide();
+    
+  }
+  
+  if(state == 2){
+  $("#attention").hide();
+  $("#cancelAttention").show();
+  }
+  if(state == 3){
+    $("#attention").show();
+    $("#cancelAttention").hide();
+    }
+  if(state == 4){
+    $("#attention").show();
+    $("#cancelAttention").hide();
+    }
+  if(state == 5){
+    $("#attention").show();
+    $("#cancelAttention").hide();
+    }
+  $("#state").val(state);
+  search();
+}
+
+function outbookInterview(){
+
+  var grid = mini.get("datagrid1");
+  var rows = grid.getSelecteds();
+  var flag = true ;
+  
+  if (rows.length > 0) {
+    var ids="";
+    var positionIds = "" ;
+    for(var i=0;i<rows.length&&flag;i++){
+      ids+=rows[i].id;
+      positionIds+=rows[i].positionid;
+      if(i!=rows.length){
+        ids+=",";
+        positionIds+=",";
+        
+      }
+      if(rows[i].lockUserAccount!=null&&rows[i].lockUserAccount != curName){
+        
+        flag = false ;
+      }
+    }
+    if(flag){
+      mini.prompt("请输入原因：", "请输入",
+          function (action, value) {
+              if (action == "ok") {
+                if(value.length){
+                  outAjaxInterviewBook(ids,positionIds,value);
+                }else{
+                  mini.alert("请填写原因!");
+                }
+              } 
+          },
+          true
+      );
+    }else{
+      mini.alert("未锁定或者锁定人是当前用户才能操作！");
+    }
+
+   
+  }else{
+    mini.alert("请先选中候选人！");
+  }
+
+}
+
+function outAjaxInterviewBook(ids,positionIds,reason){
+  $.ajax({
+    url : basePath + "/interviewBookController/outInterviewBook?ids=" + ids +"&positionIds=" + positionIds + "&reason=" + reason,
+    type : "post",
+    success : function(data) {
+     var dataJson = eval('(' + data + ')');
+        mini.alert(dataJson.msg);
+        datagrid.reload();
+    }
+  });
+  
+}
+
+  function unlocked() {
+
+  var grid = mini.get("datagrid1");
+  var rows = grid.getSelecteds();
+  if (rows.length > 0) {
+    var ids = "";
+    for (var i = 0; i < rows.length; i++) {
+      if (i == 0) {
+        ids += "'" + rows[i].candidateId + "'";
+      } else {
+        ids += ",'" + rows[i].candidateId + "'";
+      }
+      if (rows[i].lockUserAccount == null || rows[i].lockUserAccount != curName) {
+        mini.alert("当前数据没被锁定或者已被其他人锁定!");
+        return;
+      }
+    }
+   $.ajax({
+      url : basePath + "/candidateController/unlockCandidate",
+      type : "post",
+      data : {
+        ids : ids
+      },
+      dataType : 'json', // 返回的数据格式：json/xml/html/script/jsonp/text
+      success : function(data) {
+        mini.alert(data.msg);
+        datagrid.reload();
+      }
+    });
+
+  } else {
+    alert("请先选中候选人！");
+  }
+
+}
+  
+  function changePositon(){
+    var grid = mini.get("datagrid1");
+    var rows = grid.getSelecteds();
+    if (rows.length == 1) {
+        var id = rows[0].candidateId;
+        candidateId = id ;
+        if(rows[0].lockUserAccount == null||(rows[0].lockUserAccount != null&&rows[0].lockUserAccount==curName)){
+          OpenDialog(basePath + "/demand/chooseDemandList?candidateId="+candidateId+"&oldPositionId="+rows[0].positionid, "选择需求", null, 650, 380,chooseDemand);
+        }else{
+          mini.alert("未锁定或者锁定人是当前用户才能操作！");
+        }
+     
+    }else{
+      mini.alert("请选择一条数据");
+    }
+  }
+  
+  function chooseDemand(action){
+    if(action!="close"){
+      mini.alert(action);
+    }
+    datagrid.reload();
+  }
+  
+  function recommend(){
+    var grid = mini.get("datagrid1");
+    var rows = grid.getSelecteds();
+    if (rows.length == 1) {
+        var id = rows[0].candidateId;
+        candidateId = id ;
+        
+        if(rows[0].lockUserAccount == null||(rows[0].lockUserAccount != null&&rows[0].lockUserAccount==curName)){
+          $.ajax({
+            url : basePath + "/candidateRecommendController/validateCandidateRecommend",
+            type : "post",
+            data : {
+              candidatePostId:rows[0].id
+            },
+            dataType : 'json', //返回的数据格式：json/xml/html/script/jsonp/text
+            success : function(data) {
+               if(data.status == 200){
+                 OpenDialog(basePath + "/candidateRecommendController/addRecommend?candidateId="+candidateId+"&candidatePostId="+rows[0].id, "推荐候选人", null, 600, 500,chooseDemand);
+               }else{
+                 mini.alert(data.msg);
+               }
+            }
+          });
+         
+        }else{
+          mini.alert("未锁定或者锁定人是当前用户才能操作！");
+        }
+     
+    }else{
+      mini.alert("请选择一条数据");
+    }
+  
+  }
+  
+  function attention(){
+    var grid = mini.get("datagrid1");
+    var rows = grid.getSelecteds();
+    if (rows.length > 0) {
+      var ids="";
+      var positionIds="";
+      for(var i=0;i<rows.length;i++){
+        ids+=rows[i].candidateId;
+        positionIds+=rows[i].positionid;
+        if(i!=rows.length - 1){
+          ids+=",";
+          positionIds+=",";
+        }
+      }
+      $.ajax({
+        url : basePath + "/attentionController/addAttention",
+        type : "post",
+        data : {
+          ids:ids,
+          positionIds:positionIds
+        },
+        dataType : 'json', //返回的数据格式：json/xml/html/script/jsonp/text
+        success : function(data) {
+            mini.alert(data.msg);
+            datagrid.reload();
+        }
+      });
+
+     
+    }else{
+      alert("请先选中候选人！");
+    }
+  }
+  
+  
+  function cancelAttention(){
+
+
+    var grid = mini.get("datagrid1");
+    var rows = grid.getSelecteds();
+    if (rows.length > 0) {
+      var ids = "";
+      for (var i = 0; i < rows.length; i++) {
+        ids+=rows[i].id;
+        if(i != rows.length-1){
+          ids+=",";
+        }
+      }
+    $.ajax({
+       url : basePath + "/attentionController/cancelAttention",
+        type : "post",
+        data : {
+          ids : ids
+        },
+        dataType : 'json', // 返回的数据格式：json/xml/html/script/jsonp/text
+        success : function(data) {
+          mini.alert(data.msg);
+          datagrid.reload();
+        }
+      });
+
+    } else {
+      alert("请先选中候选人！");
+    }
+
+
+    
+  }
+  
+  
+  //录用申请
+  function employ() {
+    var grid = mini.get("datagrid1");
+    var rows = grid.getSelecteds();
+    if (rows.length > 0) {
+      $.ajax({
+        url : basePath + "/employ/saveEmploy",
+        type : "post",
+        data : {
+          candidateId : rows[0].candidateId,
+          candidateName : rows[0].name,
+          employPostId : rows[0].positionid
+        },
+        dataType : 'json', // 返回的数据格式：json/xml/html/script/jsonp/text
+        success : function(e) {
+          if (e.success) {
+            alert("录入申请成功！");
+            window.open(basePath + "/employ/modify/"+e.attributes.id);
+          } else {
+            mini.alert(e.msg);
+          }
+
+        }
+      });
+    } else {
+      mini.alert("请选择一条数据");
+    }
+  }

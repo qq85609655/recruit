@@ -1,0 +1,14 @@
+.tip-bar{margin:30px 10px;}
+.tip-bar .tip-msg{background:#fffce9;border:1px solid #f7da8d;border-radius:5px;color:#4d4d4d;padding:15px;}
+.main-item{margin:10px;}
+.main-item > *{display:inline-block;vertical-align:top;}
+.main-item label{width:80px;font-weight:bold;overflow:visible;white-space:nowrap;}
+.condition-add-table{display:block;margin-left:100px;}
+
+.table{margin-top:20px;margin-bottom:20px;}
+.table table{border-radius:5px;font-size:1em;margin-top:10px;}
+.table table tr th,.table table tr td{border:1px solid #999;line-height:26px;text-align:center;padding:0 10px;}
+.table .mini-checkbox-check {margin:0;}
+.table .icon-cancel-1{color:#06c;}
+.table .icon-cancel-1:hover{color:#48b8e8;}
+.condition-add{margin-top:20px;}

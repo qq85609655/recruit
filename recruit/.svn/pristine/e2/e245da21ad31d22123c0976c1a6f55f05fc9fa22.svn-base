@@ -1,0 +1,13 @@
+﻿[
+	{ id: "user", text: "用户管理"},
+	{ id: "addUser", pid: "user", text: "增加用户", iconCls: "icon-add", url: "../datagrid/celledit.html" },
+	{ id: "aaa", pid: "addUser", text: "AAA", iconCls: "icon-edit", url: "../datagrid/rowedit.html" },
+	{ id: "bbb", pid: "addUser", text: "BBB", iconCls: "icon-edit", url: "../datagrid/rowedit.html" },
+	{ id: "editUser", pid: "user", text: "修改用户", iconCls: "icon-edit", url: "../datagrid/rowedit.html" },
+	{ id: "removeUser", pid: "user", text: "删除用户", iconCls: "icon-remove", url: "../datagrid/datagrid.html" },
+		
+	{ id: "right", text: "权限管理"},
+	{ id: "addAuth", pid: "right", text: "增加权限", iconCls: "icon-add", url: "../datagrid/celledit.html" },
+	{ id: "editAuth", pid: "right", text: "修改权限", iconCls: "icon-edit", url: "../datagrid/rowedit.html" },
+	{ id: "removeAuth", pid: "right", text: "删除权限", iconCls: "icon-remove", url: "../datagrid/datagrid.html" }		
+]

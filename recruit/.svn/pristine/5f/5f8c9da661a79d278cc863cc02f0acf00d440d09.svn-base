@@ -1,0 +1,53 @@
+package com.csot.recruit.service.campus;
+
+import java.util.List;
+
+import javax.servlet.http.HttpServletResponse;
+
+import com.csot.recruit.model.original.campus.CampusAddressbook;
+import com.csot.recruit.model.original.campus.CampusPost;
+import com.csot.recruit.model.original.campus.CampusSite;
+
+import org.amberframework.web.miniui.pojo.MiniGridPageSort;
+import org.amberframework.web.miniui.pojo.MiniRtn2Grid;
+import org.apache.poi.hssf.usermodel.HSSFCellStyle;
+import org.apache.poi.hssf.usermodel.HSSFSheet;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.springframework.web.multipart.MultipartFile;
+
+public interface CampusAddressbookService {
+    MiniRtn2Grid<CampusAddressbook> getGrid(MiniGridPageSort pageSort, String searchKey);
+
+    CampusAddressbook getByPrimaryKey(String primaryKey);
+
+    void create(CampusAddressbook campusAddressbook);
+
+    void updateSelective(CampusAddressbook campusAddressbook);
+
+    void remove(String primaryKey);
+
+    String importAddressbook(MultipartFile multipartFile, String basePath, String importer)
+        throws Exception;
+
+    /**
+     * 根据姓名导出通讯录信息
+     * @param realName
+     * @param response
+     * @param request
+     * @return
+     */
+    List<CampusAddressbook> exportPartNoRealName(String realName);
+
+    /**
+     * 导出校招信息
+     * @param response
+     * @param campusList 需要导出的信息
+     */
+    void exportCampusAddbookInfo(HttpServletResponse response, List<CampusAddressbook> campusList);
+    
+    List<CampusSite> doGetSiteInfo(String siteId, String siteName);
+
+    List<CampusPost> doGetPostInfo(String id, String postName);
+
+    HSSFCellStyle doSetCellStyle(HSSFWorkbook wb, HSSFSheet sheet, String type);
+}

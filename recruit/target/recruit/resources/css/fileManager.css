@@ -1,0 +1,103 @@
+
+.fileTitle{
+	width: 100%;
+}
+
+.fileTitleContent input{
+	background-color: #46BEEE;
+	color: white;
+	width:67px;
+	height: 26px;
+	border-radius:5px;
+	border: 1px solid #2692B1;
+}
+
+.fileTitleContent{
+	position: relative;
+	left:10px;
+	top:10px;
+	
+}
+
+.fileContent{
+	margin-top: 20px;
+	border-top: 1px solid #aebed7;
+	padding-bottom: 70px;
+}
+
+
+.tGlobal th {
+    background: #eef2fb none repeat scroll 0 0;
+    border-bottom: 1px solid #cddef2;
+    height: 40px;
+}
+
+.tGlobal td {
+    border-bottom: 1px dashed #d6d6d6;
+    height: 32px;
+    line-height: 22px;
+    padding: 0 6px;
+    word-break: break-all;
+}
+.tGlobal td a:hover {
+    text-decoration: underline;
+}
+.tGlobal td a {
+    color: #06c;
+}
+.mainBg{
+	font-size: 13px;
+}
+
+.mainBg th,.mainBg td{
+	font-size:13px;
+	color:gray;
+}
+.mainBg table{
+	width: 100%;
+}
+
+.w150{
+	width: 150px;
+	height: 26px;
+}
+#fileForm{
+	margin-left: 20px;
+	margin-top: 20px;
+}
+#fileForm tr{
+	height: 30px;
+}
+#fileForm span{
+	font-size: 13px;
+}
+.red{
+	color: red;
+}
+#fileForm .grays{
+	color: gray;
+}
+.showFile{
+	width: 60px;
+	height: 26px;
+	border-radius:5px;
+	border: 1px solid #8FBAD0;
+}
+#textFile{
+	cursor: pointer;
+}
+.tipMessage{
+	width: 170px;
+	height: 50px;
+	background-color:#FFFBE4;
+	border: 2px solid red; 
+	position: relative;
+	left: 260px;
+	top: -120px;
+	display:none;
+}
+.tipContent{
+	position: relative;
+	left: 20px;
+	top:15px;
+}

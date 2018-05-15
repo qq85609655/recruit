@@ -1,0 +1,5 @@
+[
+    { "id": "all", "text": "全部信息" },
+    { "id": "isTrilateral", "text": "有三方信息" },
+    { "id": "isTrilAndBreakoff", "text": "有三方且违约" }
+]

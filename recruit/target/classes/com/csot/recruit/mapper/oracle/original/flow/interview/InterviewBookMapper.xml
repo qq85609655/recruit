@@ -1,0 +1,657 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.csot.recruit.dao.original.flow.interview.InterviewBookMapper" >
+  <resultMap id="BaseResultMap" type="com.csot.recruit.model.original.flow.interview.InterviewBook" >
+    <id column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="INTERVIEWEE" property="interviewee" jdbcType="VARCHAR" />
+    <result column="INTERVIEWERS" property="interviewers" jdbcType="VARCHAR" />
+    <result column="LINKMAN" property="linkman" jdbcType="VARCHAR" />
+    <result column="INTERVIEW_TYPE" property="interviewType" jdbcType="VARCHAR" />
+    <result column="TEL" property="tel" jdbcType="VARCHAR" />
+    <result column="WAIT_ADDRESS" property="waitAddress" jdbcType="VARCHAR" />
+    <result column="INTERVIEW_ADDRESS" property="interviewAddress" jdbcType="VARCHAR" />
+    <result column="IS_MESSAGE" property="isMessage" jdbcType="VARCHAR" />
+    <result column="IS_EMAIL" property="isEmail" jdbcType="VARCHAR" />
+    <result column="SECOND_R_NOTICE" property="secondRNotice" jdbcType="VARCHAR" />
+    <result column="SECOND_R_TIME" property="secondRTime" jdbcType="TIMESTAMP" />
+    <result column="SECOND_E_NOTICE" property="secondENotice" jdbcType="VARCHAR" />
+    <result column="SECOND_E_TIME" property="secondETime" jdbcType="TIMESTAMP" />
+    <result column="INTERVIEW_STATUS" property="interviewStatus" jdbcType="VARCHAR" />
+    <result column="POSITION_ID" property="positionId" jdbcType="VARCHAR" />
+    <result column="MODEL_ID" property="modelId" jdbcType="VARCHAR" />
+    <result column="EMAIL_CONTENT" property="emailContent" jdbcType="VARCHAR" />
+    <result column="IS_LINK" property="isLink" jdbcType="VARCHAR" />
+    <result column="INTERVIEW_DATE" property="interviewDate" jdbcType="DATE" />
+    <result column="INTERVIEW_B_TIME" property="interviewBTime" jdbcType="VARCHAR" />
+    <result column="INTERVIEW_E_TIME" property="interviewETime" jdbcType="VARCHAR" />
+    <result column="CANDIDATE_NAME" property="candidateName" jdbcType="VARCHAR" />
+    <result column="REASON" property="reason" jdbcType="VARCHAR" />
+    <result column="ROUNDS" property="rounds" jdbcType="VARCHAR" />
+    <result column="WORK_CODE" property="workCode" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    ID, INTERVIEWEE, INTERVIEWERS, LINKMAN, INTERVIEW_TYPE, TEL, WAIT_ADDRESS, INTERVIEW_ADDRESS, 
+    IS_MESSAGE, IS_EMAIL, SECOND_R_NOTICE, SECOND_R_TIME, SECOND_E_NOTICE, SECOND_E_TIME, 
+    INTERVIEW_STATUS, POSITION_ID, MODEL_ID, EMAIL_CONTENT, IS_LINK, INTERVIEW_DATE, 
+    INTERVIEW_B_TIME, INTERVIEW_E_TIME, CANDIDATE_NAME, REASON, ROUNDS, WORK_CODE
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.csot.recruit.model.original.flow.interview.InterviewBookCriteria" >
+    <include refid="Oracle_Dialect_Pagination_Prefix" />
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from T_INTERVIEW_BOOK
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <include refid="Oracle_Dialect_Pagination_Suffix" />
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from T_INTERVIEW_BOOK
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from T_INTERVIEW_BOOK
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.csot.recruit.model.original.flow.interview.InterviewBookCriteria" >
+    delete from T_INTERVIEW_BOOK
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.csot.recruit.model.original.flow.interview.InterviewBook" >
+    insert into T_INTERVIEW_BOOK (ID, INTERVIEWEE, INTERVIEWERS, 
+      LINKMAN, INTERVIEW_TYPE, TEL, 
+      WAIT_ADDRESS, INTERVIEW_ADDRESS, IS_MESSAGE, 
+      IS_EMAIL, SECOND_R_NOTICE, SECOND_R_TIME, 
+      SECOND_E_NOTICE, SECOND_E_TIME, INTERVIEW_STATUS, 
+      POSITION_ID, MODEL_ID, EMAIL_CONTENT, 
+      IS_LINK, INTERVIEW_DATE, INTERVIEW_B_TIME, 
+      INTERVIEW_E_TIME, CANDIDATE_NAME, REASON, 
+      ROUNDS, WORK_CODE)
+    values (#{id,jdbcType=VARCHAR}, #{interviewee,jdbcType=VARCHAR}, #{interviewers,jdbcType=VARCHAR}, 
+      #{linkman,jdbcType=VARCHAR}, #{interviewType,jdbcType=VARCHAR}, #{tel,jdbcType=VARCHAR}, 
+      #{waitAddress,jdbcType=VARCHAR}, #{interviewAddress,jdbcType=VARCHAR}, #{isMessage,jdbcType=VARCHAR}, 
+      #{isEmail,jdbcType=VARCHAR}, #{secondRNotice,jdbcType=VARCHAR}, #{secondRTime,jdbcType=TIMESTAMP}, 
+      #{secondENotice,jdbcType=VARCHAR}, #{secondETime,jdbcType=TIMESTAMP}, #{interviewStatus,jdbcType=VARCHAR}, 
+      #{positionId,jdbcType=VARCHAR}, #{modelId,jdbcType=VARCHAR}, #{emailContent,jdbcType=VARCHAR}, 
+      #{isLink,jdbcType=VARCHAR}, #{interviewDate,jdbcType=DATE}, #{interviewBTime,jdbcType=VARCHAR}, 
+      #{interviewETime,jdbcType=VARCHAR}, #{candidateName,jdbcType=VARCHAR}, #{reason,jdbcType=VARCHAR}, 
+      #{rounds,jdbcType=VARCHAR}, #{workCode,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.csot.recruit.model.original.flow.interview.InterviewBook" >
+    insert into T_INTERVIEW_BOOK
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="interviewee != null" >
+        INTERVIEWEE,
+      </if>
+      <if test="interviewers != null" >
+        INTERVIEWERS,
+      </if>
+      <if test="linkman != null" >
+        LINKMAN,
+      </if>
+      <if test="interviewType != null" >
+        INTERVIEW_TYPE,
+      </if>
+      <if test="tel != null" >
+        TEL,
+      </if>
+      <if test="waitAddress != null" >
+        WAIT_ADDRESS,
+      </if>
+      <if test="interviewAddress != null" >
+        INTERVIEW_ADDRESS,
+      </if>
+      <if test="isMessage != null" >
+        IS_MESSAGE,
+      </if>
+      <if test="isEmail != null" >
+        IS_EMAIL,
+      </if>
+      <if test="secondRNotice != null" >
+        SECOND_R_NOTICE,
+      </if>
+      <if test="secondRTime != null" >
+        SECOND_R_TIME,
+      </if>
+      <if test="secondENotice != null" >
+        SECOND_E_NOTICE,
+      </if>
+      <if test="secondETime != null" >
+        SECOND_E_TIME,
+      </if>
+      <if test="interviewStatus != null" >
+        INTERVIEW_STATUS,
+      </if>
+      <if test="positionId != null" >
+        POSITION_ID,
+      </if>
+      <if test="modelId != null" >
+        MODEL_ID,
+      </if>
+      <if test="emailContent != null" >
+        EMAIL_CONTENT,
+      </if>
+      <if test="isLink != null" >
+        IS_LINK,
+      </if>
+      <if test="interviewDate != null" >
+        INTERVIEW_DATE,
+      </if>
+      <if test="interviewBTime != null" >
+        INTERVIEW_B_TIME,
+      </if>
+      <if test="interviewETime != null" >
+        INTERVIEW_E_TIME,
+      </if>
+      <if test="candidateName != null" >
+        CANDIDATE_NAME,
+      </if>
+      <if test="reason != null" >
+        REASON,
+      </if>
+      <if test="rounds != null" >
+        ROUNDS,
+      </if>
+      <if test="workCode != null" >
+        WORK_CODE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="interviewee != null" >
+        #{interviewee,jdbcType=VARCHAR},
+      </if>
+      <if test="interviewers != null" >
+        #{interviewers,jdbcType=VARCHAR},
+      </if>
+      <if test="linkman != null" >
+        #{linkman,jdbcType=VARCHAR},
+      </if>
+      <if test="interviewType != null" >
+        #{interviewType,jdbcType=VARCHAR},
+      </if>
+      <if test="tel != null" >
+        #{tel,jdbcType=VARCHAR},
+      </if>
+      <if test="waitAddress != null" >
+        #{waitAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="interviewAddress != null" >
+        #{interviewAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="isMessage != null" >
+        #{isMessage,jdbcType=VARCHAR},
+      </if>
+      <if test="isEmail != null" >
+        #{isEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="secondRNotice != null" >
+        #{secondRNotice,jdbcType=VARCHAR},
+      </if>
+      <if test="secondRTime != null" >
+        #{secondRTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="secondENotice != null" >
+        #{secondENotice,jdbcType=VARCHAR},
+      </if>
+      <if test="secondETime != null" >
+        #{secondETime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="interviewStatus != null" >
+        #{interviewStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="positionId != null" >
+        #{positionId,jdbcType=VARCHAR},
+      </if>
+      <if test="modelId != null" >
+        #{modelId,jdbcType=VARCHAR},
+      </if>
+      <if test="emailContent != null" >
+        #{emailContent,jdbcType=VARCHAR},
+      </if>
+      <if test="isLink != null" >
+        #{isLink,jdbcType=VARCHAR},
+      </if>
+      <if test="interviewDate != null" >
+        #{interviewDate,jdbcType=DATE},
+      </if>
+      <if test="interviewBTime != null" >
+        #{interviewBTime,jdbcType=VARCHAR},
+      </if>
+      <if test="interviewETime != null" >
+        #{interviewETime,jdbcType=VARCHAR},
+      </if>
+      <if test="candidateName != null" >
+        #{candidateName,jdbcType=VARCHAR},
+      </if>
+      <if test="reason != null" >
+        #{reason,jdbcType=VARCHAR},
+      </if>
+      <if test="rounds != null" >
+        #{rounds,jdbcType=VARCHAR},
+      </if>
+      <if test="workCode != null" >
+        #{workCode,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.csot.recruit.model.original.flow.interview.InterviewBookCriteria" resultType="java.lang.Integer" >
+    select count(*) from T_INTERVIEW_BOOK
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update T_INTERVIEW_BOOK
+    <set >
+      <if test="record.id != null" >
+        ID = #{record.id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.interviewee != null" >
+        INTERVIEWEE = #{record.interviewee,jdbcType=VARCHAR},
+      </if>
+      <if test="record.interviewers != null" >
+        INTERVIEWERS = #{record.interviewers,jdbcType=VARCHAR},
+      </if>
+      <if test="record.linkman != null" >
+        LINKMAN = #{record.linkman,jdbcType=VARCHAR},
+      </if>
+      <if test="record.interviewType != null" >
+        INTERVIEW_TYPE = #{record.interviewType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tel != null" >
+        TEL = #{record.tel,jdbcType=VARCHAR},
+      </if>
+      <if test="record.waitAddress != null" >
+        WAIT_ADDRESS = #{record.waitAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="record.interviewAddress != null" >
+        INTERVIEW_ADDRESS = #{record.interviewAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isMessage != null" >
+        IS_MESSAGE = #{record.isMessage,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isEmail != null" >
+        IS_EMAIL = #{record.isEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="record.secondRNotice != null" >
+        SECOND_R_NOTICE = #{record.secondRNotice,jdbcType=VARCHAR},
+      </if>
+      <if test="record.secondRTime != null" >
+        SECOND_R_TIME = #{record.secondRTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.secondENotice != null" >
+        SECOND_E_NOTICE = #{record.secondENotice,jdbcType=VARCHAR},
+      </if>
+      <if test="record.secondETime != null" >
+        SECOND_E_TIME = #{record.secondETime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.interviewStatus != null" >
+        INTERVIEW_STATUS = #{record.interviewStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="record.positionId != null" >
+        POSITION_ID = #{record.positionId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.modelId != null" >
+        MODEL_ID = #{record.modelId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.emailContent != null" >
+        EMAIL_CONTENT = #{record.emailContent,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isLink != null" >
+        IS_LINK = #{record.isLink,jdbcType=VARCHAR},
+      </if>
+      <if test="record.interviewDate != null" >
+        INTERVIEW_DATE = #{record.interviewDate,jdbcType=DATE},
+      </if>
+      <if test="record.interviewBTime != null" >
+        INTERVIEW_B_TIME = #{record.interviewBTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.interviewETime != null" >
+        INTERVIEW_E_TIME = #{record.interviewETime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.candidateName != null" >
+        CANDIDATE_NAME = #{record.candidateName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.reason != null" >
+        REASON = #{record.reason,jdbcType=VARCHAR},
+      </if>
+      <if test="record.rounds != null" >
+        ROUNDS = #{record.rounds,jdbcType=VARCHAR},
+      </if>
+      <if test="record.workCode != null" >
+        WORK_CODE = #{record.workCode,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update T_INTERVIEW_BOOK
+    set ID = #{record.id,jdbcType=VARCHAR},
+      INTERVIEWEE = #{record.interviewee,jdbcType=VARCHAR},
+      INTERVIEWERS = #{record.interviewers,jdbcType=VARCHAR},
+      LINKMAN = #{record.linkman,jdbcType=VARCHAR},
+      INTERVIEW_TYPE = #{record.interviewType,jdbcType=VARCHAR},
+      TEL = #{record.tel,jdbcType=VARCHAR},
+      WAIT_ADDRESS = #{record.waitAddress,jdbcType=VARCHAR},
+      INTERVIEW_ADDRESS = #{record.interviewAddress,jdbcType=VARCHAR},
+      IS_MESSAGE = #{record.isMessage,jdbcType=VARCHAR},
+      IS_EMAIL = #{record.isEmail,jdbcType=VARCHAR},
+      SECOND_R_NOTICE = #{record.secondRNotice,jdbcType=VARCHAR},
+      SECOND_R_TIME = #{record.secondRTime,jdbcType=TIMESTAMP},
+      SECOND_E_NOTICE = #{record.secondENotice,jdbcType=VARCHAR},
+      SECOND_E_TIME = #{record.secondETime,jdbcType=TIMESTAMP},
+      INTERVIEW_STATUS = #{record.interviewStatus,jdbcType=VARCHAR},
+      POSITION_ID = #{record.positionId,jdbcType=VARCHAR},
+      MODEL_ID = #{record.modelId,jdbcType=VARCHAR},
+      EMAIL_CONTENT = #{record.emailContent,jdbcType=VARCHAR},
+      IS_LINK = #{record.isLink,jdbcType=VARCHAR},
+      INTERVIEW_DATE = #{record.interviewDate,jdbcType=DATE},
+      INTERVIEW_B_TIME = #{record.interviewBTime,jdbcType=VARCHAR},
+      INTERVIEW_E_TIME = #{record.interviewETime,jdbcType=VARCHAR},
+      CANDIDATE_NAME = #{record.candidateName,jdbcType=VARCHAR},
+      REASON = #{record.reason,jdbcType=VARCHAR},
+      ROUNDS = #{record.rounds,jdbcType=VARCHAR},
+      WORK_CODE = #{record.workCode,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.csot.recruit.model.original.flow.interview.InterviewBook" >
+    update T_INTERVIEW_BOOK
+    <set >
+      <if test="interviewee != null" >
+        INTERVIEWEE = #{interviewee,jdbcType=VARCHAR},
+      </if>
+      <if test="interviewers != null" >
+        INTERVIEWERS = #{interviewers,jdbcType=VARCHAR},
+      </if>
+      <if test="linkman != null" >
+        LINKMAN = #{linkman,jdbcType=VARCHAR},
+      </if>
+      <if test="interviewType != null" >
+        INTERVIEW_TYPE = #{interviewType,jdbcType=VARCHAR},
+      </if>
+      <if test="tel != null" >
+        TEL = #{tel,jdbcType=VARCHAR},
+      </if>
+      <if test="waitAddress != null" >
+        WAIT_ADDRESS = #{waitAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="interviewAddress != null" >
+        INTERVIEW_ADDRESS = #{interviewAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="isMessage != null" >
+        IS_MESSAGE = #{isMessage,jdbcType=VARCHAR},
+      </if>
+      <if test="isEmail != null" >
+        IS_EMAIL = #{isEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="secondRNotice != null" >
+        SECOND_R_NOTICE = #{secondRNotice,jdbcType=VARCHAR},
+      </if>
+      <if test="secondRTime != null" >
+        SECOND_R_TIME = #{secondRTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="secondENotice != null" >
+        SECOND_E_NOTICE = #{secondENotice,jdbcType=VARCHAR},
+      </if>
+      <if test="secondETime != null" >
+        SECOND_E_TIME = #{secondETime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="interviewStatus != null" >
+        INTERVIEW_STATUS = #{interviewStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="positionId != null" >
+        POSITION_ID = #{positionId,jdbcType=VARCHAR},
+      </if>
+      <if test="modelId != null" >
+        MODEL_ID = #{modelId,jdbcType=VARCHAR},
+      </if>
+      <if test="emailContent != null" >
+        EMAIL_CONTENT = #{emailContent,jdbcType=VARCHAR},
+      </if>
+      <if test="isLink != null" >
+        IS_LINK = #{isLink,jdbcType=VARCHAR},
+      </if>
+      <if test="interviewDate != null" >
+        INTERVIEW_DATE = #{interviewDate,jdbcType=DATE},
+      </if>
+      <if test="interviewBTime != null" >
+        INTERVIEW_B_TIME = #{interviewBTime,jdbcType=VARCHAR},
+      </if>
+      <if test="interviewETime != null" >
+        INTERVIEW_E_TIME = #{interviewETime,jdbcType=VARCHAR},
+      </if>
+      <if test="candidateName != null" >
+        CANDIDATE_NAME = #{candidateName,jdbcType=VARCHAR},
+      </if>
+      <if test="reason != null" >
+        REASON = #{reason,jdbcType=VARCHAR},
+      </if>
+      <if test="rounds != null" >
+        ROUNDS = #{rounds,jdbcType=VARCHAR},
+      </if>
+      <if test="workCode != null" >
+        WORK_CODE = #{workCode,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.csot.recruit.model.original.flow.interview.InterviewBook" >
+    update T_INTERVIEW_BOOK
+    set INTERVIEWEE = #{interviewee,jdbcType=VARCHAR},
+      INTERVIEWERS = #{interviewers,jdbcType=VARCHAR},
+      LINKMAN = #{linkman,jdbcType=VARCHAR},
+      INTERVIEW_TYPE = #{interviewType,jdbcType=VARCHAR},
+      TEL = #{tel,jdbcType=VARCHAR},
+      WAIT_ADDRESS = #{waitAddress,jdbcType=VARCHAR},
+      INTERVIEW_ADDRESS = #{interviewAddress,jdbcType=VARCHAR},
+      IS_MESSAGE = #{isMessage,jdbcType=VARCHAR},
+      IS_EMAIL = #{isEmail,jdbcType=VARCHAR},
+      SECOND_R_NOTICE = #{secondRNotice,jdbcType=VARCHAR},
+      SECOND_R_TIME = #{secondRTime,jdbcType=TIMESTAMP},
+      SECOND_E_NOTICE = #{secondENotice,jdbcType=VARCHAR},
+      SECOND_E_TIME = #{secondETime,jdbcType=TIMESTAMP},
+      INTERVIEW_STATUS = #{interviewStatus,jdbcType=VARCHAR},
+      POSITION_ID = #{positionId,jdbcType=VARCHAR},
+      MODEL_ID = #{modelId,jdbcType=VARCHAR},
+      EMAIL_CONTENT = #{emailContent,jdbcType=VARCHAR},
+      IS_LINK = #{isLink,jdbcType=VARCHAR},
+      INTERVIEW_DATE = #{interviewDate,jdbcType=DATE},
+      INTERVIEW_B_TIME = #{interviewBTime,jdbcType=VARCHAR},
+      INTERVIEW_E_TIME = #{interviewETime,jdbcType=VARCHAR},
+      CANDIDATE_NAME = #{candidateName,jdbcType=VARCHAR},
+      REASON = #{reason,jdbcType=VARCHAR},
+      ROUNDS = #{rounds,jdbcType=VARCHAR},
+      WORK_CODE = #{workCode,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <sql id="Oracle_Dialect_Pagination_Prefix" >
+    <if test="page != null" >
+      select * from ( select row_.*, rownum rownum_ from ( 
+    </if>
+  </sql>
+  <sql id="Oracle_Dialect_Pagination_Suffix" >
+    <if test="page != null" >
+      <![CDATA[ ) row_ ) where rownum_ > #{page.begin} and rownum_ <= #{page.end} ]]>
+    </if>
+  </sql>
+  
+      <select id="selectInterviewBookListByMap" resultMap="BaseResultMap" parameterType="java.util.Map">
+   select 
+    <include refid="Base_Column_List" />
+    from T_INTERVIEW_BOOK
+    <where>
+      <if test="candidateId != null and candidateId != ''" >
+        and INTERVIEWEE = #{candidateId,jdbcType=VARCHAR}
+      </if>
+       <if test="positionId != null and positionId != ''" >
+        and POSITION_ID = #{positionId,jdbcType=VARCHAR}
+      </if>
+       <if test="status != null and status == 1">
+        and INTERVIEW_STATUS  not in ('2','9') 
+      </if>
+    </where>
+  </select>
+  
+  <update id="batchUpdateInterviewBook" parameterType="java.util.Map">
+  update T_INTERVIEW_BOOK
+    <set >
+      <if test="interviewee != null" >
+        INTERVIEWEE = #{interviewee,jdbcType=VARCHAR},
+      </if>
+      <if test="interviewers != null" >
+        INTERVIEWERS = #{interviewers,jdbcType=VARCHAR},
+      </if>
+      <if test="linkman != null" >
+        LINKMAN = #{linkman,jdbcType=VARCHAR},
+      </if>
+      <if test="interviewType != null" >
+        INTERVIEW_TYPE = #{interviewType,jdbcType=VARCHAR},
+      </if>
+      <if test="tel != null" >
+        TEL = #{tel,jdbcType=VARCHAR},
+      </if>
+      <if test="waitAddress != null" >
+        WAIT_ADDRESS = #{waitAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="interviewAddress != null" >
+        INTERVIEW_ADDRESS = #{interviewAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="isMessage != null" >
+        IS_MESSAGE = #{isMessage,jdbcType=VARCHAR},
+      </if>
+      <if test="isEmail != null" >
+        IS_EMAIL = #{isEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="secondRNotice != null" >
+        SECOND_R_NOTICE = #{secondRNotice,jdbcType=VARCHAR},
+      </if>
+      <if test="secondRTime != null" >
+        SECOND_R_TIME = #{secondRTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="secondENotice != null" >
+        SECOND_E_NOTICE = #{secondENotice,jdbcType=VARCHAR},
+      </if>
+      <if test="secondETime != null" >
+        SECOND_E_TIME = #{secondETime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="interviewStatus != null" >
+        INTERVIEW_STATUS = #{interviewStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="positionId != null" >
+        POSITION_ID = #{positionId,jdbcType=VARCHAR},
+      </if>
+      <if test="modelId != null" >
+        MODEL_ID = #{modelId,jdbcType=VARCHAR},
+      </if>
+      <if test="emailContent != null" >
+        EMAIL_CONTENT = #{emailContent,jdbcType=VARCHAR},
+      </if>
+      <if test="isLink != null" >
+        IS_LINK = #{isLink,jdbcType=VARCHAR},
+      </if>
+      <if test="interviewDate != null" >
+        INTERVIEW_DATE = #{interviewDate,jdbcType=DATE},
+      </if>
+      <if test="interviewBTime != null" >
+        INTERVIEW_B_TIME = #{interviewBTime,jdbcType=VARCHAR},
+      </if>
+      <if test="interviewETime != null" >
+        INTERVIEW_E_TIME = #{interviewETime,jdbcType=VARCHAR},
+      </if>
+      <if test="candidateName != null" >
+        CANDIDATE_NAME = #{candidateName,jdbcType=VARCHAR},
+      </if>
+      <if test="reason != null" >
+        REASON = #{reason,jdbcType=VARCHAR},
+      </if>
+      <if test="rounds != null" >
+        ROUNDS = #{rounds,jdbcType=VARCHAR},
+      </if>
+      <if test="workCode != null" >
+        WORK_CODE = #{workCode,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID in <foreach item="item" index="index" collection="list" open="("
+            separator="," close=")">
+            #{item}  
+      </foreach>
+  </update>
+</mapper>

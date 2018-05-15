@@ -1,0 +1,288 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.csot.recruit.dao.resume.WorkIntentionMapper" >
+  <resultMap id="BaseResultMap" type="com.csot.recruit.model.resume.WorkIntention" >
+    <id column="WORKINTENTION_ID" property="id" jdbcType="VARCHAR" />
+    <result column="WORKPLACE_EXPECT" property="workplaceExpect" jdbcType="VARCHAR" />
+    <result column="INDUSTRY_EXPECT" property="industryExpect" jdbcType="VARCHAR" />
+    <result column="JOBTYPE_EXPECT" property="jobtypeExpect" jdbcType="VARCHAR" />
+    <result column="POST_EXPECT" property="postExpect" jdbcType="VARCHAR" />
+    <result column="SALARY_EXPECT" property="salaryExpect" jdbcType="VARCHAR" />
+    <result column="RPEORT_TIME" property="rpeortTime" jdbcType="VARCHAR" />
+    <result column="CURRENCY" property="currency" jdbcType="VARCHAR" />
+    <result column="RESUME_ID" property="resumeId" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    WORKINTENTION_ID, WORKPLACE_EXPECT, INDUSTRY_EXPECT, JOBTYPE_EXPECT, POST_EXPECT, SALARY_EXPECT, 
+    RPEORT_TIME, CURRENCY, RESUME_ID
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.csot.recruit.model.resume.WorkIntentionCriteria" >
+    <include refid="Oracle_Dialect_Pagination_Prefix" />
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from T_RESUME_WORK_INTENTION
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <include refid="Oracle_Dialect_Pagination_Suffix" />
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from T_RESUME_WORK_INTENTION
+    where WORKINTENTION_ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from T_RESUME_WORK_INTENTION
+    where WORKINTENTION_ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.csot.recruit.model.resume.WorkIntentionCriteria" >
+    delete from T_RESUME_WORK_INTENTION
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.csot.recruit.model.resume.WorkIntention" >
+    insert into T_RESUME_WORK_INTENTION (WORKINTENTION_ID, WORKPLACE_EXPECT, INDUSTRY_EXPECT, 
+      JOBTYPE_EXPECT, POST_EXPECT, SALARY_EXPECT, 
+      RPEORT_TIME, CURRENCY, RESUME_ID
+      )
+    values (#{id,jdbcType=VARCHAR}, #{workplaceExpect,jdbcType=VARCHAR}, #{industryExpect,jdbcType=VARCHAR}, 
+      #{jobtypeExpect,jdbcType=VARCHAR}, #{postExpect,jdbcType=VARCHAR}, #{salaryExpect,jdbcType=VARCHAR}, 
+      #{rpeortTime,jdbcType=VARCHAR}, #{currency,jdbcType=VARCHAR}, #{resumeId,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.csot.recruit.model.resume.WorkIntention" >
+    insert into T_RESUME_WORK_INTENTION
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        WORKINTENTION_ID,
+      </if>
+      <if test="workplaceExpect != null" >
+        WORKPLACE_EXPECT,
+      </if>
+      <if test="industryExpect != null" >
+        INDUSTRY_EXPECT,
+      </if>
+      <if test="jobtypeExpect != null" >
+        JOBTYPE_EXPECT,
+      </if>
+      <if test="postExpect != null" >
+        POST_EXPECT,
+      </if>
+      <if test="salaryExpect != null" >
+        SALARY_EXPECT,
+      </if>
+      <if test="rpeortTime != null" >
+        RPEORT_TIME,
+      </if>
+      <if test="currency != null" >
+        CURRENCY,
+      </if>
+      <if test="resumeId != null" >
+        RESUME_ID,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="workplaceExpect != null" >
+        #{workplaceExpect,jdbcType=VARCHAR},
+      </if>
+      <if test="industryExpect != null" >
+        #{industryExpect,jdbcType=VARCHAR},
+      </if>
+      <if test="jobtypeExpect != null" >
+        #{jobtypeExpect,jdbcType=VARCHAR},
+      </if>
+      <if test="postExpect != null" >
+        #{postExpect,jdbcType=VARCHAR},
+      </if>
+      <if test="salaryExpect != null" >
+        #{salaryExpect,jdbcType=VARCHAR},
+      </if>
+      <if test="rpeortTime != null" >
+        #{rpeortTime,jdbcType=VARCHAR},
+      </if>
+      <if test="currency != null" >
+        #{currency,jdbcType=VARCHAR},
+      </if>
+      <if test="resumeId != null" >
+        #{resumeId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.csot.recruit.model.resume.WorkIntentionCriteria" resultType="java.lang.Integer" >
+    select count(*) from T_RESUME_WORK_INTENTION
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update T_RESUME_WORK_INTENTION
+    <set >
+      <if test="record.id != null" >
+        WORKINTENTION_ID = #{record.id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.workplaceExpect != null" >
+        WORKPLACE_EXPECT = #{record.workplaceExpect,jdbcType=VARCHAR},
+      </if>
+      <if test="record.industryExpect != null" >
+        INDUSTRY_EXPECT = #{record.industryExpect,jdbcType=VARCHAR},
+      </if>
+      <if test="record.jobtypeExpect != null" >
+        JOBTYPE_EXPECT = #{record.jobtypeExpect,jdbcType=VARCHAR},
+      </if>
+      <if test="record.postExpect != null" >
+        POST_EXPECT = #{record.postExpect,jdbcType=VARCHAR},
+      </if>
+      <if test="record.salaryExpect != null" >
+        SALARY_EXPECT = #{record.salaryExpect,jdbcType=VARCHAR},
+      </if>
+      <if test="record.rpeortTime != null" >
+        RPEORT_TIME = #{record.rpeortTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.currency != null" >
+        CURRENCY = #{record.currency,jdbcType=VARCHAR},
+      </if>
+      <if test="record.resumeId != null" >
+        RESUME_ID = #{record.resumeId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update T_RESUME_WORK_INTENTION
+    set WORKINTENTION_ID = #{record.id,jdbcType=VARCHAR},
+      WORKPLACE_EXPECT = #{record.workplaceExpect,jdbcType=VARCHAR},
+      INDUSTRY_EXPECT = #{record.industryExpect,jdbcType=VARCHAR},
+      JOBTYPE_EXPECT = #{record.jobtypeExpect,jdbcType=VARCHAR},
+      POST_EXPECT = #{record.postExpect,jdbcType=VARCHAR},
+      SALARY_EXPECT = #{record.salaryExpect,jdbcType=VARCHAR},
+      RPEORT_TIME = #{record.rpeortTime,jdbcType=VARCHAR},
+      CURRENCY = #{record.currency,jdbcType=VARCHAR},
+      RESUME_ID = #{record.resumeId,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.csot.recruit.model.resume.WorkIntention" >
+    update T_RESUME_WORK_INTENTION
+    <set >
+      <if test="workplaceExpect != null" >
+        WORKPLACE_EXPECT = #{workplaceExpect,jdbcType=VARCHAR},
+      </if>
+      <if test="industryExpect != null" >
+        INDUSTRY_EXPECT = #{industryExpect,jdbcType=VARCHAR},
+      </if>
+      <if test="jobtypeExpect != null" >
+        JOBTYPE_EXPECT = #{jobtypeExpect,jdbcType=VARCHAR},
+      </if>
+      <if test="postExpect != null" >
+        POST_EXPECT = #{postExpect,jdbcType=VARCHAR},
+      </if>
+      <if test="salaryExpect != null" >
+        SALARY_EXPECT = #{salaryExpect,jdbcType=VARCHAR},
+      </if>
+      <if test="rpeortTime != null" >
+        RPEORT_TIME = #{rpeortTime,jdbcType=VARCHAR},
+      </if>
+      <if test="currency != null" >
+        CURRENCY = #{currency,jdbcType=VARCHAR},
+      </if>
+      <if test="resumeId != null" >
+        RESUME_ID = #{resumeId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where WORKINTENTION_ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.csot.recruit.model.resume.WorkIntention" >
+    update T_RESUME_WORK_INTENTION
+    set WORKPLACE_EXPECT = #{workplaceExpect,jdbcType=VARCHAR},
+      INDUSTRY_EXPECT = #{industryExpect,jdbcType=VARCHAR},
+      JOBTYPE_EXPECT = #{jobtypeExpect,jdbcType=VARCHAR},
+      POST_EXPECT = #{postExpect,jdbcType=VARCHAR},
+      SALARY_EXPECT = #{salaryExpect,jdbcType=VARCHAR},
+      RPEORT_TIME = #{rpeortTime,jdbcType=VARCHAR},
+      CURRENCY = #{currency,jdbcType=VARCHAR},
+      RESUME_ID = #{resumeId,jdbcType=VARCHAR}
+    where WORKINTENTION_ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <sql id="Oracle_Dialect_Pagination_Prefix" >
+    <if test="page != null" >
+      select * from ( select row_.*, rownum rownum_ from ( 
+    </if>
+  </sql>
+  <sql id="Oracle_Dialect_Pagination_Suffix" >
+    <if test="page != null" >
+      <![CDATA[ ) row_ ) where rownum_ > #{page.begin} and rownum_ <= #{page.end} ]]>
+    </if>
+  </sql>
+</mapper>

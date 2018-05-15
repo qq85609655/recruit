@@ -1,0 +1,19 @@
+package com.csot.recruit.common.util;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+public class CampusUtils {
+  public static String getCurrentYearth() {
+    // 获取年份
+    Date date = new Date();
+    String yearth = new SimpleDateFormat("yyyy").format(date);
+    int month = date.getMonth();
+    if (month < 6) {
+      yearth = yearth + "01";
+    } else {
+      yearth = yearth + "02";
+    }
+    return yearth;
+  }
+}

@@ -1,0 +1,781 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.csot.recruit.dao.original.interview.EducationMapper" >
+  <resultMap id="BaseResultMap" type="com.csot.recruit.model.original.interview.Education" >
+    <id column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="EDUCATION_STRATDATE_1" property="educationStratdate1" jdbcType="VARCHAR" />
+    <result column="EDUCATION_ENDDATE_1" property="educationEnddate1" jdbcType="VARCHAR" />
+    <result column="EDUCATION_SCHOOL_1" property="educationSchool1" jdbcType="VARCHAR" />
+    <result column="MAJOR_1" property="major1" jdbcType="VARCHAR" />
+    <result column="EDUCATION_STRATDATE_2" property="educationStratdate2" jdbcType="VARCHAR" />
+    <result column="EDUCATION_ENDDATE_2" property="educationEnddate2" jdbcType="VARCHAR" />
+    <result column="EDUCATION_SCHOOL_2" property="educationSchool2" jdbcType="VARCHAR" />
+    <result column="MAJOR_2" property="major2" jdbcType="VARCHAR" />
+    <result column="EDUCATION_STRATDATE_3" property="educationStratdate3" jdbcType="VARCHAR" />
+    <result column="EDUCATION_ENDDATE_3" property="educationEnddate3" jdbcType="VARCHAR" />
+    <result column="EDUCATION_SCHOOL_3" property="educationSchool3" jdbcType="VARCHAR" />
+    <result column="MAJOR_3" property="major3" jdbcType="VARCHAR" />
+    <result column="EDUCATION_STRATDATE_4" property="educationStratdate4" jdbcType="VARCHAR" />
+    <result column="EDUCATION_ENDDATE_4" property="educationEnddate4" jdbcType="VARCHAR" />
+    <result column="EDUCATION_SCHOOL_4" property="educationSchool4" jdbcType="VARCHAR" />
+    <result column="MAJOR_4" property="major4" jdbcType="VARCHAR" />
+    <result column="EDUCATIONAL_BACKGROUND_1" property="educationalBackground1" jdbcType="VARCHAR" />
+    <result column="EDUCATIONAL_TYPE_1" property="educationalType1" jdbcType="VARCHAR" />
+    <result column="GET_CERTIFICATE_1" property="getCertificate1" jdbcType="VARCHAR" />
+    <result column="EDUCATIONAL_BACKGROUND_2" property="educationalBackground2" jdbcType="VARCHAR" />
+    <result column="EDUCATIONAL_TYPE_2" property="educationalType2" jdbcType="VARCHAR" />
+    <result column="GET_CERTIFICATE_2" property="getCertificate2" jdbcType="VARCHAR" />
+    <result column="EDUCATIONAL_BACKGROUND_3" property="educationalBackground3" jdbcType="VARCHAR" />
+    <result column="EDUCATIONAL_TYPE_3" property="educationalType3" jdbcType="VARCHAR" />
+    <result column="GET_CERTIFICATE_3" property="getCertificate3" jdbcType="VARCHAR" />
+    <result column="EDUCATIONAL_BACKGROUND_4" property="educationalBackground4" jdbcType="VARCHAR" />
+    <result column="EDUCATIONAL_TYPE_4" property="educationalType4" jdbcType="VARCHAR" />
+    <result column="GET_CERTIFICATE_4" property="getCertificate4" jdbcType="VARCHAR" />
+    <result column="DIPLOMA_TYPE_1" property="diplomaType1" jdbcType="VARCHAR" />
+    <result column="DIPLOMA_NAME_1" property="diplomaName1" jdbcType="VARCHAR" />
+    <result column="DIPLOMA_DATE_1" property="diplomaDate1" jdbcType="VARCHAR" />
+    <result column="DIPLOMA_NUM_1" property="diplomaNum1" jdbcType="VARCHAR" />
+    <result column="DIPLOMA_ORGAN_1" property="diplomaOrgan1" jdbcType="VARCHAR" />
+    <result column="DIPLOMA_TYPE_2" property="diplomaType2" jdbcType="VARCHAR" />
+    <result column="DIPLOMA_NAME_2" property="diplomaName2" jdbcType="VARCHAR" />
+    <result column="DIPLOMA_DATE_2" property="diplomaDate2" jdbcType="VARCHAR" />
+    <result column="DIPLOMA_NUM_2" property="diplomaNum2" jdbcType="VARCHAR" />
+    <result column="DIPLOMA_ORGAN_2" property="diplomaOrgan2" jdbcType="VARCHAR" />
+    <result column="PERSON_CODE" property="personCode" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    ID, EDUCATION_STRATDATE_1, EDUCATION_ENDDATE_1, EDUCATION_SCHOOL_1, MAJOR_1, EDUCATION_STRATDATE_2, 
+    EDUCATION_ENDDATE_2, EDUCATION_SCHOOL_2, MAJOR_2, EDUCATION_STRATDATE_3, EDUCATION_ENDDATE_3, 
+    EDUCATION_SCHOOL_3, MAJOR_3, EDUCATION_STRATDATE_4, EDUCATION_ENDDATE_4, EDUCATION_SCHOOL_4, 
+    MAJOR_4, EDUCATIONAL_BACKGROUND_1, EDUCATIONAL_TYPE_1, GET_CERTIFICATE_1, EDUCATIONAL_BACKGROUND_2, 
+    EDUCATIONAL_TYPE_2, GET_CERTIFICATE_2, EDUCATIONAL_BACKGROUND_3, EDUCATIONAL_TYPE_3, 
+    GET_CERTIFICATE_3, EDUCATIONAL_BACKGROUND_4, EDUCATIONAL_TYPE_4, GET_CERTIFICATE_4, 
+    DIPLOMA_TYPE_1, DIPLOMA_NAME_1, DIPLOMA_DATE_1, DIPLOMA_NUM_1, DIPLOMA_ORGAN_1, DIPLOMA_TYPE_2, 
+    DIPLOMA_NAME_2, DIPLOMA_DATE_2, DIPLOMA_NUM_2, DIPLOMA_ORGAN_2, PERSON_CODE
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.csot.recruit.model.original.interview.EducationCriteria" >
+    <include refid="Oracle_Dialect_Pagination_Prefix" />
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from T_EDUCATION
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <include refid="Oracle_Dialect_Pagination_Suffix" />
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from T_EDUCATION
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from T_EDUCATION
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.csot.recruit.model.original.interview.EducationCriteria" >
+    delete from T_EDUCATION
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.csot.recruit.model.original.interview.Education" >
+    insert into T_EDUCATION (ID, EDUCATION_STRATDATE_1, EDUCATION_ENDDATE_1, 
+      EDUCATION_SCHOOL_1, MAJOR_1, EDUCATION_STRATDATE_2, 
+      EDUCATION_ENDDATE_2, EDUCATION_SCHOOL_2, MAJOR_2, 
+      EDUCATION_STRATDATE_3, EDUCATION_ENDDATE_3, 
+      EDUCATION_SCHOOL_3, MAJOR_3, EDUCATION_STRATDATE_4, 
+      EDUCATION_ENDDATE_4, EDUCATION_SCHOOL_4, MAJOR_4, 
+      EDUCATIONAL_BACKGROUND_1, EDUCATIONAL_TYPE_1, 
+      GET_CERTIFICATE_1, EDUCATIONAL_BACKGROUND_2, 
+      EDUCATIONAL_TYPE_2, GET_CERTIFICATE_2, EDUCATIONAL_BACKGROUND_3, 
+      EDUCATIONAL_TYPE_3, GET_CERTIFICATE_3, EDUCATIONAL_BACKGROUND_4, 
+      EDUCATIONAL_TYPE_4, GET_CERTIFICATE_4, DIPLOMA_TYPE_1, 
+      DIPLOMA_NAME_1, DIPLOMA_DATE_1, DIPLOMA_NUM_1, 
+      DIPLOMA_ORGAN_1, DIPLOMA_TYPE_2, DIPLOMA_NAME_2, 
+      DIPLOMA_DATE_2, DIPLOMA_NUM_2, DIPLOMA_ORGAN_2, 
+      PERSON_CODE)
+    values (#{id,jdbcType=VARCHAR}, #{educationStratdate1,jdbcType=VARCHAR}, #{educationEnddate1,jdbcType=VARCHAR}, 
+      #{educationSchool1,jdbcType=VARCHAR}, #{major1,jdbcType=VARCHAR}, #{educationStratdate2,jdbcType=VARCHAR}, 
+      #{educationEnddate2,jdbcType=VARCHAR}, #{educationSchool2,jdbcType=VARCHAR}, #{major2,jdbcType=VARCHAR}, 
+      #{educationStratdate3,jdbcType=VARCHAR}, #{educationEnddate3,jdbcType=VARCHAR}, 
+      #{educationSchool3,jdbcType=VARCHAR}, #{major3,jdbcType=VARCHAR}, #{educationStratdate4,jdbcType=VARCHAR}, 
+      #{educationEnddate4,jdbcType=VARCHAR}, #{educationSchool4,jdbcType=VARCHAR}, #{major4,jdbcType=VARCHAR}, 
+      #{educationalBackground1,jdbcType=VARCHAR}, #{educationalType1,jdbcType=VARCHAR}, 
+      #{getCertificate1,jdbcType=VARCHAR}, #{educationalBackground2,jdbcType=VARCHAR}, 
+      #{educationalType2,jdbcType=VARCHAR}, #{getCertificate2,jdbcType=VARCHAR}, #{educationalBackground3,jdbcType=VARCHAR}, 
+      #{educationalType3,jdbcType=VARCHAR}, #{getCertificate3,jdbcType=VARCHAR}, #{educationalBackground4,jdbcType=VARCHAR}, 
+      #{educationalType4,jdbcType=VARCHAR}, #{getCertificate4,jdbcType=VARCHAR}, #{diplomaType1,jdbcType=VARCHAR}, 
+      #{diplomaName1,jdbcType=VARCHAR}, #{diplomaDate1,jdbcType=VARCHAR}, #{diplomaNum1,jdbcType=VARCHAR}, 
+      #{diplomaOrgan1,jdbcType=VARCHAR}, #{diplomaType2,jdbcType=VARCHAR}, #{diplomaName2,jdbcType=VARCHAR}, 
+      #{diplomaDate2,jdbcType=VARCHAR}, #{diplomaNum2,jdbcType=VARCHAR}, #{diplomaOrgan2,jdbcType=VARCHAR}, 
+      #{personCode,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.csot.recruit.model.original.interview.Education" >
+    insert into T_EDUCATION
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="educationStratdate1 != null" >
+        EDUCATION_STRATDATE_1,
+      </if>
+      <if test="educationEnddate1 != null" >
+        EDUCATION_ENDDATE_1,
+      </if>
+      <if test="educationSchool1 != null" >
+        EDUCATION_SCHOOL_1,
+      </if>
+      <if test="major1 != null" >
+        MAJOR_1,
+      </if>
+      <if test="educationStratdate2 != null" >
+        EDUCATION_STRATDATE_2,
+      </if>
+      <if test="educationEnddate2 != null" >
+        EDUCATION_ENDDATE_2,
+      </if>
+      <if test="educationSchool2 != null" >
+        EDUCATION_SCHOOL_2,
+      </if>
+      <if test="major2 != null" >
+        MAJOR_2,
+      </if>
+      <if test="educationStratdate3 != null" >
+        EDUCATION_STRATDATE_3,
+      </if>
+      <if test="educationEnddate3 != null" >
+        EDUCATION_ENDDATE_3,
+      </if>
+      <if test="educationSchool3 != null" >
+        EDUCATION_SCHOOL_3,
+      </if>
+      <if test="major3 != null" >
+        MAJOR_3,
+      </if>
+      <if test="educationStratdate4 != null" >
+        EDUCATION_STRATDATE_4,
+      </if>
+      <if test="educationEnddate4 != null" >
+        EDUCATION_ENDDATE_4,
+      </if>
+      <if test="educationSchool4 != null" >
+        EDUCATION_SCHOOL_4,
+      </if>
+      <if test="major4 != null" >
+        MAJOR_4,
+      </if>
+      <if test="educationalBackground1 != null" >
+        EDUCATIONAL_BACKGROUND_1,
+      </if>
+      <if test="educationalType1 != null" >
+        EDUCATIONAL_TYPE_1,
+      </if>
+      <if test="getCertificate1 != null" >
+        GET_CERTIFICATE_1,
+      </if>
+      <if test="educationalBackground2 != null" >
+        EDUCATIONAL_BACKGROUND_2,
+      </if>
+      <if test="educationalType2 != null" >
+        EDUCATIONAL_TYPE_2,
+      </if>
+      <if test="getCertificate2 != null" >
+        GET_CERTIFICATE_2,
+      </if>
+      <if test="educationalBackground3 != null" >
+        EDUCATIONAL_BACKGROUND_3,
+      </if>
+      <if test="educationalType3 != null" >
+        EDUCATIONAL_TYPE_3,
+      </if>
+      <if test="getCertificate3 != null" >
+        GET_CERTIFICATE_3,
+      </if>
+      <if test="educationalBackground4 != null" >
+        EDUCATIONAL_BACKGROUND_4,
+      </if>
+      <if test="educationalType4 != null" >
+        EDUCATIONAL_TYPE_4,
+      </if>
+      <if test="getCertificate4 != null" >
+        GET_CERTIFICATE_4,
+      </if>
+      <if test="diplomaType1 != null" >
+        DIPLOMA_TYPE_1,
+      </if>
+      <if test="diplomaName1 != null" >
+        DIPLOMA_NAME_1,
+      </if>
+      <if test="diplomaDate1 != null" >
+        DIPLOMA_DATE_1,
+      </if>
+      <if test="diplomaNum1 != null" >
+        DIPLOMA_NUM_1,
+      </if>
+      <if test="diplomaOrgan1 != null" >
+        DIPLOMA_ORGAN_1,
+      </if>
+      <if test="diplomaType2 != null" >
+        DIPLOMA_TYPE_2,
+      </if>
+      <if test="diplomaName2 != null" >
+        DIPLOMA_NAME_2,
+      </if>
+      <if test="diplomaDate2 != null" >
+        DIPLOMA_DATE_2,
+      </if>
+      <if test="diplomaNum2 != null" >
+        DIPLOMA_NUM_2,
+      </if>
+      <if test="diplomaOrgan2 != null" >
+        DIPLOMA_ORGAN_2,
+      </if>
+      <if test="personCode != null" >
+        PERSON_CODE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="educationStratdate1 != null" >
+        #{educationStratdate1,jdbcType=VARCHAR},
+      </if>
+      <if test="educationEnddate1 != null" >
+        #{educationEnddate1,jdbcType=VARCHAR},
+      </if>
+      <if test="educationSchool1 != null" >
+        #{educationSchool1,jdbcType=VARCHAR},
+      </if>
+      <if test="major1 != null" >
+        #{major1,jdbcType=VARCHAR},
+      </if>
+      <if test="educationStratdate2 != null" >
+        #{educationStratdate2,jdbcType=VARCHAR},
+      </if>
+      <if test="educationEnddate2 != null" >
+        #{educationEnddate2,jdbcType=VARCHAR},
+      </if>
+      <if test="educationSchool2 != null" >
+        #{educationSchool2,jdbcType=VARCHAR},
+      </if>
+      <if test="major2 != null" >
+        #{major2,jdbcType=VARCHAR},
+      </if>
+      <if test="educationStratdate3 != null" >
+        #{educationStratdate3,jdbcType=VARCHAR},
+      </if>
+      <if test="educationEnddate3 != null" >
+        #{educationEnddate3,jdbcType=VARCHAR},
+      </if>
+      <if test="educationSchool3 != null" >
+        #{educationSchool3,jdbcType=VARCHAR},
+      </if>
+      <if test="major3 != null" >
+        #{major3,jdbcType=VARCHAR},
+      </if>
+      <if test="educationStratdate4 != null" >
+        #{educationStratdate4,jdbcType=VARCHAR},
+      </if>
+      <if test="educationEnddate4 != null" >
+        #{educationEnddate4,jdbcType=VARCHAR},
+      </if>
+      <if test="educationSchool4 != null" >
+        #{educationSchool4,jdbcType=VARCHAR},
+      </if>
+      <if test="major4 != null" >
+        #{major4,jdbcType=VARCHAR},
+      </if>
+      <if test="educationalBackground1 != null" >
+        #{educationalBackground1,jdbcType=VARCHAR},
+      </if>
+      <if test="educationalType1 != null" >
+        #{educationalType1,jdbcType=VARCHAR},
+      </if>
+      <if test="getCertificate1 != null" >
+        #{getCertificate1,jdbcType=VARCHAR},
+      </if>
+      <if test="educationalBackground2 != null" >
+        #{educationalBackground2,jdbcType=VARCHAR},
+      </if>
+      <if test="educationalType2 != null" >
+        #{educationalType2,jdbcType=VARCHAR},
+      </if>
+      <if test="getCertificate2 != null" >
+        #{getCertificate2,jdbcType=VARCHAR},
+      </if>
+      <if test="educationalBackground3 != null" >
+        #{educationalBackground3,jdbcType=VARCHAR},
+      </if>
+      <if test="educationalType3 != null" >
+        #{educationalType3,jdbcType=VARCHAR},
+      </if>
+      <if test="getCertificate3 != null" >
+        #{getCertificate3,jdbcType=VARCHAR},
+      </if>
+      <if test="educationalBackground4 != null" >
+        #{educationalBackground4,jdbcType=VARCHAR},
+      </if>
+      <if test="educationalType4 != null" >
+        #{educationalType4,jdbcType=VARCHAR},
+      </if>
+      <if test="getCertificate4 != null" >
+        #{getCertificate4,jdbcType=VARCHAR},
+      </if>
+      <if test="diplomaType1 != null" >
+        #{diplomaType1,jdbcType=VARCHAR},
+      </if>
+      <if test="diplomaName1 != null" >
+        #{diplomaName1,jdbcType=VARCHAR},
+      </if>
+      <if test="diplomaDate1 != null" >
+        #{diplomaDate1,jdbcType=VARCHAR},
+      </if>
+      <if test="diplomaNum1 != null" >
+        #{diplomaNum1,jdbcType=VARCHAR},
+      </if>
+      <if test="diplomaOrgan1 != null" >
+        #{diplomaOrgan1,jdbcType=VARCHAR},
+      </if>
+      <if test="diplomaType2 != null" >
+        #{diplomaType2,jdbcType=VARCHAR},
+      </if>
+      <if test="diplomaName2 != null" >
+        #{diplomaName2,jdbcType=VARCHAR},
+      </if>
+      <if test="diplomaDate2 != null" >
+        #{diplomaDate2,jdbcType=VARCHAR},
+      </if>
+      <if test="diplomaNum2 != null" >
+        #{diplomaNum2,jdbcType=VARCHAR},
+      </if>
+      <if test="diplomaOrgan2 != null" >
+        #{diplomaOrgan2,jdbcType=VARCHAR},
+      </if>
+      <if test="personCode != null" >
+        #{personCode,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.csot.recruit.model.original.interview.EducationCriteria" resultType="java.lang.Integer" >
+    select count(*) from T_EDUCATION
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update T_EDUCATION
+    <set >
+      <if test="record.id != null" >
+        ID = #{record.id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.educationStratdate1 != null" >
+        EDUCATION_STRATDATE_1 = #{record.educationStratdate1,jdbcType=VARCHAR},
+      </if>
+      <if test="record.educationEnddate1 != null" >
+        EDUCATION_ENDDATE_1 = #{record.educationEnddate1,jdbcType=VARCHAR},
+      </if>
+      <if test="record.educationSchool1 != null" >
+        EDUCATION_SCHOOL_1 = #{record.educationSchool1,jdbcType=VARCHAR},
+      </if>
+      <if test="record.major1 != null" >
+        MAJOR_1 = #{record.major1,jdbcType=VARCHAR},
+      </if>
+      <if test="record.educationStratdate2 != null" >
+        EDUCATION_STRATDATE_2 = #{record.educationStratdate2,jdbcType=VARCHAR},
+      </if>
+      <if test="record.educationEnddate2 != null" >
+        EDUCATION_ENDDATE_2 = #{record.educationEnddate2,jdbcType=VARCHAR},
+      </if>
+      <if test="record.educationSchool2 != null" >
+        EDUCATION_SCHOOL_2 = #{record.educationSchool2,jdbcType=VARCHAR},
+      </if>
+      <if test="record.major2 != null" >
+        MAJOR_2 = #{record.major2,jdbcType=VARCHAR},
+      </if>
+      <if test="record.educationStratdate3 != null" >
+        EDUCATION_STRATDATE_3 = #{record.educationStratdate3,jdbcType=VARCHAR},
+      </if>
+      <if test="record.educationEnddate3 != null" >
+        EDUCATION_ENDDATE_3 = #{record.educationEnddate3,jdbcType=VARCHAR},
+      </if>
+      <if test="record.educationSchool3 != null" >
+        EDUCATION_SCHOOL_3 = #{record.educationSchool3,jdbcType=VARCHAR},
+      </if>
+      <if test="record.major3 != null" >
+        MAJOR_3 = #{record.major3,jdbcType=VARCHAR},
+      </if>
+      <if test="record.educationStratdate4 != null" >
+        EDUCATION_STRATDATE_4 = #{record.educationStratdate4,jdbcType=VARCHAR},
+      </if>
+      <if test="record.educationEnddate4 != null" >
+        EDUCATION_ENDDATE_4 = #{record.educationEnddate4,jdbcType=VARCHAR},
+      </if>
+      <if test="record.educationSchool4 != null" >
+        EDUCATION_SCHOOL_4 = #{record.educationSchool4,jdbcType=VARCHAR},
+      </if>
+      <if test="record.major4 != null" >
+        MAJOR_4 = #{record.major4,jdbcType=VARCHAR},
+      </if>
+      <if test="record.educationalBackground1 != null" >
+        EDUCATIONAL_BACKGROUND_1 = #{record.educationalBackground1,jdbcType=VARCHAR},
+      </if>
+      <if test="record.educationalType1 != null" >
+        EDUCATIONAL_TYPE_1 = #{record.educationalType1,jdbcType=VARCHAR},
+      </if>
+      <if test="record.getCertificate1 != null" >
+        GET_CERTIFICATE_1 = #{record.getCertificate1,jdbcType=VARCHAR},
+      </if>
+      <if test="record.educationalBackground2 != null" >
+        EDUCATIONAL_BACKGROUND_2 = #{record.educationalBackground2,jdbcType=VARCHAR},
+      </if>
+      <if test="record.educationalType2 != null" >
+        EDUCATIONAL_TYPE_2 = #{record.educationalType2,jdbcType=VARCHAR},
+      </if>
+      <if test="record.getCertificate2 != null" >
+        GET_CERTIFICATE_2 = #{record.getCertificate2,jdbcType=VARCHAR},
+      </if>
+      <if test="record.educationalBackground3 != null" >
+        EDUCATIONAL_BACKGROUND_3 = #{record.educationalBackground3,jdbcType=VARCHAR},
+      </if>
+      <if test="record.educationalType3 != null" >
+        EDUCATIONAL_TYPE_3 = #{record.educationalType3,jdbcType=VARCHAR},
+      </if>
+      <if test="record.getCertificate3 != null" >
+        GET_CERTIFICATE_3 = #{record.getCertificate3,jdbcType=VARCHAR},
+      </if>
+      <if test="record.educationalBackground4 != null" >
+        EDUCATIONAL_BACKGROUND_4 = #{record.educationalBackground4,jdbcType=VARCHAR},
+      </if>
+      <if test="record.educationalType4 != null" >
+        EDUCATIONAL_TYPE_4 = #{record.educationalType4,jdbcType=VARCHAR},
+      </if>
+      <if test="record.getCertificate4 != null" >
+        GET_CERTIFICATE_4 = #{record.getCertificate4,jdbcType=VARCHAR},
+      </if>
+      <if test="record.diplomaType1 != null" >
+        DIPLOMA_TYPE_1 = #{record.diplomaType1,jdbcType=VARCHAR},
+      </if>
+      <if test="record.diplomaName1 != null" >
+        DIPLOMA_NAME_1 = #{record.diplomaName1,jdbcType=VARCHAR},
+      </if>
+      <if test="record.diplomaDate1 != null" >
+        DIPLOMA_DATE_1 = #{record.diplomaDate1,jdbcType=VARCHAR},
+      </if>
+      <if test="record.diplomaNum1 != null" >
+        DIPLOMA_NUM_1 = #{record.diplomaNum1,jdbcType=VARCHAR},
+      </if>
+      <if test="record.diplomaOrgan1 != null" >
+        DIPLOMA_ORGAN_1 = #{record.diplomaOrgan1,jdbcType=VARCHAR},
+      </if>
+      <if test="record.diplomaType2 != null" >
+        DIPLOMA_TYPE_2 = #{record.diplomaType2,jdbcType=VARCHAR},
+      </if>
+      <if test="record.diplomaName2 != null" >
+        DIPLOMA_NAME_2 = #{record.diplomaName2,jdbcType=VARCHAR},
+      </if>
+      <if test="record.diplomaDate2 != null" >
+        DIPLOMA_DATE_2 = #{record.diplomaDate2,jdbcType=VARCHAR},
+      </if>
+      <if test="record.diplomaNum2 != null" >
+        DIPLOMA_NUM_2 = #{record.diplomaNum2,jdbcType=VARCHAR},
+      </if>
+      <if test="record.diplomaOrgan2 != null" >
+        DIPLOMA_ORGAN_2 = #{record.diplomaOrgan2,jdbcType=VARCHAR},
+      </if>
+      <if test="record.personCode != null" >
+        PERSON_CODE = #{record.personCode,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update T_EDUCATION
+    set ID = #{record.id,jdbcType=VARCHAR},
+      EDUCATION_STRATDATE_1 = #{record.educationStratdate1,jdbcType=VARCHAR},
+      EDUCATION_ENDDATE_1 = #{record.educationEnddate1,jdbcType=VARCHAR},
+      EDUCATION_SCHOOL_1 = #{record.educationSchool1,jdbcType=VARCHAR},
+      MAJOR_1 = #{record.major1,jdbcType=VARCHAR},
+      EDUCATION_STRATDATE_2 = #{record.educationStratdate2,jdbcType=VARCHAR},
+      EDUCATION_ENDDATE_2 = #{record.educationEnddate2,jdbcType=VARCHAR},
+      EDUCATION_SCHOOL_2 = #{record.educationSchool2,jdbcType=VARCHAR},
+      MAJOR_2 = #{record.major2,jdbcType=VARCHAR},
+      EDUCATION_STRATDATE_3 = #{record.educationStratdate3,jdbcType=VARCHAR},
+      EDUCATION_ENDDATE_3 = #{record.educationEnddate3,jdbcType=VARCHAR},
+      EDUCATION_SCHOOL_3 = #{record.educationSchool3,jdbcType=VARCHAR},
+      MAJOR_3 = #{record.major3,jdbcType=VARCHAR},
+      EDUCATION_STRATDATE_4 = #{record.educationStratdate4,jdbcType=VARCHAR},
+      EDUCATION_ENDDATE_4 = #{record.educationEnddate4,jdbcType=VARCHAR},
+      EDUCATION_SCHOOL_4 = #{record.educationSchool4,jdbcType=VARCHAR},
+      MAJOR_4 = #{record.major4,jdbcType=VARCHAR},
+      EDUCATIONAL_BACKGROUND_1 = #{record.educationalBackground1,jdbcType=VARCHAR},
+      EDUCATIONAL_TYPE_1 = #{record.educationalType1,jdbcType=VARCHAR},
+      GET_CERTIFICATE_1 = #{record.getCertificate1,jdbcType=VARCHAR},
+      EDUCATIONAL_BACKGROUND_2 = #{record.educationalBackground2,jdbcType=VARCHAR},
+      EDUCATIONAL_TYPE_2 = #{record.educationalType2,jdbcType=VARCHAR},
+      GET_CERTIFICATE_2 = #{record.getCertificate2,jdbcType=VARCHAR},
+      EDUCATIONAL_BACKGROUND_3 = #{record.educationalBackground3,jdbcType=VARCHAR},
+      EDUCATIONAL_TYPE_3 = #{record.educationalType3,jdbcType=VARCHAR},
+      GET_CERTIFICATE_3 = #{record.getCertificate3,jdbcType=VARCHAR},
+      EDUCATIONAL_BACKGROUND_4 = #{record.educationalBackground4,jdbcType=VARCHAR},
+      EDUCATIONAL_TYPE_4 = #{record.educationalType4,jdbcType=VARCHAR},
+      GET_CERTIFICATE_4 = #{record.getCertificate4,jdbcType=VARCHAR},
+      DIPLOMA_TYPE_1 = #{record.diplomaType1,jdbcType=VARCHAR},
+      DIPLOMA_NAME_1 = #{record.diplomaName1,jdbcType=VARCHAR},
+      DIPLOMA_DATE_1 = #{record.diplomaDate1,jdbcType=VARCHAR},
+      DIPLOMA_NUM_1 = #{record.diplomaNum1,jdbcType=VARCHAR},
+      DIPLOMA_ORGAN_1 = #{record.diplomaOrgan1,jdbcType=VARCHAR},
+      DIPLOMA_TYPE_2 = #{record.diplomaType2,jdbcType=VARCHAR},
+      DIPLOMA_NAME_2 = #{record.diplomaName2,jdbcType=VARCHAR},
+      DIPLOMA_DATE_2 = #{record.diplomaDate2,jdbcType=VARCHAR},
+      DIPLOMA_NUM_2 = #{record.diplomaNum2,jdbcType=VARCHAR},
+      DIPLOMA_ORGAN_2 = #{record.diplomaOrgan2,jdbcType=VARCHAR},
+      PERSON_CODE = #{record.personCode,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.csot.recruit.model.original.interview.Education" >
+    update T_EDUCATION
+    <set >
+      <if test="educationStratdate1 != null" >
+        EDUCATION_STRATDATE_1 = #{educationStratdate1,jdbcType=VARCHAR},
+      </if>
+      <if test="educationEnddate1 != null" >
+        EDUCATION_ENDDATE_1 = #{educationEnddate1,jdbcType=VARCHAR},
+      </if>
+      <if test="educationSchool1 != null" >
+        EDUCATION_SCHOOL_1 = #{educationSchool1,jdbcType=VARCHAR},
+      </if>
+      <if test="major1 != null" >
+        MAJOR_1 = #{major1,jdbcType=VARCHAR},
+      </if>
+      <if test="educationStratdate2 != null" >
+        EDUCATION_STRATDATE_2 = #{educationStratdate2,jdbcType=VARCHAR},
+      </if>
+      <if test="educationEnddate2 != null" >
+        EDUCATION_ENDDATE_2 = #{educationEnddate2,jdbcType=VARCHAR},
+      </if>
+      <if test="educationSchool2 != null" >
+        EDUCATION_SCHOOL_2 = #{educationSchool2,jdbcType=VARCHAR},
+      </if>
+      <if test="major2 != null" >
+        MAJOR_2 = #{major2,jdbcType=VARCHAR},
+      </if>
+      <if test="educationStratdate3 != null" >
+        EDUCATION_STRATDATE_3 = #{educationStratdate3,jdbcType=VARCHAR},
+      </if>
+      <if test="educationEnddate3 != null" >
+        EDUCATION_ENDDATE_3 = #{educationEnddate3,jdbcType=VARCHAR},
+      </if>
+      <if test="educationSchool3 != null" >
+        EDUCATION_SCHOOL_3 = #{educationSchool3,jdbcType=VARCHAR},
+      </if>
+      <if test="major3 != null" >
+        MAJOR_3 = #{major3,jdbcType=VARCHAR},
+      </if>
+      <if test="educationStratdate4 != null" >
+        EDUCATION_STRATDATE_4 = #{educationStratdate4,jdbcType=VARCHAR},
+      </if>
+      <if test="educationEnddate4 != null" >
+        EDUCATION_ENDDATE_4 = #{educationEnddate4,jdbcType=VARCHAR},
+      </if>
+      <if test="educationSchool4 != null" >
+        EDUCATION_SCHOOL_4 = #{educationSchool4,jdbcType=VARCHAR},
+      </if>
+      <if test="major4 != null" >
+        MAJOR_4 = #{major4,jdbcType=VARCHAR},
+      </if>
+      <if test="educationalBackground1 != null" >
+        EDUCATIONAL_BACKGROUND_1 = #{educationalBackground1,jdbcType=VARCHAR},
+      </if>
+      <if test="educationalType1 != null" >
+        EDUCATIONAL_TYPE_1 = #{educationalType1,jdbcType=VARCHAR},
+      </if>
+      <if test="getCertificate1 != null" >
+        GET_CERTIFICATE_1 = #{getCertificate1,jdbcType=VARCHAR},
+      </if>
+      <if test="educationalBackground2 != null" >
+        EDUCATIONAL_BACKGROUND_2 = #{educationalBackground2,jdbcType=VARCHAR},
+      </if>
+      <if test="educationalType2 != null" >
+        EDUCATIONAL_TYPE_2 = #{educationalType2,jdbcType=VARCHAR},
+      </if>
+      <if test="getCertificate2 != null" >
+        GET_CERTIFICATE_2 = #{getCertificate2,jdbcType=VARCHAR},
+      </if>
+      <if test="educationalBackground3 != null" >
+        EDUCATIONAL_BACKGROUND_3 = #{educationalBackground3,jdbcType=VARCHAR},
+      </if>
+      <if test="educationalType3 != null" >
+        EDUCATIONAL_TYPE_3 = #{educationalType3,jdbcType=VARCHAR},
+      </if>
+      <if test="getCertificate3 != null" >
+        GET_CERTIFICATE_3 = #{getCertificate3,jdbcType=VARCHAR},
+      </if>
+      <if test="educationalBackground4 != null" >
+        EDUCATIONAL_BACKGROUND_4 = #{educationalBackground4,jdbcType=VARCHAR},
+      </if>
+      <if test="educationalType4 != null" >
+        EDUCATIONAL_TYPE_4 = #{educationalType4,jdbcType=VARCHAR},
+      </if>
+      <if test="getCertificate4 != null" >
+        GET_CERTIFICATE_4 = #{getCertificate4,jdbcType=VARCHAR},
+      </if>
+      <if test="diplomaType1 != null" >
+        DIPLOMA_TYPE_1 = #{diplomaType1,jdbcType=VARCHAR},
+      </if>
+      <if test="diplomaName1 != null" >
+        DIPLOMA_NAME_1 = #{diplomaName1,jdbcType=VARCHAR},
+      </if>
+      <if test="diplomaDate1 != null" >
+        DIPLOMA_DATE_1 = #{diplomaDate1,jdbcType=VARCHAR},
+      </if>
+      <if test="diplomaNum1 != null" >
+        DIPLOMA_NUM_1 = #{diplomaNum1,jdbcType=VARCHAR},
+      </if>
+      <if test="diplomaOrgan1 != null" >
+        DIPLOMA_ORGAN_1 = #{diplomaOrgan1,jdbcType=VARCHAR},
+      </if>
+      <if test="diplomaType2 != null" >
+        DIPLOMA_TYPE_2 = #{diplomaType2,jdbcType=VARCHAR},
+      </if>
+      <if test="diplomaName2 != null" >
+        DIPLOMA_NAME_2 = #{diplomaName2,jdbcType=VARCHAR},
+      </if>
+      <if test="diplomaDate2 != null" >
+        DIPLOMA_DATE_2 = #{diplomaDate2,jdbcType=VARCHAR},
+      </if>
+      <if test="diplomaNum2 != null" >
+        DIPLOMA_NUM_2 = #{diplomaNum2,jdbcType=VARCHAR},
+      </if>
+      <if test="diplomaOrgan2 != null" >
+        DIPLOMA_ORGAN_2 = #{diplomaOrgan2,jdbcType=VARCHAR},
+      </if>
+      <if test="personCode != null" >
+        PERSON_CODE = #{personCode,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.csot.recruit.model.original.interview.Education" >
+    update T_EDUCATION
+    set EDUCATION_STRATDATE_1 = #{educationStratdate1,jdbcType=VARCHAR},
+      EDUCATION_ENDDATE_1 = #{educationEnddate1,jdbcType=VARCHAR},
+      EDUCATION_SCHOOL_1 = #{educationSchool1,jdbcType=VARCHAR},
+      MAJOR_1 = #{major1,jdbcType=VARCHAR},
+      EDUCATION_STRATDATE_2 = #{educationStratdate2,jdbcType=VARCHAR},
+      EDUCATION_ENDDATE_2 = #{educationEnddate2,jdbcType=VARCHAR},
+      EDUCATION_SCHOOL_2 = #{educationSchool2,jdbcType=VARCHAR},
+      MAJOR_2 = #{major2,jdbcType=VARCHAR},
+      EDUCATION_STRATDATE_3 = #{educationStratdate3,jdbcType=VARCHAR},
+      EDUCATION_ENDDATE_3 = #{educationEnddate3,jdbcType=VARCHAR},
+      EDUCATION_SCHOOL_3 = #{educationSchool3,jdbcType=VARCHAR},
+      MAJOR_3 = #{major3,jdbcType=VARCHAR},
+      EDUCATION_STRATDATE_4 = #{educationStratdate4,jdbcType=VARCHAR},
+      EDUCATION_ENDDATE_4 = #{educationEnddate4,jdbcType=VARCHAR},
+      EDUCATION_SCHOOL_4 = #{educationSchool4,jdbcType=VARCHAR},
+      MAJOR_4 = #{major4,jdbcType=VARCHAR},
+      EDUCATIONAL_BACKGROUND_1 = #{educationalBackground1,jdbcType=VARCHAR},
+      EDUCATIONAL_TYPE_1 = #{educationalType1,jdbcType=VARCHAR},
+      GET_CERTIFICATE_1 = #{getCertificate1,jdbcType=VARCHAR},
+      EDUCATIONAL_BACKGROUND_2 = #{educationalBackground2,jdbcType=VARCHAR},
+      EDUCATIONAL_TYPE_2 = #{educationalType2,jdbcType=VARCHAR},
+      GET_CERTIFICATE_2 = #{getCertificate2,jdbcType=VARCHAR},
+      EDUCATIONAL_BACKGROUND_3 = #{educationalBackground3,jdbcType=VARCHAR},
+      EDUCATIONAL_TYPE_3 = #{educationalType3,jdbcType=VARCHAR},
+      GET_CERTIFICATE_3 = #{getCertificate3,jdbcType=VARCHAR},
+      EDUCATIONAL_BACKGROUND_4 = #{educationalBackground4,jdbcType=VARCHAR},
+      EDUCATIONAL_TYPE_4 = #{educationalType4,jdbcType=VARCHAR},
+      GET_CERTIFICATE_4 = #{getCertificate4,jdbcType=VARCHAR},
+      DIPLOMA_TYPE_1 = #{diplomaType1,jdbcType=VARCHAR},
+      DIPLOMA_NAME_1 = #{diplomaName1,jdbcType=VARCHAR},
+      DIPLOMA_DATE_1 = #{diplomaDate1,jdbcType=VARCHAR},
+      DIPLOMA_NUM_1 = #{diplomaNum1,jdbcType=VARCHAR},
+      DIPLOMA_ORGAN_1 = #{diplomaOrgan1,jdbcType=VARCHAR},
+      DIPLOMA_TYPE_2 = #{diplomaType2,jdbcType=VARCHAR},
+      DIPLOMA_NAME_2 = #{diplomaName2,jdbcType=VARCHAR},
+      DIPLOMA_DATE_2 = #{diplomaDate2,jdbcType=VARCHAR},
+      DIPLOMA_NUM_2 = #{diplomaNum2,jdbcType=VARCHAR},
+      DIPLOMA_ORGAN_2 = #{diplomaOrgan2,jdbcType=VARCHAR},
+      PERSON_CODE = #{personCode,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <sql id="Oracle_Dialect_Pagination_Prefix" >
+    <if test="page != null" >
+      select * from ( select row_.*, rownum rownum_ from ( 
+    </if>
+  </sql>
+  <sql id="Oracle_Dialect_Pagination_Suffix" >
+    <if test="page != null" >
+      <![CDATA[ ) row_ ) where rownum_ > #{page.begin} and rownum_ <= #{page.end} ]]>
+    </if>
+  </sql>
+</mapper>

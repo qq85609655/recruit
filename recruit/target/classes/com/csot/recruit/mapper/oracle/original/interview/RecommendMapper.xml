@@ -1,0 +1,266 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.csot.recruit.dao.original.interview.RecommendMapper" >
+  <resultMap id="BaseResultMap" type="com.csot.recruit.model.original.interview.Recommend" >
+    <id column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="PERSON_CODE" property="personCode" jdbcType="VARCHAR" />
+    <result column="RECOMMENDED" property="recommended" jdbcType="VARCHAR" />
+    <result column="RECOMMEND_RELATION" property="recommendRelation" jdbcType="VARCHAR" />
+    <result column="RECOMMEND_POSITION" property="recommendPosition" jdbcType="VARCHAR" />
+    <result column="RECOMMEND_PHONE" property="recommendPhone" jdbcType="VARCHAR" />
+    <result column="RECOMMEND_ADDRESS" property="recommendAddress" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    ID, PERSON_CODE, RECOMMENDED, RECOMMEND_RELATION, RECOMMEND_POSITION, RECOMMEND_PHONE, 
+    RECOMMEND_ADDRESS
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.csot.recruit.model.original.interview.RecommendCriteria" >
+    <include refid="Oracle_Dialect_Pagination_Prefix" />
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from T_RECOMMEND
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <include refid="Oracle_Dialect_Pagination_Suffix" />
+  </select>
+  <select id="selectByPersonCode" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from T_RECOMMEND
+    where person_code = #{personCode,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from T_RECOMMEND
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from T_RECOMMEND
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByPersonCode" parameterType="java.lang.String" >
+    delete from T_RECOMMEND
+    where person_code = #{personCode,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.csot.recruit.model.original.interview.RecommendCriteria" >
+    delete from T_RECOMMEND
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.csot.recruit.model.original.interview.Recommend" >
+    insert into T_RECOMMEND (ID, PERSON_CODE, RECOMMENDED, 
+      RECOMMEND_RELATION, RECOMMEND_POSITION, RECOMMEND_PHONE, 
+      RECOMMEND_ADDRESS)
+    values (#{id,jdbcType=VARCHAR}, #{personCode,jdbcType=VARCHAR}, #{recommended,jdbcType=VARCHAR}, 
+      #{recommendRelation,jdbcType=VARCHAR}, #{recommendPosition,jdbcType=VARCHAR}, #{recommendPhone,jdbcType=VARCHAR}, 
+      #{recommendAddress,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.csot.recruit.model.original.interview.Recommend" >
+    insert into T_RECOMMEND
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="personCode != null" >
+        PERSON_CODE,
+      </if>
+      <if test="recommended != null" >
+        RECOMMENDED,
+      </if>
+      <if test="recommendRelation != null" >
+        RECOMMEND_RELATION,
+      </if>
+      <if test="recommendPosition != null" >
+        RECOMMEND_POSITION,
+      </if>
+      <if test="recommendPhone != null" >
+        RECOMMEND_PHONE,
+      </if>
+      <if test="recommendAddress != null" >
+        RECOMMEND_ADDRESS,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="personCode != null" >
+        #{personCode,jdbcType=VARCHAR},
+      </if>
+      <if test="recommended != null" >
+        #{recommended,jdbcType=VARCHAR},
+      </if>
+      <if test="recommendRelation != null" >
+        #{recommendRelation,jdbcType=VARCHAR},
+      </if>
+      <if test="recommendPosition != null" >
+        #{recommendPosition,jdbcType=VARCHAR},
+      </if>
+      <if test="recommendPhone != null" >
+        #{recommendPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="recommendAddress != null" >
+        #{recommendAddress,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.csot.recruit.model.original.interview.RecommendCriteria" resultType="java.lang.Integer" >
+    select count(*) from T_RECOMMEND
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update T_RECOMMEND
+    <set >
+      <if test="record.id != null" >
+        ID = #{record.id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.personCode != null" >
+        PERSON_CODE = #{record.personCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.recommended != null" >
+        RECOMMENDED = #{record.recommended,jdbcType=VARCHAR},
+      </if>
+      <if test="record.recommendRelation != null" >
+        RECOMMEND_RELATION = #{record.recommendRelation,jdbcType=VARCHAR},
+      </if>
+      <if test="record.recommendPosition != null" >
+        RECOMMEND_POSITION = #{record.recommendPosition,jdbcType=VARCHAR},
+      </if>
+      <if test="record.recommendPhone != null" >
+        RECOMMEND_PHONE = #{record.recommendPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.recommendAddress != null" >
+        RECOMMEND_ADDRESS = #{record.recommendAddress,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update T_RECOMMEND
+    set ID = #{record.id,jdbcType=VARCHAR},
+      PERSON_CODE = #{record.personCode,jdbcType=VARCHAR},
+      RECOMMENDED = #{record.recommended,jdbcType=VARCHAR},
+      RECOMMEND_RELATION = #{record.recommendRelation,jdbcType=VARCHAR},
+      RECOMMEND_POSITION = #{record.recommendPosition,jdbcType=VARCHAR},
+      RECOMMEND_PHONE = #{record.recommendPhone,jdbcType=VARCHAR},
+      RECOMMEND_ADDRESS = #{record.recommendAddress,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.csot.recruit.model.original.interview.Recommend" >
+    update T_RECOMMEND
+    <set >
+      <if test="personCode != null" >
+        PERSON_CODE = #{personCode,jdbcType=VARCHAR},
+      </if>
+      <if test="recommended != null" >
+        RECOMMENDED = #{recommended,jdbcType=VARCHAR},
+      </if>
+      <if test="recommendRelation != null" >
+        RECOMMEND_RELATION = #{recommendRelation,jdbcType=VARCHAR},
+      </if>
+      <if test="recommendPosition != null" >
+        RECOMMEND_POSITION = #{recommendPosition,jdbcType=VARCHAR},
+      </if>
+      <if test="recommendPhone != null" >
+        RECOMMEND_PHONE = #{recommendPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="recommendAddress != null" >
+        RECOMMEND_ADDRESS = #{recommendAddress,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.csot.recruit.model.original.interview.Recommend" >
+    update T_RECOMMEND
+    set PERSON_CODE = #{personCode,jdbcType=VARCHAR},
+      RECOMMENDED = #{recommended,jdbcType=VARCHAR},
+      RECOMMEND_RELATION = #{recommendRelation,jdbcType=VARCHAR},
+      RECOMMEND_POSITION = #{recommendPosition,jdbcType=VARCHAR},
+      RECOMMEND_PHONE = #{recommendPhone,jdbcType=VARCHAR},
+      RECOMMEND_ADDRESS = #{recommendAddress,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <sql id="Oracle_Dialect_Pagination_Prefix" >
+    <if test="page != null" >
+      select * from ( select row_.*, rownum rownum_ from ( 
+    </if>
+  </sql>
+  <sql id="Oracle_Dialect_Pagination_Suffix" >
+    <if test="page != null" >
+      <![CDATA[ ) row_ ) where rownum_ > #{page.begin} and rownum_ <= #{page.end} ]]>
+    </if>
+  </sql>
+</mapper>

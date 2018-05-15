@@ -1,0 +1,192 @@
+package com.csot.recruit.service.impl.candidate;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
+import com.csot.recruit.common.util.DateKit;
+import com.csot.recruit.dao.original.candidate.CandidateMapper;
+import com.csot.recruit.dao.original.candidate.CandidatePostMapper;
+import com.csot.recruit.dao.resume.EducationExperienceMapper;
+import com.csot.recruit.dao.resume.WorkExperienceMapper;
+import com.csot.recruit.model.original.candidate.Candidate;
+import com.csot.recruit.model.original.candidate.CandidateColumns;
+import com.csot.recruit.model.original.candidate.CandidateCriteria;
+import com.csot.recruit.model.original.candidate.CandidatePost;
+import com.csot.recruit.model.resume.EducationExperience;
+import com.csot.recruit.model.resume.WorkExperience;
+import com.csot.recruit.model.vo.InterviewBookCandidateVo;
+import com.csot.recruit.model.vo.InterviewBookListVo;
+import com.csot.recruit.service.candidate.CandidateService;
+
+import javax.annotation.Resource;
+
+import org.amberframework.core.mybatis.pojo.Page;
+import org.amberframework.web.miniui.pojo.MiniGridPageSort;
+import org.amberframework.web.miniui.pojo.MiniRtn2Grid;
+import org.amberframework.web.system.dao.BaseUserMapper;
+import org.amberframework.web.system.model.BaseUser;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
+
+@Service("candidateService")
+public class CandidateServiceImpl implements CandidateService {
+    private static final Logger logger = LoggerFactory.getLogger(CandidateServiceImpl.class);
+
+    @Resource
+    private CandidateMapper candidateMapper;
+    
+    @Resource
+    private BaseUserMapper baseUserMapper ;
+    
+    @Resource
+    private WorkExperienceMapper workMapper;
+    
+    @Resource
+    private EducationExperienceMapper eduMapper;
+    
+    @Resource
+    private CandidatePostMapper candidatePostMapper ;
+
+    @Override
+    public MiniRtn2Grid<Candidate> getGrid(MiniGridPageSort pageSort, String searchKey) {
+        MiniRtn2Grid<Candidate> grid = new MiniRtn2Grid<Candidate>();
+        CandidateCriteria criteria = new CandidateCriteria();
+        // 查询条件
+        if (StringUtils.hasText(searchKey)) {
+            criteria.createCriteria().andIdEqualTo(searchKey);
+        }
+        // 分页和排序
+         if (pageSort.isShowPager()) {
+            Page page = Page.newInstanceWithPageIndex(pageSort.getPageIndex(), pageSort.getPageSize());
+            criteria.setPage(page);
+        }
+        String sortColumn = CandidateColumns.getColumn(pageSort.getSortField());
+        if (StringUtils.hasText(sortColumn)) {
+            StringBuilder sortStrBldr = new StringBuilder(sortColumn).append(" ").append(pageSort.getSortOrder());
+            criteria.setOrderByClause(sortStrBldr.toString());
+        }
+        
+        List<Candidate> ls = candidateMapper.selectByExample(criteria);
+        for(Candidate c : ls){
+          //获取最后一份工作经历,将该工作经历显示为最新信息
+          WorkExperience work = workMapper.selectLastWork(c.getResumeId());
+          if(work != null){
+            //填充公司名称
+            c.setCurrentCompany(work.getCompanyName());
+            //填充当前职位
+            c.setCurrentPosition(work.getPositionName());
+          }
+          //获取最后一份教育经历
+          EducationExperience edu = eduMapper.selectLastEdu(c.getResumeId());
+          if(edu != null){
+            //毕业学校
+            c.setGraduationSchool(edu.getSchoolName());
+            //专业
+            c.setMajor(edu.getMajor());
+            //学位
+            c.setHighestEducation(edu.getEducation());
+          }
+          
+          
+        }
+        
+        grid.setData(ls);
+        grid.setTotal(candidateMapper.countByExample(criteria));
+        return grid;
+    }
+
+    @Override
+    public Candidate getByPrimaryKey(String primaryKey) {
+        return candidateMapper.selectByPrimaryKey(primaryKey);
+    }
+
+    @Override
+    public void create(Candidate candidate) {
+        candidateMapper.insert(candidate);
+    }
+
+    @Override
+    public void updateSelective(Candidate candidate) {
+        candidateMapper.updateByPrimaryKeySelective(candidate);
+    }
+
+    @Override
+    public void remove(String primaryKey) {
+        candidateMapper.deleteByPrimaryKey(primaryKey);
+    }
+
+    @Override
+    public MiniRtn2Grid<InterviewBookListVo> queryCandidateListByPage(Map<String, Object> map) {
+      MiniRtn2Grid<InterviewBookListVo> miniGrid = new MiniRtn2Grid<InterviewBookListVo>();
+      List<InterviewBookCandidateVo> list = candidateMapper.queryCandidateListByPage(map);
+      List<InterviewBookListVo> interviewBookList = new ArrayList<InterviewBookListVo>();
+      if(list != null && list.size() > 0){
+         InterviewBookListVo interviewBookListVo = null ;
+         String[] ids ;
+         BaseUser baseUser ;
+         
+        for(InterviewBookCandidateVo item : list){
+          interviewBookListVo = new InterviewBookListVo();
+          interviewBookListVo.setId(item.getId());
+          interviewBookListVo.setPositonId(item.getPositionId());
+          interviewBookListVo.setCandidateId(item.getCandidateId());
+          interviewBookListVo.setName(item.getName());
+          interviewBookListVo.setcJobName(item.getcJobName());
+          interviewBookListVo.setcOrgName(item.getcOrgName());
+          interviewBookListVo.setInterviewAddress(item.getInterviewAddress());
+          StringBuffer sb = new StringBuffer() ;
+          if(null!=item.getInterviewers()&& (!"".equals(item.getInterviewers()))){
+            ids = item.getInterviewers().split(",");
+            
+            for(int i = 0 ;i < ids.length; i++ ){
+              baseUser = baseUserMapper.selectByPrimaryKey(ids[i]);
+              if(i!= ids.length-1){
+                sb.append(baseUser.getName()+",");
+              }else{
+                sb.append(baseUser.getName());
+              }
+            }
+          }
+         
+          interviewBookListVo.setInterviewers(sb.toString());
+          if("1".equals(item.getInterviewStatus())){
+            interviewBookListVo.setInterviewStatus("取消");
+          }
+          if("0".equals(item.getInterviewStatus())){
+            interviewBookListVo.setInterviewStatus("正常");
+          }
+          if("2".equals(item.getInterviewStatus())){
+            interviewBookListVo.setInterviewStatus("淘汰");
+          }
+          if("9".equals(item.getInterviewStatus())){
+            interviewBookListVo.setInterviewStatus("草稿");
+          }
+          
+          StringBuffer timeSb = new StringBuffer() ;
+          if(null!=item.getInterviewDate()&& (!"".equals(item.getInterviewDate()))){
+            timeSb.append(DateKit.dateToStr(item.getInterviewDate()));
+            timeSb.append(" ");
+            timeSb.append(item.getInterviewBTime());
+            timeSb.append("~");
+            timeSb.append(item.getInterviewETime());
+          }
+       
+          interviewBookListVo.setInterviewTimes(timeSb.toString());
+          interviewBookList.add(interviewBookListVo);
+          
+        }
+      }
+     
+      miniGrid.setData(interviewBookList);
+      miniGrid.setTotal(candidateMapper.countByPage(map));
+      return miniGrid;
+    }
+
+    @Override
+    public void updateCandidatePostSelective(CandidatePost candidatePost) {
+      candidatePostMapper.updateByUnion(candidatePost);
+    }
+}

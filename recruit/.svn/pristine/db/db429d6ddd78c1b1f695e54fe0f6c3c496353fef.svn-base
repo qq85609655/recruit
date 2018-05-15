@@ -1,0 +1,876 @@
+body {
+	background-color: #fff;
+	z-index: -1;
+}
+form {
+	margin: 0;
+}
+.l {
+	float: left;
+}
+.r {
+	float: right;
+}
+.body-co {
+	padding: 0 6%;
+	box-sizing: border-box; 
+}
+.font-b {
+	color: #009df7;
+}
+.font-black {
+	color: #000;
+}
+.bottom-dashed {
+	border-bottom: 1px dashed #d3d3d3;
+}
+.b-dashed {
+	border-bottom: 1px dashed #d3d3d3;
+	padding-bottom: 15px;
+}
+.b-solid {
+	border-bottom: 1px solid #d3d3d3;
+}
+.top {
+  height: 55px;
+  position: fixed;
+  z-index: 1;
+}
+.top .top-co {
+	height: 100%;
+	position: relative;
+}
+.top-co .resume-name {
+	font-size: 18px;
+	line-height: 55px;
+	letter-spacing: 3px;
+}
+.top-co .return {
+	display: inline-block;
+	float: right;
+	letter-spacing: 1px;
+	position: relative;
+	top: 18px;
+}
+.top-co .return .icon-back {
+	font-size: 18px;
+}
+.head-item {
+	margin-right: 0;
+}
+.head-item:after {
+	width: 96%;
+}
+.head-item:hover:after {
+	left: .3em;
+}
+.top-co .head-arrow {
+	position: absolute;
+	width: 0;
+	height: 0;
+	border-width: 0 8px 8px 8px;
+	border-style: solid; 
+	border-color: #fff transparent;
+	left: 12px;
+	bottom: 0;
+}
+
+.basic-infor {
+	padding-top: 55px;
+	color: #999;
+	font-size: 14px;
+	position: relative;
+}
+.basic-infor .tr {
+	line-height: 25px;
+}
+.basic-infor .tr-h {
+	line-height: 30px;
+}
+.basic-infor .basic-infor-lable {
+	padding-right: 10px;
+}
+.basic-infor .basic-infor-lable-co {
+	color: #444;
+	padding-right: 8px;
+}
+.basic-infor-left, .basic-infor-right {
+	display: inline-block;
+	box-sizing: border-box;
+}
+.basic-infor-left {
+	width: 75%;
+}
+.basic-infor-left .resume-img {
+	background: #d3d3d3;
+	padding: 8px 0 15px;
+	margin-top: 35px;
+	width: 13%;
+	vertical-align: top;
+	display: inline-block;
+}
+.basic-infor-left .default-img {
+	font-size: 80px;
+	color: #fff;
+}
+.basic-infor-co {
+	display: inline-block;
+	padding: 20px 50px;
+	box-sizing: border-box;
+	width: 80%;
+}
+.basic-infor-co .resume-name {
+	font-size: 24px;
+	color: #000;
+	padding-right: 10px;
+}
+.basic-infor-co .split {
+	padding: 0 10px;
+}
+.basic-infor-co .resume-label {
+	color: #ea5100;
+	display: inline-block;
+	margin: 6px 15px 10px 0;
+	position: relative;
+	border: 1px solid #ea5100;
+	border-radius: 5px;
+	padding: 0 10px;
+	line-height: 22px;
+}
+.basic-infor-co .resume-label:hover .label-dele {
+	width: 1em;
+}
+.resume-label .label-dele {
+	margin-left: -.2em;
+	margin-right: 0;
+	width: 0;
+	transition: all .5s;
+}
+.resume-label .icon-cancel-1:before {
+	opacity: 0;
+	transition: all .5s;
+}
+.resume-label:hover .icon-cancel-1:before {
+	opacity: 1;
+}
+
+.resume-label .icon-tag {
+	position: absolute;
+	top: 100%;
+	left: -1em;
+}
+.basic-infor-co .icon-tags-text {
+	color: #48b8e8;
+	cursor: pointer;
+}
+.icon-tags-text .icon-tags {
+	font-size: 20px;
+	vertical-align: middle;
+}
+.icon-tags-text:hover .icon-tags:before {
+	content: '\e94b';
+}
+.basic-infor-right {
+	margin-top: 45px;
+	margin-left: -62px;
+	position: absolute;
+}
+.resume-co {
+	color: #4d4d4d;
+}
+.resume-co .resume-tool {
+	width: 100%;
+	background-color: #f1f4f5;
+	font-size: 16px;
+	height: 50px;
+	z-index: 1;
+	opacity:1;
+}
+.resume-co .resume {
+	width: 72%;
+	padding-left: 6%;
+	box-sizing: border-box;
+	display: inline-block;
+	border-right: 1px solid #d3d3d3;
+}
+.resume-co .resume-right {
+	display: inline-block;
+	width: 28%;
+	padding-right: 6%;
+	box-sizing: border-box;
+	border-left: 1px solid #d3d3d3;
+	margin-left: -5px;
+	font-size: 14px;
+	vertical-align: top;
+}
+.resume-co .void-tip {
+	height: 60px;
+}
+.resume-tool ul li{
+	display: inline-block;
+	line-height: 50px;
+	padding: 0 15px;
+	cursor: pointer;
+	position: relative;
+}
+.resume-tool ul li.li-ul:hover:after, .resume-tool ul li.current:after {
+	content: "";
+	height: 2px;
+	width: 100%;
+	background-color: #009df7;
+	position: absolute;
+	top: 100%;
+	left: 0;
+	margin-top: -2px;
+}
+.resume-tool .li-more-co {
+	position: absolute;
+	line-height: 25px;
+	top: 0;
+	left: 0;
+	box-sizing: border-box;
+	padding: 0 13px;
+	width: 120%;
+	border: 1px solid #d3d3d3;
+	transition: all 1s;
+	opacity: 0;
+	visibility: hidden;
+	z-index: -1;
+}
+.li-more:hover .li-more-co {
+	opacity: 1;
+	z-index: 0;
+	visibility: visible;
+	padding: 50px 13px 10px;
+}
+.li-more .more-li:hover {
+	color: #48b8e8;
+}
+
+.resume .resume-item .co {
+	box-sizing: border-box;
+	padding: 20px 15px;
+}
+.resume .resume-attach {
+	line-height: 30px;
+	padding-left: 15px;
+	margin-top: 10px;
+}
+.resume .resume-attach > * {
+	display: inline-block;
+}
+.resume .resume-attach .right {
+	float: right;
+	margin-right: 20px;
+}
+.resume .resume-attach .left {
+	width: 85%;
+}
+.resume-attach a {
+	margin-left: 5px;
+	cursor: default;
+	display: inline-block;
+}
+.resume-attach a:hover {
+	margin-left: 2px;
+}
+.resume-attach a:hover .font-icon {
+	font-size: 18px;
+}
+.resume-attach a:hover .icon-doc-text {
+	font-size: 17px;
+}
+.resume-attach a:hover .file-dele:before {
+	visibility: visible;
+}
+.resume-attach a .file-dele:before {
+	content: "X";
+	color: orange;
+	visibility: hidden;
+	padding-left: 5px;
+	cursor: pointer;
+}
+.resume-attach a .file-dele:hover:before {
+	color: #ea5100;
+}
+.resume-attach .attach-bar {
+	vertical-align: top;
+}
+.resume-attach .attach-list {
+	display: inline-block;
+	width: 90%;
+}
+.resume-attach .resume-op {
+	cursor: pointer;
+}
+.resume-attach .icon-doc-text, .resume-attach .file-name {
+	color: #009df7;
+}
+.icon-upload-1, .icon-download-1, .icon-print-1, .icon-popup {
+	font-size: 16px;
+}
+.resume-attach .icon-doc-text {
+	font-size: 15px;
+}
+.resume .resume-item {
+	display: none;
+}
+.resume .current {
+	display: block;
+}
+.resume .resume-original { 
+	line-height: 30px;
+	padding-left: 15px;
+	font-size: 14px;
+}
+.resume-original .infor-text {
+	padding-left: 15px;
+}
+.resume-original .progressing {
+	display: inline-block;
+	line-height: 15px;
+	vertical-align: middle;
+}
+.resume-original .resume-source #resumeSource {
+	box-sizing: border-box;
+	border: none;
+	width: 100%;
+	padding: 10px 22px 0 0;
+}
+.resume-source #resumeSource html {
+	text-align: center;
+}
+.at-ta .co-tr {
+	font-size: 15px;
+	height: 22px;
+	line-height: 22px;
+}
+.at-ta .text-tip {
+	float: right;
+	padding-right: 20px;
+	display: inline-block;
+}
+.at-ta .text-tip .text-num {
+	font-family: Constantia,Georgia;
+  font-size: 22px;
+  font-style: italic;
+  font-weight: 700;
+}
+.at-ta .comment-div {
+	position: relative;
+}
+.comment-div textarea {
+	position: absolute;
+	top: -15px; 
+	left: 0;
+}
+.comment-div pre {
+	display: block;
+	visibility: hidden; 
+}
+.comment-div textarea, .comment-div pre{
+	outline: 0 none;
+	width: 90%;
+	min-height: 100px;
+	margin: 15px 0 20px;
+	resize: none;
+	border: 1px solid #ccc;
+  border-radius: 4px;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;
+  padding: 6px 19px 6px 12px;
+  color: #555;
+  font-size: 14px;
+  line-height: 18px;
+  white-space: pre-wrap;
+  word-break: break-all;
+  word-wrap: break-word;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+.comment-div  textarea:focus {
+	height: 100%;
+	border-color: #66afe9;
+	box-shadow: 0 1px 1px rgba(0,0,0,0.075) inset, 0 0 8px rgba(102,175,233,0.6);
+}
+
+.at-ta .a-btn {
+	border: 1px solid #48b8e8;
+	padding: 0 6px;
+	margin: 0 6px;
+}
+.at-ta .a-btn:hover {
+	border: 1px solid #06c;
+}
+.at-ta .view-range {
+	display: inline-block;
+	margin-left: 20px;
+	padding: 0 10px;
+	position: relative;
+	cursor: pointer;
+}
+.at-ta .view-range .li-more-co {
+	position: absolute;
+	top: 0;
+	left: -12px;
+	padding-right: 10px;
+	width: 100%;
+	border: 1px solid #d3d3d3;
+	color: #888;
+	transition: all .8s;
+	z-index: -1;
+	opacity: 0;
+	visibility: hidden; 
+}
+.view-range.remove-hover:hover .li-more-co {
+	z-index: -1;
+	opacity: 0;
+	visibility: hidden; 
+	padding: 0 10px 0 0;
+}
+.view-range:hover .li-more-co {
+	z-index: 0;
+	opacity: 1;
+	visibility: visible;
+	padding: 25px 10px 2px 0;
+} 
+.view-range .li-more-co .more-a {
+	position: relative;
+}
+.view-range .li-more-co .more-a:hover {
+	color: #4d4d4d;
+}
+.view-range .li-more-co .more-a:hover .more-a-tip {
+	display: block;
+}
+.view-range .li-more-co .more-a .more-a-tip {
+	position: absolute;
+	left: 92px;
+	top: 0;
+	border: 1px solid #ff6c00;
+	border-radius: 4px;
+	padding: 0 5px;
+	white-space: nowrap;
+	color: #ff6c00;
+	display: none;
+}
+.more-a-tip i {
+	border-color: transparent #ff6c00 transparent transparent;
+  border-style: solid;
+  border-width: 6px;
+  height: 0;
+  left: -13px;
+  position: absolute;
+  top: 5px;
+  width: 0;
+}
+.more-a-tip i:after {
+	border-color: transparent #fff transparent transparent;
+  border-style: solid;
+  border-width: 6px;
+  content: " ";
+  left: -4px;
+  top: -6px;
+  height: 0;
+  width: 0;
+  position: absolute;
+}
+.at-ta .view-range-tip {
+	color: #ccc;
+}
+.at-ta .button-send {
+	margin: 18px 0 60px;
+}
+.at-ta .btn-send {
+	background: none repeat scroll 0 0 #00a0e9;
+	border: medium none;
+  height: 32px;
+  line-height: 32px;
+  text-decoration: none;
+  width: 86px;
+}
+.at-ta .comment-list .title {
+	border-bottom: 1px solid #d3d3d3;
+}
+
+.resume-right .resume-right-item {
+	padding: 10px 0 0 6px;
+	overflow: hidden;
+	position: relative;
+	
+}
+.resume-right .resume-right-item .title{
+	color: #444;
+	font-size: 17px;
+	line-height: 30px;
+	position: relative;
+}
+.resume-right .resume-right-item .co {
+	padding: 10px 10px 0;
+}
+.resume-right .dynamic .co {
+	padding: 0 10px;
+}
+.resume-right .resume-right-item .split{
+	border-bottom: 1px solid #d3d3d3;
+	height: 1px;
+	width: 100%;
+	display: inline-block;
+	position: absolute;
+	top: 50%;
+	left: 98px;
+}
+.resume-right .resume-right-item .review-more {
+	text-align: right;
+	color: #48b8e8;
+	padding-right: 5px;
+	margin-top: 10px;
+}
+.review-more .view-more-a:hover {
+	color: #009df7;
+}
+.resume-right .more-function .split {
+	left: 80px;
+}
+.resume-right .dynamic .split {
+	left: 85px;
+}
+.more-function .operate-bar-item {
+	height: 35px;
+	line-height: 35px;
+	text-align: center;
+	border-radius: 5px;
+	background-color: #009df7;
+	color: #fff;
+	font-size: 15px;
+	display: inline-block;
+	padding: 0 10px;
+	min-width: 40px;
+	margin-bottom: 10px;
+	box-shadow: 0 -3px 0 rgba(0, 0, 0, 0.1) inset;
+}
+.more-function .operate-bar-item:hover {
+	color: #eee;
+}
+.more-function .operate-bar-item:active {
+	box-shadow: none;
+}
+
+.more-function .operate {
+	position: relative;
+	line-height: 28px;
+}
+.more-function .operate a {
+	display: inline-block;
+}
+.more-function .operate-sms, .more-function .operate-transmit, .more-function .operate-print{
+	position: absolute;
+	left: 50%;
+	margin-left: -32px;
+}
+.more-function .operate-more {
+	float: right;
+	padding-right: 15px;
+}
+.more-function .operate-more-list {
+	display: none;
+}
+.comment-list .ul-comments {
+	margin-top: 10px;
+}
+.comment-content-infor {
+	color: #999;
+	white-space: nowrap;
+}
+.comment-split {
+	padding: 0 5px;
+}
+.ul-comments li {
+	margin-top: 6px;
+}
+.ul-records li, .ul-comments li {
+	font-size: 12px;
+	position: relative;
+}
+.ul-records li > *, .ul-comments li > * {
+	display: inline-block;
+}
+.ul-records li .head-img, .ul-comments li .head-img {
+	font-size: 30px;
+	position: absolute;
+	top: 10px;
+	color: #999;
+}
+.ul-records li .operate-infor, .ul-comments li .comment-infor {
+	padding-left: 50px;
+	line-height: 25px;
+	box-sizing: border-box;
+	width: 90%;
+}
+.ul-comments li .comment-infor {
+  line-height: 20px;
+ }
+ .ul-comments li .comment-infor pre {
+  white-space: pre-wrap;
+  word-break: break-all;
+  word-wrap: break-word;
+}
+.ul-records li .operate-infor > div {
+	width: 100%;
+	height: 25px;
+	overflow: hidden;
+}
+.ul-records li .operate-infor .user-name {
+	padding-right: 10px; 
+}
+.ul-records li .operate-infor .operate-time {
+	color: #999;
+}
+.resume-right .recruit-progress .co {
+	padding-bottom: 30px;
+}
+.recruit-progress .icon-down-dir {
+	cursor: pointer;
+}
+.recruit-progress .progressing {
+	margin-top: 10px;
+}
+.progressing {
+	background-color: #f0f2f7;
+  border-radius: 3px;
+  height: 15px;
+  position: relative;
+  width: 260px;
+}
+.progressing .statu00 {
+	width: 5px;
+}
+.progressing .statu01 {
+  width: 20%;
+}
+.progressing .statu02 {
+  width: 40%;
+}
+.progressing .statu03 {
+  width: 60%;
+}
+.progressing .statu04 {
+	width: 80%;
+}
+.progressing .statu05 {
+	width: 100%;
+}
+.progressing .statu00 .progress-text:before {
+	content: "浜烘墠搴�;
+}
+.progressing .statu01 .progress-text:before {
+	content: "鍊欓�浜�;
+}
+.progressing .statu00:hover .progress-text:after {
+	content: "0%";
+	visibility: visible;
+	opacity: 1;
+}
+.progressing .statu01:hover .progress-text:after {
+	content: "20%";
+	visibility: visible;
+	opacity: 1;
+}
+.progressing .current {
+  background-color: #06c;
+  border-radius: 3px;
+  height: 15px;
+  cursor: pointer;
+}
+.progressing .current:hover {
+	background-color: #ea5100;
+}
+.progressing .progress-text {
+	position: absolute;
+	display: inline-block;
+}
+.progressing .progress-text.t-bottom:after {
+	content: "";
+	visibility: hidden;
+	opacity: 0;
+	position: absolute;
+	top: -18px;
+	color: #ea5100;
+	transition: all 3s;
+}
+.progressing .progress-text.t-top {
+	top: -22px;
+	margin-left: -23px;
+}
+.progressing .progress-text.t-bottom {
+  top: 14px;
+  margin-left: -16px;
+}
+.progressing .progress-text.t-right {
+	left: 100%;
+	margin-left: 6px;
+}
+.progressing .statu01 .progress-text.t-top, .progressing .statu01 .progress-text.t-bottom {
+  left: 20%;
+}
+.progressing .statu03 .progress-text.t-top, .progressing .statu03 .progress-text.t-bottom {
+  left: 60%;
+}
+.pop-main .select-tr {
+	margin: 10px 0 0;
+}
+.pop-main .file-list {
+	padding-top: 10px;
+}
+.file-list a {
+	display: inline-block;
+	margin-right: 11px;
+	position:relative;
+}
+.file-list a:hover {
+	border-bottom: 1px dashed #bbb;
+	margin-bottom: -1px;
+	cursor: default;
+}
+.file-list a:hover .file-dele:before {
+	visibility: visible;
+}
+.file-list a .font-icon {
+	font-size: 14px;
+}
+.file-list a .file-dele:before {
+	content: "X";
+	color: #bbb;
+	visibility: hidden;
+	padding-left: .5em;
+	cursor: pointer;
+}
+.file-list a .file-dele:hover:before {
+	color: #555;
+}
+.file-list .file-suc {
+	color: #39a110;
+}
+.upload-tip {
+	display: none;
+	padding-left: 30px;
+	color: green;
+}
+.upload-failed-tip {
+	display: none;
+	margin: 10px 0;
+	padding-left: 5px;
+	color: red;
+	border-top: 1px dashed #444;
+	border-bottom: 1px dashed #444;
+}
+
+.resume-zh .co .co-item {
+	margin-bottom: 10px;
+	padding-bottom: 10px;
+}
+.resume-zh .co-item .co-title {
+	color: #009df7;
+	font-size: 16px;
+	margin-bottom: 8px;
+}
+.co-item .co-co {
+	padding-left: 40px;
+	font-size: 13px;
+}
+.co-co .co-tr {
+	line-height: 25px;
+}
+.co-co .co-tr .co-td {
+	width: 49%;
+	display: inline-block;
+}
+.co-co .co-tr .co-td span {
+	display: inline-block;
+}
+.co-co .co-tr .co-td .label {
+	width: 80px;
+	color: #666;
+	vertical-align: top;
+}
+.co-co .co-tr .co-td .value {
+	color: #000;
+	white-space: nowrap;
+	max-width: 80%;
+	min-width: 20px;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+.co-co .co-co-item {
+	margin-bottom: 10px;
+}
+.co-co .co-co-item .corp-job {
+	color: #000;
+	font-size: 16px;
+	line-height: 30px;
+}
+.co-co .co-co-item .corp-job-co .job-duties {
+	padding-left: 80px;
+}
+.co-co .currency {
+	vertical-align: top;
+}
+
+.fileData{
+	display:none;
+	background-color: white;
+	border: 2px solid #E9E9E9;
+	position:absolute;
+	padding: 5px;
+	box-shadow:-2px 0px #E9E9E9 inset;
+	width: 300px;
+}
+
+.fileLi{
+	overflow: hidden;
+	margin-left: 5px;
+	margin-right: 5px; 
+}
+#addPlugs{
+	display:inline-block;
+	margin-bottom: 5px;
+	margin-left: 7px;
+}
+.clear{
+	clear: both;
+}
+.plugSpan{
+	display: inline-block;
+	margin-left: 2px;
+	margin-right: 3px;
+	padding-left:4px;
+	padding-right:4px;
+	background-color: #EEEEEE;
+  cursor: pointer;
+}
+
+.plugSpan span{
+	color:red;
+}
+
+#plugOperate{
+	float:left;
+}
+.co-label{
+	margin-right: 20px;
+	float:left;
+}
+.attachmentsIcon {
+    background:  url("../Images/newSpriteIcon.png") no-repeat scroll -9px 3px;
+    display: inline-block;
+    height: 13px;
+    position: relative;
+    top: 2px;
+    width: 16px;
+}
+
+.resumelist {
+  float: left; list-style: none;margin-left: 10px;margin-right: 10px;
+}
+.currentCol{
+  color: red;
+}

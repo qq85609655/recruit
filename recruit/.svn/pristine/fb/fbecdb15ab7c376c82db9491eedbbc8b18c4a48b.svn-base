@@ -1,0 +1,318 @@
+.con-title {
+  margin-top: 15px;
+  padding-left: 20px;
+  position: relative;
+  height: 30px;
+  line-height: 30px;
+  background-color: #effaff;
+  border: 1px solid #aebed7;
+  border-radius: 5px;
+  font-size: 14px;
+  border-bottom: 2px solid #06c;
+}
+
+.curpo {
+  cursor: pointer;
+}
+
+.search-box {
+  border-radius: 5px;
+  padding: 15px 0 10px;
+}
+
+.search-box td {
+  padding: 3px 0;
+}
+
+.search-item {
+  color: #888;
+  display: inline-block;
+  padding-left: 35px;
+  width: 65px;
+  font-size: 12px;
+}
+
+.choose_btn {
+  border: 1px solid #aebed7;
+  cursor: pointer;
+  height: 26px;
+  padding-left: 6px;
+  text-align: left;
+  width: 152px;
+  background-color: #c3e7fa;
+}
+
+.input-l {
+  width: 216px;
+}
+
+select {
+  width: 100px;
+}
+
+.search-box .search-box-last {
+  padding-left: 35px;
+  padding-top: 10px;
+}
+
+span.more-expand-icon {
+  margin: 0;
+}
+
+.more-expand {
+  color: #06c;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.more-expand-icon {
+  font-size: 18px;
+}
+
+.icon-angle-double-up:after {
+  content: "收起条件";
+  font-size: 12px;
+  position: absolute;
+  margin-left: 5px;
+}
+
+.icon-angle-double-down:after {
+  content: "更多条件 ";
+  font-size: 12px;
+  position: absolute;
+  margin-left: 5px;
+}
+
+.position-table {
+  margin-top: 10px;
+  overflow: hidden;
+}
+
+.table {
+  min-height: 200px;
+  border-top: 1px solid #aebed7;
+}
+
+.table thead {
+  border-bottom: 1px solid #aebed7;
+  text-align: left;
+}
+
+.table tr {
+  height: 40px;
+}
+
+.table th {
+  color: #4d4d4d;
+  font-weight: normal;
+}
+
+.table td {
+  color: #888;
+}
+
+.showCellTooltip {
+  display: block;
+}
+
+.position-operate {
+  width: 400px;
+  height: 170px;
+  background-color: white;
+  position: absolute;
+  border: 1px solid #A9CCDE;
+  z-index: 200;
+  display: none;
+}
+
+.position-operate-left {
+  float: left;
+  height: 80%;
+  width: 28%;
+  margin-top: 20px;
+}
+
+.position-operate-ltable {
+  height: 80%;
+  width: 100px;
+  margin-left: 10px;
+  border-right: 1px solid #A9CCDE;
+}
+
+.position-operate-ltable tr {
+  height: 30px;
+}
+
+.position-operate-right {
+  margin-top: 20px;
+  float: right;
+  width: 69%;
+  height: 100%;
+  margin-right: 10px;
+  font-size: 10px;
+}
+
+.position-operate-right span {
+  font-size: 12px;
+}
+
+.position-operate-rtable tr {
+  height: 20px;
+}
+
+.position-operate:before {
+  content: '';
+  border-top: 25px solid transparent;
+  border-bottom: 25px solid transparent;
+  border-right: 25px solid #eee;
+  position: absolute;
+  top: 40px;
+  left: -10px;
+}
+
+.position-operate:after {
+  content: '';
+  border-top: 25px solid transparent;
+  border-bottom: 25px solid transparent;
+  border-right: 25px solid #fbfdfb;
+  position: absolute;
+  top: 40px;
+  left: -10px;
+}
+
+.phone_yes, .phone_no, .info_yes, .info_no {
+  position: relative;
+  display: inline-block;
+}
+
+.phone_yes a, .phone_no a, .info_yes a, .info_no a {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  line-height: 20px;
+  margin: 3px 5px 0 0;
+}
+
+.phone_yes a {
+  background-position: left -702px;
+}
+
+.info_yes a {
+  background-position: left -736px;
+}
+
+.phone_no a {
+  background-position: -81px -72px;
+}
+
+.info_no a {
+  background-position: -81px -736px;
+}
+
+.phone-info_tanchu {
+  position: absolute;
+  left: 30px;
+  top: -23px;
+  z-index: 2;
+  color: red;
+}
+
+.phone-info_tanchu .tanchujiantou {
+  position: relative;
+  left: 70px;
+  top: 0px;
+  z-index: 3;
+  height: 10px;
+  width: 20px;
+  margin-bottom: -3px;
+}
+
+.phone-info_tanchu .tanchu_nr {
+  background: #fff;
+  border: 1px solid #ddd;
+  font-size: 14px;
+  font-weight: normal;
+  text-align: center;
+  width: 90px;
+  height: 30px;
+}
+
+.phone-info_tanchu .tanchu_nr a {
+  width: auto;
+  background: none;
+  line-height: 30px;
+}
+
+.mini-buttonedit {
+  height: auto !important;
+}
+
+.position-add-label {
+  background-color: #F5F5F5;
+  margin-left: 10px;
+}
+
+.position-add-label input[type='text'] {
+  color: rgb(153, 153, 153);
+  width: 230px;
+  height: 24px;
+}
+
+.position-add-label input[type='button'] {
+  width: 40px;
+  height: 24px;
+}
+
+#addedWrap {
+  background-color: #CDDEF2;
+  margin-right: 10px;
+  margin-top: 10px;
+  min-height: 43px;
+}
+
+#inner-hotTags {
+  margin-bottom: 5px;
+  border-top: 1px solid #CCCCCC;
+}
+
+#addedTags span {
+  padding-left: 20px;
+  text-align: center;
+}
+
+.tipMessage {
+  display: none;
+}
+
+.hotLabel {
+  padding-top: 5px;
+  padding-botton: 5px;
+  padding-left: 10px;
+  padding-right: 10px;
+  border: 1px solid #E6E6E6;
+}
+
+#isShow {
+  background-color: #CDDEF2;
+  color: #006699;
+}
+
+.showPosition-choose {
+  position: absolute;
+  background-color: white;
+  padding: 10px;
+  display: none;
+}
+
+.showPosition-choose span {
+  font-size: 13px;
+  color: gray;
+}
+
+.showPosition-choose-tab tr {
+  height: 30px;
+}
+
+.position-table {
+  display: none;
+}

@@ -1,0 +1,240 @@
+package com.csot.recruit.controller.flow.interview;
+
+import com.csot.recruit.common.util.DateKit;
+import com.csot.recruit.common.util.StringUtil;
+import com.csot.recruit.model.original.attachment.Attachment;
+import com.csot.recruit.model.original.candidate.Candidate;
+import com.csot.recruit.model.original.flow.interview.IbARalation;
+import com.csot.recruit.model.original.flow.interview.InterviewBook;
+import com.csot.recruit.model.template.Template;
+import com.csot.recruit.model.vo.InterviewBookCandidateVo;
+import com.csot.recruit.model.vo.InterviewBookListVo;
+import com.csot.recruit.model.vo.InterviewBookVo;
+import com.csot.recruit.service.attachment.AttachmentService;
+import com.csot.recruit.service.candidate.CandidateService;
+import com.csot.recruit.service.flow.interview.IbARalationService;
+import com.csot.recruit.service.flow.interview.InterviewBookService;
+import com.csot.recruit.service.mail.MailSendService;
+import com.csot.recruit.service.template.TemplateService;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.UUID;
+
+import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+
+import org.amberframework.core.common.model.AjaxRtnJson;
+import org.amberframework.web.miniui.pojo.MiniGridPageSort;
+import org.amberframework.web.miniui.pojo.MiniRtn2Grid;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.dao.DataAccessException;
+import org.springframework.stereotype.Controller;
+import org.springframework.util.StringUtils;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
+
+@Controller
+@RequestMapping("interviewBookController")
+public class InterviewBookController {
+    private static final Logger logger = LoggerFactory.getLogger(InterviewBookController.class);
+
+    @Resource
+    private InterviewBookService interviewBookService;
+    @Resource
+    private CandidateService candidateService;
+    
+    @Resource
+    private MailSendService mailSendService ; 
+    
+    @Resource
+    private TemplateService templateService ;
+    
+    @Resource
+    private AttachmentService AttachmentService ;
+
+    @RequestMapping("list")
+    public ModelAndView list() {
+        return new ModelAndView("com/csot/recruit/flow/interview/interviewBookList");
+    }
+
+    @RequestMapping("datagrid")
+    @ResponseBody
+    public MiniRtn2Grid<InterviewBook> datagrid(MiniGridPageSort pageSort, HttpServletRequest request) {
+        String searchKey = request.getParameter("searchKey");
+        return interviewBookService.getGrid(pageSort, searchKey);
+    }
+
+    @RequestMapping("create")
+    public ModelAndView create() {
+        return new ModelAndView("com/csot/recruit/flow/interview/interviewBookEdit");
+    }
+
+    @RequestMapping("modify/{id}")
+    public ModelAndView modify(@PathVariable String id, HttpServletRequest request) {
+        InterviewBook interviewBook = interviewBookService.getByPrimaryKey(id);
+        request.setAttribute("interviewBook", interviewBook);
+        return new ModelAndView("com/csot/recruit/flow/interview/interviewBookEdit");
+    }
+
+    @RequestMapping("view/{id}")
+    public ModelAndView view(@PathVariable String id, HttpServletRequest request) {
+        InterviewBook interviewBook = interviewBookService.getByPrimaryKey(id);
+        request.setAttribute("interviewBook", interviewBook);
+        return new ModelAndView("com/csot/recruit/flow/interview/interviewBookView");
+    }
+
+    @RequestMapping("remove/{id}")
+    @ResponseBody
+    public AjaxRtnJson remove(@PathVariable String id) {
+        try {
+            interviewBookService.remove(id);
+            return new AjaxRtnJson(true, "删除成功");
+        } catch (DataAccessException e) {
+            logger.error(e.getMessage(), e);
+            return new AjaxRtnJson(false, "删除失败: " + e.getMessage());
+        }
+    }
+
+    @RequestMapping("save")
+    @ResponseBody
+    public AjaxRtnJson save(InterviewBook interviewBook) {
+        if (StringUtils.hasText(interviewBook.getId())) {
+            try {
+                interviewBookService.updateSelective(interviewBook);
+                return new AjaxRtnJson(true, "修改成功");
+            } catch (DataAccessException e) {
+                logger.error(e.getMessage(), e);
+                return new AjaxRtnJson(false, "修改失败: " + e.getMessage());
+            }
+        } else {
+            try {
+                interviewBook.setId(UUID.randomUUID().toString().replace("-", ""));
+                interviewBookService.create(interviewBook);
+                return new AjaxRtnJson(true, "新建成功");
+            } catch (DataAccessException e) {
+                logger.error(e.getMessage(), e);
+                return new AjaxRtnJson(false, "新建失败: " + e.getMessage());
+            }
+        }
+    }
+    
+    @RequestMapping("InterviewBookVoSave")
+    @ResponseBody
+    public Map<String,Object> InterviewBookVoSave(InterviewBookVo interviewBookVo) {
+      Map<String,Object> map = new HashMap<String,Object>();
+          try{
+            /**
+             * 时间处理
+             */
+            if(StringUtils.hasText(interviewBookVo.getInterviewDateStr())){
+              interviewBookVo.setInterviewDate(DateKit.strToDate(interviewBookVo.getInterviewDateStr()));
+            }
+            if(StringUtils.hasText(interviewBookVo.getSecondETimeStr())){
+              interviewBookVo.setSecondETime(DateKit.strToTime(interviewBookVo.getSecondETimeStr()+":00"));
+            }
+            if(StringUtils.hasText(interviewBookVo.getSecondRTimeStr())){
+              interviewBookVo.setSecondRTime(DateKit.strToTime(interviewBookVo.getSecondRTimeStr()+":00"));
+            }
+            if(StringUtils.hasText(interviewBookVo.getIsLink())){
+              if(!("0".equals(interviewBookVo.getIsLink()))){
+                interviewBookVo.setIsLink("1");
+              }
+            }
+            
+            String interviewBookId = interviewBookService.saveOrUpdate(interviewBookVo);
+            
+            /**
+             * 发邮件
+             */
+            if(interviewBookVo.getIsEmail().equals("1")){
+              Template eTemplate = new Template();
+              eTemplate = templateService.getByPrimaryKey(interviewBookVo.getModelId());
+              eTemplate.setContext(interviewBookVo.getEmailContent());
+              List<Attachment> attachments = new ArrayList<Attachment>();
+              if(interviewBookVo.getAttchmentIds()!= null && 
+                  (!interviewBookVo.getAttchmentIds().equals(""))){
+                String[] ids = interviewBookVo.getAttchmentIds().split(",");
+                Attachment attachment = null ;
+                for(String id : ids){
+                  attachment = AttachmentService.getByPrimaryKey(id);
+                  attachments.add(attachment);
+                }
+              }
+              
+              Candidate candidate = new Candidate();
+              candidate = candidateService.getByPrimaryKey(interviewBookVo.getInterviewee());
+              mailSendService.sendCommonEmail(candidate.getEmail(), eTemplate, candidate, attachments);
+              
+            }
+              
+          
+              map.put("status", 200);
+            
+          }catch(Exception e){
+            logger.error(e.getMessage(), e);
+            map.put("status", 404);
+          }
+          return map ;
+ }
+    
+    @RequestMapping("toInterviewBookManage")
+    public ModelAndView toInterviewBookManage() {
+      return new ModelAndView("com/csot/flow/interview/interviewBookManage");
+    }
+    
+    @RequestMapping("addInterviewBook")
+    public ModelAndView addInterviewBook(HttpServletRequest request,String id) {
+      Candidate candidate = candidateService.getByPrimaryKey(id);
+      if(candidate != null){
+        ModelAndView vm = new ModelAndView("com/csot/flow/interview/interviewBookForm");
+        vm.addObject("candidate", candidate);
+        return vm ;
+      }
+      
+      return null;
+    }
+ 
+    /***
+     * 面试流程管理查询
+     * @param page 分页对象
+     * @param positionMana 查询对象
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping("queryInterviewBookListByPage")
+    public MiniRtn2Grid<InterviewBookListVo> queryInterviewBookListByPage(MiniGridPageSort page, HttpServletRequest request) {
+        String startDate  = request.getParameter("startDate");
+        String endDate  = request.getParameter("endDate");
+        String searchKey  = request.getParameter("searchKey");
+        if(StringUtil.isEmpty(page.getSortField())) {
+          page.setSortField("storageDate");
+          page.setSortOrder("desc");
+        }
+        Map<String, Object> map = new HashMap<String, Object>();
+        if(StringUtil.isNotEmpty(startDate)){
+          map.put("startDate", startDate);
+        }
+        if(StringUtil.isNotEmpty(endDate)){
+          map.put("endDate", endDate);
+        }
+        if(StringUtil.isNotEmpty(searchKey)){
+          map.put("searchKey", searchKey);
+        }
+        map.put("begin", page.getPageSize()*(page.getPageIndex()));
+        map.put("end", page.getPageSize()*(page.getPageIndex()+1));
+        map.put("sortField", page.getSortField());
+        map.put("sortOrder", page.getSortOrder());
+      
+        
+        MiniRtn2Grid<InterviewBookListVo> minirtn2Grid = candidateService.queryCandidateListByPage(map);
+        logger.info("data:" + minirtn2Grid.getData() + "total:"
+                + minirtn2Grid.getTotal());
+        return minirtn2Grid;
+    }
+}

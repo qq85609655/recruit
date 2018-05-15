@@ -1,0 +1,36 @@
+setData(window.dialogArguments);
+function setData(d) {
+	console.log(d);
+	$(".positionName").html(d.positionName);
+	$("#recruitPerson").text(d.recruitPerson);
+	$("#otherRecruitPerson").text(d.otherRecruitPerson);
+	$("#modifyTime").text();
+	$("#receiveEmail").text(d.recruitInfor.receiveEmail);
+	$("#secrecyType").text(d.secrecy);
+	$("#demands").text(d.departmentRequire.demands);
+	$("#demandType").text(d.departmentRequire.demandType);
+	$("#effectDate").text(d.departmentRequire.effectDate);
+	$("#expecDate").text(d.departmentRequire.expecDate);
+	$("#positionCode").text(d.positionCode);
+	$("#innerCode").text(d.departmentRequire.positionCode);
+	$("#department").text(d.departmentRequire.department);
+	$("#demandDepMa").text(d.deptManager);
+	$("#recruitObject").text(d.recruitObject);
+	$("#workPlace").text(d.workPlace);
+	$("#positionType").text(d.positionType);
+	$("#positionSimilar").text(d.positionSimilar);
+	$("#positionLevel").text(d.positionLevel);
+	$("#recruitNumbers").text(d.recruitNumbers);
+	$("#publisher").text(d.publisher);
+	$("#salary").text(d.salary);
+	$("#publishDate").text(d.publishDate);
+	$("#recruitType").text(d.recruitType);
+	$("#deadline").text(d.expireDate);
+	$("#positionIndustry").text(d.positionIndustry);
+	$("#age").text(d.requireInfor.age);
+	$("#workExperience").text(d.requireInfor.workExperience);
+	$("#englishLevel").text(d.requireInfor.englishLevel);
+	$("#education").text(d.requireInfor.education);
+	$("#gender").text(d.requireInfor.gender);
+	$("#positionDescription").html(d.positionDescription);
+}

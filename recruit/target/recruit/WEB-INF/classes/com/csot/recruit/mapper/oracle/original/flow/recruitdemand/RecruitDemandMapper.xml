@@ -1,0 +1,1051 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.csot.recruit.dao.original.flow.recruitdemand.RecruitDemandMapper">
+  <resultMap id="BaseResultMap" type="com.csot.recruit.model.original.flow.recruitdemand.RecruitDemand">
+    <id column="ID" jdbcType="VARCHAR" property="id" />
+    <result column="DEMAND_ID" jdbcType="VARCHAR" property="demandId" />
+    <result column="THEME" jdbcType="VARCHAR" property="theme" />
+    <result column="DUTY_PERSON_ID" jdbcType="VARCHAR" property="dutyPersonId" />
+    <result column="APPLY_ORGANIZATION_ID" jdbcType="VARCHAR" property="applyOrganizationId" />
+    <result column="APPLY_POST_ID" jdbcType="VARCHAR" property="applyPostId" />
+    <result column="EMPLOYEE_TYPE" jdbcType="VARCHAR" property="employeeType" />
+    <result column="RECRUIT_DEMAND_REASON" jdbcType="VARCHAR" property="recruitDemandReason" />
+    <result column="DIMISSION_CHANGE_PERSON" jdbcType="VARCHAR" property="dimissionChangePerson" />
+    <result column="RANK_ID" jdbcType="VARCHAR" property="rankId" />
+    <result column="APPLY_PERSON_NUMBER" jdbcType="INTEGER" property="applyPersonNumber" />
+    <result column="AGE_START" jdbcType="INTEGER" property="ageStart" />
+    <result column="AGE_END" jdbcType="INTEGER" property="ageEnd" />
+    <result column="OFFER_NUMBER" jdbcType="INTEGER" property="offerNumber" />
+    <result column="ENTRY_NUMBER" jdbcType="INTEGER" property="entryNumber" />
+    <result column="APPLY_DATE" jdbcType="VARCHAR" property="applyDate" />
+    <result column="PREDICT_COME_DATE" jdbcType="VARCHAR" property="predictComeDate" />
+    <result column="WANT_COME_DATE" jdbcType="VARCHAR" property="wantComeDate" />
+    <result column="DISTRICT" jdbcType="VARCHAR" property="district" />
+    <result column="DEPUTY_ID" jdbcType="VARCHAR" property="deputyId" />
+    <result column="WORK_REMARK" jdbcType="VARCHAR" property="workRemark" />
+    <result column="INFO_STATE" jdbcType="VARCHAR" property="infoState" />
+    <result column="FLOW_STATE" jdbcType="VARCHAR" property="flowState" />
+    <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate" />
+    <result column="UPDATE_DATE" jdbcType="TIMESTAMP" property="updateDate" />
+    <result column="CREATOR_ID" jdbcType="VARCHAR" property="creatorId" />
+    <result column="MODIFIED_ID" jdbcType="VARCHAR" property="modifiedId" />
+    <result column="GENDER" jdbcType="VARCHAR" property="gender" />
+    <result column="IS_FINISH" jdbcType="VARCHAR" property="isFinish" />
+    <result column="EDUCATION" jdbcType="VARCHAR" property="education" />
+    <result column="PROFESSION" jdbcType="VARCHAR" property="profession" />
+    <result column="WORK_EXPERIENCE" jdbcType="VARCHAR" property="workExperience" />
+    <result column="REQUIRED_SKILL" jdbcType="VARCHAR" property="requiredSkill" />
+    <result column="ABILITY_DEMANDED" jdbcType="VARCHAR" property="abilityDemanded" />
+    <result column="FLOW_DATE" jdbcType="VARCHAR" property="flowDate" />
+    <result column="ENGLISH_LEVEL" jdbcType="VARCHAR" property="englishLevel" />
+    <result column="APPLY_ORGANIZATION_NAME" jdbcType="VARCHAR" property="applyOrganizationName" />
+    <result column="APPLY_POST_NAME" jdbcType="VARCHAR" property="applyPostName" />
+    <result column="DEPUTY_NAME" jdbcType="VARCHAR" property="deputyName" />
+    <result column="LOG_NUM" jdbcType="VARCHAR" property="logNum" />
+  </resultMap>
+
+  <resultMap id="BaseResultMapVo" type="com.csot.recruit.model.original.flow.recruitdemand.RecruitDemandVo">
+    <id column="ID" jdbcType="VARCHAR" property="id" />
+    <result column="DEMAND_ID" jdbcType="VARCHAR" property="demandId" />
+    <result column="THEME" jdbcType="VARCHAR" property="theme" />
+    <result column="DUTY_PERSON_ID" jdbcType="VARCHAR" property="dutyPersonId" />
+    <result column="APPLY_ORGANIZATION_ID" jdbcType="VARCHAR" property="applyOrganizationId" />
+    <result column="APPLY_POST_ID" jdbcType="VARCHAR" property="applyPostId" />
+    <result column="EMPLOYEE_TYPE" jdbcType="VARCHAR" property="employeeType" />
+    <result column="RECRUIT_DEMAND_REASON" jdbcType="VARCHAR" property="recruitDemandReason" />
+    <result column="DIMISSION_CHANGE_PERSON" jdbcType="VARCHAR" property="dimissionChangePerson" />
+    <result column="RANK_ID" jdbcType="VARCHAR" property="rankId" />
+    <result column="APPLY_PERSON_NUMBER" jdbcType="INTEGER" property="applyPersonNumber" />
+    <result column="AGE_START" jdbcType="INTEGER" property="ageStart" />
+    <result column="AGE_END" jdbcType="INTEGER" property="ageEnd" />
+    <result column="OFFER_NUMBER" jdbcType="INTEGER" property="offerNumber" />
+    <result column="ENTRY_NUMBER" jdbcType="INTEGER" property="entryNumber" />
+    <result column="APPLY_DATE" jdbcType="VARCHAR" property="applyDate" />
+    <result column="PREDICT_COME_DATE" jdbcType="VARCHAR" property="predictComeDate" />
+    <result column="WANT_COME_DATE" jdbcType="VARCHAR" property="wantComeDate" />
+    <result column="DISTRICT" jdbcType="VARCHAR" property="district" />
+    <result column="DEPUTY_ID" jdbcType="VARCHAR" property="deputyId" />
+    <result column="WORK_REMARK" jdbcType="VARCHAR" property="workRemark" />
+    <result column="INFO_STATE" jdbcType="VARCHAR" property="infoState" />
+    <result column="FLOW_STATE" jdbcType="VARCHAR" property="flowState" />
+    <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate" />
+    <result column="UPDATE_DATE" jdbcType="TIMESTAMP" property="updateDate" />
+    <result column="CREATOR_ID" jdbcType="VARCHAR" property="creatorId" />
+    <result column="MODIFIED_ID" jdbcType="VARCHAR" property="modifiedId" />
+    <result column="GENDER" jdbcType="VARCHAR" property="gender" />
+    <result column="IS_FINISH" jdbcType="VARCHAR" property="isFinish" />
+    <result column="EDUCATION" jdbcType="VARCHAR" property="education" />
+    <result column="PROFESSION" jdbcType="VARCHAR" property="profession" />
+    <result column="WORK_EXPERIENCE" jdbcType="VARCHAR" property="workExperience" />
+    <result column="REQUIRED_SKILL" jdbcType="VARCHAR" property="requiredSkill" />
+    <result column="ABILITY_DEMANDED" jdbcType="VARCHAR" property="abilityDemanded" />
+    <result column="FLOW_DATE" jdbcType="VARCHAR" property="flowDate" />
+    <result column="ENGLISH_LEVEL" jdbcType="VARCHAR" property="englishLevel" />
+    <result column="APPLY_ORGANIZATION_NAME" jdbcType="VARCHAR" property="applyOrganizationName" />
+    <result column="APPLY_POST_NAME" jdbcType="VARCHAR" property="applyPostName" />
+    <result column="DEPUTY_NAME" jdbcType="VARCHAR" property="deputyName" />
+    <result column="LOG_NUM" jdbcType="VARCHAR" property="logNum" />
+    <result column="CHANGE_NUM" jdbcType="VARCHAR" property="changeNum" />
+    <result column="SHAER_PERSON_NAME" jdbcType="VARCHAR" property="sharePerson" />
+    <result column="REMARK" jdbcType="VARCHAR" property="shareRemark" />
+  </resultMap>
+
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and
+                  #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="("
+                    separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and
+                  #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="("
+                    separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+
+  <sql id="Base_Column_List">
+    a.ID, a.DEMAND_ID, THEME, DUTY_PERSON_ID, APPLY_ORGANIZATION_ID, APPLY_POST_ID,
+    EMPLOYEE_TYPE,
+    RECRUIT_DEMAND_REASON, DIMISSION_CHANGE_PERSON, RANK_ID, APPLY_PERSON_NUMBER,AGE_START,AGE_END,
+    APPLY_DATE,
+    PREDICT_COME_DATE, WANT_COME_DATE, DISTRICT, DEPUTY_ID, WORK_REMARK, INFO_STATE,
+    FLOW_STATE, CREATE_DATE, UPDATE_DATE, CREATOR_ID, MODIFIED_ID, GENDER, EDUCATION,
+    PROFESSION,
+    WORK_EXPERIENCE, REQUIRED_SKILL, ABILITY_DEMANDED, FLOW_DATE, ENGLISH_LEVEL,
+    APPLY_ORGANIZATION_NAME, APPLY_POST_NAME, DEPUTY_NAME,IS_FINISH,(select count(1) from
+    T_RECRUIT_DEMAND_LOG
+    b where a.ID=b.DEMAND_ID)as LOG_NUM,OFFER_NUMBER,ENTRY_NUMBER
+  </sql>
+  <sql id="Base_Column_List_Vo">
+    a.ID, a.DEMAND_ID, a.THEME, a.DUTY_PERSON_ID, a.APPLY_ORGANIZATION_ID, a.APPLY_POST_ID,
+    a.EMPLOYEE_TYPE,
+    a.RECRUIT_DEMAND_REASON, a.DIMISSION_CHANGE_PERSON, a.RANK_ID, a.APPLY_PERSON_NUMBER,a.AGE_START,a.AGE_END,
+    a.APPLY_DATE,
+    a.PREDICT_COME_DATE, a.WANT_COME_DATE, a.DISTRICT, a.DEPUTY_ID, a.WORK_REMARK, a.INFO_STATE,
+    a.FLOW_STATE, a.CREATE_DATE, a.UPDATE_DATE, a.CREATOR_ID, a.MODIFIED_ID, a.GENDER, a.EDUCATION,
+    a.PROFESSION,
+    a.WORK_EXPERIENCE, a.REQUIRED_SKILL, a.ABILITY_DEMANDED, a.FLOW_DATE, ENGLISH_LEVEL,
+    a.APPLY_ORGANIZATION_NAME, a.APPLY_POST_NAME, a.DEPUTY_NAME,a.IS_FINISH,(select count(1) from
+    T_RECRUIT_DEMAND_LOG
+    b where a.ID=b.DEMAND_ID)as
+    LOG_NUM,
+    (select count(1) from
+    T_RECRUIT_DEMAND_CHANGE
+    dc where a.ID=dc.DEMAND_ID)as
+    CHANGE_NUM
+    ,a.OFFER_NUMBER,a.ENTRY_NUMBER,d.SHAER_PERSON_NAME,d.REMARK
+  </sql>
+  <select id="selectByExample" parameterType="com.csot.recruit.model.original.flow.recruitdemand.RecruitDemandCriteria"
+    resultMap="BaseResultMap">
+    <include refid="Oracle_Dialect_Pagination_Prefix" />
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from T_RECRUIT_DEMAND a
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <include refid="filter_item" />
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+    <include refid="Oracle_Dialect_Pagination_Suffix" />
+  </select>
+  <select id="selectByExampleVo" parameterType="com.csot.recruit.model.original.flow.recruitdemand.RecruitDemandCriteria"
+    resultMap="BaseResultMapVo">
+    <include refid="Oracle_Dialect_Pagination_Prefix" />
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List_Vo" />
+    from T_RECRUIT_DEMAND a
+    LEFT JOIN T_RECRUIT_DEMAND_SHARE d on a.id=d.RECRUIT_DEMAND_ID
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <include refid="filter_item" />
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+    <include refid="Oracle_Dialect_Pagination_Suffix" />
+  </select>
+
+  <sql id="filter_item">
+    <if test="userId != null">
+      <if test="userCode != null">
+       <!-- 判断Criteria有没有筛选条件 -->
+        <if test="!oredCriteriaNull">
+          and
+        </if>
+        <if test="oredCriteriaNull">
+          where
+        </if>
+        (a.CREATOR_ID=#{userId,jdbcType=VARCHAR} or a.DEPUTY_ID=#{userCode,jdbcType=VARCHAR}
+        or a.id
+        in
+        (select RECRUIT_DEMAND_ID from T_RECRUIT_DEMAND_SHARE where
+        SHAER_PERSON_ID=#{userCode,jdbcType=VARCHAR}) )
+      </if>
+    </if>
+  </sql>
+
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from T_RECRUIT_DEMAND a
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByDemandId" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from T_RECRUIT_DEMAND a
+    where DEMAND_ID = #{demandId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from T_RECRUIT_DEMAND
+    where ID =
+    #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.csot.recruit.model.original.flow.recruitdemand.RecruitDemandCriteria">
+    delete from T_RECRUIT_DEMAND
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.csot.recruit.model.original.flow.recruitdemand.RecruitDemand">
+    insert into T_RECRUIT_DEMAND (ID, DEMAND_ID, THEME,
+    DUTY_PERSON_ID, APPLY_ORGANIZATION_ID, APPLY_POST_ID,
+    EMPLOYEE_TYPE, RECRUIT_DEMAND_REASON,
+    DIMISSION_CHANGE_PERSON,
+    RANK_ID, APPLY_PERSON_NUMBER,AGE_START,AGE_END,ENTRY_NUMBER,OFFER_NUMBER, APPLY_DATE,
+    PREDICT_COME_DATE,
+    WANT_COME_DATE, DISTRICT,
+    DEPUTY_ID, WORK_REMARK, INFO_STATE,
+    FLOW_STATE,
+    CREATE_DATE,
+    UPDATE_DATE,
+    CREATOR_ID, MODIFIED_ID, GENDER,
+    EDUCATION, PROFESSION, WORK_EXPERIENCE,
+    REQUIRED_SKILL, ABILITY_DEMANDED, FLOW_DATE,
+    ENGLISH_LEVEL, APPLY_ORGANIZATION_NAME,
+    APPLY_POST_NAME,IS_FINISH,
+    DEPUTY_NAME)
+    values (#{id,jdbcType=VARCHAR},
+    #{demandId,jdbcType=VARCHAR},
+    #{theme,jdbcType=VARCHAR},
+    #{dutyPersonId,jdbcType=VARCHAR},
+    #{applyOrganizationId,jdbcType=VARCHAR},
+    #{applyPostId,jdbcType=VARCHAR},
+    #{employeeType,jdbcType=VARCHAR}, #{recruitDemandReason,jdbcType=VARCHAR},
+    #{dimissionChangePerson,jdbcType=VARCHAR},
+    #{rankId,jdbcType=VARCHAR},
+    #{applyPersonNumber,jdbcType=INTEGER},
+    #{ageStart,jdbcType=INTEGER},
+    #{ageEnd,jdbcType=INTEGER},
+    #{entryNumber,jdbcType=INTEGER},
+    #{offerNumber,jdbcType=INTEGER},
+    #{applyDate,jdbcType=VARCHAR},
+    #{predictComeDate,jdbcType=VARCHAR},
+    #{wantComeDate,jdbcType=VARCHAR},
+    #{district,jdbcType=VARCHAR},
+    #{deputyId,jdbcType=VARCHAR},
+    #{workRemark,jdbcType=VARCHAR},
+    #{infoState,jdbcType=VARCHAR},
+    #{flowState,jdbcType=VARCHAR},
+    #{createDate,jdbcType=TIMESTAMP},
+    #{updateDate,jdbcType=TIMESTAMP},
+    #{creatorId,jdbcType=VARCHAR}, #{modifiedId,jdbcType=VARCHAR},
+    #{gender,jdbcType=VARCHAR},
+    #{education,jdbcType=VARCHAR}, #{profession,jdbcType=VARCHAR},
+    #{workExperience,jdbcType=VARCHAR},
+    #{requiredSkill,jdbcType=VARCHAR},
+    #{abilityDemanded,jdbcType=VARCHAR}, #{flowDate,jdbcType=TIMESTAMP},
+    #{englishLevel,jdbcType=VARCHAR}, #{applyOrganizationName,jdbcType=VARCHAR},
+    #{applyPostName,jdbcType=VARCHAR},#{isFinish,jdbcType=VARCHAR},
+    #{deputyName,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.csot.recruit.model.original.flow.recruitdemand.RecruitDemand">
+    insert into T_RECRUIT_DEMAND
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="demandId != null">
+        DEMAND_ID,
+      </if>
+      <if test="theme != null">
+        THEME,
+      </if>
+      <if test="dutyPersonId != null">
+        DUTY_PERSON_ID,
+      </if>
+      <if test="applyOrganizationId != null">
+        APPLY_ORGANIZATION_ID,
+      </if>
+      <if test="applyPostId != null">
+        APPLY_POST_ID,
+      </if>
+      <if test="employeeType != null">
+        EMPLOYEE_TYPE,
+      </if>
+      <if test="recruitDemandReason != null">
+        RECRUIT_DEMAND_REASON,
+      </if>
+      <if test="dimissionChangePerson != null">
+        DIMISSION_CHANGE_PERSON,
+      </if>
+      <if test="rankId != null">
+        RANK_ID,
+      </if>
+      <if test="applyPersonNumber != null">
+        APPLY_PERSON_NUMBER,
+      </if>
+       <if test="ageStart != null">
+        AGE_START,
+      </if>
+       <if test="ageEnd != null">
+        AGE_END,
+      </if>
+      <if test="entryNumber != null">
+        ENTRY_NUMBER,
+      </if>
+      <if test="offerNumber != null">
+        OFFER_NUMBER,
+      </if>
+      <if test="applyDate != null"> APPLY_DATE,
+      </if>
+      <if test="predictComeDate != null">
+        PREDICT_COME_DATE,
+      </if>
+      <if test="wantComeDate != null">
+        WANT_COME_DATE,
+      </if>
+      <if test="district != null">
+        DISTRICT,
+      </if>
+      <if test="deputyId != null">
+        DEPUTY_ID,
+      </if>
+      <if test="workRemark != null">
+        WORK_REMARK,
+      </if>
+      <if test="infoState != null">
+        INFO_STATE,
+      </if>
+      <if test="flowState != null">
+        FLOW_STATE,
+      </if>
+      <if test="createDate != null">
+        CREATE_DATE,
+      </if>
+      <if test="updateDate != null">
+        UPDATE_DATE,
+      </if>
+      <if test="creatorId != null">
+        CREATOR_ID,
+      </if>
+      <if test="modifiedId != null">
+        MODIFIED_ID,
+      </if>
+      <if test="gender != null">
+        GENDER,
+      </if>
+      <if test="education != null"> EDUCATION,
+      </if>
+      <if test="profession != null">
+        PROFESSION,
+      </if>
+      <if test="workExperience != null">
+        WORK_EXPERIENCE,
+      </if>
+      <if test="requiredSkill != null">
+        REQUIRED_SKILL,
+      </if>
+      <if test="abilityDemanded != null">
+        ABILITY_DEMANDED,
+      </if>
+      <if test="flowDate != null">
+        FLOW_DATE,
+      </if>
+      <if test="englishLevel != null">
+        ENGLISH_LEVEL,
+      </if>
+      <if test="applyOrganizationName != null">
+        APPLY_ORGANIZATION_NAME,
+      </if>
+      <if test="applyPostName != null">
+        APPLY_POST_NAME,
+      </if>
+      <if test="deputyName != null">
+        DEPUTY_NAME,
+      </if>
+      <if test="isFinish != null">
+        IS_FINISH,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="demandId != null">
+        #{demandId,jdbcType=VARCHAR},
+      </if>
+      <if test="theme != null">
+        #{theme,jdbcType=VARCHAR},
+      </if>
+      <if test="dutyPersonId != null">
+        #{dutyPersonId,jdbcType=VARCHAR},
+      </if>
+      <if test="applyOrganizationId != null">
+        #{applyOrganizationId,jdbcType=VARCHAR},
+      </if>
+      <if test="applyPostId != null">
+        #{applyPostId,jdbcType=VARCHAR},
+      </if>
+      <if test="employeeType != null">
+        #{employeeType,jdbcType=VARCHAR},
+      </if>
+      <if test="recruitDemandReason != null">
+        #{recruitDemandReason,jdbcType=VARCHAR},
+      </if>
+      <if test="dimissionChangePerson != null">
+        #{dimissionChangePerson,jdbcType=VARCHAR},
+      </if>
+      <if test="rankId != null">
+        #{rankId,jdbcType=VARCHAR},
+      </if>
+      <if test="applyPersonNumber != null">
+        #{applyPersonNumber,jdbcType=INTEGER},
+      </if>
+      <if test="ageStart != null">
+        #{ageStart,jdbcType=INTEGER},
+      </if>
+      <if test="ageEnd != null">
+        #{ageEnd,jdbcType=INTEGER},
+      </if>
+      <if test="entryNumber != null">
+        #{entryNumber,jdbcType=INTEGER},
+      </if>
+      <if test="offerNumber != null">
+        #{offerNumber,jdbcType=INTEGER},
+      </if>
+      <if test="applyDate != null">
+        #{applyDate,jdbcType=VARCHAR},
+      </if>
+      <if test="predictComeDate != null">
+        #{predictComeDate,jdbcType=VARCHAR},
+      </if>
+      <if test="wantComeDate != null">
+        #{wantComeDate,jdbcType=VARCHAR},
+      </if>
+      <if test="district != null">
+        #{district,jdbcType=VARCHAR},
+      </if>
+      <if test="deputyId != null">
+        #{deputyId,jdbcType=VARCHAR},
+      </if>
+      <if test="workRemark != null">
+        #{workRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="infoState != null">
+        #{infoState,jdbcType=VARCHAR},
+      </if>
+      <if test="flowState != null">
+        #{flowState,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null">
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateDate != null">
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creatorId != null">
+        #{creatorId,jdbcType=VARCHAR},
+      </if>
+      <if test="modifiedId != null">
+        #{modifiedId,jdbcType=VARCHAR},
+      </if>
+      <if test="gender != null">
+        #{gender,jdbcType=VARCHAR},
+      </if>
+      <if test="education != null">
+        #{education,jdbcType=VARCHAR},
+      </if>
+      <if test="profession != null">
+        #{profession,jdbcType=VARCHAR},
+      </if>
+      <if test="workExperience != null">
+        #{workExperience,jdbcType=VARCHAR},
+      </if>
+      <if test="requiredSkill != null">
+        #{requiredSkill,jdbcType=VARCHAR},
+      </if>
+      <if test="abilityDemanded != null">
+        #{abilityDemanded,jdbcType=VARCHAR},
+      </if>
+      <if test="flowDate != null">
+        #{flowDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="englishLevel != null">
+        #{englishLevel,jdbcType=VARCHAR},
+      </if>
+      <if test="applyOrganizationName != null">
+        #{applyOrganizationName,jdbcType=VARCHAR},
+      </if>
+      <if test="applyPostName != null">
+        #{applyPostName,jdbcType=VARCHAR},
+      </if>
+      <if test="deputyName != null">
+        #{deputyName,jdbcType=VARCHAR},
+      </if>
+      <if test="isFinish != null">
+        #{isFinish,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.csot.recruit.model.original.flow.recruitdemand.RecruitDemandCriteria"
+    resultType="java.lang.Integer">
+    select count(*) from T_RECRUIT_DEMAND a
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <include refid="filter_item" />
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update T_RECRUIT_DEMAND
+    <set>
+      <if test="record.id != null">
+        ID = #{record.id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.demandId != null">
+        DEMAND_ID = #{record.demandId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.theme != null">
+        THEME = #{record.theme,jdbcType=VARCHAR},
+      </if>
+      <if test="record.dutyPersonId != null">
+        DUTY_PERSON_ID = #{record.dutyPersonId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.applyOrganizationId != null">
+        APPLY_ORGANIZATION_ID = #{record.applyOrganizationId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.applyPostId != null">
+        APPLY_POST_ID = #{record.applyPostId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.employeeType != null">
+        EMPLOYEE_TYPE = #{record.employeeType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.recruitDemandReason != null">
+        RECRUIT_DEMAND_REASON = #{record.recruitDemandReason,jdbcType=VARCHAR},
+      </if>
+      <if test="record.dimissionChangePerson != null">
+        DIMISSION_CHANGE_PERSON = #{record.dimissionChangePerson,jdbcType=VARCHAR},
+      </if>
+      <if test="record.rankId != null">
+        RANK_ID = #{record.rankId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.applyPersonNumber != null">
+        APPLY_PERSON_NUMBER = #{record.applyPersonNumber,jdbcType=INTEGER},
+      </if>
+      <if test="record.ageStart!= null">
+        AGE_START = #{record.ageStart,jdbcType=INTEGER},
+      </if>
+      <if test="record.ageEnd != null">
+        AGE_END = #{record.ageEnd,jdbcType=INTEGER},
+      </if>
+      <if test="record.entryNumber != null">
+        ENTRY_NUMBER = #{record.entryNumber,jdbcType=INTEGER},
+      </if>
+      <if test="record.offerNumber != null">
+        OFFER_NUMBER = #{record.offerNumber,jdbcType=INTEGER},
+      </if>
+      <if test="record.applyDate != null">
+        APPLY_DATE = #{record.applyDate,jdbcType=VARCHAR},
+      </if>
+      <if test="record.predictComeDate != null">
+        PREDICT_COME_DATE = #{record.predictComeDate,jdbcType=VARCHAR},
+      </if>
+      <if test="record.wantComeDate != null">
+        WANT_COME_DATE = #{record.wantComeDate,jdbcType=VARCHAR},
+      </if>
+      <if test="record.district != null">
+        DISTRICT = #{record.district,jdbcType=VARCHAR},
+      </if>
+      <if test="record.deputyId != null">
+        DEPUTY_ID = #{record.deputyId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.workRemark != null">
+        WORK_REMARK = #{record.workRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="record.infoState != null">
+        INFO_STATE = #{record.infoState,jdbcType=VARCHAR},
+      </if>
+      <if test="record.flowState != null">
+        FLOW_STATE = #{record.flowState,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createDate != null">
+        CREATE_DATE = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateDate != null">
+        UPDATE_DATE = #{record.updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.creatorId != null">
+        CREATOR_ID = #{record.creatorId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.modifiedId != null">
+        MODIFIED_ID = #{record.modifiedId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.gender != null">
+        GENDER = #{record.gender,jdbcType=VARCHAR},
+      </if>
+      <if test="record.education != null">
+        EDUCATION = #{record.education,jdbcType=VARCHAR},
+      </if>
+      <if test="record.profession != null">
+        PROFESSION = #{record.profession,jdbcType=VARCHAR},
+      </if>
+      <if test="record.workExperience != null">
+        WORK_EXPERIENCE = #{record.workExperience,jdbcType=VARCHAR},
+      </if>
+      <if test="record.requiredSkill != null">
+        REQUIRED_SKILL = #{record.requiredSkill,jdbcType=VARCHAR},
+      </if>
+      <if test="record.abilityDemanded != null">
+        ABILITY_DEMANDED = #{record.abilityDemanded,jdbcType=VARCHAR},
+      </if>
+      <if test="record.flowDate != null">
+        FLOW_DATE = #{record.flowDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.englishLevel != null">
+        ENGLISH_LEVEL = #{record.englishLevel,jdbcType=VARCHAR},
+      </if>
+      <if test="record.applyOrganizationName != null">
+        APPLY_ORGANIZATION_NAME = #{record.applyOrganizationName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.applyPostName != null">
+        APPLY_POST_NAME = #{record.applyPostName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.deputyName != null">
+        DEPUTY_NAME = #{record.deputyName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isFinish != null">
+        IS_FINISH = #{record.isFinish,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update T_RECRUIT_DEMAND
+    set ID = #{record.id,jdbcType=VARCHAR},
+    DEMAND_ID =
+    #{record.demandId,jdbcType=VARCHAR},
+    THEME = #{record.theme,jdbcType=VARCHAR},
+    DUTY_PERSON_ID =
+    #{record.dutyPersonId,jdbcType=VARCHAR},
+    APPLY_ORGANIZATION_ID =
+    #{record.applyOrganizationId,jdbcType=VARCHAR},
+    APPLY_POST_ID =
+    #{record.applyPostId,jdbcType=VARCHAR},
+    EMPLOYEE_TYPE = #{record.employeeType,jdbcType=VARCHAR},
+    RECRUIT_DEMAND_REASON = #{record.recruitDemandReason,jdbcType=VARCHAR},
+    DIMISSION_CHANGE_PERSON =
+    #{record.dimissionChangePerson,jdbcType=VARCHAR},
+    RANK_ID = #{record.rankId,jdbcType=VARCHAR},
+    APPLY_PERSON_NUMBER = #{record.applyPersonNumber,jdbcType=INTEGER},
+    AGE_START = #{record.ageStart,jdbcType=INTEGER},
+    AGE_END = #{record.ageEnd,jdbcType=INTEGER},
+    ENTRY_NUMBER =
+    #{record.entryNumber,jdbcType=INTEGER},
+    OFFER_NUMBER = #{record.offerNumber,jdbcType=INTEGER},
+    APPLY_DATE =
+    #{record.applyDate,jdbcType=VARCHAR},
+    PREDICT_COME_DATE =
+    #{record.predictComeDate,jdbcType=VARCHAR},
+    WANT_COME_DATE =
+    #{record.wantComeDate,jdbcType=VARCHAR},
+    DISTRICT = #{record.district,jdbcType=VARCHAR},
+    DEPUTY_ID = #{record.deputyId,jdbcType=VARCHAR},
+    WORK_REMARK =
+    #{record.workRemark,jdbcType=VARCHAR},
+    INFO_STATE = #{record.infoState,jdbcType=VARCHAR},
+    FLOW_STATE = #{record.flowState,jdbcType=VARCHAR},
+    CREATE_DATE =
+    #{record.createDate,jdbcType=TIMESTAMP},
+    UPDATE_DATE = #{record.updateDate,jdbcType=TIMESTAMP},
+    CREATOR_ID = #{record.creatorId,jdbcType=VARCHAR},
+    MODIFIED_ID =
+    #{record.modifiedId,jdbcType=VARCHAR},
+    GENDER = #{record.gender,jdbcType=VARCHAR},
+    EDUCATION =
+    #{record.education,jdbcType=VARCHAR},
+    PROFESSION = #{record.profession,jdbcType=VARCHAR},
+    WORK_EXPERIENCE = #{record.workExperience,jdbcType=VARCHAR},
+    REQUIRED_SKILL =
+    #{record.requiredSkill,jdbcType=VARCHAR},
+    ABILITY_DEMANDED =
+    #{record.abilityDemanded,jdbcType=VARCHAR},
+    FLOW_DATE = #{record.flowDate,jdbcType=TIMESTAMP},
+    ENGLISH_LEVEL = #{record.englishLevel,jdbcType=VARCHAR},
+    APPLY_ORGANIZATION_NAME =
+    #{record.applyOrganizationName,jdbcType=VARCHAR},
+    APPLY_POST_NAME =
+    #{record.applyPostName,jdbcType=VARCHAR},
+    DEPUTY_NAME = #{record.deputyName,jdbcType=VARCHAR},
+    IS_FINISH = #{record.isFinish,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.csot.recruit.model.original.flow.recruitdemand.RecruitDemand">
+    update T_RECRUIT_DEMAND
+    <set>
+      <if test="demandId != null">
+        DEMAND_ID = #{demandId,jdbcType=VARCHAR},
+      </if>
+      <if test="theme != null">
+        THEME = #{theme,jdbcType=VARCHAR},
+      </if>
+      <if test="dutyPersonId != null">
+        DUTY_PERSON_ID = #{dutyPersonId,jdbcType=VARCHAR},
+      </if>
+      <if test="applyOrganizationId != null">
+        APPLY_ORGANIZATION_ID = #{applyOrganizationId,jdbcType=VARCHAR},
+      </if>
+      <if test="applyPostId != null">
+        APPLY_POST_ID = #{applyPostId,jdbcType=VARCHAR},
+      </if>
+      <if test="employeeType != null">
+        EMPLOYEE_TYPE = #{employeeType,jdbcType=VARCHAR},
+      </if>
+      <if test="recruitDemandReason != null">
+        RECRUIT_DEMAND_REASON = #{recruitDemandReason,jdbcType=VARCHAR},
+      </if>
+      <if test="dimissionChangePerson != null">
+        DIMISSION_CHANGE_PERSON = #{dimissionChangePerson,jdbcType=VARCHAR},
+      </if>
+      <if test="rankId != null">
+        RANK_ID = #{rankId,jdbcType=VARCHAR},
+      </if>
+      <if test="applyPersonNumber != null">
+        APPLY_PERSON_NUMBER = #{applyPersonNumber,jdbcType=INTEGER},
+      </if>
+       <if test="ageStart != null">
+        AGE_START = #{ageStart,jdbcType=INTEGER},
+      </if>
+       <if test="ageEnd != null">
+        AGE_END = #{ageEnd,jdbcType=INTEGER},
+      </if>
+      <if test="entryNumber != null">
+        ENTRY_NUMBER = #{entryNumber,jdbcType=INTEGER},
+      </if>
+      <if test="offerNumber != null">
+        OFFER_NUMBER = #{offerNumber,jdbcType=INTEGER},
+      </if>
+      <if test="applyDate != null">
+        APPLY_DATE = #{applyDate,jdbcType=VARCHAR},
+      </if>
+      <if test="predictComeDate != null">
+        PREDICT_COME_DATE = #{predictComeDate,jdbcType=VARCHAR},
+      </if>
+      <if test="wantComeDate != null">
+        WANT_COME_DATE = #{wantComeDate,jdbcType=VARCHAR},
+      </if>
+      <if test="district != null">
+        DISTRICT = #{district,jdbcType=VARCHAR},
+      </if>
+      <if test="deputyId != null">
+        DEPUTY_ID = #{deputyId,jdbcType=VARCHAR},
+      </if>
+      <if test="workRemark != null">
+        WORK_REMARK = #{workRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="infoState != null">
+        INFO_STATE = #{infoState,jdbcType=VARCHAR},
+      </if>
+      <if test="flowState != null">
+        FLOW_STATE = #{flowState,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null">
+        CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateDate != null">
+        UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creatorId != null">
+        CREATOR_ID = #{creatorId,jdbcType=VARCHAR},
+      </if>
+      <if test="modifiedId != null">
+        MODIFIED_ID = #{modifiedId,jdbcType=VARCHAR},
+      </if>
+      <if test="gender != null">
+        GENDER = #{gender,jdbcType=VARCHAR},
+      </if>
+      <if test="education != null">
+        EDUCATION = #{education,jdbcType=VARCHAR},
+      </if>
+      <if test="profession != null">
+        PROFESSION = #{profession,jdbcType=VARCHAR},
+      </if>
+      <if test="workExperience != null">
+        WORK_EXPERIENCE = #{workExperience,jdbcType=VARCHAR},
+      </if>
+      <if test="requiredSkill != null">
+        REQUIRED_SKILL = #{requiredSkill,jdbcType=VARCHAR},
+      </if>
+      <if test="abilityDemanded != null">
+        ABILITY_DEMANDED = #{abilityDemanded,jdbcType=VARCHAR},
+      </if>
+      <if test="flowDate != null">
+        FLOW_DATE = #{flowDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="englishLevel != null">
+        ENGLISH_LEVEL = #{englishLevel,jdbcType=VARCHAR},
+      </if>
+      <if test="applyOrganizationName != null">
+        APPLY_ORGANIZATION_NAME = #{applyOrganizationName,jdbcType=VARCHAR},
+      </if>
+      <if test="applyPostName != null">
+        APPLY_POST_NAME = #{applyPostName,jdbcType=VARCHAR},
+      </if>
+      <if test="deputyName != null">
+        DEPUTY_NAME = #{deputyName,jdbcType=VARCHAR},
+      </if>
+      <if test="isFinish != null">
+        IS_FINISH = #{isFinish,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.csot.recruit.model.original.flow.recruitdemand.RecruitDemand">
+    update T_RECRUIT_DEMAND
+    set DEMAND_ID =
+    #{demandId,jdbcType=VARCHAR},
+    THEME = #{theme,jdbcType=VARCHAR},
+    DUTY_PERSON_ID =
+    #{dutyPersonId,jdbcType=VARCHAR},
+    APPLY_ORGANIZATION_ID =
+    #{applyOrganizationId,jdbcType=VARCHAR},
+    APPLY_POST_ID = #{applyPostId,jdbcType=VARCHAR},
+    EMPLOYEE_TYPE = #{employeeType,jdbcType=VARCHAR},
+    RECRUIT_DEMAND_REASON =
+    #{recruitDemandReason,jdbcType=VARCHAR},
+    DIMISSION_CHANGE_PERSON =
+    #{dimissionChangePerson,jdbcType=VARCHAR},
+    RANK_ID = #{rankId,jdbcType=VARCHAR},
+    APPLY_PERSON_NUMBER = #{applyPersonNumber,jdbcType=INTEGER},
+    AGE_START = #{ageStart,jdbcType=INTEGER},
+    AGE_END = #{ageEnd,jdbcType=INTEGER},
+    ENTRY_NUMBER =
+    #{entryNumber,jdbcType=INTEGER},
+    OFFER_NUMBER = #{offerNumber,jdbcType=INTEGER},
+    APPLY_DATE =
+    #{applyDate,jdbcType=VARCHAR},
+    PREDICT_COME_DATE =
+    #{predictComeDate,jdbcType=VARCHAR},
+    WANT_COME_DATE = #{wantComeDate,jdbcType=VARCHAR},
+    DISTRICT =
+    #{district,jdbcType=VARCHAR},
+    DEPUTY_ID = #{deputyId,jdbcType=VARCHAR},
+    WORK_REMARK =
+    #{workRemark,jdbcType=VARCHAR},
+    INFO_STATE
+    = #{infoState,jdbcType=VARCHAR},
+    FLOW_STATE =
+    #{flowState,jdbcType=VARCHAR},
+    CREATE_DATE =
+    #{createDate,jdbcType=TIMESTAMP},
+    UPDATE_DATE =
+    #{updateDate,jdbcType=TIMESTAMP},
+    CREATOR_ID =
+    #{creatorId,jdbcType=VARCHAR},
+    MODIFIED_ID =
+    #{modifiedId,jdbcType=VARCHAR},
+    GENDER =
+    #{gender,jdbcType=VARCHAR},
+    EDUCATION =
+    #{education,jdbcType=VARCHAR},
+    PROFESSION =
+    #{profession,jdbcType=VARCHAR},
+    WORK_EXPERIENCE =
+    #{workExperience,jdbcType=VARCHAR},
+    REQUIRED_SKILL = #{requiredSkill,jdbcType=VARCHAR},
+    ABILITY_DEMANDED =
+    #{abilityDemanded,jdbcType=VARCHAR},
+    FLOW_DATE =
+    #{flowDate,jdbcType=TIMESTAMP},
+    ENGLISH_LEVEL =
+    #{englishLevel,jdbcType=VARCHAR},
+    APPLY_ORGANIZATION_NAME
+    =
+    #{applyOrganizationName,jdbcType=VARCHAR},
+    APPLY_POST_NAME = #{applyPostName,jdbcType=VARCHAR},
+    DEPUTY_NAME = #{deputyName,jdbcType=VARCHAR},
+    IS_FINISH = #{isFinish,jdbcType=VARCHAR}
+    where ID =
+    #{id,jdbcType=VARCHAR}
+  </update>
+  <sql id="Oracle_Dialect_Pagination_Prefix">
+    <if test="page != null">
+      select * from ( select row_.*, rownum rownum_ from (
+    </if>
+  </sql>
+  <sql id="Oracle_Dialect_Pagination_Suffix">
+    <if test="page != null">
+      <![CDATA[ ) row_ ) where rownum_ > #{page.begin} and rownum_ <= #{page.end} ]]>
+    </if>
+  </sql>
+  
+  
+  
+  <!-- 扩展方法 -->
+  <resultMap id="HandlerResultMap"
+    type="com.csot.recruit.model.original.flow.recruitdemand.RecruitDemandByHandler">
+    <id column="ID" jdbcType="VARCHAR" property="id" />
+    <result column="DEMAND_ID" jdbcType="VARCHAR" property="demandId" />
+    <result column="THEME" jdbcType="VARCHAR" property="theme" />
+    <result column="DUTY_PERSON_ID" jdbcType="VARCHAR" property="dutyPersonId" />
+    <result column="APPLY_ORGANIZATION_ID" jdbcType="VARCHAR" property="applyOrganizationId" />
+    <result column="APPLY_POST_ID" jdbcType="VARCHAR" property="applyPostId" />
+    <result column="EMPLOYEE_TYPE" jdbcType="VARCHAR" property="employeeType" />
+    <result column="RECRUIT_DEMAND_REASON" jdbcType="VARCHAR" property="recruitDemandReason" />
+    <result column="DIMISSION_CHANGE_PERSON" jdbcType="VARCHAR" property="dimissionChangePerson" />
+    <result column="RANK_ID" jdbcType="VARCHAR" property="rankId" />
+    <result column="APPLY_PERSON_NUMBER" jdbcType="INTEGER" property="applyPersonNumber" />
+    <result column="OFFER_NUMBER" jdbcType="INTEGER" property="offerNumber" />
+    <result column="ENTRY_NUMBER" jdbcType="INTEGER" property="entryNumber" />
+    <result column="APPLY_DATE" jdbcType="VARCHAR" property="applyDate" />
+    <result column="PREDICT_COME_DATE" jdbcType="VARCHAR" property="predictComeDate" />
+    <result column="WANT_COME_DATE" jdbcType="VARCHAR" property="wantComeDate" />
+    <result column="DISTRICT" jdbcType="VARCHAR" property="district" />
+    <result column="DEPUTY_ID" jdbcType="VARCHAR" property="deputyId" />
+    <result column="WORK_REMARK" jdbcType="VARCHAR" property="workRemark" />
+    <result column="INFO_STATE" jdbcType="VARCHAR" property="infoState" />
+    <result column="FLOW_STATE" jdbcType="VARCHAR" property="flowState" />
+    <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate" />
+    <result column="UPDATE_DATE" jdbcType="TIMESTAMP" property="updateDate" />
+    <result column="CREATOR_ID" jdbcType="VARCHAR" property="creatorId" />
+    <result column="MODIFIED_ID" jdbcType="VARCHAR" property="modifiedId" />
+    <result column="GENDER" jdbcType="VARCHAR" property="gender" />
+    <result column="IS_FINISH" jdbcType="VARCHAR" property="isFinish" />
+    <result column="EDUCATION" jdbcType="VARCHAR" property="education" />
+    <result column="PROFESSION" jdbcType="VARCHAR" property="profession" />
+    <result column="WORK_EXPERIENCE" jdbcType="VARCHAR" property="workExperience" />
+    <result column="REQUIRED_SKILL" jdbcType="VARCHAR" property="requiredSkill" />
+    <result column="ABILITY_DEMANDED" jdbcType="VARCHAR" property="abilityDemanded" />
+    <result column="FLOW_DATE" jdbcType="VARCHAR" property="flowDate" />
+    <result column="ENGLISH_LEVEL" jdbcType="VARCHAR" property="englishLevel" />
+    <result column="APPLY_ORGANIZATION_NAME" jdbcType="VARCHAR" property="applyOrganizationName" />
+    <result column="APPLY_POST_NAME" jdbcType="VARCHAR" property="applyPostName" />
+    <result column="DEPUTY_NAME" jdbcType="VARCHAR" property="deputyName" />
+    <result column="LOG_NUM" jdbcType="VARCHAR" property="logNum" />
+    <result column="RECOMMEND_NUMBER" jdbcType="INTEGER" property="recommendNumber" />
+  </resultMap>
+  <sql id="Handler_Column_List">
+    a.ID, a.DEMAND_ID, THEME, DUTY_PERSON_ID, APPLY_ORGANIZATION_ID, APPLY_POST_ID,
+    EMPLOYEE_TYPE,
+    RECRUIT_DEMAND_REASON, DIMISSION_CHANGE_PERSON, RANK_ID, APPLY_PERSON_NUMBER,
+    APPLY_DATE,
+    PREDICT_COME_DATE, WANT_COME_DATE, DISTRICT, DEPUTY_ID, WORK_REMARK, INFO_STATE,
+    FLOW_STATE, CREATE_DATE, UPDATE_DATE, CREATOR_ID, MODIFIED_ID, GENDER, EDUCATION,
+    PROFESSION,
+    WORK_EXPERIENCE, REQUIRED_SKILL, ABILITY_DEMANDED, FLOW_DATE, ENGLISH_LEVEL,
+    APPLY_ORGANIZATION_NAME, APPLY_POST_NAME, DEPUTY_NAME,IS_FINISH,
+    (select count(1) from
+    T_CANDIDATE_RECOMMEND t where t.turnto_post_id=a.APPLY_POST_ID and
+    t.interviewer=#{userCode,jdbcType=VARCHAR}) AS RECOMMEND_NUMBER
+  </sql>
+
+  <select id="selectByExampleByHandler" parameterType="com.csot.recruit.model.original.flow.recruitdemand.RecruitDemandCriteria"
+    resultMap="HandlerResultMap">
+    <include refid="Oracle_Dialect_Pagination_Prefix" />
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Handler_Column_List" />
+    from T_RECRUIT_DEMAND a
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <include refid="filter_handler" />
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+    <include refid="Oracle_Dialect_Pagination_Suffix" />
+  </select>
+
+  <select id="countByExampleByHandler" parameterType="com.csot.recruit.model.original.flow.recruitdemand.RecruitDemandCriteria"
+    resultType="java.lang.Integer">
+    select count(*) from T_RECRUIT_DEMAND a
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <include refid="filter_handler" />
+  </select>
+
+  <sql id="filter_handler">
+   <!-- 判断Criteria有没有筛选条件 -->
+    <if test="!oredCriteriaNull">
+      and
+    </if>
+    <if test="oredCriteriaNull">
+      where
+    </if>
+    ( a.CREATOR_ID=#{userId,jdbcType=VARCHAR})
+  </sql>
+</mapper>

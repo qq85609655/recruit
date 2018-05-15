@@ -1,0 +1,564 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.csot.recruit.dao.original.interview.LanguageMapper" >
+  <resultMap id="BaseResultMap" type="com.csot.recruit.model.original.interview.Language" >
+    <id column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="PERSON_CODE" property="personCode" jdbcType="VARCHAR" />
+    <result column="OFFICE_FLAG" property="officeFlag" jdbcType="VARCHAR" />
+    <result column="OFFICE_SKILLED_LEVEL" property="officeSkilledLevel" jdbcType="VARCHAR" />
+    <result column="OFFICE_DIPLOMA" property="officeDiploma" jdbcType="VARCHAR" />
+    <result column="ENGLISH_FLAG" property="englishFlag" jdbcType="VARCHAR" />
+    <result column="ENGLISH_SKILLED_LEVEL" property="englishSkilledLevel" jdbcType="VARCHAR" />
+    <result column="ENGLISH_DIPLOMA" property="englishDiploma" jdbcType="VARCHAR" />
+    <result column="SAP_FLAG" property="sapFlag" jdbcType="VARCHAR" />
+    <result column="SAP_SKILLED_LEVEL" property="sapSkilledLevel" jdbcType="VARCHAR" />
+    <result column="SAP_DIPLOMA" property="sapDiploma" jdbcType="VARCHAR" />
+    <result column="KOREAN_FLAG" property="koreanFlag" jdbcType="VARCHAR" />
+    <result column="KOREAN_SKILLED_LEVEL" property="koreanSkilledLevel" jdbcType="VARCHAR" />
+    <result column="KOREAN_DIPLOMA" property="koreanDiploma" jdbcType="VARCHAR" />
+    <result column="VBA_FLAG" property="vbaFlag" jdbcType="VARCHAR" />
+    <result column="VBA_SKILLED_LEVEL" property="vbaSkilledLevel" jdbcType="VARCHAR" />
+    <result column="VBA_DIPLOMA" property="vbaDiploma" jdbcType="VARCHAR" />
+    <result column="JAPANESE_FLAG" property="japaneseFlag" jdbcType="VARCHAR" />
+    <result column="JAPANESE_SKILLED_LEVEL" property="japaneseSkilledLevel" jdbcType="VARCHAR" />
+    <result column="JAPANESE_DIPLOMA" property="japaneseDiploma" jdbcType="VARCHAR" />
+    <result column="OTHERIT_FLAG" property="otheritFlag" jdbcType="VARCHAR" />
+    <result column="OTHERIT_SKILLED_LEVEL" property="otheritSkilledLevel" jdbcType="VARCHAR" />
+    <result column="OTHERIT_DIPLOMA" property="otheritDiploma" jdbcType="VARCHAR" />
+    <result column="OTHER_FLAG" property="otherFlag" jdbcType="VARCHAR" />
+    <result column="OTHER_SKILLED_LEVEL" property="otherSkilledLevel" jdbcType="VARCHAR" />
+    <result column="OTHER_DIPLOMA" property="otherDiploma" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    ID, PERSON_CODE, OFFICE_FLAG, OFFICE_SKILLED_LEVEL, OFFICE_DIPLOMA, ENGLISH_FLAG, 
+    ENGLISH_SKILLED_LEVEL, ENGLISH_DIPLOMA, SAP_FLAG, SAP_SKILLED_LEVEL, SAP_DIPLOMA, 
+    KOREAN_FLAG, KOREAN_SKILLED_LEVEL, KOREAN_DIPLOMA, VBA_FLAG, VBA_SKILLED_LEVEL, VBA_DIPLOMA, 
+    JAPANESE_FLAG, JAPANESE_SKILLED_LEVEL, JAPANESE_DIPLOMA, OTHERIT_FLAG, OTHERIT_SKILLED_LEVEL, 
+    OTHERIT_DIPLOMA, OTHER_FLAG, OTHER_SKILLED_LEVEL, OTHER_DIPLOMA
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.csot.recruit.model.original.interview.LanguageCriteria" >
+    <include refid="Oracle_Dialect_Pagination_Prefix" />
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from T_LANGUAGE
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <include refid="Oracle_Dialect_Pagination_Suffix" />
+  </select>
+  <select id="selectByPersonCode" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from T_LANGUAGE
+    where person_code = #{personCode,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from T_LANGUAGE
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from T_LANGUAGE
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.csot.recruit.model.original.interview.LanguageCriteria" >
+    delete from T_LANGUAGE
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.csot.recruit.model.original.interview.Language" >
+    insert into T_LANGUAGE (ID, PERSON_CODE, OFFICE_FLAG, 
+      OFFICE_SKILLED_LEVEL, OFFICE_DIPLOMA, ENGLISH_FLAG, 
+      ENGLISH_SKILLED_LEVEL, ENGLISH_DIPLOMA, SAP_FLAG, 
+      SAP_SKILLED_LEVEL, SAP_DIPLOMA, KOREAN_FLAG, 
+      KOREAN_SKILLED_LEVEL, KOREAN_DIPLOMA, VBA_FLAG, 
+      VBA_SKILLED_LEVEL, VBA_DIPLOMA, JAPANESE_FLAG, 
+      JAPANESE_SKILLED_LEVEL, JAPANESE_DIPLOMA, 
+      OTHERIT_FLAG, OTHERIT_SKILLED_LEVEL, OTHERIT_DIPLOMA, 
+      OTHER_FLAG, OTHER_SKILLED_LEVEL, OTHER_DIPLOMA
+      )
+    values (#{id,jdbcType=VARCHAR}, #{personCode,jdbcType=VARCHAR}, #{officeFlag,jdbcType=VARCHAR}, 
+      #{officeSkilledLevel,jdbcType=VARCHAR}, #{officeDiploma,jdbcType=VARCHAR}, #{englishFlag,jdbcType=VARCHAR}, 
+      #{englishSkilledLevel,jdbcType=VARCHAR}, #{englishDiploma,jdbcType=VARCHAR}, #{sapFlag,jdbcType=VARCHAR}, 
+      #{sapSkilledLevel,jdbcType=VARCHAR}, #{sapDiploma,jdbcType=VARCHAR}, #{koreanFlag,jdbcType=VARCHAR}, 
+      #{koreanSkilledLevel,jdbcType=VARCHAR}, #{koreanDiploma,jdbcType=VARCHAR}, #{vbaFlag,jdbcType=VARCHAR}, 
+      #{vbaSkilledLevel,jdbcType=VARCHAR}, #{vbaDiploma,jdbcType=VARCHAR}, #{japaneseFlag,jdbcType=VARCHAR}, 
+      #{japaneseSkilledLevel,jdbcType=VARCHAR}, #{japaneseDiploma,jdbcType=VARCHAR}, 
+      #{otheritFlag,jdbcType=VARCHAR}, #{otheritSkilledLevel,jdbcType=VARCHAR}, #{otheritDiploma,jdbcType=VARCHAR}, 
+      #{otherFlag,jdbcType=VARCHAR}, #{otherSkilledLevel,jdbcType=VARCHAR}, #{otherDiploma,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.csot.recruit.model.original.interview.Language" >
+    insert into T_LANGUAGE
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="personCode != null" >
+        PERSON_CODE,
+      </if>
+      <if test="officeFlag != null" >
+        OFFICE_FLAG,
+      </if>
+      <if test="officeSkilledLevel != null" >
+        OFFICE_SKILLED_LEVEL,
+      </if>
+      <if test="officeDiploma != null" >
+        OFFICE_DIPLOMA,
+      </if>
+      <if test="englishFlag != null" >
+        ENGLISH_FLAG,
+      </if>
+      <if test="englishSkilledLevel != null" >
+        ENGLISH_SKILLED_LEVEL,
+      </if>
+      <if test="englishDiploma != null" >
+        ENGLISH_DIPLOMA,
+      </if>
+      <if test="sapFlag != null" >
+        SAP_FLAG,
+      </if>
+      <if test="sapSkilledLevel != null" >
+        SAP_SKILLED_LEVEL,
+      </if>
+      <if test="sapDiploma != null" >
+        SAP_DIPLOMA,
+      </if>
+      <if test="koreanFlag != null" >
+        KOREAN_FLAG,
+      </if>
+      <if test="koreanSkilledLevel != null" >
+        KOREAN_SKILLED_LEVEL,
+      </if>
+      <if test="koreanDiploma != null" >
+        KOREAN_DIPLOMA,
+      </if>
+      <if test="vbaFlag != null" >
+        VBA_FLAG,
+      </if>
+      <if test="vbaSkilledLevel != null" >
+        VBA_SKILLED_LEVEL,
+      </if>
+      <if test="vbaDiploma != null" >
+        VBA_DIPLOMA,
+      </if>
+      <if test="japaneseFlag != null" >
+        JAPANESE_FLAG,
+      </if>
+      <if test="japaneseSkilledLevel != null" >
+        JAPANESE_SKILLED_LEVEL,
+      </if>
+      <if test="japaneseDiploma != null" >
+        JAPANESE_DIPLOMA,
+      </if>
+      <if test="otheritFlag != null" >
+        OTHERIT_FLAG,
+      </if>
+      <if test="otheritSkilledLevel != null" >
+        OTHERIT_SKILLED_LEVEL,
+      </if>
+      <if test="otheritDiploma != null" >
+        OTHERIT_DIPLOMA,
+      </if>
+      <if test="otherFlag != null" >
+        OTHER_FLAG,
+      </if>
+      <if test="otherSkilledLevel != null" >
+        OTHER_SKILLED_LEVEL,
+      </if>
+      <if test="otherDiploma != null" >
+        OTHER_DIPLOMA,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="personCode != null" >
+        #{personCode,jdbcType=VARCHAR},
+      </if>
+      <if test="officeFlag != null" >
+        #{officeFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="officeSkilledLevel != null" >
+        #{officeSkilledLevel,jdbcType=VARCHAR},
+      </if>
+      <if test="officeDiploma != null" >
+        #{officeDiploma,jdbcType=VARCHAR},
+      </if>
+      <if test="englishFlag != null" >
+        #{englishFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="englishSkilledLevel != null" >
+        #{englishSkilledLevel,jdbcType=VARCHAR},
+      </if>
+      <if test="englishDiploma != null" >
+        #{englishDiploma,jdbcType=VARCHAR},
+      </if>
+      <if test="sapFlag != null" >
+        #{sapFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="sapSkilledLevel != null" >
+        #{sapSkilledLevel,jdbcType=VARCHAR},
+      </if>
+      <if test="sapDiploma != null" >
+        #{sapDiploma,jdbcType=VARCHAR},
+      </if>
+      <if test="koreanFlag != null" >
+        #{koreanFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="koreanSkilledLevel != null" >
+        #{koreanSkilledLevel,jdbcType=VARCHAR},
+      </if>
+      <if test="koreanDiploma != null" >
+        #{koreanDiploma,jdbcType=VARCHAR},
+      </if>
+      <if test="vbaFlag != null" >
+        #{vbaFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="vbaSkilledLevel != null" >
+        #{vbaSkilledLevel,jdbcType=VARCHAR},
+      </if>
+      <if test="vbaDiploma != null" >
+        #{vbaDiploma,jdbcType=VARCHAR},
+      </if>
+      <if test="japaneseFlag != null" >
+        #{japaneseFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="japaneseSkilledLevel != null" >
+        #{japaneseSkilledLevel,jdbcType=VARCHAR},
+      </if>
+      <if test="japaneseDiploma != null" >
+        #{japaneseDiploma,jdbcType=VARCHAR},
+      </if>
+      <if test="otheritFlag != null" >
+        #{otheritFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="otheritSkilledLevel != null" >
+        #{otheritSkilledLevel,jdbcType=VARCHAR},
+      </if>
+      <if test="otheritDiploma != null" >
+        #{otheritDiploma,jdbcType=VARCHAR},
+      </if>
+      <if test="otherFlag != null" >
+        #{otherFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="otherSkilledLevel != null" >
+        #{otherSkilledLevel,jdbcType=VARCHAR},
+      </if>
+      <if test="otherDiploma != null" >
+        #{otherDiploma,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.csot.recruit.model.original.interview.LanguageCriteria" resultType="java.lang.Integer" >
+    select count(*) from T_LANGUAGE
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update T_LANGUAGE
+    <set >
+      <if test="record.id != null" >
+        ID = #{record.id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.personCode != null" >
+        PERSON_CODE = #{record.personCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.officeFlag != null" >
+        OFFICE_FLAG = #{record.officeFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="record.officeSkilledLevel != null" >
+        OFFICE_SKILLED_LEVEL = #{record.officeSkilledLevel,jdbcType=VARCHAR},
+      </if>
+      <if test="record.officeDiploma != null" >
+        OFFICE_DIPLOMA = #{record.officeDiploma,jdbcType=VARCHAR},
+      </if>
+      <if test="record.englishFlag != null" >
+        ENGLISH_FLAG = #{record.englishFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="record.englishSkilledLevel != null" >
+        ENGLISH_SKILLED_LEVEL = #{record.englishSkilledLevel,jdbcType=VARCHAR},
+      </if>
+      <if test="record.englishDiploma != null" >
+        ENGLISH_DIPLOMA = #{record.englishDiploma,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sapFlag != null" >
+        SAP_FLAG = #{record.sapFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sapSkilledLevel != null" >
+        SAP_SKILLED_LEVEL = #{record.sapSkilledLevel,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sapDiploma != null" >
+        SAP_DIPLOMA = #{record.sapDiploma,jdbcType=VARCHAR},
+      </if>
+      <if test="record.koreanFlag != null" >
+        KOREAN_FLAG = #{record.koreanFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="record.koreanSkilledLevel != null" >
+        KOREAN_SKILLED_LEVEL = #{record.koreanSkilledLevel,jdbcType=VARCHAR},
+      </if>
+      <if test="record.koreanDiploma != null" >
+        KOREAN_DIPLOMA = #{record.koreanDiploma,jdbcType=VARCHAR},
+      </if>
+      <if test="record.vbaFlag != null" >
+        VBA_FLAG = #{record.vbaFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="record.vbaSkilledLevel != null" >
+        VBA_SKILLED_LEVEL = #{record.vbaSkilledLevel,jdbcType=VARCHAR},
+      </if>
+      <if test="record.vbaDiploma != null" >
+        VBA_DIPLOMA = #{record.vbaDiploma,jdbcType=VARCHAR},
+      </if>
+      <if test="record.japaneseFlag != null" >
+        JAPANESE_FLAG = #{record.japaneseFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="record.japaneseSkilledLevel != null" >
+        JAPANESE_SKILLED_LEVEL = #{record.japaneseSkilledLevel,jdbcType=VARCHAR},
+      </if>
+      <if test="record.japaneseDiploma != null" >
+        JAPANESE_DIPLOMA = #{record.japaneseDiploma,jdbcType=VARCHAR},
+      </if>
+      <if test="record.otheritFlag != null" >
+        OTHERIT_FLAG = #{record.otheritFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="record.otheritSkilledLevel != null" >
+        OTHERIT_SKILLED_LEVEL = #{record.otheritSkilledLevel,jdbcType=VARCHAR},
+      </if>
+      <if test="record.otheritDiploma != null" >
+        OTHERIT_DIPLOMA = #{record.otheritDiploma,jdbcType=VARCHAR},
+      </if>
+      <if test="record.otherFlag != null" >
+        OTHER_FLAG = #{record.otherFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="record.otherSkilledLevel != null" >
+        OTHER_SKILLED_LEVEL = #{record.otherSkilledLevel,jdbcType=VARCHAR},
+      </if>
+      <if test="record.otherDiploma != null" >
+        OTHER_DIPLOMA = #{record.otherDiploma,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update T_LANGUAGE
+    set ID = #{record.id,jdbcType=VARCHAR},
+      PERSON_CODE = #{record.personCode,jdbcType=VARCHAR},
+      OFFICE_FLAG = #{record.officeFlag,jdbcType=VARCHAR},
+      OFFICE_SKILLED_LEVEL = #{record.officeSkilledLevel,jdbcType=VARCHAR},
+      OFFICE_DIPLOMA = #{record.officeDiploma,jdbcType=VARCHAR},
+      ENGLISH_FLAG = #{record.englishFlag,jdbcType=VARCHAR},
+      ENGLISH_SKILLED_LEVEL = #{record.englishSkilledLevel,jdbcType=VARCHAR},
+      ENGLISH_DIPLOMA = #{record.englishDiploma,jdbcType=VARCHAR},
+      SAP_FLAG = #{record.sapFlag,jdbcType=VARCHAR},
+      SAP_SKILLED_LEVEL = #{record.sapSkilledLevel,jdbcType=VARCHAR},
+      SAP_DIPLOMA = #{record.sapDiploma,jdbcType=VARCHAR},
+      KOREAN_FLAG = #{record.koreanFlag,jdbcType=VARCHAR},
+      KOREAN_SKILLED_LEVEL = #{record.koreanSkilledLevel,jdbcType=VARCHAR},
+      KOREAN_DIPLOMA = #{record.koreanDiploma,jdbcType=VARCHAR},
+      VBA_FLAG = #{record.vbaFlag,jdbcType=VARCHAR},
+      VBA_SKILLED_LEVEL = #{record.vbaSkilledLevel,jdbcType=VARCHAR},
+      VBA_DIPLOMA = #{record.vbaDiploma,jdbcType=VARCHAR},
+      JAPANESE_FLAG = #{record.japaneseFlag,jdbcType=VARCHAR},
+      JAPANESE_SKILLED_LEVEL = #{record.japaneseSkilledLevel,jdbcType=VARCHAR},
+      JAPANESE_DIPLOMA = #{record.japaneseDiploma,jdbcType=VARCHAR},
+      OTHERIT_FLAG = #{record.otheritFlag,jdbcType=VARCHAR},
+      OTHERIT_SKILLED_LEVEL = #{record.otheritSkilledLevel,jdbcType=VARCHAR},
+      OTHERIT_DIPLOMA = #{record.otheritDiploma,jdbcType=VARCHAR},
+      OTHER_FLAG = #{record.otherFlag,jdbcType=VARCHAR},
+      OTHER_SKILLED_LEVEL = #{record.otherSkilledLevel,jdbcType=VARCHAR},
+      OTHER_DIPLOMA = #{record.otherDiploma,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.csot.recruit.model.original.interview.Language" >
+    update T_LANGUAGE
+    <set >
+      <if test="personCode != null" >
+        PERSON_CODE = #{personCode,jdbcType=VARCHAR},
+      </if>
+      <if test="officeFlag != null" >
+        OFFICE_FLAG = #{officeFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="officeSkilledLevel != null" >
+        OFFICE_SKILLED_LEVEL = #{officeSkilledLevel,jdbcType=VARCHAR},
+      </if>
+      <if test="officeDiploma != null" >
+        OFFICE_DIPLOMA = #{officeDiploma,jdbcType=VARCHAR},
+      </if>
+      <if test="englishFlag != null" >
+        ENGLISH_FLAG = #{englishFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="englishSkilledLevel != null" >
+        ENGLISH_SKILLED_LEVEL = #{englishSkilledLevel,jdbcType=VARCHAR},
+      </if>
+      <if test="englishDiploma != null" >
+        ENGLISH_DIPLOMA = #{englishDiploma,jdbcType=VARCHAR},
+      </if>
+      <if test="sapFlag != null" >
+        SAP_FLAG = #{sapFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="sapSkilledLevel != null" >
+        SAP_SKILLED_LEVEL = #{sapSkilledLevel,jdbcType=VARCHAR},
+      </if>
+      <if test="sapDiploma != null" >
+        SAP_DIPLOMA = #{sapDiploma,jdbcType=VARCHAR},
+      </if>
+      <if test="koreanFlag != null" >
+        KOREAN_FLAG = #{koreanFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="koreanSkilledLevel != null" >
+        KOREAN_SKILLED_LEVEL = #{koreanSkilledLevel,jdbcType=VARCHAR},
+      </if>
+      <if test="koreanDiploma != null" >
+        KOREAN_DIPLOMA = #{koreanDiploma,jdbcType=VARCHAR},
+      </if>
+      <if test="vbaFlag != null" >
+        VBA_FLAG = #{vbaFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="vbaSkilledLevel != null" >
+        VBA_SKILLED_LEVEL = #{vbaSkilledLevel,jdbcType=VARCHAR},
+      </if>
+      <if test="vbaDiploma != null" >
+        VBA_DIPLOMA = #{vbaDiploma,jdbcType=VARCHAR},
+      </if>
+      <if test="japaneseFlag != null" >
+        JAPANESE_FLAG = #{japaneseFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="japaneseSkilledLevel != null" >
+        JAPANESE_SKILLED_LEVEL = #{japaneseSkilledLevel,jdbcType=VARCHAR},
+      </if>
+      <if test="japaneseDiploma != null" >
+        JAPANESE_DIPLOMA = #{japaneseDiploma,jdbcType=VARCHAR},
+      </if>
+      <if test="otheritFlag != null" >
+        OTHERIT_FLAG = #{otheritFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="otheritSkilledLevel != null" >
+        OTHERIT_SKILLED_LEVEL = #{otheritSkilledLevel,jdbcType=VARCHAR},
+      </if>
+      <if test="otheritDiploma != null" >
+        OTHERIT_DIPLOMA = #{otheritDiploma,jdbcType=VARCHAR},
+      </if>
+      <if test="otherFlag != null" >
+        OTHER_FLAG = #{otherFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="otherSkilledLevel != null" >
+        OTHER_SKILLED_LEVEL = #{otherSkilledLevel,jdbcType=VARCHAR},
+      </if>
+      <if test="otherDiploma != null" >
+        OTHER_DIPLOMA = #{otherDiploma,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.csot.recruit.model.original.interview.Language" >
+    update T_LANGUAGE
+    set PERSON_CODE = #{personCode,jdbcType=VARCHAR},
+      OFFICE_FLAG = #{officeFlag,jdbcType=VARCHAR},
+      OFFICE_SKILLED_LEVEL = #{officeSkilledLevel,jdbcType=VARCHAR},
+      OFFICE_DIPLOMA = #{officeDiploma,jdbcType=VARCHAR},
+      ENGLISH_FLAG = #{englishFlag,jdbcType=VARCHAR},
+      ENGLISH_SKILLED_LEVEL = #{englishSkilledLevel,jdbcType=VARCHAR},
+      ENGLISH_DIPLOMA = #{englishDiploma,jdbcType=VARCHAR},
+      SAP_FLAG = #{sapFlag,jdbcType=VARCHAR},
+      SAP_SKILLED_LEVEL = #{sapSkilledLevel,jdbcType=VARCHAR},
+      SAP_DIPLOMA = #{sapDiploma,jdbcType=VARCHAR},
+      KOREAN_FLAG = #{koreanFlag,jdbcType=VARCHAR},
+      KOREAN_SKILLED_LEVEL = #{koreanSkilledLevel,jdbcType=VARCHAR},
+      KOREAN_DIPLOMA = #{koreanDiploma,jdbcType=VARCHAR},
+      VBA_FLAG = #{vbaFlag,jdbcType=VARCHAR},
+      VBA_SKILLED_LEVEL = #{vbaSkilledLevel,jdbcType=VARCHAR},
+      VBA_DIPLOMA = #{vbaDiploma,jdbcType=VARCHAR},
+      JAPANESE_FLAG = #{japaneseFlag,jdbcType=VARCHAR},
+      JAPANESE_SKILLED_LEVEL = #{japaneseSkilledLevel,jdbcType=VARCHAR},
+      JAPANESE_DIPLOMA = #{japaneseDiploma,jdbcType=VARCHAR},
+      OTHERIT_FLAG = #{otheritFlag,jdbcType=VARCHAR},
+      OTHERIT_SKILLED_LEVEL = #{otheritSkilledLevel,jdbcType=VARCHAR},
+      OTHERIT_DIPLOMA = #{otheritDiploma,jdbcType=VARCHAR},
+      OTHER_FLAG = #{otherFlag,jdbcType=VARCHAR},
+      OTHER_SKILLED_LEVEL = #{otherSkilledLevel,jdbcType=VARCHAR},
+      OTHER_DIPLOMA = #{otherDiploma,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <sql id="Oracle_Dialect_Pagination_Prefix" >
+    <if test="page != null" >
+      select * from ( select row_.*, rownum rownum_ from ( 
+    </if>
+  </sql>
+  <sql id="Oracle_Dialect_Pagination_Suffix" >
+    <if test="page != null" >
+      <![CDATA[ ) row_ ) where rownum_ > #{page.begin} and rownum_ <= #{page.end} ]]>
+    </if>
+  </sql>
+</mapper>

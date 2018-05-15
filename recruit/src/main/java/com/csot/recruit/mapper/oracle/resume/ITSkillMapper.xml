@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.csot.recruit.dao.resume.ITSkillMapper" >
+
+  <insert id="insertSelective" parameterType="com.csot.recruit.model.resume.ITSkill" >
+    insert into T_RESUME_SKILL
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      ID,
+      <if test="skill != null" >
+        SKILL,
+      </if>
+      <if test="rank != null and rank !=''">
+        RANK,
+      </if>
+      <if test="resumeId != null" >
+        RESUME_ID,
+      </if>
+      <if test="experience != null and experience !=''">
+        EXPERIENCE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      #{id,jdbcType=CHAR},
+      <if test="skill != null" >
+        #{skill,jdbcType=CHAR},
+      </if>
+      <if test="rank != null and rank !=''">
+        #{rank,jdbcType=VARCHAR},
+      </if>
+      <if test="resumeId != null" >
+        #{resumeId,jdbcType=VARCHAR},
+      </if>
+      <if test="experience != null and experience !=''">
+        #{experience,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  
+  <delete id="deleteByResumeId" parameterType="java.lang.String" >
+    delete from T_RESUME_SKILL
+    where RESUME_ID = #{resumeId,jdbcType=VARCHAR}
+  </delete>
+  
+</mapper>

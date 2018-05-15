@@ -1,0 +1,398 @@
+package com.csot.recruit.service.impl.campus;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
+import java.util.UUID;
+
+import javax.annotation.Resource;
+import javax.servlet.http.HttpServletResponse;
+
+import org.amberframework.core.mybatis.pojo.Page;
+import org.amberframework.web.miniui.pojo.MiniGridPageSort;
+import org.amberframework.web.miniui.pojo.MiniRtn2Grid;
+import org.apache.poi.hssf.usermodel.HSSFCell;
+import org.apache.poi.hssf.usermodel.HSSFCellStyle;
+import org.apache.poi.hssf.usermodel.HSSFFont;
+import org.apache.poi.hssf.usermodel.HSSFRow;
+import org.apache.poi.hssf.usermodel.HSSFSheet;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.Font;
+import org.apache.poi.ss.usermodel.IndexedColors;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.util.CellRangeAddress;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.elasticsearch.common.collect.Lists;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
+import org.springframework.web.multipart.MultipartFile;
+
+import com.csot.recruit.common.util.ExcelReadUtils;
+import com.csot.recruit.dao.original.campus.CampusAddressbookMapper;
+import com.csot.recruit.dao.original.campus.CampusPostMapper;
+import com.csot.recruit.dao.original.campus.CampusSiteMapper;
+import com.csot.recruit.model.original.campus.CampusAddressbook;
+import com.csot.recruit.model.original.campus.CampusAddressbookColumns;
+import com.csot.recruit.model.original.campus.CampusAddressbookCriteria;
+import com.csot.recruit.model.original.campus.CampusPost;
+import com.csot.recruit.model.original.campus.CampusPostCriteria;
+import com.csot.recruit.model.original.campus.CampusSite;
+import com.csot.recruit.model.original.campus.CampusSiteCriteria;
+import com.csot.recruit.service.campus.CampusAddressbookService;
+
+@Service("campusAddressbookService")
+public class CampusAddressbookServiceImpl implements CampusAddressbookService {
+  private static final Logger logger = LoggerFactory.getLogger(CampusAddressbookServiceImpl.class);
+
+  @Resource
+  private CampusAddressbookMapper campusAddressbookMapper;
+
+  @Resource
+  private CampusSiteMapper campusSiteMapper;
+
+  @Resource
+  private CampusPostMapper campusPostMapper;
+
+  @Override
+  public MiniRtn2Grid<CampusAddressbook> getGrid(MiniGridPageSort pageSort, String searchKey) {
+    MiniRtn2Grid<CampusAddressbook> grid = new MiniRtn2Grid<CampusAddressbook>();
+    CampusAddressbookCriteria criteria = new CampusAddressbookCriteria();
+    // 查询条件
+    if (StringUtils.hasText(searchKey)) {
+      criteria.createCriteria().andRealnameLike("%" + searchKey + "%");
+    }
+    // 分页和排序
+    if (pageSort.isShowPager()) {
+      Page page = Page.newInstanceWithPageIndex(pageSort.getPageIndex(), pageSort.getPageSize());
+      criteria.setPage(page);
+    }
+    String sortColumn = CampusAddressbookColumns.getColumn(pageSort.getSortField());
+    if (StringUtils.hasText(sortColumn)) {
+      StringBuilder sortStrBldr =
+          new StringBuilder(sortColumn).append(" ").append(pageSort.getSortOrder());
+      criteria.setOrderByClause(sortStrBldr.toString());
+    }
+    grid.setData(campusAddressbookMapper.selectByExample(criteria));
+    grid.setTotal(campusAddressbookMapper.countByExample(criteria));
+    return grid;
+  }
+
+  @Override
+  public CampusAddressbook getByPrimaryKey(String primaryKey) {
+    return campusAddressbookMapper.selectByPrimaryKey(primaryKey);
+  }
+
+  @Override
+  public void create(CampusAddressbook campusAddressbook) {
+    campusAddressbookMapper.insert(campusAddressbook);
+  }
+
+  @Override
+  public void updateSelective(CampusAddressbook campusAddressbook) {
+    campusAddressbookMapper.updateByPrimaryKeySelective(campusAddressbook);
+  }
+
+  @Override
+  public void remove(String primaryKey) {
+    campusAddressbookMapper.deleteByPrimaryKey(primaryKey);
+  }
+
+  /**
+   * 导入校招模板信息，即批量新增
+   */
+  @SuppressWarnings("resource")
+  @Override
+  public String importAddressbook(MultipartFile multipartFile, String basePath, String importer)
+      throws Exception {
+    // 获取模板名称
+    String sourceName = multipartFile.getOriginalFilename();
+    File file = new File(basePath);
+    if (!file.exists()) {
+      file.mkdirs();
+    }
+    String path = basePath + File.separator + sourceName;
+    multipartFile.transferTo(new File(path));
+    FileInputStream in = new FileInputStream(path);
+    Workbook wb = null;
+    String message = "";
+    if (path.endsWith(".xls")) {
+      wb = new HSSFWorkbook(in);
+    } else if (path.endsWith(".xlsx")) {
+      wb = new XSSFWorkbook(in);
+    } else {
+      return "导入文件格式不对!";
+    }
+    Sheet sheet = wb.getSheetAt(0);
+    int rowNum = sheet.getLastRowNum();
+    if (rowNum < 1) {
+      logger.error("上传文件为空！");
+    } else {
+      for (int i = 1; i <= rowNum; i++) {
+        // 表格第一列为序号，因而从第二列开始读取内容
+        Row row = sheet.getRow(i);
+
+        // 调用ExcelReadUtils类的getValue()方法，根据不同的单元格数据格式获取相应类型的数据。
+        String siteName = ExcelReadUtils.getValue(row.getCell(1));
+        if (StringUtils.isEmpty(siteName)) {
+          logger.error("站点名为空");
+          message = message.concat("站点名为：" + siteName + "为空" + "\n");
+
+        }
+        String siteId = ExcelReadUtils.getValue(row.getCell(2));
+        if (StringUtils.isEmpty(siteId)) {
+          logger.error("站点ID为空");
+          message = message.concat("站点名为：" + siteName + "的ID为空" + "\n");
+        }
+        if (doGetSiteInfo(siteId, siteName).size() <= 0) {
+          logger.error("站点名或者站点ID不存在");
+          message = message.concat("站点名为：" + siteName + "不存在或者相应的ID不存在" + "\n");
+        }
+        String workNo = ExcelReadUtils.getValue(row.getCell(4));
+        // 如果工号长度大于16，则此数据新建不成功
+        if (workNo.length() > 16) {
+          logger.error("工号长度大于16");
+          message = message.concat("站点名为：" + siteName + "的工号长度大于16" + "\n");
+        }
+        String realName = ExcelReadUtils.getValue(row.getCell(5));
+        if (StringUtils.isEmpty(realName)) {
+          logger.error("姓名为空");
+          message = message.concat("站点名为：" + siteName + "的姓名为空" + "\n");
+        }
+        String phoneNo = ExcelReadUtils.getValue(row.getCell(6));
+        if (phoneNo.length() > 13) {
+          logger.error("联系电话长度大于13");
+          message = message.concat("站点名为：" + siteName + "的联系电话长度大于13" + "\n");
+        }
+      }
+      // 当所有的检验都通过时才新增所以的数据，否则返回错去的信息到界面
+      if ("".equals(message)) {
+        for (int j = 1; j <= rowNum; j++) {
+
+          Row row1 = sheet.getRow(j);
+          CampusAddressbook campusAb = new CampusAddressbook();
+          campusAb.setSiteName(ExcelReadUtils.getValue(row1.getCell(1)));
+          campusAb.setSiteId(ExcelReadUtils.getValue(row1.getCell(2)));
+          campusAb.setCampusRole(ExcelReadUtils.getValue(row1.getCell(3)));
+          campusAb.setWorkNo(ExcelReadUtils.getValue(row1.getCell(4)));
+          campusAb.setRealname(ExcelReadUtils.getValue(row1.getCell(5)));
+          campusAb.setPhoneno(ExcelReadUtils.getValue(row1.getCell(6)));
+          // UUID方式生成ID
+          campusAb.setId(UUID.randomUUID().toString().replace("-", ""));
+          campusAddressbookMapper.insert(campusAb);
+        }
+        message = "成功导入数据" + rowNum + "条";
+      }
+    }
+    return message;
+  }
+
+  /**
+   * 按姓名导出通讯录信息
+   */
+  @Override
+  public List<CampusAddressbook> exportPartNoRealName(String realName) {
+
+    List<CampusAddressbook> campusList = Lists.newArrayList();
+    CampusAddressbookCriteria criteria = new CampusAddressbookCriteria();
+    // 查询条件
+    if (StringUtils.hasText(realName)) {
+      criteria.createCriteria().andRealnameLike("%" + realName + "%");
+    }
+    campusList = campusAddressbookMapper.selectByExample(criteria);
+
+    return campusList;
+  }
+
+  /**
+   * 导出校园招聘信息
+   */
+  @Override
+  public void exportCampusAddbookInfo(HttpServletResponse response,
+      List<CampusAddressbook> campusList) {
+
+    HSSFWorkbook wb = new HSSFWorkbook();
+    HSSFSheet sheet = wb.createSheet("校招通讯录信息");
+
+    // 表格第一行
+    HSSFRow row1 = sheet.createRow(0);
+    // 四个参数分别是：起始行，起始列，结束行，结束列
+    sheet.addMergedRegion(new CellRangeAddress(0, (short) 0, 0, (short) 5));// 设置单元格合并，首行1到6列
+    // 设定第0 2 5列的宽度
+    sheet.setColumnWidth(0, 3500);
+    sheet.setColumnWidth(2, 3500);
+    sheet.setColumnWidth(5, 3500);
+
+    row1.setHeightInPoints(25);
+    HSSFCell cell1 = row1.createCell(0);
+    cell1.setCellStyle(doSetCellStyle(wb, sheet, "1"));
+    cell1.setCellValue("校园招聘通讯录详细信息");
+
+    // 表头，title值
+    String[] titles = {"站点", "站点ID", "校招角色", "姓名", "工号", "联系电话"};
+    // 表格第二行 ,设置列名
+    HSSFRow titleRow = sheet.createRow(1);
+    for (int j = 0; j < titles.length; j++) {
+      HSSFCell titleCell = titleRow.createCell(j);
+      titleCell.setCellStyle(doSetCellStyle(wb, sheet, "2"));
+      titleCell.setCellValue(titles[j]);
+    }
+    // 填充Excel内容
+    for (int i = 0; i < campusList.size(); i++) {
+      // 从第三行开始填写表格信息
+      HSSFRow row = sheet.createRow(i + 2);
+      // 内容写入单元格且设置样式
+      HSSFCell siteCell = row.createCell(0);
+      siteCell.setCellValue(campusList.get(i).getSiteName());
+      siteCell.setCellStyle(doSetCellStyle(wb, sheet, "3"));
+      HSSFCell siteIdCell = row.createCell(1);
+      siteIdCell.setCellValue(campusList.get(i).getSiteId());
+      siteIdCell.setCellStyle(doSetCellStyle(wb, sheet, "3"));
+      HSSFCell roleCell = row.createCell(2);
+      roleCell.setCellValue(campusList.get(i).getCampusRole());
+      roleCell.setCellStyle(doSetCellStyle(wb, sheet, "3"));
+      HSSFCell nameCell = row.createCell(3);
+      nameCell.setCellValue(campusList.get(i).getRealname());
+      nameCell.setCellStyle(doSetCellStyle(wb, sheet, "3"));
+      HSSFCell workNoCell = row.createCell(4);
+      workNoCell.setCellValue(campusList.get(i).getWorkNo());
+      workNoCell.setCellStyle(doSetCellStyle(wb, sheet, "3"));
+      HSSFCell telephoneCell = row.createCell(5);
+      telephoneCell.setCellValue(campusList.get(i).getPhoneno());
+      telephoneCell.setCellStyle(doSetCellStyle(wb, sheet, "3"));
+    }
+
+    SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd/HH:mm:ss");
+    String fileName = "校招信息" + formatter.format(new Date()) + ".xls";
+    OutputStream os;
+    try {
+      os = response.getOutputStream();
+      response.setContentType("APPLICATION/vnd.ms-excel");
+      response.setHeader("content-disposition",
+          "attachment;fileName=" + new String(fileName.getBytes("UTF-8"), "ISO8859-1"));
+
+      wb.write(os);
+      os.close();
+    } catch (IOException e) {
+      logger.error(e.getMessage(), e);
+    }
+  }
+
+  /**
+   * 设置单元格样式
+   * 
+   * @param wb
+   * @param sheet
+   * @param type 样式类型
+   * @return
+   */
+  @Override
+  public HSSFCellStyle doSetCellStyle(HSSFWorkbook wb, HSSFSheet sheet, String type) {
+
+    HSSFCellStyle style = wb.createCellStyle();
+    // 样式1
+    HSSFCellStyle style1 = wb.createCellStyle(); // 样式对象
+    style1.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);// 垂直
+    style1.setAlignment(HSSFCellStyle.ALIGN_CENTER);// 水平
+    // style1.setFillBackgroundColor(HSSFColor.YELLOW.index);
+    style1.setFillForegroundColor(IndexedColors.YELLOW.getIndex());
+    style1.setFillPattern(CellStyle.SOLID_FOREGROUND);
+    style1.setBorderBottom(HSSFCellStyle.BORDER_THIN);// 下边框
+    style1.setBorderLeft(HSSFCellStyle.BORDER_THIN);// 左边框
+    style1.setBorderRight(HSSFCellStyle.BORDER_THIN);// 右边框
+    style1.setBorderTop(HSSFCellStyle.BORDER_THIN);// 上边框
+
+    // 设置字体格式1
+    Font font = wb.createFont();
+    font.setFontHeightInPoints((short) 20); // --->设置字体大小
+    font.setFontName("宋体"); // ---》设置字体，是什么类型例如：宋体
+    font.setBoldweight(HSSFFont.BOLDWEIGHT_BOLD); // --->设置是否是加粗
+    style1.setFont(font);
+
+
+    // 样式2
+    HSSFCellStyle style2 = wb.createCellStyle(); // 样式对象
+    style2.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);// 垂直
+    style2.setAlignment(HSSFCellStyle.ALIGN_CENTER);// 水平
+    style2.setFillForegroundColor(IndexedColors.LEMON_CHIFFON.getIndex());
+    style2.setFillPattern(CellStyle.SOLID_FOREGROUND);
+    style2.setBorderBottom(HSSFCellStyle.BORDER_THIN);// 下边框
+    style2.setBorderLeft(HSSFCellStyle.BORDER_THIN);// 左边框
+    style2.setBorderRight(HSSFCellStyle.BORDER_THIN);// 右边框
+    style2.setBorderTop(HSSFCellStyle.BORDER_THIN);// 上边框
+
+    // 设置字体格式2
+    Font font2 = wb.createFont();
+    font2.setFontHeightInPoints((short) 12);
+    font2.setFontName("宋体");
+    font2.setBoldweight(HSSFFont.BOLDWEIGHT_BOLD);
+    style2.setFont(font2);
+
+    // 样式3
+    HSSFCellStyle style3 = wb.createCellStyle(); // 样式对象
+    style3.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);// 垂直
+    style3.setAlignment(HSSFCellStyle.ALIGN_CENTER);// 水平
+    style3.setBorderBottom(HSSFCellStyle.BORDER_THIN);// 下边框
+    style3.setBorderLeft(HSSFCellStyle.BORDER_THIN);// 左边框
+    style3.setBorderRight(HSSFCellStyle.BORDER_THIN);// 右边框
+    style3.setBorderTop(HSSFCellStyle.BORDER_THIN);// 上边框
+
+    switch (type) {
+      case "1":
+        style = style1;
+        break;
+      case "2":
+        style = style2;
+        break;
+      case "3":
+        style = style3;
+        break;
+      default:
+        break;
+    }
+    return style;
+  }
+
+  @Override
+  public List<CampusSite> doGetSiteInfo(String siteId, String siteName) {
+
+    CampusSiteCriteria criteria = new CampusSiteCriteria();
+
+    // 查询条件
+    if (StringUtils.hasText(siteId)) {
+      criteria.or().andSiteIdEqualTo(siteId);
+    }
+    if (StringUtils.hasText(siteName)) {
+      criteria.or().andSiteNameEqualTo(siteName);
+    }
+    List<CampusSite> campusSiteList = campusSiteMapper.selectByExample(criteria);
+
+    return campusSiteList;
+  }
+
+  @Override
+  public List<CampusPost> doGetPostInfo(String id, String postName) {
+
+    CampusPostCriteria criteria = new CampusPostCriteria();
+
+    // 查询条件
+    if (StringUtils.hasText(id)) {
+      criteria.or().andIdEqualTo(id);
+    }
+    if (StringUtils.hasText(postName)) {
+      criteria.or().andPostNameEqualTo(postName);
+    }
+
+    return campusPostMapper.selectByExample(criteria);
+
+  }
+
+}

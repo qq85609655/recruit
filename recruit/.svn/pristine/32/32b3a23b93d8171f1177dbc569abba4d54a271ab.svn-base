@@ -1,0 +1,866 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.csot.recruit.dao.original.interview.InterviewInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.csot.recruit.model.original.interview.InterviewInfo" >
+    <id column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="PERSON_CODE" property="personCode" jdbcType="VARCHAR" />
+    <result column="RECRUITER_NUMBER" property="recruiterNumber" jdbcType="VARCHAR" />
+    <result column="NATIONALITY" property="nationality" jdbcType="VARCHAR" />
+    <result column="CNNAME" property="cnname" jdbcType="VARCHAR" />
+    <result column="ENNAME" property="enname" jdbcType="VARCHAR" />
+    <result column="SEX" property="sex" jdbcType="VARCHAR" />
+    <result column="MARITAL_STATUS" property="maritalStatus" jdbcType="VARCHAR" />
+    <result column="NAMEPY" property="namepy" jdbcType="VARCHAR" />
+    <result column="NATION" property="nation" jdbcType="VARCHAR" />
+    <result column="POLITICAL_STATUS" property="politicalStatus" jdbcType="VARCHAR" />
+    <result column="NATIVE_PLACE" property="nativePlace" jdbcType="VARCHAR" />
+    <result column="RESIDENCE_PROPERTY" property="residenceProperty" jdbcType="VARCHAR" />
+    <result column="RESIDENCE" property="residence" jdbcType="VARCHAR" />
+    <result column="CERTIFICATE_TYPE" property="certificateType" jdbcType="VARCHAR" />
+    <result column="CERTIFICATE_NUM" property="certificateNum" jdbcType="VARCHAR" />
+    <result column="CERTIFICATE_NAME" property="certificateName" jdbcType="VARCHAR" />
+    <result column="BIRTHDATE" property="birthdate" jdbcType="VARCHAR" />
+    <result column="HIGHEST_EDUCATION" property="highestEducation" jdbcType="VARCHAR" />
+    <result column="PHONENUMBER" property="phonenumber" jdbcType="VARCHAR" />
+    <result column="EMAIL" property="email" jdbcType="VARCHAR" />
+    <result column="ADDRESS" property="address" jdbcType="VARCHAR" />
+    <result column="POSTCODES" property="postcodes" jdbcType="VARCHAR" />
+    <result column="STARTWORKINGDATE" property="startworkingdate" jdbcType="VARCHAR" />
+    <result column="POSITION_NAME" property="positionName" jdbcType="VARCHAR" />
+    <result column="ARRIVE_DATE" property="arriveDate" jdbcType="VARCHAR" />
+    <result column="EXPECTED_SALARY_MONTH" property="expectedSalaryMonth" jdbcType="VARCHAR" />
+    <result column="EXPECTED_SALARY_YEAR" property="expectedSalaryYear" jdbcType="VARCHAR" />
+    <result column="EXPECTED_SALARY_OTHER" property="expectedSalaryOther" jdbcType="VARCHAR" />
+    <result column="RECRUITMENT_APPROACH" property="recruitmentApproach" jdbcType="VARCHAR" />
+    <result column="REFEREE_NAME" property="refereeName" jdbcType="VARCHAR" />
+    <result column="REFEREE_WORK_CODE" property="refereeWorkCode" jdbcType="VARCHAR" />
+    <result column="REFEREE_PHONE" property="refereePhone" jdbcType="VARCHAR" />
+    <result column="OTHER_WAY" property="otherWay" jdbcType="VARCHAR" />
+    <result column="RELATIVES_FLAG" property="relativesFlag" jdbcType="VARCHAR" />
+    <result column="RELATIVES_NAME" property="relativesName" jdbcType="VARCHAR" />
+    <result column="RELATIVES_SHIP" property="relativesShip" jdbcType="VARCHAR" />
+    <result column="INTERVIEW_STATUS" property="interviewStatus" jdbcType="VARCHAR" />
+    <result column="CREATETIME" property="createtime" jdbcType="TIMESTAMP" />
+    <result column="RECRUITER_NAME" property="recruiterName" jdbcType="VARCHAR" />
+    <result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="EDIT_PERSON" property="editPerson" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    ID, PERSON_CODE, RECRUITER_NUMBER, NATIONALITY, CNNAME, ENNAME, SEX, MARITAL_STATUS, 
+    NAMEPY, NATION, POLITICAL_STATUS, NATIVE_PLACE, RESIDENCE_PROPERTY, RESIDENCE, CERTIFICATE_TYPE, 
+    CERTIFICATE_NUM, CERTIFICATE_NAME, BIRTHDATE, HIGHEST_EDUCATION, PHONENUMBER, EMAIL, ADDRESS, POSTCODES, 
+    STARTWORKINGDATE, POSITION_NAME, ARRIVE_DATE, EXPECTED_SALARY_MONTH, EXPECTED_SALARY_YEAR, 
+    EXPECTED_SALARY_OTHER, RECRUITMENT_APPROACH, REFEREE_NAME,REFEREE_WORK_CODE,REFEREE_PHONE, OTHER_WAY, RELATIVES_FLAG, 
+    RELATIVES_NAME, RELATIVES_SHIP, INTERVIEW_STATUS, CREATETIME, RECRUITER_NAME, UPDATE_TIME, 
+    EDIT_PERSON
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.csot.recruit.model.original.interview.InterviewInfoCriteria" >
+    <include refid="Oracle_Dialect_Pagination_Prefix" />
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from T_INTERVIEW_INFO
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <include refid="Oracle_Dialect_Pagination_Suffix" />
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from T_INTERVIEW_INFO
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByPersonCode" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from T_INTERVIEW_INFO
+    where person_code = #{personCode,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from T_INTERVIEW_INFO
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.csot.recruit.model.original.interview.InterviewInfoCriteria" >
+    delete from T_INTERVIEW_INFO
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.csot.recruit.model.original.interview.InterviewInfo" >
+    insert into T_INTERVIEW_INFO (ID, PERSON_CODE, RECRUITER_NUMBER, 
+      NATIONALITY, CNNAME, ENNAME, 
+      SEX, MARITAL_STATUS, NAMEPY, 
+      NATION, POLITICAL_STATUS, NATIVE_PLACE, 
+      RESIDENCE_PROPERTY, RESIDENCE, CERTIFICATE_TYPE, 
+      CERTIFICATE_NUM,CERTIFICATE_NAME, BIRTHDATE, HIGHEST_EDUCATION, 
+      PHONENUMBER, EMAIL, ADDRESS, 
+      POSTCODES, STARTWORKINGDATE, POSITION_NAME, 
+      ARRIVE_DATE, EXPECTED_SALARY_MONTH, EXPECTED_SALARY_YEAR, 
+      EXPECTED_SALARY_OTHER, RECRUITMENT_APPROACH, 
+      REFEREE_NAME,REFEREE_WORK_CODE,REFEREE_PHONE, OTHER_WAY, RELATIVES_FLAG, 
+      RELATIVES_NAME, RELATIVES_SHIP, INTERVIEW_STATUS, 
+      CREATETIME, RECRUITER_NAME, UPDATE_TIME, 
+      EDIT_PERSON)
+    values (#{id,jdbcType=VARCHAR}, #{personCode,jdbcType=VARCHAR}, #{recruiterNumber,jdbcType=VARCHAR}, 
+      #{nationality,jdbcType=VARCHAR}, #{cnname,jdbcType=VARCHAR}, #{enname,jdbcType=VARCHAR}, 
+      #{sex,jdbcType=VARCHAR}, #{maritalStatus,jdbcType=VARCHAR}, #{namepy,jdbcType=VARCHAR}, 
+      #{nation,jdbcType=VARCHAR}, #{politicalStatus,jdbcType=VARCHAR}, #{nativePlace,jdbcType=VARCHAR}, 
+      #{residenceProperty,jdbcType=VARCHAR}, #{residence,jdbcType=VARCHAR}, #{certificateType,jdbcType=VARCHAR}, 
+      #{certificateNum,jdbcType=VARCHAR},#{certificateName,jdbcType=VARCHAR}, #{birthdate,jdbcType=VARCHAR}, #{highestEducation,jdbcType=VARCHAR}, 
+      #{phonenumber,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, 
+      #{postcodes,jdbcType=VARCHAR}, #{startworkingdate,jdbcType=VARCHAR}, #{positionName,jdbcType=VARCHAR}, 
+      #{arriveDate,jdbcType=VARCHAR}, #{expectedSalaryMonth,jdbcType=VARCHAR}, #{expectedSalaryYear,jdbcType=VARCHAR}, 
+      #{expectedSalaryOther,jdbcType=VARCHAR}, #{recruitmentApproach,jdbcType=VARCHAR}, 
+      #{refereeName,jdbcType=VARCHAR},#{refereeWorkCode,jdbcType=VARCHAR},#{refereePhone,jdbcType=VARCHAR},
+      #{otherWay,jdbcType=VARCHAR}, #{relativesFlag,jdbcType=VARCHAR}, 
+      #{relativesName,jdbcType=VARCHAR}, #{relativesShip,jdbcType=VARCHAR}, #{interviewStatus,jdbcType=VARCHAR}, 
+      #{createtime,jdbcType=TIMESTAMP}, #{recruiterName,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP}, 
+      #{editPerson,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.csot.recruit.model.original.interview.InterviewInfo" >
+    insert into T_INTERVIEW_INFO
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="personCode != null" >
+        PERSON_CODE,
+      </if>
+      <if test="recruiterNumber != null" >
+        RECRUITER_NUMBER,
+      </if>
+      <if test="nationality != null" >
+        NATIONALITY,
+      </if>
+      <if test="cnname != null" >
+        CNNAME,
+      </if>
+      <if test="enname != null" >
+        ENNAME,
+      </if>
+      <if test="sex != null" >
+        SEX,
+      </if>
+      <if test="maritalStatus != null" >
+        MARITAL_STATUS,
+      </if>
+      <if test="namepy != null" >
+        NAMEPY,
+      </if>
+      <if test="nation != null" >
+        NATION,
+      </if>
+      <if test="politicalStatus != null" >
+        POLITICAL_STATUS,
+      </if>
+      <if test="nativePlace != null" >
+        NATIVE_PLACE,
+      </if>
+      <if test="residenceProperty != null" >
+        RESIDENCE_PROPERTY,
+      </if>
+      <if test="residence != null" >
+        RESIDENCE,
+      </if>
+      <if test="certificateType != null" >
+        CERTIFICATE_TYPE,
+      </if>
+      <if test="certificateNum != null" >
+        CERTIFICATE_NUM,
+      </if>
+      <if test="certificateName != null" >
+        CERTIFICATE_NAME,
+      </if>
+      <if test="birthdate != null" >
+        BIRTHDATE,
+      </if>
+      <if test="highestEducation != null" >
+        HIGHEST_EDUCATION,
+      </if>
+      <if test="phonenumber != null" >
+        PHONENUMBER,
+      </if>
+      <if test="email != null" >
+        EMAIL,
+      </if>
+      <if test="address != null" >
+        ADDRESS,
+      </if>
+      <if test="postcodes != null" >
+        POSTCODES,
+      </if>
+      <if test="startworkingdate != null" >
+        STARTWORKINGDATE,
+      </if>
+      <if test="positionName != null" >
+        POSITION_NAME,
+      </if>
+      <if test="arriveDate != null" >
+        ARRIVE_DATE,
+      </if>
+      <if test="expectedSalaryMonth != null" >
+        EXPECTED_SALARY_MONTH,
+      </if>
+      <if test="expectedSalaryYear != null" >
+        EXPECTED_SALARY_YEAR,
+      </if>
+      <if test="expectedSalaryOther != null" >
+        EXPECTED_SALARY_OTHER,
+      </if>
+      <if test="recruitmentApproach != null" >
+        RECRUITMENT_APPROACH,
+      </if>
+      <if test="refereeName != null" >
+        REFEREE_NAME,
+      </if>
+      <if test="refereeWorkCode != null" >
+        REFEREE_WORK_CODE,
+      </if>
+      <if test="refereePhone != null" >
+        REFEREE_PHONE,
+      </if>
+      <if test="otherWay != null" >
+        OTHER_WAY,
+      </if>
+      <if test="relativesFlag != null" >
+        RELATIVES_FLAG,
+      </if>
+      <if test="relativesName != null" >
+        RELATIVES_NAME,
+      </if>
+      <if test="relativesShip != null" >
+        RELATIVES_SHIP,
+      </if>
+      <if test="interviewStatus != null" >
+        INTERVIEW_STATUS,
+      </if>
+      <if test="createtime != null" >
+        CREATETIME,
+      </if>
+      <if test="recruiterName != null" >
+        RECRUITER_NAME,
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME,
+      </if>
+      <if test="editPerson != null" >
+        EDIT_PERSON,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="personCode != null" >
+        #{personCode,jdbcType=VARCHAR},
+      </if>
+      <if test="recruiterNumber != null" >
+        #{recruiterNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="nationality != null" >
+        #{nationality,jdbcType=VARCHAR},
+      </if>
+      <if test="cnname != null" >
+        #{cnname,jdbcType=VARCHAR},
+      </if>
+      <if test="enname != null" >
+        #{enname,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null" >
+        #{sex,jdbcType=VARCHAR},
+      </if>
+      <if test="maritalStatus != null" >
+        #{maritalStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="namepy != null" >
+        #{namepy,jdbcType=VARCHAR},
+      </if>
+      <if test="nation != null" >
+        #{nation,jdbcType=VARCHAR},
+      </if>
+      <if test="politicalStatus != null" >
+        #{politicalStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="nativePlace != null" >
+        #{nativePlace,jdbcType=VARCHAR},
+      </if>
+      <if test="residenceProperty != null" >
+        #{residenceProperty,jdbcType=VARCHAR},
+      </if>
+      <if test="residence != null" >
+        #{residence,jdbcType=VARCHAR},
+      </if>
+      <if test="certificateType != null" >
+        #{certificateType,jdbcType=VARCHAR},
+      </if>
+      <if test="certificateNum != null" >
+        #{certificateNum,jdbcType=VARCHAR},
+      </if>
+      <if test="certificateName != null" >
+        #{certificateName,jdbcType=VARCHAR},
+      </if>
+      <if test="birthdate != null" >
+        #{birthdate,jdbcType=VARCHAR},
+      </if>
+      <if test="highestEducation != null" >
+        #{highestEducation,jdbcType=VARCHAR},
+      </if>
+      <if test="phonenumber != null" >
+        #{phonenumber,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null" >
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null" >
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="postcodes != null" >
+        #{postcodes,jdbcType=VARCHAR},
+      </if>
+      <if test="startworkingdate != null" >
+        #{startworkingdate,jdbcType=VARCHAR},
+      </if>
+      <if test="positionName != null" >
+        #{positionName,jdbcType=VARCHAR},
+      </if>
+      <if test="arriveDate != null" >
+        #{arriveDate,jdbcType=VARCHAR},
+      </if>
+      <if test="expectedSalaryMonth != null" >
+        #{expectedSalaryMonth,jdbcType=VARCHAR},
+      </if>
+      <if test="expectedSalaryYear != null" >
+        #{expectedSalaryYear,jdbcType=VARCHAR},
+      </if>
+      <if test="expectedSalaryOther != null" >
+        #{expectedSalaryOther,jdbcType=VARCHAR},
+      </if>
+      <if test="recruitmentApproach != null" >
+        #{recruitmentApproach,jdbcType=VARCHAR},
+      </if>
+      <if test="refereeName != null" >
+        #{refereeName,jdbcType=VARCHAR},
+      </if>
+      <if test="refereeWorkCode != null" >
+        #{refereeWorkCode,jdbcType=VARCHAR},
+      </if>
+      <if test="refereePhone != null" >
+        #{refereePhone,jdbcType=VARCHAR},
+      </if>
+      <if test="otherWay != null" >
+        #{otherWay,jdbcType=VARCHAR},
+      </if>
+      <if test="relativesFlag != null" >
+        #{relativesFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="relativesName != null" >
+        #{relativesName,jdbcType=VARCHAR},
+      </if>
+      <if test="relativesShip != null" >
+        #{relativesShip,jdbcType=VARCHAR},
+      </if>
+      <if test="interviewStatus != null" >
+        #{interviewStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null" >
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="recruiterName != null" >
+        #{recruiterName,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="editPerson != null" >
+        #{editPerson,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.csot.recruit.model.original.interview.InterviewInfoCriteria" resultType="java.lang.Integer" >
+    select count(*) from T_INTERVIEW_INFO
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update T_INTERVIEW_INFO
+    <set >
+      <if test="record.id != null" >
+        ID = #{record.id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.personCode != null" >
+        PERSON_CODE = #{record.personCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.recruiterNumber != null" >
+        RECRUITER_NUMBER = #{record.recruiterNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="record.nationality != null" >
+        NATIONALITY = #{record.nationality,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cnname != null" >
+        CNNAME = #{record.cnname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.enname != null" >
+        ENNAME = #{record.enname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sex != null" >
+        SEX = #{record.sex,jdbcType=VARCHAR},
+      </if>
+      <if test="record.maritalStatus != null" >
+        MARITAL_STATUS = #{record.maritalStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="record.namepy != null" >
+        NAMEPY = #{record.namepy,jdbcType=VARCHAR},
+      </if>
+      <if test="record.nation != null" >
+        NATION = #{record.nation,jdbcType=VARCHAR},
+      </if>
+      <if test="record.politicalStatus != null" >
+        POLITICAL_STATUS = #{record.politicalStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="record.nativePlace != null" >
+        NATIVE_PLACE = #{record.nativePlace,jdbcType=VARCHAR},
+      </if>
+      <if test="record.residenceProperty != null" >
+        RESIDENCE_PROPERTY = #{record.residenceProperty,jdbcType=VARCHAR},
+      </if>
+      <if test="record.residence != null" >
+        RESIDENCE = #{record.residence,jdbcType=VARCHAR},
+      </if>
+      <if test="record.certificateType != null" >
+        CERTIFICATE_TYPE = #{record.certificateType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.certificateNum != null" >
+        CERTIFICATE_NUM = #{record.certificateNum,jdbcType=VARCHAR},
+      </if>
+      <if test="record.certificateName != null" >
+        CERTIFICATE_NAME = #{record.certificateName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.birthdate != null" >
+        BIRTHDATE = #{record.birthdate,jdbcType=VARCHAR},
+      </if>
+      <if test="record.highestEducation != null" >
+        HIGHEST_EDUCATION = #{record.highestEducation,jdbcType=VARCHAR},
+      </if>
+      <if test="record.phonenumber != null" >
+        PHONENUMBER = #{record.phonenumber,jdbcType=VARCHAR},
+      </if>
+      <if test="record.email != null" >
+        EMAIL = #{record.email,jdbcType=VARCHAR},
+      </if>
+      <if test="record.address != null" >
+        ADDRESS = #{record.address,jdbcType=VARCHAR},
+      </if>
+      <if test="record.postcodes != null" >
+        POSTCODES = #{record.postcodes,jdbcType=VARCHAR},
+      </if>
+      <if test="record.startworkingdate != null" >
+        STARTWORKINGDATE = #{record.startworkingdate,jdbcType=VARCHAR},
+      </if>
+      <if test="record.positionName != null" >
+        POSITION_NAME = #{record.positionName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.arriveDate != null" >
+        ARRIVE_DATE = #{record.arriveDate,jdbcType=VARCHAR},
+      </if>
+      <if test="record.expectedSalaryMonth != null" >
+        EXPECTED_SALARY_MONTH = #{record.expectedSalaryMonth,jdbcType=VARCHAR},
+      </if>
+      <if test="record.expectedSalaryYear != null" >
+        EXPECTED_SALARY_YEAR = #{record.expectedSalaryYear,jdbcType=VARCHAR},
+      </if>
+      <if test="record.expectedSalaryOther != null" >
+        EXPECTED_SALARY_OTHER = #{record.expectedSalaryOther,jdbcType=VARCHAR},
+      </if>
+      <if test="record.recruitmentApproach != null" >
+        RECRUITMENT_APPROACH = #{record.recruitmentApproach,jdbcType=VARCHAR},
+      </if>
+      <if test="record.refereeName != null" >
+        REFEREE_NAME = #{record.refereeName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.refereeWorkCode != null" >
+        REFEREE_WORK_CODE = #{record.refereeWorkCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.refereePhone != null" >
+        REFEREE_PHONE = #{record.refereePhone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.otherWay != null" >
+        OTHER_WAY = #{record.otherWay,jdbcType=VARCHAR},
+      </if>
+      <if test="record.relativesFlag != null" >
+        RELATIVES_FLAG = #{record.relativesFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="record.relativesName != null" >
+        RELATIVES_NAME = #{record.relativesName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.relativesShip != null" >
+        RELATIVES_SHIP = #{record.relativesShip,jdbcType=VARCHAR},
+      </if>
+      <if test="record.interviewStatus != null" >
+        INTERVIEW_STATUS = #{record.interviewStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createtime != null" >
+        CREATETIME = #{record.createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.recruiterName != null" >
+        RECRUITER_NAME = #{record.recruiterName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.updateTime != null" >
+        UPDATE_TIME = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.editPerson != null" >
+        EDIT_PERSON = #{record.editPerson,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update T_INTERVIEW_INFO
+    set ID = #{record.id,jdbcType=VARCHAR},
+      PERSON_CODE = #{record.personCode,jdbcType=VARCHAR},
+      RECRUITER_NUMBER = #{record.recruiterNumber,jdbcType=VARCHAR},
+      NATIONALITY = #{record.nationality,jdbcType=VARCHAR},
+      CNNAME = #{record.cnname,jdbcType=VARCHAR},
+      ENNAME = #{record.enname,jdbcType=VARCHAR},
+      SEX = #{record.sex,jdbcType=VARCHAR},
+      MARITAL_STATUS = #{record.maritalStatus,jdbcType=VARCHAR},
+      NAMEPY = #{record.namepy,jdbcType=VARCHAR},
+      NATION = #{record.nation,jdbcType=VARCHAR},
+      POLITICAL_STATUS = #{record.politicalStatus,jdbcType=VARCHAR},
+      NATIVE_PLACE = #{record.nativePlace,jdbcType=VARCHAR},
+      RESIDENCE_PROPERTY = #{record.residenceProperty,jdbcType=VARCHAR},
+      RESIDENCE = #{record.residence,jdbcType=VARCHAR},
+      CERTIFICATE_TYPE = #{record.certificateType,jdbcType=VARCHAR},
+      CERTIFICATE_NUM = #{record.certificateNum,jdbcType=VARCHAR},
+      CERTIFICATE_NAME = #{record.certificateName,jdbcType=VARCHAR},
+      BIRTHDATE = #{record.birthdate,jdbcType=VARCHAR},
+      HIGHEST_EDUCATION = #{record.highestEducation,jdbcType=VARCHAR},
+      PHONENUMBER = #{record.phonenumber,jdbcType=VARCHAR},
+      EMAIL = #{record.email,jdbcType=VARCHAR},
+      ADDRESS = #{record.address,jdbcType=VARCHAR},
+      POSTCODES = #{record.postcodes,jdbcType=VARCHAR},
+      STARTWORKINGDATE = #{record.startworkingdate,jdbcType=VARCHAR},
+      POSITION_NAME = #{record.positionName,jdbcType=VARCHAR},
+      ARRIVE_DATE = #{record.arriveDate,jdbcType=VARCHAR},
+      EXPECTED_SALARY_MONTH = #{record.expectedSalaryMonth,jdbcType=VARCHAR},
+      EXPECTED_SALARY_YEAR = #{record.expectedSalaryYear,jdbcType=VARCHAR},
+      EXPECTED_SALARY_OTHER = #{record.expectedSalaryOther,jdbcType=VARCHAR},
+      RECRUITMENT_APPROACH = #{record.recruitmentApproach,jdbcType=VARCHAR},
+      REFEREE_NAME = #{record.refereeName,jdbcType=VARCHAR},
+      REFEREE_WORK_CODE = #{record.refereeWorkCode,jdbcType=VARCHAR},
+      REFEREE_PHONE = #{record.refereePhone,jdbcType=VARCHAR},
+      OTHER_WAY = #{record.otherWay,jdbcType=VARCHAR},
+      RELATIVES_FLAG = #{record.relativesFlag,jdbcType=VARCHAR},
+      RELATIVES_NAME = #{record.relativesName,jdbcType=VARCHAR},
+      RELATIVES_SHIP = #{record.relativesShip,jdbcType=VARCHAR},
+      INTERVIEW_STATUS = #{record.interviewStatus,jdbcType=VARCHAR},
+      CREATETIME = #{record.createtime,jdbcType=TIMESTAMP},
+      RECRUITER_NAME = #{record.recruiterName,jdbcType=VARCHAR},
+      UPDATE_TIME = #{record.updateTime,jdbcType=TIMESTAMP},
+      EDIT_PERSON = #{record.editPerson,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.csot.recruit.model.original.interview.InterviewInfo" >
+    update T_INTERVIEW_INFO
+    <set >
+      <if test="personCode != null" >
+        PERSON_CODE = #{personCode,jdbcType=VARCHAR},
+      </if>
+      <if test="recruiterNumber != null" >
+        RECRUITER_NUMBER = #{recruiterNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="nationality != null" >
+        NATIONALITY = #{nationality,jdbcType=VARCHAR},
+      </if>
+      <if test="cnname != null" >
+        CNNAME = #{cnname,jdbcType=VARCHAR},
+      </if>
+      <if test="enname != null" >
+        ENNAME = #{enname,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null" >
+        SEX = #{sex,jdbcType=VARCHAR},
+      </if>
+      <if test="maritalStatus != null" >
+        MARITAL_STATUS = #{maritalStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="namepy != null" >
+        NAMEPY = #{namepy,jdbcType=VARCHAR},
+      </if>
+      <if test="nation != null" >
+        NATION = #{nation,jdbcType=VARCHAR},
+      </if>
+      <if test="politicalStatus != null" >
+        POLITICAL_STATUS = #{politicalStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="nativePlace != null" >
+        NATIVE_PLACE = #{nativePlace,jdbcType=VARCHAR},
+      </if>
+      <if test="residenceProperty != null" >
+        RESIDENCE_PROPERTY = #{residenceProperty,jdbcType=VARCHAR},
+      </if>
+      <if test="residence != null" >
+        RESIDENCE = #{residence,jdbcType=VARCHAR},
+      </if>
+      <if test="certificateType != null" >
+        CERTIFICATE_TYPE = #{certificateType,jdbcType=VARCHAR},
+      </if>
+      <if test="certificateNum != null" >
+        CERTIFICATE_NUM = #{certificateNum,jdbcType=VARCHAR},
+      </if>
+      <if test="certificateName != null" >
+        CERTIFICATE_NAME = #{certificateName,jdbcType=VARCHAR},
+      </if>
+      <if test="birthdate != null" >
+        BIRTHDATE = #{birthdate,jdbcType=VARCHAR},
+      </if>
+      <if test="highestEducation != null" >
+        HIGHEST_EDUCATION = #{highestEducation,jdbcType=VARCHAR},
+      </if>
+      <if test="phonenumber != null" >
+        PHONENUMBER = #{phonenumber,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null" >
+        EMAIL = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null" >
+        ADDRESS = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="postcodes != null" >
+        POSTCODES = #{postcodes,jdbcType=VARCHAR},
+      </if>
+      <if test="startworkingdate != null" >
+        STARTWORKINGDATE = #{startworkingdate,jdbcType=VARCHAR},
+      </if>
+      <if test="positionName != null" >
+        POSITION_NAME = #{positionName,jdbcType=VARCHAR},
+      </if>
+      <if test="arriveDate != null" >
+        ARRIVE_DATE = #{arriveDate,jdbcType=VARCHAR},
+      </if>
+      <if test="expectedSalaryMonth != null" >
+        EXPECTED_SALARY_MONTH = #{expectedSalaryMonth,jdbcType=VARCHAR},
+      </if>
+      <if test="expectedSalaryYear != null" >
+        EXPECTED_SALARY_YEAR = #{expectedSalaryYear,jdbcType=VARCHAR},
+      </if>
+      <if test="expectedSalaryOther != null" >
+        EXPECTED_SALARY_OTHER = #{expectedSalaryOther,jdbcType=VARCHAR},
+      </if>
+      <if test="recruitmentApproach != null" >
+        RECRUITMENT_APPROACH = #{recruitmentApproach,jdbcType=VARCHAR},
+      </if>
+      <if test="refereeName != null" >
+        REFEREE_NAME = #{refereeName,jdbcType=VARCHAR},
+      </if>
+      <if test="refereeWorkCode != null" >
+        REFEREE_WORK_CODE = #{refereeWorkCode,jdbcType=VARCHAR},
+      </if>
+      <if test="refereePhone != null" >
+        REFEREE_PHONE = #{refereePhone,jdbcType=VARCHAR},
+      </if>
+      <if test="otherWay != null" >
+        OTHER_WAY = #{otherWay,jdbcType=VARCHAR},
+      </if>
+      <if test="relativesFlag != null" >
+        RELATIVES_FLAG = #{relativesFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="relativesName != null" >
+        RELATIVES_NAME = #{relativesName,jdbcType=VARCHAR},
+      </if>
+      <if test="relativesShip != null" >
+        RELATIVES_SHIP = #{relativesShip,jdbcType=VARCHAR},
+      </if>
+      <if test="interviewStatus != null" >
+        INTERVIEW_STATUS = #{interviewStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null" >
+        CREATETIME = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="recruiterName != null" >
+        RECRUITER_NAME = #{recruiterName,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="editPerson != null" >
+        EDIT_PERSON = #{editPerson,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.csot.recruit.model.original.interview.InterviewInfo" >
+    update T_INTERVIEW_INFO
+    set PERSON_CODE = #{personCode,jdbcType=VARCHAR},
+      RECRUITER_NUMBER = #{recruiterNumber,jdbcType=VARCHAR},
+      NATIONALITY = #{nationality,jdbcType=VARCHAR},
+      CNNAME = #{cnname,jdbcType=VARCHAR},
+      ENNAME = #{enname,jdbcType=VARCHAR},
+      SEX = #{sex,jdbcType=VARCHAR},
+      MARITAL_STATUS = #{maritalStatus,jdbcType=VARCHAR},
+      NAMEPY = #{namepy,jdbcType=VARCHAR},
+      NATION = #{nation,jdbcType=VARCHAR},
+      POLITICAL_STATUS = #{politicalStatus,jdbcType=VARCHAR},
+      NATIVE_PLACE = #{nativePlace,jdbcType=VARCHAR},
+      RESIDENCE_PROPERTY = #{residenceProperty,jdbcType=VARCHAR},
+      RESIDENCE = #{residence,jdbcType=VARCHAR},
+      CERTIFICATE_TYPE = #{certificateType,jdbcType=VARCHAR},
+      CERTIFICATE_NUM = #{certificateNum,jdbcType=VARCHAR},
+      CERTIFICATE_NAME = #{certificateName,jdbcType=VARCHAR},
+      BIRTHDATE = #{birthdate,jdbcType=VARCHAR},
+      HIGHEST_EDUCATION = #{highestEducation,jdbcType=VARCHAR},
+      PHONENUMBER = #{phonenumber,jdbcType=VARCHAR},
+      EMAIL = #{email,jdbcType=VARCHAR},
+      ADDRESS = #{address,jdbcType=VARCHAR},
+      POSTCODES = #{postcodes,jdbcType=VARCHAR},
+      STARTWORKINGDATE = #{startworkingdate,jdbcType=VARCHAR},
+      POSITION_NAME = #{positionName,jdbcType=VARCHAR},
+      ARRIVE_DATE = #{arriveDate,jdbcType=VARCHAR},
+      EXPECTED_SALARY_MONTH = #{expectedSalaryMonth,jdbcType=VARCHAR},
+      EXPECTED_SALARY_YEAR = #{expectedSalaryYear,jdbcType=VARCHAR},
+      EXPECTED_SALARY_OTHER = #{expectedSalaryOther,jdbcType=VARCHAR},
+      RECRUITMENT_APPROACH = #{recruitmentApproach,jdbcType=VARCHAR},
+      REFEREE_NAME = #{refereeName,jdbcType=VARCHAR},
+      REFEREE_WORK_CODE = #{refereeWorkCode,jdbcType=VARCHAR},
+      REFEREE_PHONE = #{refereePhone,jdbcType=VARCHAR},
+      OTHER_WAY = #{otherWay,jdbcType=VARCHAR},
+      RELATIVES_FLAG = #{relativesFlag,jdbcType=VARCHAR},
+      RELATIVES_NAME = #{relativesName,jdbcType=VARCHAR},
+      RELATIVES_SHIP = #{relativesShip,jdbcType=VARCHAR},
+      INTERVIEW_STATUS = #{interviewStatus,jdbcType=VARCHAR},
+      CREATETIME = #{createtime,jdbcType=TIMESTAMP},
+      RECRUITER_NAME = #{recruiterName,jdbcType=VARCHAR},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      EDIT_PERSON = #{editPerson,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <sql id="Oracle_Dialect_Pagination_Prefix" >
+    <if test="page != null" >
+      select * from ( select row_.*, rownum rownum_ from ( 
+    </if>
+  </sql>
+  <sql id="Oracle_Dialect_Pagination_Suffix" >
+    <if test="page != null" >
+      <![CDATA[ ) row_ ) where rownum_ > #{page.begin} and rownum_ <= #{page.end} ]]>
+    </if>
+  </sql>
+  
+  
+  <sql id="query_by_page" >
+    <where>
+      <if test="startDate != null and startDate != ''" >
+        <![CDATA[  and createtime >= to_date(#{startDate},'yyyy-mm-dd') ]]>
+      </if>
+      <if test="endDate != null and endDate != ''" >
+        <![CDATA[  and createtime <= to_date(#{endDate},'yyyy-mm-dd') ]]>
+      </if>
+      <if test="searchKey != null and searchKey != ''" >
+        and (CNNAME like '%'||#{searchKey}||'%' or 
+             ENNAME like '%'||#{searchKey}||'%' or 
+             NAMEPY like '%'||#{searchKey}||'%' or 
+             PHONENUMBER like '%'||#{searchKey}||'%'
+        )
+      </if>
+    </where>
+  </sql>
+  
+  <select id="queryInterviewListByPage" resultMap="BaseResultMap" parameterType="java.util.Map" >
+    <include refid="Oracle_Dialect_Pagination_Prefix" />
+    select
+    <include refid="Base_Column_List" />
+    from T_INTERVIEW_INFO
+    <include refid="query_by_page" />
+    <if test="sortField != null and sortField != ''">
+  		order by ${sortField} ${sortOrder}
+  	</if>
+    <include refid="Oracle_Dialect_Pagination_Suffix" />
+  </select>
+  
+  <select id="countByPage" parameterType="java.util.Map" resultType="java.lang.Integer" >
+    select count(1) from T_INTERVIEW_INFO
+    <include refid="query_by_page" />
+  </select>
+  
+  <select id="searchPersonCode" parameterType="java.util.Map" resultType="java.lang.Integer" >
+      select CURRENTNUM from t_person_code t where t.DATASTR=#{dataStr}
+  </select>
+  
+  <update id="updatePersonCode" parameterType="java.util.Map" >
+      update t_person_code t set CURRENTNUM =#{currentNum} where t.DATASTR=#{dataStr}
+  </update>
+  
+  <insert id="addPersonCode" parameterType="java.util.Map" >
+      insert into t_person_code(DATASTR,CURRENTNUM)
+      values
+      (#{dataStr},#{currentNum})
+  </insert>
+  
+</mapper>

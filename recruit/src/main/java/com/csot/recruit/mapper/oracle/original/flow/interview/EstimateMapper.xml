@@ -1,0 +1,650 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.csot.recruit.dao.original.flow.interview.EstimateMapper" >
+  <resultMap id="BaseResultMap" type="com.csot.recruit.model.original.flow.interview.Estimate" >
+    <id column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="CANDIDATE_ID" property="candidateId" jdbcType="VARCHAR" />
+    <result column="POSITION_ID" property="positionId" jdbcType="VARCHAR" />
+    <result column="SYS_THINK" property="sysThink" jdbcType="DECIMAL" />
+    <result column="COMMUNICATE" property="communicate" jdbcType="DECIMAL" />
+    <result column="STUDY" property="study" jdbcType="DECIMAL" />
+    <result column="TEAM_WORK" property="teamWork" jdbcType="DECIMAL" />
+    <result column="INNOVATE" property="innovate" jdbcType="DECIMAL" />
+    <result column="MAJOR_KNOWLEDGE" property="majorKnowledge" jdbcType="DECIMAL" />
+    <result column="MAJOR_SKILL" property="majorSkill" jdbcType="DECIMAL" />
+    <result column="MAJOR_EXP" property="majorExp" jdbcType="DECIMAL" />
+    <result column="POSITION_MATCH" property="positionMatch" jdbcType="DECIMAL" />
+    <result column="ORG_MATCH" property="orgMatch" jdbcType="DECIMAL" />
+    <result column="TOTAL" property="total" jdbcType="DECIMAL" />
+    <result column="RESULT" property="result" jdbcType="VARCHAR" />
+    <result column="ORG_COMMENT" property="orgComment" jdbcType="VARCHAR" />
+    <result column="HR_COMMENT" property="hrComment" jdbcType="VARCHAR" />
+    <result column="HR_SYS_THINK" property="hrSysThink" jdbcType="DECIMAL" />
+    <result column="HR_COMMUNICATE" property="hrCommunicate" jdbcType="DECIMAL" />
+    <result column="HR_STUDY" property="hrStudy" jdbcType="DECIMAL" />
+    <result column="HR_TEAM_WORK" property="hrTeamWork" jdbcType="DECIMAL" />
+    <result column="HR_INNOVATE" property="hrInnovate" jdbcType="DECIMAL" />
+    <result column="HR_MAJOR_KNOWLEDGE" property="hrMajorKnowledge" jdbcType="DECIMAL" />
+    <result column="HR_MAJOR_SKILL" property="hrMajorSkill" jdbcType="DECIMAL" />
+    <result column="HR_MAJOR_EXP" property="hrMajorExp" jdbcType="DECIMAL" />
+    <result column="HR_POSITION_MATCH" property="hrPositionMatch" jdbcType="DECIMAL" />
+    <result column="HR_ORG_MATCH" property="hrOrgMatch" jdbcType="DECIMAL" />
+    <result column="HR_ID" property="hrId" jdbcType="VARCHAR" />
+    <result column="INTERVIEWERS" property="interviewers" jdbcType="VARCHAR" />
+    <result column="HR_TOTAL" property="hrTotal" jdbcType="DECIMAL" />
+    <result column="HR_RESULT" property="hrResult" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    ID, CANDIDATE_ID, POSITION_ID, SYS_THINK, COMMUNICATE, STUDY, TEAM_WORK, INNOVATE, 
+    MAJOR_KNOWLEDGE, MAJOR_SKILL, MAJOR_EXP, POSITION_MATCH, ORG_MATCH, TOTAL, RESULT, 
+    ORG_COMMENT, HR_COMMENT, HR_SYS_THINK, HR_COMMUNICATE, HR_STUDY, HR_TEAM_WORK, HR_INNOVATE, 
+    HR_MAJOR_KNOWLEDGE, HR_MAJOR_SKILL, HR_MAJOR_EXP, HR_POSITION_MATCH, HR_ORG_MATCH, 
+    HR_ID, INTERVIEWERS, HR_TOTAL, HR_RESULT
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.csot.recruit.model.original.flow.interview.EstimateCriteria" >
+    <include refid="Oracle_Dialect_Pagination_Prefix" />
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from T_INTERVIEW_ESTIMATE
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <include refid="Oracle_Dialect_Pagination_Suffix" />
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from T_INTERVIEW_ESTIMATE
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from T_INTERVIEW_ESTIMATE
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.csot.recruit.model.original.flow.interview.EstimateCriteria" >
+    delete from T_INTERVIEW_ESTIMATE
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.csot.recruit.model.original.flow.interview.Estimate" >
+    insert into T_INTERVIEW_ESTIMATE (ID, CANDIDATE_ID, POSITION_ID, 
+      SYS_THINK, COMMUNICATE, STUDY, 
+      TEAM_WORK, INNOVATE, MAJOR_KNOWLEDGE, 
+      MAJOR_SKILL, MAJOR_EXP, POSITION_MATCH, 
+      ORG_MATCH, TOTAL, RESULT, 
+      ORG_COMMENT, HR_COMMENT, HR_SYS_THINK, 
+      HR_COMMUNICATE, HR_STUDY, HR_TEAM_WORK, 
+      HR_INNOVATE, HR_MAJOR_KNOWLEDGE, HR_MAJOR_SKILL, 
+      HR_MAJOR_EXP, HR_POSITION_MATCH, HR_ORG_MATCH, 
+      HR_ID, INTERVIEWERS, HR_TOTAL, 
+      HR_RESULT)
+    values (#{id,jdbcType=VARCHAR}, #{candidateId,jdbcType=VARCHAR}, #{positionId,jdbcType=VARCHAR}, 
+      #{sysThink,jdbcType=DECIMAL}, #{communicate,jdbcType=DECIMAL}, #{study,jdbcType=DECIMAL}, 
+      #{teamWork,jdbcType=DECIMAL}, #{innovate,jdbcType=DECIMAL}, #{majorKnowledge,jdbcType=DECIMAL}, 
+      #{majorSkill,jdbcType=DECIMAL}, #{majorExp,jdbcType=DECIMAL}, #{positionMatch,jdbcType=DECIMAL}, 
+      #{orgMatch,jdbcType=DECIMAL}, #{total,jdbcType=DECIMAL}, #{result,jdbcType=VARCHAR}, 
+      #{orgComment,jdbcType=VARCHAR}, #{hrComment,jdbcType=VARCHAR}, #{hrSysThink,jdbcType=DECIMAL}, 
+      #{hrCommunicate,jdbcType=DECIMAL}, #{hrStudy,jdbcType=DECIMAL}, #{hrTeamWork,jdbcType=DECIMAL}, 
+      #{hrInnovate,jdbcType=DECIMAL}, #{hrMajorKnowledge,jdbcType=DECIMAL}, #{hrMajorSkill,jdbcType=DECIMAL}, 
+      #{hrMajorExp,jdbcType=DECIMAL}, #{hrPositionMatch,jdbcType=DECIMAL}, #{hrOrgMatch,jdbcType=DECIMAL}, 
+      #{hrId,jdbcType=VARCHAR}, #{interviewers,jdbcType=VARCHAR}, #{hrTotal,jdbcType=DECIMAL}, 
+      #{hrResult,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.csot.recruit.model.original.flow.interview.Estimate" >
+    insert into T_INTERVIEW_ESTIMATE
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="candidateId != null" >
+        CANDIDATE_ID,
+      </if>
+      <if test="positionId != null" >
+        POSITION_ID,
+      </if>
+      <if test="sysThink != null" >
+        SYS_THINK,
+      </if>
+      <if test="communicate != null" >
+        COMMUNICATE,
+      </if>
+      <if test="study != null" >
+        STUDY,
+      </if>
+      <if test="teamWork != null" >
+        TEAM_WORK,
+      </if>
+      <if test="innovate != null" >
+        INNOVATE,
+      </if>
+      <if test="majorKnowledge != null" >
+        MAJOR_KNOWLEDGE,
+      </if>
+      <if test="majorSkill != null" >
+        MAJOR_SKILL,
+      </if>
+      <if test="majorExp != null" >
+        MAJOR_EXP,
+      </if>
+      <if test="positionMatch != null" >
+        POSITION_MATCH,
+      </if>
+      <if test="orgMatch != null" >
+        ORG_MATCH,
+      </if>
+      <if test="total != null" >
+        TOTAL,
+      </if>
+      <if test="result != null" >
+        RESULT,
+      </if>
+      <if test="orgComment != null" >
+        ORG_COMMENT,
+      </if>
+      <if test="hrComment != null" >
+        HR_COMMENT,
+      </if>
+      <if test="hrSysThink != null" >
+        HR_SYS_THINK,
+      </if>
+      <if test="hrCommunicate != null" >
+        HR_COMMUNICATE,
+      </if>
+      <if test="hrStudy != null" >
+        HR_STUDY,
+      </if>
+      <if test="hrTeamWork != null" >
+        HR_TEAM_WORK,
+      </if>
+      <if test="hrInnovate != null" >
+        HR_INNOVATE,
+      </if>
+      <if test="hrMajorKnowledge != null" >
+        HR_MAJOR_KNOWLEDGE,
+      </if>
+      <if test="hrMajorSkill != null" >
+        HR_MAJOR_SKILL,
+      </if>
+      <if test="hrMajorExp != null" >
+        HR_MAJOR_EXP,
+      </if>
+      <if test="hrPositionMatch != null" >
+        HR_POSITION_MATCH,
+      </if>
+      <if test="hrOrgMatch != null" >
+        HR_ORG_MATCH,
+      </if>
+      <if test="hrId != null" >
+        HR_ID,
+      </if>
+      <if test="interviewers != null" >
+        INTERVIEWERS,
+      </if>
+      <if test="hrTotal != null" >
+        HR_TOTAL,
+      </if>
+      <if test="hrResult != null" >
+        HR_RESULT,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="candidateId != null" >
+        #{candidateId,jdbcType=VARCHAR},
+      </if>
+      <if test="positionId != null" >
+        #{positionId,jdbcType=VARCHAR},
+      </if>
+      <if test="sysThink != null" >
+        #{sysThink,jdbcType=DECIMAL},
+      </if>
+      <if test="communicate != null" >
+        #{communicate,jdbcType=DECIMAL},
+      </if>
+      <if test="study != null" >
+        #{study,jdbcType=DECIMAL},
+      </if>
+      <if test="teamWork != null" >
+        #{teamWork,jdbcType=DECIMAL},
+      </if>
+      <if test="innovate != null" >
+        #{innovate,jdbcType=DECIMAL},
+      </if>
+      <if test="majorKnowledge != null" >
+        #{majorKnowledge,jdbcType=DECIMAL},
+      </if>
+      <if test="majorSkill != null" >
+        #{majorSkill,jdbcType=DECIMAL},
+      </if>
+      <if test="majorExp != null" >
+        #{majorExp,jdbcType=DECIMAL},
+      </if>
+      <if test="positionMatch != null" >
+        #{positionMatch,jdbcType=DECIMAL},
+      </if>
+      <if test="orgMatch != null" >
+        #{orgMatch,jdbcType=DECIMAL},
+      </if>
+      <if test="total != null" >
+        #{total,jdbcType=DECIMAL},
+      </if>
+      <if test="result != null" >
+        #{result,jdbcType=VARCHAR},
+      </if>
+      <if test="orgComment != null" >
+        #{orgComment,jdbcType=VARCHAR},
+      </if>
+      <if test="hrComment != null" >
+        #{hrComment,jdbcType=VARCHAR},
+      </if>
+      <if test="hrSysThink != null" >
+        #{hrSysThink,jdbcType=DECIMAL},
+      </if>
+      <if test="hrCommunicate != null" >
+        #{hrCommunicate,jdbcType=DECIMAL},
+      </if>
+      <if test="hrStudy != null" >
+        #{hrStudy,jdbcType=DECIMAL},
+      </if>
+      <if test="hrTeamWork != null" >
+        #{hrTeamWork,jdbcType=DECIMAL},
+      </if>
+      <if test="hrInnovate != null" >
+        #{hrInnovate,jdbcType=DECIMAL},
+      </if>
+      <if test="hrMajorKnowledge != null" >
+        #{hrMajorKnowledge,jdbcType=DECIMAL},
+      </if>
+      <if test="hrMajorSkill != null" >
+        #{hrMajorSkill,jdbcType=DECIMAL},
+      </if>
+      <if test="hrMajorExp != null" >
+        #{hrMajorExp,jdbcType=DECIMAL},
+      </if>
+      <if test="hrPositionMatch != null" >
+        #{hrPositionMatch,jdbcType=DECIMAL},
+      </if>
+      <if test="hrOrgMatch != null" >
+        #{hrOrgMatch,jdbcType=DECIMAL},
+      </if>
+      <if test="hrId != null" >
+        #{hrId,jdbcType=VARCHAR},
+      </if>
+      <if test="interviewers != null" >
+        #{interviewers,jdbcType=VARCHAR},
+      </if>
+      <if test="hrTotal != null" >
+        #{hrTotal,jdbcType=DECIMAL},
+      </if>
+      <if test="hrResult != null" >
+        #{hrResult,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.csot.recruit.model.original.flow.interview.EstimateCriteria" resultType="java.lang.Integer" >
+    select count(*) from T_INTERVIEW_ESTIMATE
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update T_INTERVIEW_ESTIMATE
+    <set >
+      <if test="record.id != null" >
+        ID = #{record.id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.candidateId != null" >
+        CANDIDATE_ID = #{record.candidateId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.positionId != null" >
+        POSITION_ID = #{record.positionId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sysThink != null" >
+        SYS_THINK = #{record.sysThink,jdbcType=DECIMAL},
+      </if>
+      <if test="record.communicate != null" >
+        COMMUNICATE = #{record.communicate,jdbcType=DECIMAL},
+      </if>
+      <if test="record.study != null" >
+        STUDY = #{record.study,jdbcType=DECIMAL},
+      </if>
+      <if test="record.teamWork != null" >
+        TEAM_WORK = #{record.teamWork,jdbcType=DECIMAL},
+      </if>
+      <if test="record.innovate != null" >
+        INNOVATE = #{record.innovate,jdbcType=DECIMAL},
+      </if>
+      <if test="record.majorKnowledge != null" >
+        MAJOR_KNOWLEDGE = #{record.majorKnowledge,jdbcType=DECIMAL},
+      </if>
+      <if test="record.majorSkill != null" >
+        MAJOR_SKILL = #{record.majorSkill,jdbcType=DECIMAL},
+      </if>
+      <if test="record.majorExp != null" >
+        MAJOR_EXP = #{record.majorExp,jdbcType=DECIMAL},
+      </if>
+      <if test="record.positionMatch != null" >
+        POSITION_MATCH = #{record.positionMatch,jdbcType=DECIMAL},
+      </if>
+      <if test="record.orgMatch != null" >
+        ORG_MATCH = #{record.orgMatch,jdbcType=DECIMAL},
+      </if>
+      <if test="record.total != null" >
+        TOTAL = #{record.total,jdbcType=DECIMAL},
+      </if>
+      <if test="record.result != null" >
+        RESULT = #{record.result,jdbcType=VARCHAR},
+      </if>
+      <if test="record.orgComment != null" >
+        ORG_COMMENT = #{record.orgComment,jdbcType=VARCHAR},
+      </if>
+      <if test="record.hrComment != null" >
+        HR_COMMENT = #{record.hrComment,jdbcType=VARCHAR},
+      </if>
+      <if test="record.hrSysThink != null" >
+        HR_SYS_THINK = #{record.hrSysThink,jdbcType=DECIMAL},
+      </if>
+      <if test="record.hrCommunicate != null" >
+        HR_COMMUNICATE = #{record.hrCommunicate,jdbcType=DECIMAL},
+      </if>
+      <if test="record.hrStudy != null" >
+        HR_STUDY = #{record.hrStudy,jdbcType=DECIMAL},
+      </if>
+      <if test="record.hrTeamWork != null" >
+        HR_TEAM_WORK = #{record.hrTeamWork,jdbcType=DECIMAL},
+      </if>
+      <if test="record.hrInnovate != null" >
+        HR_INNOVATE = #{record.hrInnovate,jdbcType=DECIMAL},
+      </if>
+      <if test="record.hrMajorKnowledge != null" >
+        HR_MAJOR_KNOWLEDGE = #{record.hrMajorKnowledge,jdbcType=DECIMAL},
+      </if>
+      <if test="record.hrMajorSkill != null" >
+        HR_MAJOR_SKILL = #{record.hrMajorSkill,jdbcType=DECIMAL},
+      </if>
+      <if test="record.hrMajorExp != null" >
+        HR_MAJOR_EXP = #{record.hrMajorExp,jdbcType=DECIMAL},
+      </if>
+      <if test="record.hrPositionMatch != null" >
+        HR_POSITION_MATCH = #{record.hrPositionMatch,jdbcType=DECIMAL},
+      </if>
+      <if test="record.hrOrgMatch != null" >
+        HR_ORG_MATCH = #{record.hrOrgMatch,jdbcType=DECIMAL},
+      </if>
+      <if test="record.hrId != null" >
+        HR_ID = #{record.hrId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.interviewers != null" >
+        INTERVIEWERS = #{record.interviewers,jdbcType=VARCHAR},
+      </if>
+      <if test="record.hrTotal != null" >
+        HR_TOTAL = #{record.hrTotal,jdbcType=DECIMAL},
+      </if>
+      <if test="record.hrResult != null" >
+        HR_RESULT = #{record.hrResult,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update T_INTERVIEW_ESTIMATE
+    set ID = #{record.id,jdbcType=VARCHAR},
+      CANDIDATE_ID = #{record.candidateId,jdbcType=VARCHAR},
+      POSITION_ID = #{record.positionId,jdbcType=VARCHAR},
+      SYS_THINK = #{record.sysThink,jdbcType=DECIMAL},
+      COMMUNICATE = #{record.communicate,jdbcType=DECIMAL},
+      STUDY = #{record.study,jdbcType=DECIMAL},
+      TEAM_WORK = #{record.teamWork,jdbcType=DECIMAL},
+      INNOVATE = #{record.innovate,jdbcType=DECIMAL},
+      MAJOR_KNOWLEDGE = #{record.majorKnowledge,jdbcType=DECIMAL},
+      MAJOR_SKILL = #{record.majorSkill,jdbcType=DECIMAL},
+      MAJOR_EXP = #{record.majorExp,jdbcType=DECIMAL},
+      POSITION_MATCH = #{record.positionMatch,jdbcType=DECIMAL},
+      ORG_MATCH = #{record.orgMatch,jdbcType=DECIMAL},
+      TOTAL = #{record.total,jdbcType=DECIMAL},
+      RESULT = #{record.result,jdbcType=VARCHAR},
+      ORG_COMMENT = #{record.orgComment,jdbcType=VARCHAR},
+      HR_COMMENT = #{record.hrComment,jdbcType=VARCHAR},
+      HR_SYS_THINK = #{record.hrSysThink,jdbcType=DECIMAL},
+      HR_COMMUNICATE = #{record.hrCommunicate,jdbcType=DECIMAL},
+      HR_STUDY = #{record.hrStudy,jdbcType=DECIMAL},
+      HR_TEAM_WORK = #{record.hrTeamWork,jdbcType=DECIMAL},
+      HR_INNOVATE = #{record.hrInnovate,jdbcType=DECIMAL},
+      HR_MAJOR_KNOWLEDGE = #{record.hrMajorKnowledge,jdbcType=DECIMAL},
+      HR_MAJOR_SKILL = #{record.hrMajorSkill,jdbcType=DECIMAL},
+      HR_MAJOR_EXP = #{record.hrMajorExp,jdbcType=DECIMAL},
+      HR_POSITION_MATCH = #{record.hrPositionMatch,jdbcType=DECIMAL},
+      HR_ORG_MATCH = #{record.hrOrgMatch,jdbcType=DECIMAL},
+      HR_ID = #{record.hrId,jdbcType=VARCHAR},
+      INTERVIEWERS = #{record.interviewers,jdbcType=VARCHAR},
+      HR_TOTAL = #{record.hrTotal,jdbcType=DECIMAL},
+      HR_RESULT = #{record.hrResult,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.csot.recruit.model.original.flow.interview.Estimate" >
+    update T_INTERVIEW_ESTIMATE
+    <set >
+      <if test="candidateId != null" >
+        CANDIDATE_ID = #{candidateId,jdbcType=VARCHAR},
+      </if>
+      <if test="positionId != null" >
+        POSITION_ID = #{positionId,jdbcType=VARCHAR},
+      </if>
+      <if test="sysThink != null" >
+        SYS_THINK = #{sysThink,jdbcType=DECIMAL},
+      </if>
+      <if test="communicate != null" >
+        COMMUNICATE = #{communicate,jdbcType=DECIMAL},
+      </if>
+      <if test="study != null" >
+        STUDY = #{study,jdbcType=DECIMAL},
+      </if>
+      <if test="teamWork != null" >
+        TEAM_WORK = #{teamWork,jdbcType=DECIMAL},
+      </if>
+      <if test="innovate != null" >
+        INNOVATE = #{innovate,jdbcType=DECIMAL},
+      </if>
+      <if test="majorKnowledge != null" >
+        MAJOR_KNOWLEDGE = #{majorKnowledge,jdbcType=DECIMAL},
+      </if>
+      <if test="majorSkill != null" >
+        MAJOR_SKILL = #{majorSkill,jdbcType=DECIMAL},
+      </if>
+      <if test="majorExp != null" >
+        MAJOR_EXP = #{majorExp,jdbcType=DECIMAL},
+      </if>
+      <if test="positionMatch != null" >
+        POSITION_MATCH = #{positionMatch,jdbcType=DECIMAL},
+      </if>
+      <if test="orgMatch != null" >
+        ORG_MATCH = #{orgMatch,jdbcType=DECIMAL},
+      </if>
+      <if test="total != null" >
+        TOTAL = #{total,jdbcType=DECIMAL},
+      </if>
+      <if test="result != null" >
+        RESULT = #{result,jdbcType=VARCHAR},
+      </if>
+      <if test="orgComment != null" >
+        ORG_COMMENT = #{orgComment,jdbcType=VARCHAR},
+      </if>
+      <if test="hrComment != null" >
+        HR_COMMENT = #{hrComment,jdbcType=VARCHAR},
+      </if>
+      <if test="hrSysThink != null" >
+        HR_SYS_THINK = #{hrSysThink,jdbcType=DECIMAL},
+      </if>
+      <if test="hrCommunicate != null" >
+        HR_COMMUNICATE = #{hrCommunicate,jdbcType=DECIMAL},
+      </if>
+      <if test="hrStudy != null" >
+        HR_STUDY = #{hrStudy,jdbcType=DECIMAL},
+      </if>
+      <if test="hrTeamWork != null" >
+        HR_TEAM_WORK = #{hrTeamWork,jdbcType=DECIMAL},
+      </if>
+      <if test="hrInnovate != null" >
+        HR_INNOVATE = #{hrInnovate,jdbcType=DECIMAL},
+      </if>
+      <if test="hrMajorKnowledge != null" >
+        HR_MAJOR_KNOWLEDGE = #{hrMajorKnowledge,jdbcType=DECIMAL},
+      </if>
+      <if test="hrMajorSkill != null" >
+        HR_MAJOR_SKILL = #{hrMajorSkill,jdbcType=DECIMAL},
+      </if>
+      <if test="hrMajorExp != null" >
+        HR_MAJOR_EXP = #{hrMajorExp,jdbcType=DECIMAL},
+      </if>
+      <if test="hrPositionMatch != null" >
+        HR_POSITION_MATCH = #{hrPositionMatch,jdbcType=DECIMAL},
+      </if>
+      <if test="hrOrgMatch != null" >
+        HR_ORG_MATCH = #{hrOrgMatch,jdbcType=DECIMAL},
+      </if>
+      <if test="hrId != null" >
+        HR_ID = #{hrId,jdbcType=VARCHAR},
+      </if>
+      <if test="interviewers != null" >
+        INTERVIEWERS = #{interviewers,jdbcType=VARCHAR},
+      </if>
+      <if test="hrTotal != null" >
+        HR_TOTAL = #{hrTotal,jdbcType=DECIMAL},
+      </if>
+      <if test="hrResult != null" >
+        HR_RESULT = #{hrResult,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.csot.recruit.model.original.flow.interview.Estimate" >
+    update T_INTERVIEW_ESTIMATE
+    set CANDIDATE_ID = #{candidateId,jdbcType=VARCHAR},
+      POSITION_ID = #{positionId,jdbcType=VARCHAR},
+      SYS_THINK = #{sysThink,jdbcType=DECIMAL},
+      COMMUNICATE = #{communicate,jdbcType=DECIMAL},
+      STUDY = #{study,jdbcType=DECIMAL},
+      TEAM_WORK = #{teamWork,jdbcType=DECIMAL},
+      INNOVATE = #{innovate,jdbcType=DECIMAL},
+      MAJOR_KNOWLEDGE = #{majorKnowledge,jdbcType=DECIMAL},
+      MAJOR_SKILL = #{majorSkill,jdbcType=DECIMAL},
+      MAJOR_EXP = #{majorExp,jdbcType=DECIMAL},
+      POSITION_MATCH = #{positionMatch,jdbcType=DECIMAL},
+      ORG_MATCH = #{orgMatch,jdbcType=DECIMAL},
+      TOTAL = #{total,jdbcType=DECIMAL},
+      RESULT = #{result,jdbcType=VARCHAR},
+      ORG_COMMENT = #{orgComment,jdbcType=VARCHAR},
+      HR_COMMENT = #{hrComment,jdbcType=VARCHAR},
+      HR_SYS_THINK = #{hrSysThink,jdbcType=DECIMAL},
+      HR_COMMUNICATE = #{hrCommunicate,jdbcType=DECIMAL},
+      HR_STUDY = #{hrStudy,jdbcType=DECIMAL},
+      HR_TEAM_WORK = #{hrTeamWork,jdbcType=DECIMAL},
+      HR_INNOVATE = #{hrInnovate,jdbcType=DECIMAL},
+      HR_MAJOR_KNOWLEDGE = #{hrMajorKnowledge,jdbcType=DECIMAL},
+      HR_MAJOR_SKILL = #{hrMajorSkill,jdbcType=DECIMAL},
+      HR_MAJOR_EXP = #{hrMajorExp,jdbcType=DECIMAL},
+      HR_POSITION_MATCH = #{hrPositionMatch,jdbcType=DECIMAL},
+      HR_ORG_MATCH = #{hrOrgMatch,jdbcType=DECIMAL},
+      HR_ID = #{hrId,jdbcType=VARCHAR},
+      INTERVIEWERS = #{interviewers,jdbcType=VARCHAR},
+      HR_TOTAL = #{hrTotal,jdbcType=DECIMAL},
+      HR_RESULT = #{hrResult,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <sql id="Oracle_Dialect_Pagination_Prefix" >
+    <if test="page != null" >
+      select * from ( select row_.*, rownum rownum_ from ( 
+    </if>
+  </sql>
+  <sql id="Oracle_Dialect_Pagination_Suffix" >
+    <if test="page != null" >
+      <![CDATA[ ) row_ ) where rownum_ > #{page.begin} and rownum_ <= #{page.end} ]]>
+    </if>
+  </sql>
+  
+  <select id="selectByCandiateIdAndPositionId"  resultMap="BaseResultMap" parameterType="java.util.Map">
+   select 
+    <include refid="Base_Column_List" />
+    from T_INTERVIEW_ESTIMATE
+      <where>
+      <if test="candidateId != null and candidateId != ''" >
+        and CANDIDATE_ID = #{candidateId,jdbcType=VARCHAR}
+      </if>
+       <if test="positionId != null and positionId != ''" >
+        and POSITION_ID = #{positionId,jdbcType=VARCHAR}
+      </if>
+    </where>
+  
+  </select>
+</mapper>

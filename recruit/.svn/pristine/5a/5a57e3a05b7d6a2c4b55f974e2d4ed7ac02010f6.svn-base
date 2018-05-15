@@ -1,0 +1,66 @@
+package com.csot.recruit.service.impl.resumelibrary.source;
+
+import com.csot.recruit.dao.original.resumelibrary.source.ResumeSourceMapper;
+import com.csot.recruit.model.original.resumelibrary.source.ResumeSource;
+import com.csot.recruit.model.original.resumelibrary.source.ResumeSourceColumns;
+import com.csot.recruit.model.original.resumelibrary.source.ResumeSourceCriteria;
+import com.csot.recruit.service.resumelibrary.source.ResumeSourceService;
+import javax.annotation.Resource;
+import org.amberframework.core.mybatis.pojo.Page;
+import org.amberframework.web.miniui.pojo.MiniGridPageSort;
+import org.amberframework.web.miniui.pojo.MiniRtn2Grid;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
+
+@Service("resumeSourceService")
+public class ResumeSourceServiceImpl implements ResumeSourceService {
+    private static final Logger logger = LoggerFactory.getLogger(ResumeSourceServiceImpl.class);
+
+    @Resource
+    private ResumeSourceMapper resumeSourceMapper;
+
+    @Override
+    public MiniRtn2Grid<ResumeSource> getGrid(MiniGridPageSort pageSort, String searchKey) {
+        MiniRtn2Grid<ResumeSource> grid = new MiniRtn2Grid<ResumeSource>();
+        ResumeSourceCriteria criteria = new ResumeSourceCriteria();
+        // 查询条件
+        if (StringUtils.hasText(searchKey)) {
+            criteria.createCriteria().andIdEqualTo(searchKey);
+        }
+        // 分页和排序
+         if (pageSort.isShowPager()) {
+            Page page = Page.newInstanceWithPageIndex(pageSort.getPageIndex(), pageSort.getPageSize());
+            criteria.setPage(page);
+        }
+        String sortColumn = ResumeSourceColumns.getColumn(pageSort.getSortField());
+        if (StringUtils.hasText(sortColumn)) {
+            StringBuilder sortStrBldr = new StringBuilder(sortColumn).append(" ").append(pageSort.getSortOrder());
+            criteria.setOrderByClause(sortStrBldr.toString());
+        }
+        grid.setData(resumeSourceMapper.selectByExample(criteria));
+        grid.setTotal(resumeSourceMapper.countByExample(criteria));
+        return grid;
+    }
+
+    @Override
+    public ResumeSource getByPrimaryKey(String primaryKey) {
+        return resumeSourceMapper.selectByPrimaryKey(primaryKey);
+    }
+
+    @Override
+    public void create(ResumeSource resumeSource) {
+        resumeSourceMapper.insert(resumeSource);
+    }
+
+    @Override
+    public void updateSelective(ResumeSource resumeSource) {
+        resumeSourceMapper.updateByPrimaryKeySelective(resumeSource);
+    }
+
+    @Override
+    public void remove(String primaryKey) {
+        resumeSourceMapper.deleteByPrimaryKey(primaryKey);
+    }
+}

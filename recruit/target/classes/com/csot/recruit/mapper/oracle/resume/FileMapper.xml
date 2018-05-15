@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.csot.recruit.dao.resume.FileMapper" >
+  <resultMap id="BaseResultMap" type="com.csot.recruit.model.resume.File" >
+    <id column="ID" property="id" />
+    <result column="FILE_NAME" property="fileName" />
+    <result column="UPLOADER" property="uploader" />
+    <result column="UPLOAD_TIME" property="uploadTime"  />
+    <result column="FILE_TYPE" property="fileType"  />
+  </resultMap>
+  
+  <insert id="addFileToDb" parameterType="com.csot.recruit.model.resume.File" >
+    insert into T_FILE 
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id !=null and id !=''">
+        ID,
+      </if>
+      <if test="fileName !=null and fileName !=''">
+        FILE_NAME,
+      </if>
+      <if test="uploader !=null and uploader !=''">
+        UPLOADER,
+      </if>
+      <if test="uploadTime !=null and uploadTime !=''">
+        UPLOAD_TIME,
+      </if>
+      <if test="fileType !=null and fileType !=''">
+        FILE_TYPE,
+      </if>
+    </trim>
+    VALUES
+    <trim  prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id !=null and id !=''">
+        #{id},
+      </if>
+      <if test="fileName !=null and fileName !=''">
+        #{fileName},
+      </if>
+      <if test="uploader !=null and uploader !=''">
+        #{uploader},
+      </if>
+      <if test="uploadTime !=null and uploadTime !=''">
+        #{uploadTime},
+      </if>
+      <if test="fileType !=null and fileType !=''">
+        #{fileType},
+      </if>
+    </trim>
+  </insert>
+  
+  <select id="getAllFile" resultMap="BaseResultMap">
+    select t.id,substr(t.file_name,0,instr(t.file_name,'.')-1) as file_name,t.uploader,t.UPLOAD_TIME,t.FILE_TYPE from T_FILE t
+  </select>
+  
+  <select id="getFileName" parameterType="java.lang.String" resultType="java.lang.String">
+    select file_name from T_FILE where id = trim(#{id})
+  </select>
+ 
+ <delete id="deleteFileById" parameterType="java.lang.String" >
+   delete from T_FILE where id = trim(#{id})
+ </delete>
+ 
+ <select id="countRecordByFileName"  parameterType="java.lang.String" resultType="java.lang.Integer">
+   select count(1) from T_FILE t where  substr(t.file_name,0,instr(t.file_name,'.')-1) = trim(#{fileName})
+ </select>
+</mapper>

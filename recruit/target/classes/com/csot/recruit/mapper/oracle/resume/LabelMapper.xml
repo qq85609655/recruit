@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.csot.recruit.dao.resume.LabelMapper" >
+  <resultMap id="BaseResultMap" type="com.csot.recruit.model.resume.Label" >
+    <id column="ID" property="id" jdbcType="CHAR" />
+    <result column="NAME" property="name" jdbcType="CHAR" />
+    <result column="CATEGORY_ID" property="categoryId" jdbcType="CHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    ID, NAME, CATEGORY_ID
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.csot.recruit.model.resume.LabelCriteria" >
+    <include refid="Oracle_Dialect_Pagination_Prefix" />
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from T_LABEL
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <include refid="Oracle_Dialect_Pagination_Suffix" />
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from T_LABEL
+    where ID = #{id,jdbcType=CHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from T_LABEL
+    where trim(ID) = #{id,jdbcType=CHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.csot.recruit.model.resume.LabelCriteria" >
+    delete from T_LABEL
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.csot.recruit.model.resume.Label" >
+    insert into T_LABEL (ID, NAME, CATEGORY_ID)
+    values (#{id,jdbcType=CHAR}, #{name,jdbcType=CHAR}, #{categoryId,jdbcType=CHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.csot.recruit.model.resume.Label" >
+    <selectKey resultType="java.lang.String" keyProperty="id" order="BEFORE" >
+      select SEQ_LABEL_ID.NEXTVAL from dual
+    </selectKey>
+    insert into T_LABEL
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      ID,
+      <if test="name != null" >
+        NAME,
+      </if>
+      <if test="categoryId != null" >
+        CATEGORY_ID,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      #{id,jdbcType=CHAR},
+      <if test="name != null" >
+        #{name,jdbcType=CHAR},
+      </if>
+      <if test="categoryId != null" >
+        #{categoryId,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.csot.recruit.model.resume.LabelCriteria" resultType="java.lang.Integer" >
+    select count(*) from T_LABEL
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update T_LABEL
+    <set >
+      <if test="record.id != null" >
+        ID = #{record.id,jdbcType=CHAR},
+      </if>
+      <if test="record.name != null" >
+        NAME = #{record.name,jdbcType=CHAR},
+      </if>
+      <if test="record.categoryId != null" >
+        CATEGORY_ID = #{record.categoryId,jdbcType=CHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update T_LABEL
+    set ID = #{record.id,jdbcType=CHAR},
+      NAME = #{record.name,jdbcType=CHAR},
+      CATEGORY_ID = #{record.categoryId,jdbcType=CHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.csot.recruit.model.resume.Label" >
+    update T_LABEL
+    <set >
+      <if test="name != null" >
+        NAME = #{name,jdbcType=CHAR},
+      </if>
+      <if test="categoryId != null" >
+        CATEGORY_ID = #{categoryId,jdbcType=CHAR},
+      </if>
+    </set>
+    where trim(ID) = #{id,jdbcType=CHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.csot.recruit.model.resume.Label" >
+    update T_LABEL
+    set NAME = #{name,jdbcType=CHAR},
+      CATEGORY_ID = #{categoryId,jdbcType=CHAR}
+    where trim(ID) = #{id,jdbcType=CHAR}
+  </update>
+  <sql id="Oracle_Dialect_Pagination_Prefix" >
+    <if test="page != null" >
+      select * from ( select row_.*, rownum rownum_ from ( 
+    </if>
+  </sql>
+  <sql id="Oracle_Dialect_Pagination_Suffix" >
+    <if test="page != null" >
+      <![CDATA[ ) row_ ) where rownum_ > #{page.begin} and rownum_ <= #{page.end} ]]>
+    </if>
+  </sql>
+  <select id="getLabelCount" parameterType="com.csot.recruit.model.resume.Label" resultType="java.lang.Integer" >
+    select count(*) from T_LABEL
+    <where>
+      1=1
+      <if test="id != null and id != '' " >
+      		and trim(ID) != #{id}
+   	  </if>
+      <if test="name != null and name != ''">
+      		and trim(NAME) = #{name}
+   	  </if>
+   	  <if test="categoryId != null and categoryId != ''">
+      		and trim(CATEGORY_ID) = #{categoryId}
+   	  </if>
+    </where>
+  </select>
+  
+  <select id="getLabelListByIds" parameterType="java.util.Map" resultType="com.csot.recruit.model.resume.Label">
+    select  * from T_LABEL t where 1=1 
+      <if test="list !=null and list !='' ">
+        and
+        <foreach collection="list"  item="label" index="index" open="(" close=")">
+          <choose>
+            <when test="index ==0">
+               trim(t.id)=#{label}
+            </when>
+            <otherwise>
+              or trim(t.id)=#{label}
+            </otherwise>
+          </choose>
+      </foreach>
+    </if>
+  </select>
+  
+  <select id="getLabelListByNames" parameterType="java.util.Map" resultType="com.csot.recruit.model.resume.Label">
+    select  * from T_LABEL t where 1=1 
+      <if test="list !=null and list !='' ">
+        and
+        <foreach collection="list"  item="labelName" index="index" open="(" close=")">
+          <choose>
+            <when test="index ==0">
+               trim(t.name)=#{labelName}
+            </when>
+            <otherwise>
+              or trim(t.name)=#{labelName}
+            </otherwise>
+          </choose>
+      </foreach>
+    </if>
+  </select>
+</mapper>

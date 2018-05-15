@@ -1,0 +1,288 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.csot.recruit.dao.original.candidate.CandidatePostMapper" >
+  <resultMap id="BaseResultMap" type="com.csot.recruit.model.original.candidate.CandidatePost" >
+    <id column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="CANDIDATE_ID" property="candidateId" jdbcType="VARCHAR" />
+    <result column="OPERATOR_USER" property="operatorUser" jdbcType="VARCHAR" />
+    <result column="POSITION_ID" property="positionId" jdbcType="VARCHAR" />
+    <result column="INTERVIEW_STATUS" property="interviewStatus" jdbcType="VARCHAR" />
+    <result column="OPERATOR_DATE" property="operatorDate" jdbcType="DATE" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    ID, CANDIDATE_ID, OPERATOR_USER, POSITION_ID, INTERVIEW_STATUS, OPERATOR_DATE
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.csot.recruit.model.original.candidate.CandidatePostCriteria" >
+    <include refid="Oracle_Dialect_Pagination_Prefix" />
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from T_CANDIDATE_POST
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <include refid="Oracle_Dialect_Pagination_Suffix" />
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from T_CANDIDATE_POST
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from T_CANDIDATE_POST
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.csot.recruit.model.original.candidate.CandidatePostCriteria" >
+    delete from T_CANDIDATE_POST
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.csot.recruit.model.original.candidate.CandidatePost" >
+    insert into T_CANDIDATE_POST (ID, CANDIDATE_ID, OPERATOR_USER, 
+      POSITION_ID, INTERVIEW_STATUS, OPERATOR_DATE
+      )
+    values (#{id,jdbcType=VARCHAR}, #{candidateId,jdbcType=VARCHAR}, #{operatorUser,jdbcType=VARCHAR}, 
+      #{positionId,jdbcType=VARCHAR}, #{interviewStatus,jdbcType=VARCHAR}, #{operatorDate,jdbcType=DATE}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.csot.recruit.model.original.candidate.CandidatePost" >
+    insert into T_CANDIDATE_POST
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="candidateId != null" >
+        CANDIDATE_ID,
+      </if>
+      <if test="operatorUser != null" >
+        OPERATOR_USER,
+      </if>
+      <if test="positionId != null" >
+        POSITION_ID,
+      </if>
+      <if test="interviewStatus != null" >
+        INTERVIEW_STATUS,
+      </if>
+      <if test="operatorDate != null" >
+        OPERATOR_DATE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="candidateId != null" >
+        #{candidateId,jdbcType=VARCHAR},
+      </if>
+      <if test="operatorUser != null" >
+        #{operatorUser,jdbcType=VARCHAR},
+      </if>
+      <if test="positionId != null" >
+        #{positionId,jdbcType=VARCHAR},
+      </if>
+      <if test="interviewStatus != null" >
+        #{interviewStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="operatorDate != null" >
+        #{operatorDate,jdbcType=DATE},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.csot.recruit.model.original.candidate.CandidatePostCriteria" resultType="java.lang.Integer" >
+    select count(*) from T_CANDIDATE_POST
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update T_CANDIDATE_POST
+    <set >
+      <if test="record.id != null" >
+        ID = #{record.id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.candidateId != null" >
+        CANDIDATE_ID = #{record.candidateId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.operatorUser != null" >
+        OPERATOR_USER = #{record.operatorUser,jdbcType=VARCHAR},
+      </if>
+      <if test="record.positionId != null" >
+        POSITION_ID = #{record.positionId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.interviewStatus != null" >
+        INTERVIEW_STATUS = #{record.interviewStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="record.operatorDate != null" >
+        OPERATOR_DATE = #{record.operatorDate,jdbcType=DATE},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update T_CANDIDATE_POST
+    set ID = #{record.id,jdbcType=VARCHAR},
+      CANDIDATE_ID = #{record.candidateId,jdbcType=VARCHAR},
+      OPERATOR_USER = #{record.operatorUser,jdbcType=VARCHAR},
+      POSITION_ID = #{record.positionId,jdbcType=VARCHAR},
+      INTERVIEW_STATUS = #{record.interviewStatus,jdbcType=VARCHAR},
+      OPERATOR_DATE = #{record.operatorDate,jdbcType=DATE}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.csot.recruit.model.original.candidate.CandidatePost" >
+    update T_CANDIDATE_POST
+    <set >
+      <if test="candidateId != null" >
+        CANDIDATE_ID = #{candidateId,jdbcType=VARCHAR},
+      </if>
+      <if test="operatorUser != null" >
+        OPERATOR_USER = #{operatorUser,jdbcType=VARCHAR},
+      </if>
+      <if test="positionId != null" >
+        POSITION_ID = #{positionId,jdbcType=VARCHAR},
+      </if>
+      <if test="interviewStatus != null" >
+        INTERVIEW_STATUS = #{interviewStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="operatorDate != null" >
+        OPERATOR_DATE = #{operatorDate,jdbcType=DATE},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.csot.recruit.model.original.candidate.CandidatePost" >
+    update T_CANDIDATE_POST
+    set CANDIDATE_ID = #{candidateId,jdbcType=VARCHAR},
+      OPERATOR_USER = #{operatorUser,jdbcType=VARCHAR},
+      POSITION_ID = #{positionId,jdbcType=VARCHAR},
+      INTERVIEW_STATUS = #{interviewStatus,jdbcType=VARCHAR},
+      OPERATOR_DATE = #{operatorDate,jdbcType=DATE}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <sql id="Oracle_Dialect_Pagination_Prefix" >
+    <if test="page != null" >
+      select * from ( select row_.*, rownum rownum_ from ( 
+    </if>
+  </sql>
+  <sql id="Oracle_Dialect_Pagination_Suffix" >
+    <if test="page != null" >
+      <![CDATA[ ) row_ ) where rownum_ > #{page.begin} and rownum_ <= #{page.end} ]]>
+    </if>
+  </sql>
+  
+   <update id="updateByUnion" parameterType="com.csot.recruit.model.original.candidate.CandidatePost" >
+    update T_CANDIDATE_POST
+    <set >
+      <if test="operatorUser != null" >
+        OPERATOR_USER = #{operatorUser,jdbcType=VARCHAR},
+      </if>
+      <if test="nowPositionId != null" >
+        POSITION_ID = #{nowPositionId,jdbcType=VARCHAR},
+      </if>
+      <if test="interviewStatus != null" >
+        INTERVIEW_STATUS = #{interviewStatus,jdbcType=VARCHAR},
+      </if>
+    </set>
+       <where>
+      <if test="candidateId != null and candidateId != ''" >
+        and CANDIDATE_ID = #{candidateId,jdbcType=VARCHAR}
+      </if>
+       <if test="positionId != null and positionId != ''" >
+        and POSITION_ID = #{positionId,jdbcType=VARCHAR}
+      </if>
+    </where>
+  </update>
+  
+  
+  
+  
+  <select id="selectCandidatePostListByCandidateId" resultMap="BaseResultMap" parameterType="java.lang.String">
+     select 
+    <include refid="Base_Column_List" />
+    from T_CANDIDATE_POST
+    where CANDIDATE_ID = #{candidateId,jdbcType=VARCHAR}
+  </select>
+  
+  
+  <select id="selectCandidatePostByMap"  resultMap="BaseResultMap" parameterType="java.util.Map">
+       select 
+    <include refid="Base_Column_List" />
+    from T_CANDIDATE_POST
+     <where>
+      <if test="candidateId != null and candidateId != ''" >
+        and CANDIDATE_ID = #{candidateId,jdbcType=VARCHAR}
+      </if>
+       <if test="positionId != null and positionId != ''" >
+        and POSITION_ID = #{positionId,jdbcType=VARCHAR}
+      </if>
+    </where>
+  </select>
+</mapper>

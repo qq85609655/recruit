@@ -1,0 +1,117 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<head>
+<%@ include file="/webpage/common.jsp"%>
+<title>淘汰</title>
+<style>
+.title {
+  padding: 8px;
+  border-bottom: 2px solid #888;
+  font-size: 1.4em;
+}
+
+.form-table {
+  margin-top: 20px;
+}
+
+.form-table .mini-textbox {
+  width: 200px;
+}
+
+.form-table #content {
+  width: 550px;
+  height: 300px;
+  visibility: hidden;
+}
+
+.form-table tr td {
+  padding: 6px 0;
+}
+
+.form-table .form-label {
+  width: 80px;
+  text-align: left;
+  padding-right: 10px;
+  vertical-align: top;
+}
+
+.form-table .mini-button {
+  width: 100px;
+}
+
+.fileArea {
+  width: 99%;
+  height: 48px;
+  overflow-y: auto;
+}
+
+.fileStyle {
+  float: left;
+  margin-top: 7px;
+  margin-left: 10px;
+}
+</style>
+</head>
+<body>
+  <div id="form1" class="main">
+     
+      <table class="form-table">
+        <input id="ids" type="hidden" name="ids" value="${ids }" />
+        <input id="positionIds" type="hidden" name="positionIds" value="${positionIds }" />
+        <tr>
+          <td>邮件提醒面试官：</td>
+          <td>
+             <input id="isSend" type="hidden" name="isSend" value="" />
+          <input id="send" type="checkbox" name="isSendCheckbox" value="1">
+          </td>
+        </tr>
+        
+        
+        <tr>
+          <td class="form-label"><span style="color: red;">*</span>&nbsp;&nbsp;&nbsp;淘汰原因：</td>
+          <td>
+           <input type="text" name="reason" id="reason" class="jobEdit-text radius1" style="width:150px;"></input></td>
+        </tr>
+        <tr></tr>
+        <tr>
+          <td><a id="button1" class="mini-button" onclick="save()">淘汰</a></td>
+          <td> &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;<a class="mini-button"
+            style="width: 100px;" onclick="onCancel()">取消</a></td>
+        </tr>
+      </table>
+    </form>
+  </div>
+
+  <script type="text/javascript">
+  function save() {
+    if($("#send").prop('checked') == true ){
+      $("#isSend").val(1);
+    }
+    if($.trim($("#reason").val()).length <= 0){
+      alert("淘汰原因不能为空！");
+      return;
+    }
+   $.ajax({
+      url : basePath + "/interviewBookController/outInterviewBook",
+      data :{
+        ids:$("#ids").val(),
+        positionIds : $("#positionIds").val(),
+        reason : $("#reason").val(),
+        isSend : $("#isSend").val()
+      },
+      type : "post",
+      dataType : 'json',
+      success : function(data) {
+        alert(data.msg);
+        CloseWindow("close");
+      }
+    }); 
+  }
+  
+  function onCancel(e) {
+    CloseWindow("close");
+  }
+    </script>
+</body>
+</html>

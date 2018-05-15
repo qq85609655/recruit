@@ -1,0 +1,149 @@
+$(function() {
+  mini.parse();
+  var grid = mini.get("datagrid1");
+  grid.load();
+});
+
+function search() {
+  var startDate = mini.get("startDate").getFormValue();
+  var endDate = mini.get("endDate").getFormValue();
+  var searchKey = $("#searchKey").val();
+  var grid = mini.get("datagrid1");
+  grid.load({
+    startDate : startDate,
+    endDate : endDate,
+    searchKey : searchKey
+  });
+}
+
+function editInfo() {
+  var grid = mini.get("datagrid1");
+  var rows = grid.getSelecteds();
+  if (rows.length > 0) {
+    var row = rows[0];
+    var id = row.personCode;
+    window.open(basePath + "/interviewController/editInfo?personCode=" + id);
+
+  } else {
+    alert("请先选中简历！");
+  }
+}
+
+function addRecruitDemand() {
+  var grid = mini.get("datagrid1");
+  OpenDialog(basePath + "/demand/create", "招聘需求申请", grid, 900, 650);
+
+}
+
+function exportData() {
+  var grid = mini.get("datagrid1");
+  var rows = grid.getSelecteds();
+  if (rows.length > 0) {
+    if (rows.length == 1) {
+      var row = rows[0];
+      var id = row.personCode;
+      var cnname = row.cnname;
+      window.location = basePath + "/interviewController/exportResumeExcel?resumeId=" + id
+          + "&name=" + cnname;
+    } else {
+      var ids = "";
+      for (var i = 0; i < rows.length; i++) {
+        ids += rows[i].personCode;
+        if (i != rows.length - 1) {
+          ids += ",";
+        }
+      }
+      window.location = basePath + "/interviewController/exportBatchResumeExcel?resumeIds=" + ids;
+    }
+  } else {
+    alert("请先选中简历！");
+  }
+}
+
+function printResume() {
+  var grid = mini.get("datagrid1");
+  var rows = grid.getSelecteds();
+  if (rows.length > 0) {
+    var ids = "";
+    for (var i = 0; i < rows.length; i++) {
+      ids += rows[i].personCode;
+      if (i != rows.length - 1) {
+        ids += ",";
+      }
+    }
+    $.ajax({
+      url : basePath + "/interviewController/printResume?personCodes=" + ids,
+      type : "post",
+      success : function(data) {
+        if (data.success == true) {
+          mini.showTips({
+            content : "打印成功!",
+            timeout : 3000
+          });
+        } else {
+          mini.showTips({
+            content : "打印失败!" + ajaxobj.msg,
+            timeout : 3000
+          });
+        }
+      }
+    });
+  } else {
+    alert("请先选中简历！");
+  }
+}
+
+function onKeyEnter(e) {
+  search();
+}
+
+
+
+var flowState = [ {
+  id : 1,
+  text : '未提交'
+}, {
+  id : 2,
+  text : '审核中'
+} , {
+  id : 3,
+  text : '废弃'
+}, {
+  id : 4,
+  text : '审核通过'
+}];
+
+// 类型渲染
+function onFlowStateRenderer(e) {
+  for (var i = 0, l = flowState.length; i < l; i++) {
+    var g = flowState[i];
+    if (g.id == e.value)
+      return g.text;
+  }
+  return "";
+}
+
+
+
+
+
+var infoState = [ {
+  id : 1,
+  text : '草稿'
+}, {
+  id : 2,
+  text : '待发布'
+} , {
+  id : 3,
+  text : '已发布'
+}];
+
+// 类型渲染
+function onInfoStateRenderer(e) {
+  for (var i = 0, l = infoState.length; i < l; i++) {
+    var g = infoState[i];
+    if (g.id == e.value)
+      return g.text;
+  }
+  return "";
+}

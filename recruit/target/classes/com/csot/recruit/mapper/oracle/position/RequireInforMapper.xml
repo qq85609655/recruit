@@ -1,0 +1,404 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.csot.recruit.dao.position.RequireInforMapper" >
+  <resultMap id="BaseResultMap" type="com.csot.recruit.model.position.RequireInfor" >
+    <id column="ID" property="id" jdbcType="INTEGER" />
+    <result column="AGE_MIN" property="ageMin" jdbcType="INTEGER" />
+    <result column="AGE_MAX" property="ageMax" jdbcType="INTEGER" />
+    <result column="WORK_EXPERIENCE_MIN" property="workExperienceMin" jdbcType="DECIMAL" />
+    <result column="WORK_EXPERIENCE_MAX" property="workExperienceMax" jdbcType="DECIMAL" />
+    <result column="ENGLISH_LEVEL" property="englishLevel" jdbcType="CHAR" />
+    <result column="EDUCATION_MIN" property="educationMin" jdbcType="CHAR" />
+    <result column="EDUCATION_MAX" property="educationMax" jdbcType="CHAR" />
+    <result column="RECRUIT_POSITION_ID" property="recruitPositionId" jdbcType="CHAR" />
+    <result column="GENDER" property="gender" jdbcType="CHAR" />
+    <result column="AGE_NOT" property="ageNot" jdbcType="CHAR" />
+    <result column="WORK_EXPERIENCE_NOT" property="workExperienceNot" jdbcType="CHAR" />
+    <result column="ENGLISH_LEVEL_NOT" property="englishLevelNot" jdbcType="CHAR" />
+    <result column="EDUCATION_NOT" property="educationNot" jdbcType="CHAR" />
+    <result column="AGENDER_NOT" property="agenderNot" jdbcType="CHAR" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    ID, AGE_MIN, AGE_MAX, WORK_EXPERIENCE_MIN, WORK_EXPERIENCE_MAX, ENGLISH_LEVEL, EDUCATION_MIN, 
+    EDUCATION_MAX, RECRUIT_POSITION_ID, GENDER, AGE_NOT, WORK_EXPERIENCE_NOT, ENGLISH_LEVEL_NOT, 
+    EDUCATION_NOT, AGENDER_NOT, CREATE_DATE
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.csot.recruit.model.position.RequireInforCriteria" >
+    <include refid="Oracle_Dialect_Pagination_Prefix" />
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from T_POSITION_REQUIRE_INFOR
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <include refid="Oracle_Dialect_Pagination_Suffix" />
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from T_POSITION_REQUIRE_INFOR
+    where ID = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from T_POSITION_REQUIRE_INFOR
+    where ID = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.csot.recruit.model.position.RequireInforCriteria" >
+    delete from T_POSITION_REQUIRE_INFOR
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.csot.recruit.model.position.RequireInfor" >
+    <selectKey resultType="java.lang.Integer" keyProperty="id" order="BEFORE" >
+      select SQ_PO_RE_IN_ID.NEXTVAL from dual
+    </selectKey>
+    insert into T_POSITION_REQUIRE_INFOR (ID, AGE_MIN, AGE_MAX, 
+      WORK_EXPERIENCE_MIN, WORK_EXPERIENCE_MAX, ENGLISH_LEVEL, 
+      EDUCATION_MIN, EDUCATION_MAX, RECRUIT_POSITION_ID, 
+      GENDER, AGE_NOT, WORK_EXPERIENCE_NOT, 
+      ENGLISH_LEVEL_NOT, EDUCATION_NOT, AGENDER_NOT, 
+      CREATE_DATE)
+    values (#{id,jdbcType=INTEGER}, #{ageMin,jdbcType=INTEGER}, #{ageMax,jdbcType=INTEGER}, 
+      #{workExperienceMin,jdbcType=DECIMAL}, #{workExperienceMax,jdbcType=DECIMAL}, #{englishLevel,jdbcType=CHAR}, 
+      #{educationMin,jdbcType=CHAR}, #{educationMax,jdbcType=CHAR}, #{recruitPositionId,jdbcType=CHAR}, 
+      #{gender,jdbcType=CHAR}, #{ageNot,jdbcType=CHAR}, #{workExperienceNot,jdbcType=CHAR}, 
+      #{englishLevelNot,jdbcType=CHAR}, #{educationNot,jdbcType=CHAR}, #{agenderNot,jdbcType=CHAR}, 
+      #{createDate,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.csot.recruit.model.position.RequireInfor" >
+    <selectKey resultType="java.lang.Integer" keyProperty="id" order="BEFORE" >
+      select SQ_PO_RE_IN_ID.NEXTVAL from dual
+    </selectKey>
+    insert into T_POSITION_REQUIRE_INFOR
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="ageMin != null" >
+        AGE_MIN,
+      </if>
+      <if test="ageMax != null" >
+        AGE_MAX,
+      </if>
+      <if test="workExperienceMin != null" >
+        WORK_EXPERIENCE_MIN,
+      </if>
+      <if test="workExperienceMax != null" >
+        WORK_EXPERIENCE_MAX,
+      </if>
+      <if test="englishLevel != null" >
+        ENGLISH_LEVEL,
+      </if>
+      <if test="educationMin != null" >
+        EDUCATION_MIN,
+      </if>
+      <if test="educationMax != null" >
+        EDUCATION_MAX,
+      </if>
+      <if test="recruitPositionId != null" >
+        RECRUIT_POSITION_ID,
+      </if>
+      <if test="gender != null" >
+        GENDER,
+      </if>
+      <if test="ageNot != null" >
+        AGE_NOT,
+      </if>
+      <if test="workExperienceNot != null" >
+        WORK_EXPERIENCE_NOT,
+      </if>
+      <if test="englishLevelNot != null" >
+        ENGLISH_LEVEL_NOT,
+      </if>
+      <if test="educationNot != null" >
+        EDUCATION_NOT,
+      </if>
+      <if test="agenderNot != null" >
+        AGENDER_NOT,
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="ageMin != null" >
+        #{ageMin,jdbcType=INTEGER},
+      </if>
+      <if test="ageMax != null" >
+        #{ageMax,jdbcType=INTEGER},
+      </if>
+      <if test="workExperienceMin != null" >
+        #{workExperienceMin,jdbcType=DECIMAL},
+      </if>
+      <if test="workExperienceMax != null" >
+        #{workExperienceMax,jdbcType=DECIMAL},
+      </if>
+      <if test="englishLevel != null" >
+        #{englishLevel,jdbcType=CHAR},
+      </if>
+      <if test="educationMin != null" >
+        #{educationMin,jdbcType=CHAR},
+      </if>
+      <if test="educationMax != null" >
+        #{educationMax,jdbcType=CHAR},
+      </if>
+      <if test="recruitPositionId != null" >
+        #{recruitPositionId,jdbcType=CHAR},
+      </if>
+      <if test="gender != null" >
+        #{gender,jdbcType=CHAR},
+      </if>
+      <if test="ageNot != null" >
+        #{ageNot,jdbcType=CHAR},
+      </if>
+      <if test="workExperienceNot != null" >
+        #{workExperienceNot,jdbcType=CHAR},
+      </if>
+      <if test="englishLevelNot != null" >
+        #{englishLevelNot,jdbcType=CHAR},
+      </if>
+      <if test="educationNot != null" >
+        #{educationNot,jdbcType=CHAR},
+      </if>
+      <if test="agenderNot != null" >
+        #{agenderNot,jdbcType=CHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.csot.recruit.model.position.RequireInforCriteria" resultType="java.lang.Integer" >
+    select count(*) from T_POSITION_REQUIRE_INFOR
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update T_POSITION_REQUIRE_INFOR
+    <set >
+      <if test="record.id != null" >
+        ID = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.ageMin != null" >
+        AGE_MIN = #{record.ageMin,jdbcType=INTEGER},
+      </if>
+      <if test="record.ageMax != null" >
+        AGE_MAX = #{record.ageMax,jdbcType=INTEGER},
+      </if>
+      <if test="record.workExperienceMin != null" >
+        WORK_EXPERIENCE_MIN = #{record.workExperienceMin,jdbcType=DECIMAL},
+      </if>
+      <if test="record.workExperienceMax != null" >
+        WORK_EXPERIENCE_MAX = #{record.workExperienceMax,jdbcType=DECIMAL},
+      </if>
+      <if test="record.englishLevel != null" >
+        ENGLISH_LEVEL = #{record.englishLevel,jdbcType=CHAR},
+      </if>
+      <if test="record.educationMin != null" >
+        EDUCATION_MIN = #{record.educationMin,jdbcType=CHAR},
+      </if>
+      <if test="record.educationMax != null" >
+        EDUCATION_MAX = #{record.educationMax,jdbcType=CHAR},
+      </if>
+      <if test="record.recruitPositionId != null" >
+        RECRUIT_POSITION_ID = #{record.recruitPositionId,jdbcType=CHAR},
+      </if>
+      <if test="record.gender != null" >
+        GENDER = #{record.gender,jdbcType=CHAR},
+      </if>
+      <if test="record.ageNot != null" >
+        AGE_NOT = #{record.ageNot,jdbcType=CHAR},
+      </if>
+      <if test="record.workExperienceNot != null" >
+        WORK_EXPERIENCE_NOT = #{record.workExperienceNot,jdbcType=CHAR},
+      </if>
+      <if test="record.englishLevelNot != null" >
+        ENGLISH_LEVEL_NOT = #{record.englishLevelNot,jdbcType=CHAR},
+      </if>
+      <if test="record.educationNot != null" >
+        EDUCATION_NOT = #{record.educationNot,jdbcType=CHAR},
+      </if>
+      <if test="record.agenderNot != null" >
+        AGENDER_NOT = #{record.agenderNot,jdbcType=CHAR},
+      </if>
+      <if test="record.createDate != null" >
+        CREATE_DATE = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update T_POSITION_REQUIRE_INFOR
+    set ID = #{record.id,jdbcType=INTEGER},
+      AGE_MIN = #{record.ageMin,jdbcType=INTEGER},
+      AGE_MAX = #{record.ageMax,jdbcType=INTEGER},
+      WORK_EXPERIENCE_MIN = #{record.workExperienceMin,jdbcType=DECIMAL},
+      WORK_EXPERIENCE_MAX = #{record.workExperienceMax,jdbcType=DECIMAL},
+      ENGLISH_LEVEL = #{record.englishLevel,jdbcType=CHAR},
+      EDUCATION_MIN = #{record.educationMin,jdbcType=CHAR},
+      EDUCATION_MAX = #{record.educationMax,jdbcType=CHAR},
+      RECRUIT_POSITION_ID = #{record.recruitPositionId,jdbcType=CHAR},
+      GENDER = #{record.gender,jdbcType=CHAR},
+      AGE_NOT = #{record.ageNot,jdbcType=CHAR},
+      WORK_EXPERIENCE_NOT = #{record.workExperienceNot,jdbcType=CHAR},
+      ENGLISH_LEVEL_NOT = #{record.englishLevelNot,jdbcType=CHAR},
+      EDUCATION_NOT = #{record.educationNot,jdbcType=CHAR},
+      AGENDER_NOT = #{record.agenderNot,jdbcType=CHAR},
+      CREATE_DATE = #{record.createDate,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.csot.recruit.model.position.RequireInfor" >
+    update T_POSITION_REQUIRE_INFOR
+    <set >
+      <if test="ageMin != null" >
+        AGE_MIN = #{ageMin,jdbcType=INTEGER},
+      </if>
+      <if test="ageMax != null" >
+        AGE_MAX = #{ageMax,jdbcType=INTEGER},
+      </if>
+      <if test="workExperienceMin != null" >
+        WORK_EXPERIENCE_MIN = #{workExperienceMin,jdbcType=DECIMAL},
+      </if>
+      <if test="workExperienceMax != null" >
+        WORK_EXPERIENCE_MAX = #{workExperienceMax,jdbcType=DECIMAL},
+      </if>
+      <if test="englishLevel != null" >
+        ENGLISH_LEVEL = #{englishLevel,jdbcType=CHAR},
+      </if>
+      <if test="educationMin != null" >
+        EDUCATION_MIN = #{educationMin,jdbcType=CHAR},
+      </if>
+      <if test="educationMax != null" >
+        EDUCATION_MAX = #{educationMax,jdbcType=CHAR},
+      </if>
+      <if test="recruitPositionId != null" >
+        RECRUIT_POSITION_ID = #{recruitPositionId,jdbcType=CHAR},
+      </if>
+      <if test="gender != null" >
+        GENDER = #{gender,jdbcType=CHAR},
+      </if>
+      <if test="ageNot != null" >
+        AGE_NOT = #{ageNot,jdbcType=CHAR},
+      </if>
+      <if test="workExperienceNot != null" >
+        WORK_EXPERIENCE_NOT = #{workExperienceNot,jdbcType=CHAR},
+      </if>
+      <if test="englishLevelNot != null" >
+        ENGLISH_LEVEL_NOT = #{englishLevelNot,jdbcType=CHAR},
+      </if>
+      <if test="educationNot != null" >
+        EDUCATION_NOT = #{educationNot,jdbcType=CHAR},
+      </if>
+      <if test="agenderNot != null" >
+        AGENDER_NOT = #{agenderNot,jdbcType=CHAR},
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.csot.recruit.model.position.RequireInfor" >
+    update T_POSITION_REQUIRE_INFOR
+    set AGE_MIN = #{ageMin,jdbcType=INTEGER},
+      AGE_MAX = #{ageMax,jdbcType=INTEGER},
+      WORK_EXPERIENCE_MIN = #{workExperienceMin,jdbcType=DECIMAL},
+      WORK_EXPERIENCE_MAX = #{workExperienceMax,jdbcType=DECIMAL},
+      ENGLISH_LEVEL = #{englishLevel,jdbcType=CHAR},
+      EDUCATION_MIN = #{educationMin,jdbcType=CHAR},
+      EDUCATION_MAX = #{educationMax,jdbcType=CHAR},
+      RECRUIT_POSITION_ID = #{recruitPositionId,jdbcType=CHAR},
+      GENDER = #{gender,jdbcType=CHAR},
+      AGE_NOT = #{ageNot,jdbcType=CHAR},
+      WORK_EXPERIENCE_NOT = #{workExperienceNot,jdbcType=CHAR},
+      ENGLISH_LEVEL_NOT = #{englishLevelNot,jdbcType=CHAR},
+      EDUCATION_NOT = #{educationNot,jdbcType=CHAR},
+      AGENDER_NOT = #{agenderNot,jdbcType=CHAR},
+      CREATE_DATE = #{createDate,jdbcType=TIMESTAMP}
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <sql id="Oracle_Dialect_Pagination_Prefix" >
+    <if test="page != null" >
+      select * from ( select row_.*, rownum rownum_ from ( 
+    </if>
+  </sql>
+  <sql id="Oracle_Dialect_Pagination_Suffix" >
+    <if test="page != null" >
+      <![CDATA[ ) row_ ) where rownum_ > #{page.begin} and rownum_ <= #{page.end} ]]>
+    </if>
+  </sql>
+</mapper>

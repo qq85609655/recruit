@@ -1,0 +1,43 @@
+mini.parse();
+var editor;
+KindEditor.ready(function(K) {
+  editor = K.create('textarea[name="context"]', {
+    allowFileManager : false
+  });
+  editor.sync();
+});
+
+function onOk(e) {
+  $("input[name='docKeyWord']").each(function() {
+    if ($(this).attr('checked') == false) {
+      alert($(this).val());
+    }
+  });
+
+  mini.get("button1").setEnabled(false)
+
+  var data = form1.getData(true);// / 获取表单多个控件的数据
+  /**
+   * 表单序列化后的数据传参注意：Ajax参数不需要设置contentType
+   */
+  data.context = editor.html();
+  form1.validate();
+  if (form1.isValid() == false)
+    return;
+  else {
+    $.ajax({
+      url : jsWebRoot + "/templateController/save",
+      type : "post",
+      data : data,
+      dataType : "json",
+      success : function(data) {
+        if (data.success == true) {
+          alert("保存成功！");
+          CloseWindow("close", form1);
+        } else {
+          mini.alert("保存失败！" + data.msg);
+        }
+      }
+    });
+  }
+}

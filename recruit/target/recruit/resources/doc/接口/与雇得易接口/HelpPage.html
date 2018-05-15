@@ -1,0 +1,189 @@
+
+
+<html>
+<head>
+    <meta content="text/html;charset=utf-8" http-equiv="content-type">
+    <title>雇得易OpenApi帮助文档预览版</title>
+    <style type="text/css">
+        pre.wrapped {
+    white-space: -moz-pre-wrap;
+    white-space: -pre-wrap;
+    white-space: -o-pre-wrap;
+    white-space: pre-wrap;
+}
+
+.warning-message-container {
+    margin-top: 20px;
+    padding: 0 10px;
+    color: #525252;
+    background: #EFDCA9;
+    border: 1px solid #CCCCCC;
+}
+
+.help-page-table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+    margin: 0px 0px 20px 0px;
+    border-top: 2px solid #D4D4D4;
+}
+
+    .help-page-table th {
+        text-align: left;
+        font-weight: bold;
+        border-bottom: 2px solid #D4D4D4;
+        padding: 8px 6px 8px 6px;
+    }
+
+    .help-page-table td {
+        border-bottom: 2px solid #D4D4D4;
+        padding: 15px 8px 15px 8px;
+        vertical-align: top;
+    }
+
+    .help-page-table pre, .help-page-table p {
+        margin: 0px;
+        padding: 0px;
+        font-family: inherit;
+        font-size: 100%;
+    }
+
+    .help-page-table tbody tr:hover td {
+        background-color: #F3F3F3;
+    }
+
+a:hover {
+    background-color: transparent;
+}
+
+.sample-header {
+    border: 2px solid #D4D4D4;
+    background: #76B8DB;
+    color: #FFFFFF;
+    padding: 8px 15px;
+    border-bottom: none;
+    display: inline-block;
+    margin: 10px 0px 0px 0px;
+}
+
+.sample-content {
+    display: block;
+    border-width: 0;
+    padding: 15px 20px;
+    background: #FFFFFF;
+    border: 2px solid #D4D4D4;
+    margin: 0px 0px 10px 0px;
+}
+
+.api-name {
+    width: 40%;
+}
+
+.api-documentation {
+    width: 60%;
+}
+
+.parameter-name {
+    width: 20%;
+}
+
+.parameter-documentation {
+    width: 50%;
+}
+
+.parameter-source {
+    width: 30%;
+}
+    </style>
+</head>
+<body>
+<header>
+    <div class="content-wrapper">
+        <div class="float-left">
+            <h1>雇得易OpenApi帮助文档预览版</h1>
+        </div>
+    </div>
+</header>
+<div id="body">
+    <section class="featured">
+        <div class="content-wrapper">
+            <h2>介绍</h2>
+            <p>
+                雇得易OpenApi向雇得易的合作伙伴提供了雇得易产品的公开接口。
+            </p>
+            <p>
+                <h4>身份验证</h4>
+                雇得易OpenApi的身份验证是通过在Url的查询字符串中附加一个appkey参数来实现。<br />
+                appkey的值由雇得易提供。<br />
+                比如： https://api.hirede.com/v1/campus/jobs/?fields=all&take=10&appkey=70b88AA007fe
+            </p>
+            <p>
+                <h4>参数</h4>
+                文档中的{ParameterName}表示是参数占位符，在调用中请使用实际的参数替换。比如：<br />
+                GET campus/jobs?fields={fields}&Keyword={Keyword}&Area={Area}&Category={Category}&Start={Start}&Take={Take}<br />
+                实际的调用可能是：https://api.hirede.com/v1/campus/jobs/?fields=all&take=10&appkey=70b88AA007fe <br />
+                其中有些参数是可选的，在文档中有说明。
+            </p>
+            <p>
+                <h4>错误的响应</h4>
+                雇得易OpenApi的错误响应会通过相应的Http状态码来表达，同时会在响应正文中给出原因。例如： <br />
+                HTTP/1.1 401 Unauthorized<br />
+                Content-Type: application/json; charset=utf-8<br />
+                Expires: -1<br />
+                Server: Microsoft-IIS/8.5<br />
+                Date: Wed, 28 May 2014 02:28:30 GMT<br />
+                Content-Length: 46<br />
+                <br />
+                {"Code":401,"Message":"错误的身份信息"}<br />
+            </p>
+            <p>
+                <h4>注意事项</h4>
+                此文档是预览版，仅提供给雇得易合作伙伴对我们的雇得易OpenApi有个概要的认识。<br />
+                接口可能会根据雇得易和合作伙伴的需要新增或者变更，请以最新的文档为准。
+            </p>
+        </div>
+    </section>
+    <section class="content-wrapper main-content clear-fix">
+                    <h2 id="JobPosting">JobPosting</h2>
+<table class="help-page-table">
+	<thead>
+		<meta content="text/html;charset=utf-8" http-equiv="content-type">
+		<tr><th>API</th><th>描述</th></tr>
+	</thead>
+	<tbody class="ui-widget-content">
+			<tr>
+			<td class="api-name"><a href="GET-job-posting-sites_hasCaptcha.html">GET job/posting/sites/?hasCaptcha={hasCaptcha}</a></td>
+			<td class="api-documentation">
+							<p>获取有验证码的站点</p>
+						</td>
+		</tr>
+			<tr>
+			<td class="api-name"><a href="GET-job-posting-site-captcha.html">GET job/posting/{site}/captcha/</a></td>
+			<td class="api-documentation">
+							<p>获取站点的验证码</p>
+						</td>
+		</tr>
+			<tr>
+			<td class="api-name"><a href="GET-job-posting-site-account-extra-fields.html">GET job/posting/{site}/account/extra/fields/</a></td>
+			<td class="api-documentation">
+							<p>获取指定站点登录账号所需的额外字段</p>
+						</td>
+		</tr>
+			<tr>
+			<td class="api-name"><a href="GET-job-posting-site-Posting-extra-fields.html">GET job/posting/{site}/Posting/extra/fields/</a></td>
+			<td class="api-documentation">
+							<p>获取指定站点分发职位所需的额外字段</p>
+						</td>
+		</tr>
+			<tr>
+			<td class="api-name"><a href="POST-job-posting-site.html">POST job/posting/{site}/</a></td>
+			<td class="api-documentation">
+							<p>发布职位到指定站点</p>
+						</td>
+		</tr>
+		</tbody>
+</table>
+            </section>
+</div>
+</body>
+</html>

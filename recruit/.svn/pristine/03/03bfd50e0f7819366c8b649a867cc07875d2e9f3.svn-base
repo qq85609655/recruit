@@ -1,0 +1,2 @@
+<html><head><title>${templateTitle}</title><meta http-equiv='Content-Type' content='text/html; charset=UTF-8'></head><body><textarea rows='10' cols='80' id='templateContext' name='templateContext'>${templateContext}
+</textarea></body></html>

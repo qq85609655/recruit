@@ -1,0 +1,137 @@
+
+.head{
+	width: 100%;
+	background: url("../../images/headBg.jpg") repeat-x;
+}
+#newMessageStatus {
+    display: inline-block;
+}
+#messageFeedbackBox {
+    background: white none repeat scroll 0 0;
+    border: 1px solid #8fb4e1;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px #999;
+    display: none;
+    left: -30px;
+    padding: 15px;
+    position: absolute;
+    text-align: left;
+    top: 30px;
+    width: 100px;
+    z-index: 9999;
+}
+#messageFeedbackBox ul {
+    border-top: 1px solid #d6d6d6;
+    padding-top: 3px;
+}
+#messageFeedbackBox li {
+    margin-bottom: 10px;
+    text-align: left;
+}
+#messageFeedbackBox li a {
+    color: #06c;
+    text-decoration: none;
+}
+#btnRefreshNewMessageStatus {
+    background: rgba(0, 0, 0, 0) url("../../images/sprite_repeat.jpg") repeat scroll -72px -1121px;
+    border: 0 none;
+    height: 18px;
+    margin: 3px;
+    width: 18px;
+}
+#btnRefreshNewMessageStatus:hover {
+    cursor: pointer;
+}
+#mFUpTri {
+    background: rgba(0, 0, 0, 0) url("../../images/sprite_repeat.jpg") repeat scroll -146px -200px;
+    display: inline-block;
+    height: 25px;
+    left: 40px;
+    position: absolute;
+    top: -13px;
+    width: 25px;
+}
+.messageFeedbackTri {
+    background: rgba(0, 0, 0, 0) url("../../images/sprite_repeat.jpg") repeat scroll -202px -512px;
+    display: inline-block;
+    height: 20px;
+    width: 20px;
+}
+#mFUsercenterTri {
+    height: 17px;
+}
+.messageFeedbackTri:hover {
+    cursor: pointer;
+}
+#messageFeedbackCounts {
+    background: #f00 none repeat scroll 0 0;
+    border-radius: 10px;
+    color: #fff;
+    font: 12px "Microsoft Yahei";
+    padding: 1px 5px;
+}
+#messageFeedbackCounts:hover {
+    cursor: pointer;
+}
+#newMessageStatus a:first-child {
+    padding: 3px 0;
+}
+#messageFeedbackBox span{
+	color:black;
+	font-size: 14px;
+}
+#PersonSettings {
+    background: #fff none repeat scroll 0 0;
+    border: 1px solid #8fb4e1;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px #999;
+    display: none;
+    padding: 15px 10px 10px;
+    position: absolute;
+    left: -55px;
+    text-align: left;
+    top: 30px;
+    width: 210px;
+    z-index: 999;
+}
+.PersonSettingsArrow {
+    background: rgba(0, 0, 0, 0) url("../../images/sprite_repeat.jpg") repeat scroll -277px -749px;
+    height: 11px;
+    left: 90px;
+    position: absolute;
+    top: -11px;
+    width: 21px;
+}
+#settingItems {
+    border-bottom: 1px solid #d6d6d6;
+}
+#settingItems li, #menuSetting li, .normalItems li {
+    margin: 5px 0;
+}
+#settingItems li a, #menuSetting li a, .normalItems li a {
+    color: #06c;
+    display: inline-block;
+    line-height: 16px;
+    padding: 3px;
+    text-decoration: none;
+    width: 100px;
+}
+#currentUser {
+    position: relative;
+}
+#currentUserAccount {
+    border-bottom: 1px solid #d6d6d6;
+    color: #4d4d4d;
+    font-family: Arial;
+    font-size: 12px;
+    line-height: 17px;
+    padding-bottom: 10px;
+    width: 210px;
+}
+/* .more{
+	position: relative;
+	left: 50px;
+	top:30px;
+} */
+
+

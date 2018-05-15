@@ -1,0 +1,825 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.csot.recruit.dao.original.uniform.OrganizationMapper" >
+  <resultMap id="BaseResultMap" type="com.csot.recruit.model.original.uniform.Organization" >
+    <id column="ID" property="id" jdbcType="DECIMAL" />
+    <result column="C_ORGNAME" property="cOrgname" jdbcType="VARCHAR" />
+    <result column="C_OLD_ORGCODE" property="cOldOrgcode" jdbcType="VARCHAR" />
+    <result column="C_ORGCODE" property="cOrgcode" jdbcType="VARCHAR" />
+    <result column="C_ORGTYPE" property="cOrgtype" jdbcType="DECIMAL" />
+    <result column="C_OLD_CHARGECODE" property="cOldChargecode" jdbcType="VARCHAR" />
+    <result column="C_CHARGECODE" property="cChargecode" jdbcType="VARCHAR" />
+    <result column="C_OLD_ORGPARENTCODE" property="cOldOrgparentcode" jdbcType="VARCHAR" />
+    <result column="C_ORGPARENTCODE" property="cOrgparentcode" jdbcType="VARCHAR" />
+    <result column="C_OLD_ORGPARENTLEAD" property="cOldOrgparentlead" jdbcType="VARCHAR" />
+    <result column="C_ORGPARENTLEAD" property="cOrgparentlead" jdbcType="VARCHAR" />
+    <result column="C_AVAILABLE" property="cAvailable" jdbcType="VARCHAR" />
+    <result column="C_SORT" property="cSort" jdbcType="DECIMAL" />
+    <result column="C_KEY" property="cKey" jdbcType="VARCHAR" />
+    <result column="C_REMARK" property="cRemark" jdbcType="VARCHAR" />
+    <result column="C_STATUS" property="cStatus" jdbcType="VARCHAR" />
+    <result column="ORGID" property="orgid" jdbcType="VARCHAR" />
+    <result column="KOSTL" property="kostl" jdbcType="VARCHAR" />
+    <result column="KOSTLT" property="kostlt" jdbcType="VARCHAR" />
+    <result column="C_ONEUNIT" property="cOneunit" jdbcType="VARCHAR" />
+    <result column="C_TWOUNIT" property="cTwounit" jdbcType="VARCHAR" />
+    <result column="C_THREEUNIT" property="cThreeunit" jdbcType="VARCHAR" />
+    <result column="C_FOURUNIT" property="cFourunit" jdbcType="VARCHAR" />
+    <result column="C_FIVEUNIT" property="cFiveunit" jdbcType="VARCHAR" />
+    <result column="IS_TEMP_ORG" property="isTempOrg" jdbcType="VARCHAR" />
+    <result column="C_OPERATORTIME" property="cOperatortime" jdbcType="DATE" />
+    <result column="FD_PRIMARY_KEY" property="fdPrimaryKey" jdbcType="VARCHAR" />
+    <result column="FD_STATUS" property="fdStatus" jdbcType="VARCHAR" />
+    <result column="FD_EXCUTE_TIME" property="fdExcuteTime" jdbcType="DATE" />
+    <result column="FD_IS_UPDATED" property="fdIsUpdated" jdbcType="VARCHAR" />
+    <result column="FD_UPDATE_EMP_NO" property="fdUpdateEmpNo" jdbcType="VARCHAR" />
+    <result column="FD_UPDATE_TIME" property="fdUpdateTime" jdbcType="DATE" />
+    <result column="RESERVED_1" property="reserved1" jdbcType="VARCHAR" />
+    <result column="RESERVED_2" property="reserved2" jdbcType="VARCHAR" />
+    <result column="RESERVED_3" property="reserved3" jdbcType="VARCHAR" />
+    <result column="RESERVED_4" property="reserved4" jdbcType="VARCHAR" />
+    <result column="RESERVED_5" property="reserved5" jdbcType="VARCHAR" />
+    <result column="RESERVED_6" property="reserved6" jdbcType="VARCHAR" />
+    <result column="RESERVED_7" property="reserved7" jdbcType="VARCHAR" />
+    <result column="RESERVED_8" property="reserved8" jdbcType="VARCHAR" />
+    <result column="RESERVED_9" property="reserved9" jdbcType="VARCHAR" />
+    <result column="RESERVED_10" property="reserved10" jdbcType="VARCHAR" />
+    <result column="IS_REPORTRELATION_DEAL" property="isReportrelationDeal" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    ID, C_ORGNAME, C_OLD_ORGCODE, C_ORGCODE, C_ORGTYPE, C_OLD_CHARGECODE, C_CHARGECODE, 
+    C_OLD_ORGPARENTCODE, C_ORGPARENTCODE, C_OLD_ORGPARENTLEAD, C_ORGPARENTLEAD, C_AVAILABLE, 
+    C_SORT, C_KEY, C_REMARK, C_STATUS, ORGID, KOSTL, KOSTLT, C_ONEUNIT, C_TWOUNIT, C_THREEUNIT, 
+    C_FOURUNIT, C_FIVEUNIT, IS_TEMP_ORG, C_OPERATORTIME, FD_PRIMARY_KEY, FD_STATUS, FD_EXCUTE_TIME, 
+    FD_IS_UPDATED, FD_UPDATE_EMP_NO, FD_UPDATE_TIME, RESERVED_1, RESERVED_2, RESERVED_3, 
+    RESERVED_4, RESERVED_5, RESERVED_6, RESERVED_7, RESERVED_8, RESERVED_9, RESERVED_10, 
+    IS_REPORTRELATION_DEAL
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.csot.recruit.model.original.uniform.OrganizationCriteria" >
+    <include refid="Oracle_Dialect_Pagination_Prefix" />
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from T_ORGANIZATION
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <include refid="Oracle_Dialect_Pagination_Suffix" />
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.math.BigDecimal" >
+    select 
+    <include refid="Base_Column_List" />
+    from T_ORGANIZATION
+    where ID = #{id,jdbcType=DECIMAL}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.math.BigDecimal" >
+    delete from T_ORGANIZATION
+    where ID = #{id,jdbcType=DECIMAL}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.csot.recruit.model.original.uniform.OrganizationCriteria" >
+    delete from T_ORGANIZATION
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.csot.recruit.model.original.uniform.Organization" >
+    insert into T_ORGANIZATION (ID, C_ORGNAME, C_OLD_ORGCODE, 
+      C_ORGCODE, C_ORGTYPE, C_OLD_CHARGECODE, 
+      C_CHARGECODE, C_OLD_ORGPARENTCODE, C_ORGPARENTCODE, 
+      C_OLD_ORGPARENTLEAD, C_ORGPARENTLEAD, C_AVAILABLE, 
+      C_SORT, C_KEY, C_REMARK, 
+      C_STATUS, ORGID, KOSTL, 
+      KOSTLT, C_ONEUNIT, C_TWOUNIT, 
+      C_THREEUNIT, C_FOURUNIT, C_FIVEUNIT, 
+      IS_TEMP_ORG, C_OPERATORTIME, FD_PRIMARY_KEY, 
+      FD_STATUS, FD_EXCUTE_TIME, FD_IS_UPDATED, 
+      FD_UPDATE_EMP_NO, FD_UPDATE_TIME, RESERVED_1, 
+      RESERVED_2, RESERVED_3, RESERVED_4, 
+      RESERVED_5, RESERVED_6, RESERVED_7, 
+      RESERVED_8, RESERVED_9, RESERVED_10, 
+      IS_REPORTRELATION_DEAL)
+    values (#{id,jdbcType=DECIMAL}, #{cOrgname,jdbcType=VARCHAR}, #{cOldOrgcode,jdbcType=VARCHAR}, 
+      #{cOrgcode,jdbcType=VARCHAR}, #{cOrgtype,jdbcType=DECIMAL}, #{cOldChargecode,jdbcType=VARCHAR}, 
+      #{cChargecode,jdbcType=VARCHAR}, #{cOldOrgparentcode,jdbcType=VARCHAR}, #{cOrgparentcode,jdbcType=VARCHAR}, 
+      #{cOldOrgparentlead,jdbcType=VARCHAR}, #{cOrgparentlead,jdbcType=VARCHAR}, #{cAvailable,jdbcType=VARCHAR}, 
+      #{cSort,jdbcType=DECIMAL}, #{cKey,jdbcType=VARCHAR}, #{cRemark,jdbcType=VARCHAR}, 
+      #{cStatus,jdbcType=VARCHAR}, #{orgid,jdbcType=VARCHAR}, #{kostl,jdbcType=VARCHAR}, 
+      #{kostlt,jdbcType=VARCHAR}, #{cOneunit,jdbcType=VARCHAR}, #{cTwounit,jdbcType=VARCHAR}, 
+      #{cThreeunit,jdbcType=VARCHAR}, #{cFourunit,jdbcType=VARCHAR}, #{cFiveunit,jdbcType=VARCHAR}, 
+      #{isTempOrg,jdbcType=VARCHAR}, #{cOperatortime,jdbcType=DATE}, #{fdPrimaryKey,jdbcType=VARCHAR}, 
+      #{fdStatus,jdbcType=VARCHAR}, #{fdExcuteTime,jdbcType=DATE}, #{fdIsUpdated,jdbcType=VARCHAR}, 
+      #{fdUpdateEmpNo,jdbcType=VARCHAR}, #{fdUpdateTime,jdbcType=DATE}, #{reserved1,jdbcType=VARCHAR}, 
+      #{reserved2,jdbcType=VARCHAR}, #{reserved3,jdbcType=VARCHAR}, #{reserved4,jdbcType=VARCHAR}, 
+      #{reserved5,jdbcType=VARCHAR}, #{reserved6,jdbcType=VARCHAR}, #{reserved7,jdbcType=VARCHAR}, 
+      #{reserved8,jdbcType=VARCHAR}, #{reserved9,jdbcType=VARCHAR}, #{reserved10,jdbcType=VARCHAR}, 
+      #{isReportrelationDeal,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.csot.recruit.model.original.uniform.Organization" >
+    insert into T_ORGANIZATION
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="cOrgname != null" >
+        C_ORGNAME,
+      </if>
+      <if test="cOldOrgcode != null" >
+        C_OLD_ORGCODE,
+      </if>
+      <if test="cOrgcode != null" >
+        C_ORGCODE,
+      </if>
+      <if test="cOrgtype != null" >
+        C_ORGTYPE,
+      </if>
+      <if test="cOldChargecode != null" >
+        C_OLD_CHARGECODE,
+      </if>
+      <if test="cChargecode != null" >
+        C_CHARGECODE,
+      </if>
+      <if test="cOldOrgparentcode != null" >
+        C_OLD_ORGPARENTCODE,
+      </if>
+      <if test="cOrgparentcode != null" >
+        C_ORGPARENTCODE,
+      </if>
+      <if test="cOldOrgparentlead != null" >
+        C_OLD_ORGPARENTLEAD,
+      </if>
+      <if test="cOrgparentlead != null" >
+        C_ORGPARENTLEAD,
+      </if>
+      <if test="cAvailable != null" >
+        C_AVAILABLE,
+      </if>
+      <if test="cSort != null" >
+        C_SORT,
+      </if>
+      <if test="cKey != null" >
+        C_KEY,
+      </if>
+      <if test="cRemark != null" >
+        C_REMARK,
+      </if>
+      <if test="cStatus != null" >
+        C_STATUS,
+      </if>
+      <if test="orgid != null" >
+        ORGID,
+      </if>
+      <if test="kostl != null" >
+        KOSTL,
+      </if>
+      <if test="kostlt != null" >
+        KOSTLT,
+      </if>
+      <if test="cOneunit != null" >
+        C_ONEUNIT,
+      </if>
+      <if test="cTwounit != null" >
+        C_TWOUNIT,
+      </if>
+      <if test="cThreeunit != null" >
+        C_THREEUNIT,
+      </if>
+      <if test="cFourunit != null" >
+        C_FOURUNIT,
+      </if>
+      <if test="cFiveunit != null" >
+        C_FIVEUNIT,
+      </if>
+      <if test="isTempOrg != null" >
+        IS_TEMP_ORG,
+      </if>
+      <if test="cOperatortime != null" >
+        C_OPERATORTIME,
+      </if>
+      <if test="fdPrimaryKey != null" >
+        FD_PRIMARY_KEY,
+      </if>
+      <if test="fdStatus != null" >
+        FD_STATUS,
+      </if>
+      <if test="fdExcuteTime != null" >
+        FD_EXCUTE_TIME,
+      </if>
+      <if test="fdIsUpdated != null" >
+        FD_IS_UPDATED,
+      </if>
+      <if test="fdUpdateEmpNo != null" >
+        FD_UPDATE_EMP_NO,
+      </if>
+      <if test="fdUpdateTime != null" >
+        FD_UPDATE_TIME,
+      </if>
+      <if test="reserved1 != null" >
+        RESERVED_1,
+      </if>
+      <if test="reserved2 != null" >
+        RESERVED_2,
+      </if>
+      <if test="reserved3 != null" >
+        RESERVED_3,
+      </if>
+      <if test="reserved4 != null" >
+        RESERVED_4,
+      </if>
+      <if test="reserved5 != null" >
+        RESERVED_5,
+      </if>
+      <if test="reserved6 != null" >
+        RESERVED_6,
+      </if>
+      <if test="reserved7 != null" >
+        RESERVED_7,
+      </if>
+      <if test="reserved8 != null" >
+        RESERVED_8,
+      </if>
+      <if test="reserved9 != null" >
+        RESERVED_9,
+      </if>
+      <if test="reserved10 != null" >
+        RESERVED_10,
+      </if>
+      <if test="isReportrelationDeal != null" >
+        IS_REPORTRELATION_DEAL,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=DECIMAL},
+      </if>
+      <if test="cOrgname != null" >
+        #{cOrgname,jdbcType=VARCHAR},
+      </if>
+      <if test="cOldOrgcode != null" >
+        #{cOldOrgcode,jdbcType=VARCHAR},
+      </if>
+      <if test="cOrgcode != null" >
+        #{cOrgcode,jdbcType=VARCHAR},
+      </if>
+      <if test="cOrgtype != null" >
+        #{cOrgtype,jdbcType=DECIMAL},
+      </if>
+      <if test="cOldChargecode != null" >
+        #{cOldChargecode,jdbcType=VARCHAR},
+      </if>
+      <if test="cChargecode != null" >
+        #{cChargecode,jdbcType=VARCHAR},
+      </if>
+      <if test="cOldOrgparentcode != null" >
+        #{cOldOrgparentcode,jdbcType=VARCHAR},
+      </if>
+      <if test="cOrgparentcode != null" >
+        #{cOrgparentcode,jdbcType=VARCHAR},
+      </if>
+      <if test="cOldOrgparentlead != null" >
+        #{cOldOrgparentlead,jdbcType=VARCHAR},
+      </if>
+      <if test="cOrgparentlead != null" >
+        #{cOrgparentlead,jdbcType=VARCHAR},
+      </if>
+      <if test="cAvailable != null" >
+        #{cAvailable,jdbcType=VARCHAR},
+      </if>
+      <if test="cSort != null" >
+        #{cSort,jdbcType=DECIMAL},
+      </if>
+      <if test="cKey != null" >
+        #{cKey,jdbcType=VARCHAR},
+      </if>
+      <if test="cRemark != null" >
+        #{cRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="cStatus != null" >
+        #{cStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="orgid != null" >
+        #{orgid,jdbcType=VARCHAR},
+      </if>
+      <if test="kostl != null" >
+        #{kostl,jdbcType=VARCHAR},
+      </if>
+      <if test="kostlt != null" >
+        #{kostlt,jdbcType=VARCHAR},
+      </if>
+      <if test="cOneunit != null" >
+        #{cOneunit,jdbcType=VARCHAR},
+      </if>
+      <if test="cTwounit != null" >
+        #{cTwounit,jdbcType=VARCHAR},
+      </if>
+      <if test="cThreeunit != null" >
+        #{cThreeunit,jdbcType=VARCHAR},
+      </if>
+      <if test="cFourunit != null" >
+        #{cFourunit,jdbcType=VARCHAR},
+      </if>
+      <if test="cFiveunit != null" >
+        #{cFiveunit,jdbcType=VARCHAR},
+      </if>
+      <if test="isTempOrg != null" >
+        #{isTempOrg,jdbcType=VARCHAR},
+      </if>
+      <if test="cOperatortime != null" >
+        #{cOperatortime,jdbcType=DATE},
+      </if>
+      <if test="fdPrimaryKey != null" >
+        #{fdPrimaryKey,jdbcType=VARCHAR},
+      </if>
+      <if test="fdStatus != null" >
+        #{fdStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="fdExcuteTime != null" >
+        #{fdExcuteTime,jdbcType=DATE},
+      </if>
+      <if test="fdIsUpdated != null" >
+        #{fdIsUpdated,jdbcType=VARCHAR},
+      </if>
+      <if test="fdUpdateEmpNo != null" >
+        #{fdUpdateEmpNo,jdbcType=VARCHAR},
+      </if>
+      <if test="fdUpdateTime != null" >
+        #{fdUpdateTime,jdbcType=DATE},
+      </if>
+      <if test="reserved1 != null" >
+        #{reserved1,jdbcType=VARCHAR},
+      </if>
+      <if test="reserved2 != null" >
+        #{reserved2,jdbcType=VARCHAR},
+      </if>
+      <if test="reserved3 != null" >
+        #{reserved3,jdbcType=VARCHAR},
+      </if>
+      <if test="reserved4 != null" >
+        #{reserved4,jdbcType=VARCHAR},
+      </if>
+      <if test="reserved5 != null" >
+        #{reserved5,jdbcType=VARCHAR},
+      </if>
+      <if test="reserved6 != null" >
+        #{reserved6,jdbcType=VARCHAR},
+      </if>
+      <if test="reserved7 != null" >
+        #{reserved7,jdbcType=VARCHAR},
+      </if>
+      <if test="reserved8 != null" >
+        #{reserved8,jdbcType=VARCHAR},
+      </if>
+      <if test="reserved9 != null" >
+        #{reserved9,jdbcType=VARCHAR},
+      </if>
+      <if test="reserved10 != null" >
+        #{reserved10,jdbcType=VARCHAR},
+      </if>
+      <if test="isReportrelationDeal != null" >
+        #{isReportrelationDeal,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.csot.recruit.model.original.uniform.OrganizationCriteria" resultType="java.lang.Integer" >
+    select count(*) from T_ORGANIZATION
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update T_ORGANIZATION
+    <set >
+      <if test="record.id != null" >
+        ID = #{record.id,jdbcType=DECIMAL},
+      </if>
+      <if test="record.cOrgname != null" >
+        C_ORGNAME = #{record.cOrgname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cOldOrgcode != null" >
+        C_OLD_ORGCODE = #{record.cOldOrgcode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cOrgcode != null" >
+        C_ORGCODE = #{record.cOrgcode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cOrgtype != null" >
+        C_ORGTYPE = #{record.cOrgtype,jdbcType=DECIMAL},
+      </if>
+      <if test="record.cOldChargecode != null" >
+        C_OLD_CHARGECODE = #{record.cOldChargecode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cChargecode != null" >
+        C_CHARGECODE = #{record.cChargecode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cOldOrgparentcode != null" >
+        C_OLD_ORGPARENTCODE = #{record.cOldOrgparentcode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cOrgparentcode != null" >
+        C_ORGPARENTCODE = #{record.cOrgparentcode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cOldOrgparentlead != null" >
+        C_OLD_ORGPARENTLEAD = #{record.cOldOrgparentlead,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cOrgparentlead != null" >
+        C_ORGPARENTLEAD = #{record.cOrgparentlead,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cAvailable != null" >
+        C_AVAILABLE = #{record.cAvailable,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cSort != null" >
+        C_SORT = #{record.cSort,jdbcType=DECIMAL},
+      </if>
+      <if test="record.cKey != null" >
+        C_KEY = #{record.cKey,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cRemark != null" >
+        C_REMARK = #{record.cRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cStatus != null" >
+        C_STATUS = #{record.cStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="record.orgid != null" >
+        ORGID = #{record.orgid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.kostl != null" >
+        KOSTL = #{record.kostl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.kostlt != null" >
+        KOSTLT = #{record.kostlt,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cOneunit != null" >
+        C_ONEUNIT = #{record.cOneunit,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cTwounit != null" >
+        C_TWOUNIT = #{record.cTwounit,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cThreeunit != null" >
+        C_THREEUNIT = #{record.cThreeunit,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cFourunit != null" >
+        C_FOURUNIT = #{record.cFourunit,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cFiveunit != null" >
+        C_FIVEUNIT = #{record.cFiveunit,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isTempOrg != null" >
+        IS_TEMP_ORG = #{record.isTempOrg,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cOperatortime != null" >
+        C_OPERATORTIME = #{record.cOperatortime,jdbcType=DATE},
+      </if>
+      <if test="record.fdPrimaryKey != null" >
+        FD_PRIMARY_KEY = #{record.fdPrimaryKey,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fdStatus != null" >
+        FD_STATUS = #{record.fdStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fdExcuteTime != null" >
+        FD_EXCUTE_TIME = #{record.fdExcuteTime,jdbcType=DATE},
+      </if>
+      <if test="record.fdIsUpdated != null" >
+        FD_IS_UPDATED = #{record.fdIsUpdated,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fdUpdateEmpNo != null" >
+        FD_UPDATE_EMP_NO = #{record.fdUpdateEmpNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fdUpdateTime != null" >
+        FD_UPDATE_TIME = #{record.fdUpdateTime,jdbcType=DATE},
+      </if>
+      <if test="record.reserved1 != null" >
+        RESERVED_1 = #{record.reserved1,jdbcType=VARCHAR},
+      </if>
+      <if test="record.reserved2 != null" >
+        RESERVED_2 = #{record.reserved2,jdbcType=VARCHAR},
+      </if>
+      <if test="record.reserved3 != null" >
+        RESERVED_3 = #{record.reserved3,jdbcType=VARCHAR},
+      </if>
+      <if test="record.reserved4 != null" >
+        RESERVED_4 = #{record.reserved4,jdbcType=VARCHAR},
+      </if>
+      <if test="record.reserved5 != null" >
+        RESERVED_5 = #{record.reserved5,jdbcType=VARCHAR},
+      </if>
+      <if test="record.reserved6 != null" >
+        RESERVED_6 = #{record.reserved6,jdbcType=VARCHAR},
+      </if>
+      <if test="record.reserved7 != null" >
+        RESERVED_7 = #{record.reserved7,jdbcType=VARCHAR},
+      </if>
+      <if test="record.reserved8 != null" >
+        RESERVED_8 = #{record.reserved8,jdbcType=VARCHAR},
+      </if>
+      <if test="record.reserved9 != null" >
+        RESERVED_9 = #{record.reserved9,jdbcType=VARCHAR},
+      </if>
+      <if test="record.reserved10 != null" >
+        RESERVED_10 = #{record.reserved10,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isReportrelationDeal != null" >
+        IS_REPORTRELATION_DEAL = #{record.isReportrelationDeal,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update T_ORGANIZATION
+    set ID = #{record.id,jdbcType=DECIMAL},
+      C_ORGNAME = #{record.cOrgname,jdbcType=VARCHAR},
+      C_OLD_ORGCODE = #{record.cOldOrgcode,jdbcType=VARCHAR},
+      C_ORGCODE = #{record.cOrgcode,jdbcType=VARCHAR},
+      C_ORGTYPE = #{record.cOrgtype,jdbcType=DECIMAL},
+      C_OLD_CHARGECODE = #{record.cOldChargecode,jdbcType=VARCHAR},
+      C_CHARGECODE = #{record.cChargecode,jdbcType=VARCHAR},
+      C_OLD_ORGPARENTCODE = #{record.cOldOrgparentcode,jdbcType=VARCHAR},
+      C_ORGPARENTCODE = #{record.cOrgparentcode,jdbcType=VARCHAR},
+      C_OLD_ORGPARENTLEAD = #{record.cOldOrgparentlead,jdbcType=VARCHAR},
+      C_ORGPARENTLEAD = #{record.cOrgparentlead,jdbcType=VARCHAR},
+      C_AVAILABLE = #{record.cAvailable,jdbcType=VARCHAR},
+      C_SORT = #{record.cSort,jdbcType=DECIMAL},
+      C_KEY = #{record.cKey,jdbcType=VARCHAR},
+      C_REMARK = #{record.cRemark,jdbcType=VARCHAR},
+      C_STATUS = #{record.cStatus,jdbcType=VARCHAR},
+      ORGID = #{record.orgid,jdbcType=VARCHAR},
+      KOSTL = #{record.kostl,jdbcType=VARCHAR},
+      KOSTLT = #{record.kostlt,jdbcType=VARCHAR},
+      C_ONEUNIT = #{record.cOneunit,jdbcType=VARCHAR},
+      C_TWOUNIT = #{record.cTwounit,jdbcType=VARCHAR},
+      C_THREEUNIT = #{record.cThreeunit,jdbcType=VARCHAR},
+      C_FOURUNIT = #{record.cFourunit,jdbcType=VARCHAR},
+      C_FIVEUNIT = #{record.cFiveunit,jdbcType=VARCHAR},
+      IS_TEMP_ORG = #{record.isTempOrg,jdbcType=VARCHAR},
+      C_OPERATORTIME = #{record.cOperatortime,jdbcType=DATE},
+      FD_PRIMARY_KEY = #{record.fdPrimaryKey,jdbcType=VARCHAR},
+      FD_STATUS = #{record.fdStatus,jdbcType=VARCHAR},
+      FD_EXCUTE_TIME = #{record.fdExcuteTime,jdbcType=DATE},
+      FD_IS_UPDATED = #{record.fdIsUpdated,jdbcType=VARCHAR},
+      FD_UPDATE_EMP_NO = #{record.fdUpdateEmpNo,jdbcType=VARCHAR},
+      FD_UPDATE_TIME = #{record.fdUpdateTime,jdbcType=DATE},
+      RESERVED_1 = #{record.reserved1,jdbcType=VARCHAR},
+      RESERVED_2 = #{record.reserved2,jdbcType=VARCHAR},
+      RESERVED_3 = #{record.reserved3,jdbcType=VARCHAR},
+      RESERVED_4 = #{record.reserved4,jdbcType=VARCHAR},
+      RESERVED_5 = #{record.reserved5,jdbcType=VARCHAR},
+      RESERVED_6 = #{record.reserved6,jdbcType=VARCHAR},
+      RESERVED_7 = #{record.reserved7,jdbcType=VARCHAR},
+      RESERVED_8 = #{record.reserved8,jdbcType=VARCHAR},
+      RESERVED_9 = #{record.reserved9,jdbcType=VARCHAR},
+      RESERVED_10 = #{record.reserved10,jdbcType=VARCHAR},
+      IS_REPORTRELATION_DEAL = #{record.isReportrelationDeal,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.csot.recruit.model.original.uniform.Organization" >
+    update T_ORGANIZATION
+    <set >
+      <if test="cOrgname != null" >
+        C_ORGNAME = #{cOrgname,jdbcType=VARCHAR},
+      </if>
+      <if test="cOldOrgcode != null" >
+        C_OLD_ORGCODE = #{cOldOrgcode,jdbcType=VARCHAR},
+      </if>
+      <if test="cOrgcode != null" >
+        C_ORGCODE = #{cOrgcode,jdbcType=VARCHAR},
+      </if>
+      <if test="cOrgtype != null" >
+        C_ORGTYPE = #{cOrgtype,jdbcType=DECIMAL},
+      </if>
+      <if test="cOldChargecode != null" >
+        C_OLD_CHARGECODE = #{cOldChargecode,jdbcType=VARCHAR},
+      </if>
+      <if test="cChargecode != null" >
+        C_CHARGECODE = #{cChargecode,jdbcType=VARCHAR},
+      </if>
+      <if test="cOldOrgparentcode != null" >
+        C_OLD_ORGPARENTCODE = #{cOldOrgparentcode,jdbcType=VARCHAR},
+      </if>
+      <if test="cOrgparentcode != null" >
+        C_ORGPARENTCODE = #{cOrgparentcode,jdbcType=VARCHAR},
+      </if>
+      <if test="cOldOrgparentlead != null" >
+        C_OLD_ORGPARENTLEAD = #{cOldOrgparentlead,jdbcType=VARCHAR},
+      </if>
+      <if test="cOrgparentlead != null" >
+        C_ORGPARENTLEAD = #{cOrgparentlead,jdbcType=VARCHAR},
+      </if>
+      <if test="cAvailable != null" >
+        C_AVAILABLE = #{cAvailable,jdbcType=VARCHAR},
+      </if>
+      <if test="cSort != null" >
+        C_SORT = #{cSort,jdbcType=DECIMAL},
+      </if>
+      <if test="cKey != null" >
+        C_KEY = #{cKey,jdbcType=VARCHAR},
+      </if>
+      <if test="cRemark != null" >
+        C_REMARK = #{cRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="cStatus != null" >
+        C_STATUS = #{cStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="orgid != null" >
+        ORGID = #{orgid,jdbcType=VARCHAR},
+      </if>
+      <if test="kostl != null" >
+        KOSTL = #{kostl,jdbcType=VARCHAR},
+      </if>
+      <if test="kostlt != null" >
+        KOSTLT = #{kostlt,jdbcType=VARCHAR},
+      </if>
+      <if test="cOneunit != null" >
+        C_ONEUNIT = #{cOneunit,jdbcType=VARCHAR},
+      </if>
+      <if test="cTwounit != null" >
+        C_TWOUNIT = #{cTwounit,jdbcType=VARCHAR},
+      </if>
+      <if test="cThreeunit != null" >
+        C_THREEUNIT = #{cThreeunit,jdbcType=VARCHAR},
+      </if>
+      <if test="cFourunit != null" >
+        C_FOURUNIT = #{cFourunit,jdbcType=VARCHAR},
+      </if>
+      <if test="cFiveunit != null" >
+        C_FIVEUNIT = #{cFiveunit,jdbcType=VARCHAR},
+      </if>
+      <if test="isTempOrg != null" >
+        IS_TEMP_ORG = #{isTempOrg,jdbcType=VARCHAR},
+      </if>
+      <if test="cOperatortime != null" >
+        C_OPERATORTIME = #{cOperatortime,jdbcType=DATE},
+      </if>
+      <if test="fdPrimaryKey != null" >
+        FD_PRIMARY_KEY = #{fdPrimaryKey,jdbcType=VARCHAR},
+      </if>
+      <if test="fdStatus != null" >
+        FD_STATUS = #{fdStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="fdExcuteTime != null" >
+        FD_EXCUTE_TIME = #{fdExcuteTime,jdbcType=DATE},
+      </if>
+      <if test="fdIsUpdated != null" >
+        FD_IS_UPDATED = #{fdIsUpdated,jdbcType=VARCHAR},
+      </if>
+      <if test="fdUpdateEmpNo != null" >
+        FD_UPDATE_EMP_NO = #{fdUpdateEmpNo,jdbcType=VARCHAR},
+      </if>
+      <if test="fdUpdateTime != null" >
+        FD_UPDATE_TIME = #{fdUpdateTime,jdbcType=DATE},
+      </if>
+      <if test="reserved1 != null" >
+        RESERVED_1 = #{reserved1,jdbcType=VARCHAR},
+      </if>
+      <if test="reserved2 != null" >
+        RESERVED_2 = #{reserved2,jdbcType=VARCHAR},
+      </if>
+      <if test="reserved3 != null" >
+        RESERVED_3 = #{reserved3,jdbcType=VARCHAR},
+      </if>
+      <if test="reserved4 != null" >
+        RESERVED_4 = #{reserved4,jdbcType=VARCHAR},
+      </if>
+      <if test="reserved5 != null" >
+        RESERVED_5 = #{reserved5,jdbcType=VARCHAR},
+      </if>
+      <if test="reserved6 != null" >
+        RESERVED_6 = #{reserved6,jdbcType=VARCHAR},
+      </if>
+      <if test="reserved7 != null" >
+        RESERVED_7 = #{reserved7,jdbcType=VARCHAR},
+      </if>
+      <if test="reserved8 != null" >
+        RESERVED_8 = #{reserved8,jdbcType=VARCHAR},
+      </if>
+      <if test="reserved9 != null" >
+        RESERVED_9 = #{reserved9,jdbcType=VARCHAR},
+      </if>
+      <if test="reserved10 != null" >
+        RESERVED_10 = #{reserved10,jdbcType=VARCHAR},
+      </if>
+      <if test="isReportrelationDeal != null" >
+        IS_REPORTRELATION_DEAL = #{isReportrelationDeal,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=DECIMAL}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.csot.recruit.model.original.uniform.Organization" >
+    update T_ORGANIZATION
+    set C_ORGNAME = #{cOrgname,jdbcType=VARCHAR},
+      C_OLD_ORGCODE = #{cOldOrgcode,jdbcType=VARCHAR},
+      C_ORGCODE = #{cOrgcode,jdbcType=VARCHAR},
+      C_ORGTYPE = #{cOrgtype,jdbcType=DECIMAL},
+      C_OLD_CHARGECODE = #{cOldChargecode,jdbcType=VARCHAR},
+      C_CHARGECODE = #{cChargecode,jdbcType=VARCHAR},
+      C_OLD_ORGPARENTCODE = #{cOldOrgparentcode,jdbcType=VARCHAR},
+      C_ORGPARENTCODE = #{cOrgparentcode,jdbcType=VARCHAR},
+      C_OLD_ORGPARENTLEAD = #{cOldOrgparentlead,jdbcType=VARCHAR},
+      C_ORGPARENTLEAD = #{cOrgparentlead,jdbcType=VARCHAR},
+      C_AVAILABLE = #{cAvailable,jdbcType=VARCHAR},
+      C_SORT = #{cSort,jdbcType=DECIMAL},
+      C_KEY = #{cKey,jdbcType=VARCHAR},
+      C_REMARK = #{cRemark,jdbcType=VARCHAR},
+      C_STATUS = #{cStatus,jdbcType=VARCHAR},
+      ORGID = #{orgid,jdbcType=VARCHAR},
+      KOSTL = #{kostl,jdbcType=VARCHAR},
+      KOSTLT = #{kostlt,jdbcType=VARCHAR},
+      C_ONEUNIT = #{cOneunit,jdbcType=VARCHAR},
+      C_TWOUNIT = #{cTwounit,jdbcType=VARCHAR},
+      C_THREEUNIT = #{cThreeunit,jdbcType=VARCHAR},
+      C_FOURUNIT = #{cFourunit,jdbcType=VARCHAR},
+      C_FIVEUNIT = #{cFiveunit,jdbcType=VARCHAR},
+      IS_TEMP_ORG = #{isTempOrg,jdbcType=VARCHAR},
+      C_OPERATORTIME = #{cOperatortime,jdbcType=DATE},
+      FD_PRIMARY_KEY = #{fdPrimaryKey,jdbcType=VARCHAR},
+      FD_STATUS = #{fdStatus,jdbcType=VARCHAR},
+      FD_EXCUTE_TIME = #{fdExcuteTime,jdbcType=DATE},
+      FD_IS_UPDATED = #{fdIsUpdated,jdbcType=VARCHAR},
+      FD_UPDATE_EMP_NO = #{fdUpdateEmpNo,jdbcType=VARCHAR},
+      FD_UPDATE_TIME = #{fdUpdateTime,jdbcType=DATE},
+      RESERVED_1 = #{reserved1,jdbcType=VARCHAR},
+      RESERVED_2 = #{reserved2,jdbcType=VARCHAR},
+      RESERVED_3 = #{reserved3,jdbcType=VARCHAR},
+      RESERVED_4 = #{reserved4,jdbcType=VARCHAR},
+      RESERVED_5 = #{reserved5,jdbcType=VARCHAR},
+      RESERVED_6 = #{reserved6,jdbcType=VARCHAR},
+      RESERVED_7 = #{reserved7,jdbcType=VARCHAR},
+      RESERVED_8 = #{reserved8,jdbcType=VARCHAR},
+      RESERVED_9 = #{reserved9,jdbcType=VARCHAR},
+      RESERVED_10 = #{reserved10,jdbcType=VARCHAR},
+      IS_REPORTRELATION_DEAL = #{isReportrelationDeal,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=DECIMAL}
+  </update>
+  <sql id="Oracle_Dialect_Pagination_Prefix" >
+    <if test="page != null" >
+      select * from ( select row_.*, rownum rownum_ from ( 
+    </if>
+  </sql>
+  <sql id="Oracle_Dialect_Pagination_Suffix" >
+    <if test="page != null" >
+      <![CDATA[ ) row_ ) where rownum_ > #{page.begin} and rownum_ <= #{page.end} ]]>
+    </if>
+  </sql>
+</mapper>

@@ -1,0 +1,342 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.csot.recruit.dao.original.flow.employ.EmployRefuseOfferMapper">
+  <resultMap id="BaseResultMap" type="com.csot.recruit.model.original.flow.employ.EmployRefuseOffer">
+    <id column="ID" jdbcType="VARCHAR" property="id" />
+    <result column="REASON" jdbcType="VARCHAR" property="reason" />
+    <result column="SALARY" jdbcType="VARCHAR" property="salary" />
+    <result column="OLDCOMPANY" jdbcType="VARCHAR" property="oldcompany" />
+    <result column="TRAFFIC" jdbcType="VARCHAR" property="traffic" />
+    <result column="OTHER" jdbcType="VARCHAR" property="other" />
+    <result column="OTHER_OFFER" jdbcType="VARCHAR" property="otherOffer" />
+    <result column="EMPLOY_ID" jdbcType="VARCHAR" property="employId" />
+    <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate" />
+    <result column="UPDATE_DATE" jdbcType="TIMESTAMP" property="updateDate" />
+    <result column="CREATOR_ID" jdbcType="VARCHAR" property="creatorId" />
+    <result column="MODIFIED_ID" jdbcType="VARCHAR" property="modifiedId" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    ID, REASON, SALARY, OLDCOMPANY, TRAFFIC, OTHER, OTHER_OFFER, EMPLOY_ID, CREATE_DATE, 
+    UPDATE_DATE, CREATOR_ID, MODIFIED_ID
+  </sql>
+  <select id="selectByExample" parameterType="com.csot.recruit.model.original.flow.employ.EmployRefuseOfferCriteria" resultMap="BaseResultMap">
+    <include refid="Oracle_Dialect_Pagination_Prefix" />
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from T_EMPLOY_REFUSE_OFFER
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+    <include refid="Oracle_Dialect_Pagination_Suffix" />
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from T_EMPLOY_REFUSE_OFFER
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+   <select id="getByEmployeId" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from T_EMPLOY_REFUSE_OFFER
+    where EMPLOY_ID = #{employId,jdbcType=VARCHAR}
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from T_EMPLOY_REFUSE_OFFER
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.csot.recruit.model.original.flow.employ.EmployRefuseOfferCriteria">
+    delete from T_EMPLOY_REFUSE_OFFER
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.csot.recruit.model.original.flow.employ.EmployRefuseOffer">
+    insert into T_EMPLOY_REFUSE_OFFER (ID, REASON, SALARY, 
+      OLDCOMPANY, TRAFFIC, OTHER, 
+      OTHER_OFFER, EMPLOY_ID, CREATE_DATE, 
+      UPDATE_DATE, CREATOR_ID, MODIFIED_ID
+      )
+    values (#{id,jdbcType=VARCHAR}, #{reason,jdbcType=VARCHAR}, #{salary,jdbcType=VARCHAR}, 
+      #{oldcompany,jdbcType=VARCHAR}, #{traffic,jdbcType=VARCHAR}, #{other,jdbcType=VARCHAR}, 
+      #{otherOffer,jdbcType=VARCHAR}, #{employId,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, 
+      #{updateDate,jdbcType=TIMESTAMP}, #{creatorId,jdbcType=VARCHAR}, #{modifiedId,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.csot.recruit.model.original.flow.employ.EmployRefuseOffer">
+    insert into T_EMPLOY_REFUSE_OFFER
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="reason != null">
+        REASON,
+      </if>
+      <if test="salary != null">
+        SALARY,
+      </if>
+      <if test="oldcompany != null">
+        OLDCOMPANY,
+      </if>
+      <if test="traffic != null">
+        TRAFFIC,
+      </if>
+      <if test="other != null">
+        OTHER,
+      </if>
+      <if test="otherOffer != null">
+        OTHER_OFFER,
+      </if>
+      <if test="employId != null">
+        EMPLOY_ID,
+      </if>
+      <if test="createDate != null">
+        CREATE_DATE,
+      </if>
+      <if test="updateDate != null">
+        UPDATE_DATE,
+      </if>
+      <if test="creatorId != null">
+        CREATOR_ID,
+      </if>
+      <if test="modifiedId != null">
+        MODIFIED_ID,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="reason != null">
+        #{reason,jdbcType=VARCHAR},
+      </if>
+      <if test="salary != null">
+        #{salary,jdbcType=VARCHAR},
+      </if>
+      <if test="oldcompany != null">
+        #{oldcompany,jdbcType=VARCHAR},
+      </if>
+      <if test="traffic != null">
+        #{traffic,jdbcType=VARCHAR},
+      </if>
+      <if test="other != null">
+        #{other,jdbcType=VARCHAR},
+      </if>
+      <if test="otherOffer != null">
+        #{otherOffer,jdbcType=VARCHAR},
+      </if>
+      <if test="employId != null">
+        #{employId,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null">
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateDate != null">
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creatorId != null">
+        #{creatorId,jdbcType=VARCHAR},
+      </if>
+      <if test="modifiedId != null">
+        #{modifiedId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.csot.recruit.model.original.flow.employ.EmployRefuseOfferCriteria" resultType="java.lang.Integer">
+    select count(*) from T_EMPLOY_REFUSE_OFFER
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update T_EMPLOY_REFUSE_OFFER
+    <set>
+      <if test="record.id != null">
+        ID = #{record.id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.reason != null">
+        REASON = #{record.reason,jdbcType=VARCHAR},
+      </if>
+      <if test="record.salary != null">
+        SALARY = #{record.salary,jdbcType=VARCHAR},
+      </if>
+      <if test="record.oldcompany != null">
+        OLDCOMPANY = #{record.oldcompany,jdbcType=VARCHAR},
+      </if>
+      <if test="record.traffic != null">
+        TRAFFIC = #{record.traffic,jdbcType=VARCHAR},
+      </if>
+      <if test="record.other != null">
+        OTHER = #{record.other,jdbcType=VARCHAR},
+      </if>
+      <if test="record.otherOffer != null">
+        OTHER_OFFER = #{record.otherOffer,jdbcType=VARCHAR},
+      </if>
+      <if test="record.employId != null">
+        EMPLOY_ID = #{record.employId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createDate != null">
+        CREATE_DATE = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateDate != null">
+        UPDATE_DATE = #{record.updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.creatorId != null">
+        CREATOR_ID = #{record.creatorId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.modifiedId != null">
+        MODIFIED_ID = #{record.modifiedId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update T_EMPLOY_REFUSE_OFFER
+    set ID = #{record.id,jdbcType=VARCHAR},
+      REASON = #{record.reason,jdbcType=VARCHAR},
+      SALARY = #{record.salary,jdbcType=VARCHAR},
+      OLDCOMPANY = #{record.oldcompany,jdbcType=VARCHAR},
+      TRAFFIC = #{record.traffic,jdbcType=VARCHAR},
+      OTHER = #{record.other,jdbcType=VARCHAR},
+      OTHER_OFFER = #{record.otherOffer,jdbcType=VARCHAR},
+      EMPLOY_ID = #{record.employId,jdbcType=VARCHAR},
+      CREATE_DATE = #{record.createDate,jdbcType=TIMESTAMP},
+      UPDATE_DATE = #{record.updateDate,jdbcType=TIMESTAMP},
+      CREATOR_ID = #{record.creatorId,jdbcType=VARCHAR},
+      MODIFIED_ID = #{record.modifiedId,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.csot.recruit.model.original.flow.employ.EmployRefuseOffer">
+    update T_EMPLOY_REFUSE_OFFER
+    <set>
+      <if test="reason != null">
+        REASON = #{reason,jdbcType=VARCHAR},
+      </if>
+      <if test="salary != null">
+        SALARY = #{salary,jdbcType=VARCHAR},
+      </if>
+      <if test="oldcompany != null">
+        OLDCOMPANY = #{oldcompany,jdbcType=VARCHAR},
+      </if>
+      <if test="traffic != null">
+        TRAFFIC = #{traffic,jdbcType=VARCHAR},
+      </if>
+      <if test="other != null">
+        OTHER = #{other,jdbcType=VARCHAR},
+      </if>
+      <if test="otherOffer != null">
+        OTHER_OFFER = #{otherOffer,jdbcType=VARCHAR},
+      </if>
+      <if test="employId != null">
+        EMPLOY_ID = #{employId,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null">
+        CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateDate != null">
+        UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creatorId != null">
+        CREATOR_ID = #{creatorId,jdbcType=VARCHAR},
+      </if>
+      <if test="modifiedId != null">
+        MODIFIED_ID = #{modifiedId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.csot.recruit.model.original.flow.employ.EmployRefuseOffer">
+    update T_EMPLOY_REFUSE_OFFER
+    set REASON = #{reason,jdbcType=VARCHAR},
+      SALARY = #{salary,jdbcType=VARCHAR},
+      OLDCOMPANY = #{oldcompany,jdbcType=VARCHAR},
+      TRAFFIC = #{traffic,jdbcType=VARCHAR},
+      OTHER = #{other,jdbcType=VARCHAR},
+      OTHER_OFFER = #{otherOffer,jdbcType=VARCHAR},
+      EMPLOY_ID = #{employId,jdbcType=VARCHAR},
+      CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+      CREATOR_ID = #{creatorId,jdbcType=VARCHAR},
+      MODIFIED_ID = #{modifiedId,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <sql id="Oracle_Dialect_Pagination_Prefix">
+    <if test="page != null">
+      select * from ( select row_.*, rownum rownum_ from ( 
+    </if>
+  </sql>
+  <sql id="Oracle_Dialect_Pagination_Suffix">
+    <if test="page != null">
+      <![CDATA[ ) row_ ) where rownum_ > #{page.begin} and rownum_ <= #{page.end} ]]>
+    </if>
+  </sql>
+</mapper>

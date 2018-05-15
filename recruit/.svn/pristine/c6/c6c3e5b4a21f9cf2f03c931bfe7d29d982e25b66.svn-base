@@ -1,0 +1,186 @@
+$(function() {
+	mini.parse();
+	  $("input[name='is_book']").change(function(){
+	    
+	    $("input[name='is_book']").each(function(){
+	      if($(this).attr('checked')=='checked' && $(this).val()=='1'){
+	        $("#cancelBookInterview").show();
+	        $("#outBookInterview").show();
+	        $("#interview_status").show();
+	        search();
+	      }
+	      if($(this).attr('checked')=='checked' && $(this).val()=='2'){
+	        $("#cancelBookInterview").hide();
+	        $("#outBookInterview").hide();
+	        $("#interview_status").hide();
+	        search();
+	      }
+	      
+	    });
+	    
+	  });
+	search();
+});
+
+function search() {
+  
+
+  var isBook = 0 ;
+  $("input[name='is_book']").each(function(){
+    if($(this).attr('checked')=='checked' && $(this).val()=='1'){
+     isBook = 1 ;
+    }
+    if($(this).attr('checked')=='checked' && $(this).val()=='2'){
+      isBook = 2 ;
+    }
+    
+  });
+    var interview_status = $("#interview_status").val();
+	var startDate = mini.get("startDate").getFormValue();
+	var endDate = mini.get("endDate").getFormValue();
+	var searchKey = $("#searchKey").val();
+	var grid = mini.get("datagrid1");
+	grid.load({startDate:startDate, 
+	    endDate:endDate,
+	    searchKey:searchKey,
+	    isBook:isBook,
+	    interviewStatus:interview_status});
+}
+
+
+
+function bookInterview() {
+  var grid = mini.get("datagrid1");
+  var rows = grid.getSelecteds();
+  if (rows.length > 0) {
+      var id = rows[0].id;
+      window.open(basePath + "/interviewBookController/addInterviewBook?id=" + id);
+   
+  }else{
+    alert("请先选中候选人！");
+  }
+}
+
+
+function onKeyEnter(e) {
+    search();
+}
+
+function onDateRenderer(e) {
+  var value = e.value;
+  if (value) return new Date(value).format("yyyy-MM-dd");
+  return "";
+}
+
+function updateInterviewBook(){
+  
+  var grid = mini.get("datagrid1");
+  var rows = grid.getSelecteds();
+  
+  if (rows.length > 0) {
+    var ids="";
+    for(var i=0;i<rows.length;i++){
+      ids+=rows[i].id;
+      if(i!=rows.length-1){
+        ids+=",";
+      }
+    }
+    mini.prompt("请输入原因：", "请输入",
+        function (action, value) {
+            if (action == "ok") {
+              updateAjaxInterviewBook(ids,value);
+            } else {
+                mini.alert("取消");
+            }
+        },
+        true
+    );
+  }else{
+    mini.alert("请先选中面试！");
+  }
+}
+
+function updateAjaxInterviewBook(ids,reason){
+  
+  $.ajax({
+    url : basePath + "/interviewBookController/updateInterviewBook",
+    type : "post",
+    data : {
+      ids:ids,
+      reason:reason
+    },
+    success : function(data) {
+     var dataJson = eval('(' + data + ')');
+        mini.alert(dataJson.msg);
+    }
+  });
+  
+}
+
+function outInterviewBook(){
+  
+  var grid = mini.get("datagrid1");
+  var rows = grid.getSelecteds();
+  var arr = new Array();
+  if (rows.length > 0) {
+    var temp="";
+    var ids="";
+    var positionIds="";
+    for(var i=0;i<rows.length;i++){
+     /* ids+=rows[i].id;
+      if(i!=rows.length-1){
+        ids+=",";
+      }*/
+      temp = rows[i].candidateId + "_" + rows[i].positonId ;
+      if(!contains(arr,temp)){
+       arr.push(temp);
+       ids+= rows[i].candidateId + ",";
+       positionIds+= rows[i].positonId + ",";
+      }
+     // if(contains(arr,))
+    }
+    mini.prompt("请输入原因：", "请输入",
+        function (action, value) {
+            if (action == "ok") {
+              outAjaxInterviewBook(ids,positionIds,value);
+            } else {
+                mini.alert("取消");
+            }
+        },
+        true
+    );
+  }else{
+    mini.alert("请先选中面试！");
+  }
+}
+
+function outAjaxInterviewBook(ids,positionIds,reason){
+
+  
+  $.ajax({
+    url : basePath + "/interviewBookController/outInterviewBook",
+    type : "post",
+    data : {
+      ids:ids,
+      positionIds:positionIds,
+      reason:reason
+    },
+    success : function(data) {
+     var dataJson = eval('(' + data + ')');
+        mini.alert(dataJson.msg);
+    }
+  });
+  
+
+}
+
+function contains(arr, obj) {  
+  var i = arr.length;  
+  while (i--) {  
+      if (arr[i] === obj) {  
+          return true;  
+      }  
+  }  
+  return false;  
+}  
+

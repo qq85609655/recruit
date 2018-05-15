@@ -1,0 +1,88 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+
+<html>
+<head>
+<%@include file="/webpage/common.jsp"%>
+
+<title>Insert title here</title>
+<style>
+html, body {
+  overflow: hidden; /* overflow|overflow-x|overflow-y : visible|hidden|scroll|auto */
+}
+
+.form-label {
+  color: #888;
+  display: inline-block;
+  padding-left: 8px;
+  font-size: 12px;
+  font-family: 微软雅黑;
+  width: 70px;
+  align: left
+}
+</style>
+</head>
+<body>
+
+  <div style="width: 500px; margin: 10px" align="center">
+    <table class="form-table" border="0" align="left">
+      <tr>
+        <td>OFFER</td>
+        <td><input id="radioButtom1" name="offer" class="mini-radiobuttonlist"
+          value="${campusStudent.offer}" url="/recruit/resources/data/yesOrNo.txt" textField="text"
+          valueField="id" /></td>
+      </tr>
+      <tr>
+        <td>三方</td>
+        <td><input id="radioButtom2" name="trilateral" class="mini-radiobuttonlist"
+          value="${campusStudent.trilateral }" url="/recruit/resources/data/yesOrNo.txt"
+          textField="text" valueField="id" /></td>
+      </tr>
+      <tr>
+        <td>成绩单</td>
+        <td><input id="radioButtom3" name="transcript" class="mini-radiobuttonlist"
+          value="${campusStudent.transcript }" url="/recruit/resources/data/yesOrNo.txt"
+          textField="text" valueField="id" /></td>
+      </tr>
+      <tr>
+        <td>就业推荐表</td>
+        <td><input id="radioButtom4" name="referenceForm" class="mini-radiobuttonlist"
+          value="${campusStudent.referenceForm }" url="/recruit/resources/data/yesOrNo.txt"
+          textField="text" valueField="id" /></td>
+      </tr>
+      <tr>
+        <td>身份证复印件</td>
+        <td><input id="radioButtom5" name="idcardCopy" class="mini-radiobuttonlist"
+          value="${campusStudent.idcardCopy }" url="/recruit/resources/data/yesOrNo.txt"
+          textField="text" valueField="id" /></td>
+      </tr>
+      <tr>
+        <td>四六级成绩单</td>
+        <td><input id="radioButtom6" name="cetTranscript" class="mini-radiobuttonlist"
+          value="${campusStudent.cetTranscript }" url="/recruit/resources/data/yesOrNo.txt"
+          textField="text" valueField="id" /></td>
+      </tr>
+      <tr>
+        <td>照片</td>
+        <td><input id="radioButtom7" name="photo" class="mini-radiobuttonlist"
+          value="${campusStudent.photo }" url="/recruit/resources/data/yesOrNo.txt" textField="text"
+          valueField="id" /></td>
+      </tr>
+      <tr>
+        <td>违约情况</td>
+        <td><input id="radioButtom8" name="breakOff" class="mini-radiobuttonlist"
+          value="${campusStudent.breakOff }" url="/recruit/resources/data/yesOrNo.txt"
+          textField="text" valueField="id" /></td>
+      </tr>
+    </table>
+  </div>
+</body>
+  <script type="text/javascript">
+      mini.parse();
+
+      var radioButtom1 = mini.get("radioButtom1");
+      var radioButtom2 = mini.get("radioButtom2");
+    </script>
+  <script type="text/javascript" src="${webRoot}/resources/js/campus/campusStuList.js"></script>
+
+</html>

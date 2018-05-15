@@ -1,0 +1,550 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.csot.recruit.dao.resume.MyResumeRepositoryMapper" >
+  <!-- 定义返回的结果集合-->
+  <resultMap type="com.csot.recruit.model.resume.ResumesData" id="resumesData" >
+    <id property="id" column="id"/>
+    <result property="name" column="name"/>
+    <result property="selectionStatus" column="selection_status"/>
+    <result property="age" column="age"/>
+    <result property="label" column="label"/>
+    <result property="experience" column="experience"/>
+    <result property="resumeOrigin" column="resumeorigin"/>
+    <result property="positionId" column="positionId"/>
+    <result property="channel" column="channel"/>
+    <result property="updateDate" column="updateDate"/>
+    <result property="residence" column="residence"/>
+    <result property="birthday" column="BIRTHDAY"/>
+    <result property="maritalStatus" column="MARITAL_STATUS"/>
+    <result property="workYears" column="WORK_EXPERIENCE"/>
+    <result property="phoneReseave" column="PHONE_RESERVE"/>
+    <result property="phone" column="PHONE"/>
+    <result property="email" column="EMAIL"/>
+    <result property="address" column="ADDRESS"/>
+    <result property="nation" column="NATION"/>
+    <result property="idNumber" column="ID_NUMBER"/>
+    <result property="idAddress" column="ID_ADDRESS"/>
+    <result property="sex" column="SEX"/>
+    <result property="highestEducation" column="highest_education"/>
+    <result property="currentPosition" column="currentPosition" />
+    <result property="selfEvaluation" column="SELF_EVALUATION"/>
+    <result property="careerObject" column="CAREER_OBJECT"/>
+    <result property="experienceDetail" column="EXPERIENCE_DETAIL"/>
+    <result property="projectExperience" column="PROJECT_EXPERIENCE"/>
+    <result property="resumeLanguage" column="RESUME_LANGUAGE"/>
+    <result property="skillText" column="SKILL_TEXT"/>
+    <result property="trainInfo" column="TRAIN_INFOR"/>
+    <result property="languageInfo" column="LANGUAGE_INFOR"/>
+    <result property="certificateInfo" column="CERTIFICATE_INFOR"/>
+    <result property="awardInfo" column="AWARD_INFOR"/>
+    <result property="hobbyInfo" column="HOBBY_INFOR"/>
+    <result property="storageDate" column="storage_date"/>
+    <collection property="educationExperience" resultMap="educationExperienceMap"/>
+    <collection property="workIntention" resultMap="workIntentionMap"/>
+    <collection property="workExperience" resultMap="workExperienceMap"/>
+    <collection property="skill" resultMap="skillMap"/>
+    <collection property="languageSkill" resultMap="languageSkillMap"/>
+  </resultMap>
+  
+  <resultMap type="com.csot.recruit.model.resume.EducationExperience" id="educationExperienceMap">
+    <id column="eduexperience_id" property="id"/>
+    <result column="EDU_START_DATE" property="eduStartDate"/>
+    <result column="EDU_END_DATE" property="eduEndDate"/>
+    <result column="SCHOOL_NAME" property="schoolName"/>
+    <result column="SCHOOL_NAME_EN" property="schoolNameEn"/>
+    <result column="EDUCATION" property="education"/>
+    <result column="MAJOR" property="major"/>
+    <result column="MAJOR_EN" property="majorEn"/>
+    <result column="EXRESUME_ID" property="resumeId"/>
+  </resultMap>
+  
+  <resultMap type="com.csot.recruit.model.resume.WorkIntention" id="workIntentionMap">
+    <id column="workintention_id" property="id"/>
+    <result column="WORKPLACE_EXPECT" property="workplaceExpect"/>
+    <result column="INDUSTRY_EXPECT" property="industryExpect"/>
+    <result column="JOBTYPE_EXPECT" property="jobtypeExpect"/>
+    <result column="POST_EXPECT" property="postExpect"/>
+    <result column="SALARY_EXPECT" property="salaryExpect"/>
+    <result column="RPEORT_TIME" property="rpeortTime"/>
+    <result column="I_CURRENCY" property="currency"/>
+    <result column="WORESUME_ID" property="resumeId"/>
+  </resultMap>
+  
+  <resultMap type="com.csot.recruit.model.resume.WorkExperience" id="workExperienceMap">
+    <id column="workexperience_id" property="id"/>
+    <result column="COMPANY_NAME" property="companyName"/>
+    <result column="COMPANY_NAME_EN" property="companyNameEn"/>
+    <result column="JOB_START_DATE" property="jobStartDate"/>
+    <result column="JOB_END_DATE" property="jobEndDate"/>
+    <result column="INDUSTRY" property="industry"/>
+    <result column="POSITION_NAME" property="positionName"/>
+    <result column="POSITION_NAME_EN" property="positionNameEn"/>
+    <result column="WORKPLACE" property="workplace"/>
+    <result column="COMPANY_NATURE" property="companyNature"/>
+    <result column="JOB_DUTY" property="jobDuty"/>
+    <result column="JOB_DUTY_EN" property="jobDutyEn"/>
+    <result column="DEBRIEFER" property="debriefer"/>
+    <result column="DEBRIEFER_EN" property="debrieferEn"/>
+    <result column="SUBORDINATE" property="subordinate"/>
+    <result column="SALARY" property="salary"/>
+    <result column="W_CURRENCY" property="currency"/>
+    <result column="WORK_PERFORMACE" property="workPerformace"/>
+    <result column="WORK_PERFORMACE_EN" property="workPerformaceEn"/>
+    <result column="WERESUME_ID" property="resumeId"/>
+  </resultMap>
+  
+  <resultMap type="com.csot.recruit.model.resume.ITSkill" id="skillMap">
+    <id property="id" column="skillId"/>
+    <result property="skill" column="skill"/>
+    <result property="rank" column="rank"/>
+  </resultMap>
+
+  <resultMap type="com.csot.recruit.model.resume.LanguageSkill" id="languageSkillMap">
+    <id property="id" column="languageId"/>
+    <result property="languageName" column="language_name"/>
+    <result property="languageLevel" column="language_level"/>
+    <result property="oralLevel" column="oral_level"/>
+  </resultMap>
+  
+  <sql id="Base_Column_List">
+  	t.id, t.name, t.selection_status, t.age, t.BIRTHDAY, t.positionId,
+    t.label, t.residence, t.work_experience as experience, t.resumeorigin, t.channel, t.update_date as updateDate,
+    t.highest_education, t.current_position as currentPosition, t.storage_date, t.professional, t.email,
+    t.current_industry, t.sex, t.phone
+  </sql>
+  <sql id="Education_Experience_List" >
+    ex.id as eduexperience_id, ex.EDU_START_DATE, ex.EDU_END_DATE, ex.SCHOOL_NAME, ex.SCHOOL_NAME_EN, ex.EDUCATION, ex.MAJOR, 
+    ex.MAJOR_EN, ex.RESUME_ID as EXRESUME_ID
+  </sql>
+  <sql id="Work_Experience_List" >
+    we.id workexperience_id, we.COMPANY_NAME, we.COMPANY_NAME_EN, we.JOB_START_DATE, we.JOB_END_DATE, we.INDUSTRY, we.POSITION_NAME, 
+    we.POSITION_NAME_EN, we.WORKPLACE, we.COMPANY_NATURE, we.JOB_DUTY, we.JOB_DUTY_EN, we.DEBRIEFER, we.DEBRIEFER_EN, 
+    we.SUBORDINATE, we.SALARY, we.CURRENCY as W_CURRENCY, we.WORK_PERFORMACE, we.WORK_PERFORMACE_EN, we.RESUME_ID as WERESUME_ID
+  </sql>
+  <sql id="Work_Intention_List" >
+    wo.workintention_id, wo.WORKPLACE_EXPECT, wo.INDUSTRY_EXPECT, wo.JOBTYPE_EXPECT, wo.POST_EXPECT, wo.SALARY_EXPECT, 
+    wo.RPEORT_TIME, wo.CURRENCY as I_CURRENCY, wo.RESUME_ID as WORESUME_ID
+  </sql>
+  <sql id="Language_List" >
+    language.ID as language_id, language.LANGUAGE_NAME, language.LANGUAGE_LEVEL, language.ORAL_LEVEL, language.RESUME_ID
+  </sql>
+  <sql id="Label_List" >
+    trim(label.ID) as label_id, trim(label.NAME) as label_name, trim(label.CATEGORY_ID) as CATEGORY_ID
+  </sql>
+  <sql id="log_list">
+  	log.LOGCONTENT, log.PRIVACYLEVEL as PRIVACYLEVEL, log.userid as LOG_ACCOUNT, log.OPERATETYPE as OPERATE_TYPE, log.OPERATETIME
+  </sql>
+  
+  <!-- 查询分类信息和数量 -->
+  <resultMap type="com.csot.recruit.model.resume.ClassifyData" id="classifyData">
+    <result property="name" column="name"/>
+    <result property="totalCount" column="toltalCount"/>
+  </resultMap>
+ 
+  <select id="queryResumesDataByPage"  parameterType="java.util.Map" resultMap="resumesData" >
+  	select * from(
+    	select 
+    		<include refid="Base_Column_List"/>,
+      	<include refid="Work_Experience_List"/>,
+      	<include refid="Work_Intention_List"/>,
+      	<include refid="Education_Experience_List"/>
+      	<include refid="tableContact"/>
+	    	<include refid="queryRequirement"/>)
+        where id in(
+				  select id from (select rownum as rowno ,id from(select  t.id,t.storage_date
+				  <include refid="tableContact"/>
+					<include refid="queryRequirement"/>
+				    group by t.id,t.storage_date order by storage_date desc) ) f
+				  <if test="pageSize !=null and pageIndex !=null">
+				    where  f.rowno>#{pageSize} * #{pageIndex} 
+				    and f.rowno<![CDATA[<=#{pageSize} * (#{pageIndex} + 1)]]>
+				  </if>
+					) order by storage_date desc, id, EDU_END_DATE desc, JOB_END_DATE desc
+		 		<if test="sortField != null and sortField != ''">
+     	    ,${sortField} ${sortOrder}
+        </if>
+  </select>
+  
+  <!-- 查询简历人才库不带分页 -->
+  <select id="queryResumesData" resultMap="resumesData">
+    select * from(
+   	  select 
+    		<include refid="Base_Column_List"/>,
+      	<include refid="Work_Experience_List"/>,
+      	<include refid="Work_Intention_List"/>,
+      	<include refid="Education_Experience_List"/>
+      	<include refid="tableContact"/>
+	    	<include refid="queryRequirement"/>)
+        where id in(
+				  select id from (select rownum as rowno ,id from(select  t.id,t.storage_date
+				  <include refid="tableContact"/>
+				  group by t.id,t.storage_date order by storage_date desc) ) f) order by storage_date desc
+  </select>
+  
+  <select id="countResumesData"   parameterType="java.util.Map" resultType="java.lang.Integer">
+    select count(id) from( select t.id as id 
+    <include refid="tableContact"/>
+    <include refid="queryRequirement"/>
+	group by t.id )
+  </select>
+  
+  <!-- 分类查询职位 -->
+  <select id="queryClassifyByPosition" resultMap="classifyData" parameterType="java.util.Map"> 
+    select name ,count(name)as totalCount from(select t.id as id ,t.current_position as name
+	<include refid="tableContact"/>
+	<include refid="queryRequirement"/>
+	group by t.id,t.current_position) group by name
+  </select>
+  
+  <!-- 分类查询毕业学校 -->
+  <select id="queryClassifyGraduationSchool" resultMap="classifyData" parameterType="java.util.Map">
+    select name ,count(name)as totalCount from (select t.id as id ,ex.school_name as name
+    <include refid="tableContact"/>
+	<include refid="queryRequirement"/>
+	group by t.id,ex.school_name) group by name
+  </select>
+  
+  <!-- 分类查询学历-->
+  <select id="queryClassifyHighestEducation" resultMap="classifyData" parameterType="java.util.Map">
+    select name ,count(name)as totalCount from (select t.id as id, t.highest_education as name 
+    <include refid="tableContact"/>
+	<include refid="queryRequirement"/>
+	group by t.id,t.highest_education)group by name
+  </select>
+  
+  <!-- 分类查询当前所在地-->
+  <select id="queryClassifyResidencer" resultMap="classifyData" parameterType="java.util.Map">
+    select name,count(name) as totalCount from( select t.id as id ,t.residence as name
+    <include refid="tableContact"/>
+	  <include refid="queryRequirement"/>
+	  group by t.id,t.residence)group by name
+  </select>
+  
+  <!-- 分类查询招聘渠道-->
+  <select id="queryClassifyChannel" resultMap="classifyData" parameterType="java.util.Map">
+    select name,count(name) as totalCount from ( select t.id as id ,t.channel as name
+    <include refid="tableContact"/>
+	  <include refid="queryRequirement"/>
+	  group by t.id, t.channel) group by name
+  </select>
+  
+  <!-- 分类查询标签-->
+  <select id="queryClassifyLabel" resultMap="classifyData" parameterType="java.util.Map">
+    select name,count(name) as totalCount from ( select t.id as id ,lr.label_id as name
+    <include refid="tableContact"/>
+	  <include refid="queryRequirement"/>
+	  group by t.id, lr.label_id) group by name
+  </select>
+   
+  <sql id="tableContact">
+    from T_RESUME_BASICINFOR t 
+    left join T_RESUME_EDUCATION_EXPERIENCE ex on t.id=ex.resume_id 
+	  left join T_RESUME_WORK_INTENTION wo on t.id=wo.resume_id 
+	  left join T_RESUME_WORK_EXPERIENCE we on t.id=we.resume_id
+	  left join T_LABEL_RESUME lr on lr.resume_id = t.id  
+	  left join T_RESUME_LANGUAGE rl on t.id=rl.resume_id 
+	  left join T_RESUME_SKILL rs on t.id=rs.resume_id 
+  </sql>
+   
+  <sql id="queryRequirement">
+    <where>
+	  	1=1 and t.RESUME_STATUS != -1
+	  	<if test="idList !='' and idList != null">
+	    	and t.id IN
+	    	<foreach item="item" index="index" collection="idList" open="(" separator="," close=")">
+          #{item}
+        </foreach>
+	  	</if>
+	  	<if test="name !=null and name !=''">
+	    	and t.name like '%'|| #{name}|| '%'
+	  	</if>
+	  	<if test="lowerAge !=null and lowerAge !=''">
+	   	  and t.age  &gt;=to_number(#{lowerAge}) 
+	  	</if>
+	    <if test="upperAge !=null and upperAge !=''">
+	    	and t.age &lt;=to_number(#{upperAge})
+	  	</if>
+	  	<if test="currentPosition !=null and currentPosition !=''">
+	    	and t.current_position like '%' ||#{currentPosition}||'%'
+	  	</if>
+	  	<if test="company !=null and company !=''">
+	    	and we.company_name like '%' ||#{company}||'%'
+	  	</if>
+	  	<if test="highestEducation !=null and highestEducation !=''">
+	   		and t.highest_education in
+	      <foreach collection="highestEducation" index="index" item="item" open="(" separator="," close=")">
+           #{item}
+        </foreach> 
+	  	</if> 
+      <if test="label !=null and label !=''">
+	    	<choose>
+	      	<when test="labelSign ==0">
+	        	and 
+	        	<foreach collection="label" index="index" item="item"  open="(" close=")" >
+	          	<choose>  
+	            	<when test="index==0">   
+                  t.label like '%' ||#{item}||'%' 
+                </when> 
+                <otherwise>
+                  or t.label like '%' ||#{item}||'%'
+                </otherwise>  
+	          	</choose>
+            </foreach>
+	      	</when>
+	      	<otherwise>
+	        	<foreach collection="label" index="index" item="item"   >
+	         	  and t.label like '%' ||#{item}||'%'
+            </foreach>
+	      	</otherwise>
+	    	</choose>
+	  	</if> 
+	  	<if test="professional !=null and professional !=''">
+	    	and ex.major in 
+	    	<foreach collection="professional" index="index" item="item" open="(" separator="," close=")">
+          #{item}
+        </foreach> 
+	  	</if>
+	  	<if test="lowerExperience !=null and lowerExperience !=''">
+	    	and t.work_experience &gt;=to_number(#{lowerExperience})
+	  	</if>
+	  	<if test="upperExperience !=null and upperExperience !=''">
+	    	and t.work_experience  &lt;=to_number(#{upperExperience})
+	  	</if>
+	  	<if test="channel !=null and channel !='' ">
+	    	and t.channel = #{channel}
+	  	</if>
+	  	<if test="email !=null and email !='' ">
+	    	and t.email = #{email}
+	  	</if>
+	  	<if test="currentIndustry !=null and currentIndustry !='' ">
+	    	and t.current_industry = #{currentIndustry}
+	  	</if>
+	  	<if test="residence !=null and residence !='' ">
+	    	and t.residence = #{residence}
+	  	</if>
+	  	<if test="schoolName !=null and schoolName !='' ">
+	    	and ex.school_name in 
+	    	<foreach collection="schoolName" index="index" item="item" open="(" separator="," close=")">
+          #{item}
+        </foreach> 
+	  	</if>
+	  	<if test="postExpect !=null and postExpect !='' ">
+	    	and wo.post_expect in 
+	    	<foreach collection="postExpect" index="index" item="item" open="(" separator="," close=")">
+          #{item}
+        </foreach> 
+	  	</if>
+	  	<if test="sex !=null and sex !='' ">
+	    	and t.sex = #{sex}
+	  	</if>
+	  	<if test="industryExpect !=null and industryExpect !='' ">
+	    	and wo.industry_expect in 
+	    	<foreach collection="industryExpect" index="index" item="item" open="(" separator="," close=")">
+          #{item}
+        </foreach> 
+	   	</if>
+	   	<if test="lowerUpdateDate !=null and lowerUpdateDate !='' ">
+	      and to_date(to_char(Trunc(t.update_date),' yyyy-mm-dd'),'yyyy-mm-dd') >= 
+		    to_date(#{lowerUpdateDate},'yyyy-mm-dd')
+	      <!--  and t.update_date &gt;=#{lowerUpdateDate} -->
+	    </if>
+	    <if test="upperUpdateDate !=null and upperUpdateDate !='' ">
+	      and to_date(#{upperUpdateDate},'yyyy-mm-dd') >=
+		    to_date(to_char(Trunc(t.update_date),' yyyy-mm-dd'),'yyyy-mm-dd')
+	    </if>
+	    <if test="workplaceExpect !=null and workplaceExpect !='' ">
+	      and wo.workplace_expect in #{workplaceExpect}
+	    </if>
+	    <if test="salaryExpect !=null and salaryExpect !='' ">
+	      and wo.salary_expect= #{salaryExpect}
+	    </if>
+	  </where>
+  </sql>
+  
+  <select id="queryResumesDataById" resultMap="resumesData" parameterType="java.lang.String">
+    <include refid="queryResumeByIdSql"></include>
+    where t.id=#{id}
+  </select>
+  
+  <sql id="queryResumeByIdSql">
+     select t.id,t.name,t.age,t.residence,t.BIRTHDAY,t.MARITAL_STATUS,t.WORK_EXPERIENCE,t.PHONE_RESERVE,t.PHONE,t.EMAIL,t.ADDRESS,
+           t.NATION,t.ID_NUMBER,t.ID_ADDRESS,t.SEX,t.highest_education,t.SELF_EVALUATION,t.CAREER_OBJECT,
+           t.EXPERIENCE_DETAIL,t.PROJECT_EXPERIENCE,t.LANGUAGE_SKILL,t.SKILL_TEXT,t.TRAIN_INFOR,t.LANGUAGE_INFOR,t.CERTIFICATE_INFOR,
+           t.AWARD_INFOR,t.HOBBY_INFOR,we.id workexperience_id,we.company_name,we.industry,we.workplace,we.job_duty,we.JOB_START_DATE,
+           we.JOB_END_DATE,we.POSITION_NAME,we.WORKPLACE,we.COMPANY_NATURE,we.DEBRIEFER,we.SUBORDINATE,we.SALARY,we.CURRENCY,we.WORK_PERFORMACE,
+           rl.id as languageId,rl.language_name,rl.language_level,rl.oral_level,rs.id as skillId,rs.skill,rs.rank,ree.EDU_START_DATE,ree.EDU_END_DATE,
+           ree.id education_id,ree.school_name,ree.education,ree.major
+           from T_RESUME_BASICINFOR t left join T_RESUME_WORK_EXPERIENCE we on t.id=we.resume_id 
+           left join T_RESUME_LANGUAGE rl on t.id=rl.resume_id left join T_RESUME_SKILL rs on t.id=rs.resume_id 
+           left join T_RESUME_EDUCATION_EXPERIENCE ree on t.id = ree.resume_id
+  </sql>
+  
+  <sql id="queryRequirement2">
+    <where>
+	  1=1 and t.RESUME_STATUS != -1
+	  <if test="keyword !='' and keyword !=null" >
+	    and(
+	        t.id = #{keyword} 
+	        or t.name like '%'|| #{keyword}|| '%' or t.age like '%'|| #{keyword}|| '%' or t.residence like '%'|| #{keyword}|| '%'
+	        or t.BIRTHDAY like '%'|| #{keyword}|| '%' or t.WORK_EXPERIENCE like '%'|| #{keyword}|| '%' or t.PHONE_RESERVE like '%'|| #{keyword}|| '%'
+	        or t.ID_NUMBER like '%'|| #{keyword}|| '%' or t.ID_ADDRESS like '%'|| #{keyword}|| '%' or t.SELF_EVALUATION like '%'|| #{keyword}|| '%' 
+	        or t.CAREER_OBJECT like '%'|| #{keyword}|| '%' or t.EXPERIENCE_DETAIL like '%'|| #{keyword}|| '%' or t.PROJECT_EXPERIENCE like '%'|| #{keyword}|| '%'
+	        or t.LANGUAGE_SKILL like '%'|| #{keyword}|| '%' or t.SKILL_TEXT like '%'|| #{keyword}|| '%' or t.TRAIN_INFOR like '%'|| #{keyword}|| '%' 
+            or t.CERTIFICATE_INFOR like '%'|| #{keyword}|| '%' or t.AWARD_INFOR like '%'|| #{keyword}|| '%' or t.HOBBY_INFOR like '%'|| #{keyword}|| '%' 
+            or we.company_name like '%'|| #{keyword}|| '%' or we.industry like '%'|| #{keyword}|| '%' or t.LANGUAGE_INFOR like '%'|| #{keyword}|| '%' 
+            or we.workplace like '%'|| #{keyword}|| '%' or we.job_duty like '%'|| #{keyword}|| '%' or we.JOB_START_DATE like '%'|| #{keyword}|| '%'
+            or we.JOB_END_DATE like '%'|| #{keyword}|| '%' or we.POSITION_NAME like '%'|| #{keyword}|| '%' or we.WORKPLACE like '%'|| #{keyword}|| '%' 
+            or we.COMPANY_NATURE like '%'|| #{keyword}|| '%' or we.DEBRIEFER like '%'|| #{keyword}|| '%' or we.SUBORDINATE like '%'|| #{keyword}|| '%' 
+            or we.SALARY like '%'|| #{keyword}|| '%' or we.CURRENCY like '%'|| #{keyword}|| '%' or we.WORK_PERFORMACE like '%'|| #{keyword}|| '%'
+            or rl.language_name like '%'|| #{keyword}|| '%' or rs.skill like '%'|| #{keyword}|| '%' or ex.EDU_START_DATE like '%'|| #{keyword}|| '%'
+            or ex.EDU_END_DATE like '%'|| #{keyword}|| '%' or ex.school_name like '%'|| #{keyword}|| '%' or ex.major like '%'|| #{keyword}|| '%'
+            or t.PHONE  like '%'|| #{keyword}|| '%' or t.EMAIL like '%'|| #{keyword}|| '%' or t.ADDRESS like '%'|| #{keyword}|| '%' or t.NATION like '%'|| #{keyword}|| '%'
+	        )
+	  </if>
+	  <if test="id !='' and id != null">
+	    and t.id = #{id}
+	  </if>
+	  <if test="name !=null and name !='' ">
+	    and t.name like '%'|| #{name}|| '%'
+	  </if>
+	  <if test="lowerAge !=null and lowerAge !='' ">
+	    and t.age  &gt;=to_number(#{lowerAge}) 
+	  </if>
+	  <if test="upperAge !=null and upperAge !=''">
+	    and t.age &lt;=to_number(#{upperAge})
+	  </if>
+	  <if test="currentPosition !=null and currentPosition !=''">
+	    and t.current_position like '%' ||#{currentPosition}||'%'
+	  </if>
+	  <if test="company !=null and company !=''">
+	    and we.company_name like '%' ||#{company}||'%'
+	  </if>
+	  <if test="highestEducation !=null and highestEducation !=''">
+	    <choose>
+	      <when test="educationSign ==0">
+	        and t.highest_education =#{highestEducation}
+	      </when>
+	      <otherwise>
+	        and to_number(substr(t.highest_education, length(t.highest_education), length(t.highest_education))) >= to_number(substr(#{highestEducation}, length(#{highestEducation}), length(#{highestEducation})))
+	      </otherwise>
+	    </choose>
+	  </if> 
+      <if test="label !=null and label !=''">
+	    <choose>
+	      <when test="labelSign ==0">
+	        and 
+	        <foreach collection="label" index="index" item="item"  open="(" close=")" >
+	          <choose>  
+	            <when test="index==0">   
+                  t.label like '%' ||#{item}||'%' 
+                </when> 
+                <otherwise>
+                  or t.label like '%' ||#{item}||'%'
+                </otherwise>  
+	          </choose>
+            </foreach>
+	      </when>
+	      <otherwise>
+	        <foreach collection="label" index="index" item="item"   >
+	          and t.label like '%' ||#{item}||'%'
+            </foreach>
+	      </otherwise>
+	    </choose>
+	  </if> 
+	  <if test="professional !=null and professional !=''">
+	    and ex.major in 
+	    <foreach collection="professional" index="index" item="item" open="(" separator="," close=")">
+           #{item}
+        </foreach> 
+	  </if>
+	  <if test="lowerExperience !=null and lowerExperience !=''">
+	    and t.work_experience &gt;=to_number(#{lowerExperience})
+	  </if>
+	  <if test="upperExperience !=null and upperExperience !=''">
+	    and t.work_experience  &lt;=to_number(#{upperExperience})
+	  </if>
+	  <if test="channel !=null and channel !='' ">
+	    and t.channel = #{channel}
+	  </if>
+	  <if test="email !=null and email !='' ">
+	    and t.email = #{email}
+	  </if>
+	  <if test="currentIndustry !=null and currentIndustry !='' ">
+	    and t.current_industry = #{currentIndustry}
+	  </if>
+	  <if test="residence !=null and residence !='' ">
+	    and t.residence = #{residence}
+	  </if>
+	  <if test="schoolName !=null and schoolName !='' ">
+	    and ex.school_name in 
+	    <foreach collection="schoolName" index="index" item="item" open="(" separator="," close=")">
+          #{item}
+        </foreach> 
+	  </if>
+	  <if test="postExpect !=null and postExpect !='' ">
+	    and wo.post_expect in 
+	    <foreach collection="postExpect" index="index" item="item" open="(" separator="," close=")">
+          #{item}
+        </foreach> 
+	  </if>
+	  <if test="sex !=null and sex !='' ">
+	    and t.sex = #{sex} 
+	  </if>
+	  <if test="industryExpect !=null and industryExpect !='' ">
+	    and wo.industry_expect in  
+	    <foreach collection="industryExpect" index="index" item="item" open="(" separator="," close=")">
+          #{item}
+        </foreach> 
+	   </if>
+	   <if test="lowerUpdateDate !=null and lowerUpdateDate !='' ">
+	     and to_date(to_char(Trunc(t.update_date),' yyyy-mm-dd'),'yyyy-mm-dd') >= 
+		   to_date(#{lowerUpdateDate},'yyyy-mm-dd')
+	      <!--  and t.update_date &gt;=#{lowerUpdateDate} -->
+	   </if>
+	   <if test="upperUpdateDate !=null and upperUpdateDate !='' ">
+	     and to_date(#{upperUpdateDate},'yyyy-mm-dd') >=
+		   to_date(to_char(Trunc(t.update_date),' yyyy-mm-dd'),'yyyy-mm-dd')
+	   </if>
+	   <if test="workplaceExpect !=null and workplaceExpect !='' ">
+	     and wo.workplace_expect in #{workplaceExpect} 
+	   </if>
+	   <if test="salaryExpect !=null and salaryExpect !='' ">
+	     and wo.salary_expect= #{salaryExpect}
+	   </if>
+	 </where>
+  </sql>
+  
+  <!-- 添加人才库索引 -->
+  <insert id="insertPositionSearch" parameterType="java.lang.String">
+  	insert into T_POSITION_SEARCH (POSITION_ID) values(#{positionId})
+  </insert>
+  
+  <!-- 查询要建立索引的人才库id -->
+  <select id="querySearchPosition" resultType="com.csot.recruit.model.resume.PositionSearch">
+   <![CDATA[
+         SELECT tks.POSITION_ID as positionId,tks.IS_SEARCH as isSearch 
+		 FROM T_POSITION_SEARCH tks WHERE tks.IS_SEARCH <> 99
+        ]]>
+  </select>
+  
+  <!-- 查询要建立索引的人才库id是否已创建  -->
+  <select id="querySearchPositionById" parameterType="java.lang.String" resultType="java.lang.Integer">
+   <![CDATA[
+         SELECT count(tks.POSITION_ID) 
+		 FROM T_POSITION_SEARCH tks WHERE tks.POSITION_ID =#{positionId}
+        ]]>
+  </select>
+  
+  <!-- 更改已建立索引的人才库状态  -->
+  <update id="updatePositionIsSearch" parameterType="java.lang.String">
+ 	  UPDATE T_POSITION_SEARCH SET IS_SEARCH =99 WHERE POSITION_ID=#{positionId}
+  </update>
+    
+  <!-- 如果调用创建索引失败则 isSearch++ -->
+  <update id="updatePositionAddIsSearch" parameterType="java.lang.String">
+ 		<![CDATA[
+      UPDATE T_POSITION_SEARCH SET IS_SEARCH =IS_SEARCH+1 WHERE POSITION_ID=#{positionId}
+    ]]>
+ </update>
+ 
+</mapper>

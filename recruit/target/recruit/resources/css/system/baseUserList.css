@@ -1,0 +1,177 @@
+
+html {
+    color: #4d4d4d;
+}
+body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, code, form, fieldset, legend, input, textarea, p, blockquote, th, td {
+    margin: 0;
+    padding: 0;
+}
+.account-search{
+    border: 1px solid #a9ccde;
+    border-radius: 5px;
+    padding: 10px;
+    position: relative;
+    margin-top: 20px;
+}
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+.tblQuery2 th {
+    color: #999;
+    padding: 5px;
+}
+caption, th {
+    text-align: left;
+    margin-right: 12px;
+}
+address, caption, cite, code, dfn, em, strong, th, var {
+    font-style: normal;
+    font-weight: normal;
+}
+select {
+    height: 25px;
+    line-height: 25px;
+    padding: 2px;
+    font-size: 13px;
+}
+input, textarea, select {
+}
+input, textarea, select, label {
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: inherit;
+    vertical-align: middle;
+}
+input, select, textarea {
+    color: #4d4d4d;
+}
+.choose_btn:hover {
+    background-position: 0 -948px;
+}
+.choose_btn {
+    background-position: 0 -112px;
+    color: #4d4d4d;
+}
+.search_btn:hover {
+    background-position: 0 -749px;
+}
+.search_btn {
+    background-position: -192px -297px;
+    color: #fff;
+}
+.search_btn {
+    border: medium none;
+    color: #fff;
+    cursor: pointer;
+    height: 24px;
+    line-height: 24px;
+    width: 54px;
+}
+#btnSelDeptTitle1{
+	width: 150px;
+	height: 28px;
+	border-radius:5px;
+	border:1px solid #8FBAD0;
+	text-align: left;
+}
+.btn4:hover, .refresh:hover {
+    background-position: -101px -749px;
+    text-decoration: none;
+}
+.btn4 {
+    border: medium none;
+    color: #fff;
+    cursor: pointer;
+    height: 24px;
+    margin-right: 3px;
+    width: 65px;
+    margin-bottom: 2px;
+}
+#jobFunc {
+    height: 24px;
+    line-height: 24px;
+    margin-top: 10px;
+    overflow: hidden;
+    padding: 10px 0 10px 10px;
+}
+.dataOperate {
+    height: 20px;
+    line-height: 20px;
+    overflow: hidden;
+    padding: 10px 0 10px 10px;
+}
+
+body, button, input, select, textarea {
+    color: #4d4d4d;
+    font: 13px/1.5 "微软雅黑","宋体",Helvetica,Verdana,Arial,Tahoma;
+}
+.btn4{
+    background: url("../../images/sprite_repeat.jpg") no-repeat scroll 0 0;
+}
+.btn4, .refresh {
+    background-position: -100px -401px;
+    color: #fff;
+}
+.btn4, .refresh {
+    background-position: -100px -401px;
+    color: #fff;
+}
+.innerBtn{
+	text-align: center;
+}
+.showCellTooltip{
+	display: inline-block;
+	float:left;
+	margin-right: 20px;
+	color: blue;
+}
+.recruit-assistant-win {
+    width: 460px !important;
+}
+.recruit-assistant-middle {
+    margin: 15px;
+}
+.recruit-assistant-middle span, .department-win span {
+    color: gray;
+}
+.recruit-assistant-tab {
+    margin-left: 10px;
+}
+.recruit-assistant-tab tr {
+    height: 27px;
+}
+.recruit-assistant-text {
+    width: 203px;
+}
+.pdept-btn, .recruit-assistant-dept {
+    background-color: #c3e7fa;
+    border: 1px solid #aebed7;
+    cursor: pointer;
+}
+#cellphoneMsg .msg-wrap {
+    margin-left: 0;
+    position: relative;
+}
+.pdept-btn, .recruit-assistant-dept {
+    background-color: #c3e7fa;
+    border: 1px solid #aebed7;
+    cursor: pointer;
+}
+.recruit-choosebtn, .recruit-select {
+    height: 23px;
+    width: 154px;
+}
+#accountRoleSelect{
+	height: 23px;
+	width: 154px;
+}
+.clearButton{
+	position: relative;
+	bottom: 0px;
+	left: 120px;
+}
+
+.userContent{
+	margin-top: 20px;
+}

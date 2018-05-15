@@ -1,0 +1,388 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.csot.recruit.dao.original.candidate.CandidateRecommendMapper" >
+  <resultMap id="BaseResultMap" type="com.csot.recruit.model.original.candidate.CandidateRecommend" >
+    <id column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="CANDIDATE_POST_ID" property="candidatePostId" jdbcType="VARCHAR" />
+    <result column="INTERVIEWER" property="interviewer" jdbcType="VARCHAR" />
+    <result column="RESUME_ID" property="resumeId" jdbcType="VARCHAR" />
+    <result column="COMMENTS" property="comments" jdbcType="VARCHAR" />
+    <result column="FEEDBACK" property="feedback" jdbcType="VARCHAR" />
+    <result column="TURNTO_POST_ID" property="turntoPostId" jdbcType="VARCHAR" />
+    <result column="CREATE_USER" property="createUser" jdbcType="VARCHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="FEEDBACK_TIME" property="feedbackTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  
+    <resultMap id="RecommendResultMap" type="com.csot.recruit.model.original.candidate.RecommendUnionIds" >
+    <result column="CANDIDATE_RECOMMEND_ID" property="candidateRecommendId" jdbcType="VARCHAR" />
+    <result column="CANDIDATE_POST_ID" property="candidatePostId" jdbcType="VARCHAR" />
+    <result column="CANDIDATE_ID" property="candidateId" jdbcType="VARCHAR" />
+    <result column="RESUME_ID" property="resumeId" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    ID, CANDIDATE_POST_ID, INTERVIEWER, RESUME_ID, COMMENTS, FEEDBACK, TURNTO_POST_ID, 
+    CREATE_USER, CREATE_TIME, FEEDBACK_TIME
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.csot.recruit.model.original.candidate.CandidateRecommendCriteria" >
+    <include refid="Oracle_Dialect_Pagination_Prefix" />
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from T_CANDIDATE_RECOMMEND
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <include refid="Oracle_Dialect_Pagination_Suffix" />
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from T_CANDIDATE_RECOMMEND
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from T_CANDIDATE_RECOMMEND
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.csot.recruit.model.original.candidate.CandidateRecommendCriteria" >
+    delete from T_CANDIDATE_RECOMMEND
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.csot.recruit.model.original.candidate.CandidateRecommend" >
+    insert into T_CANDIDATE_RECOMMEND (ID, CANDIDATE_POST_ID, INTERVIEWER, 
+      RESUME_ID, COMMENTS, FEEDBACK, 
+      TURNTO_POST_ID, CREATE_USER, CREATE_TIME, 
+      FEEDBACK_TIME)
+    values (#{id,jdbcType=VARCHAR}, #{candidatePostId,jdbcType=VARCHAR}, #{interviewer,jdbcType=VARCHAR}, 
+      #{resumeId,jdbcType=VARCHAR}, #{comments,jdbcType=VARCHAR}, #{feedback,jdbcType=VARCHAR}, 
+      #{turntoPostId,jdbcType=VARCHAR}, #{createUser,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{feedbackTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.csot.recruit.model.original.candidate.CandidateRecommend" >
+    insert into T_CANDIDATE_RECOMMEND
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="candidatePostId != null" >
+        CANDIDATE_POST_ID,
+      </if>
+      <if test="interviewer != null" >
+        INTERVIEWER,
+      </if>
+      <if test="resumeId != null" >
+        RESUME_ID,
+      </if>
+      <if test="comments != null" >
+        COMMENTS,
+      </if>
+      <if test="feedback != null" >
+        FEEDBACK,
+      </if>
+      <if test="turntoPostId != null" >
+        TURNTO_POST_ID,
+      </if>
+      <if test="createUser != null" >
+        CREATE_USER,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+      <if test="feedbackTime != null" >
+        FEEDBACK_TIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="candidatePostId != null" >
+        #{candidatePostId,jdbcType=VARCHAR},
+      </if>
+      <if test="interviewer != null" >
+        #{interviewer,jdbcType=VARCHAR},
+      </if>
+      <if test="resumeId != null" >
+        #{resumeId,jdbcType=VARCHAR},
+      </if>
+      <if test="comments != null" >
+        #{comments,jdbcType=VARCHAR},
+      </if>
+      <if test="feedback != null" >
+        #{feedback,jdbcType=VARCHAR},
+      </if>
+      <if test="turntoPostId != null" >
+        #{turntoPostId,jdbcType=VARCHAR},
+      </if>
+      <if test="createUser != null" >
+        #{createUser,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="feedbackTime != null" >
+        #{feedbackTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.csot.recruit.model.original.candidate.CandidateRecommendCriteria" resultType="java.lang.Integer" >
+    select count(*) from T_CANDIDATE_RECOMMEND
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update T_CANDIDATE_RECOMMEND
+    <set >
+      <if test="record.id != null" >
+        ID = #{record.id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.candidatePostId != null" >
+        CANDIDATE_POST_ID = #{record.candidatePostId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.interviewer != null" >
+        INTERVIEWER = #{record.interviewer,jdbcType=VARCHAR},
+      </if>
+      <if test="record.resumeId != null" >
+        RESUME_ID = #{record.resumeId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.comments != null" >
+        COMMENTS = #{record.comments,jdbcType=VARCHAR},
+      </if>
+      <if test="record.feedback != null" >
+        FEEDBACK = #{record.feedback,jdbcType=VARCHAR},
+      </if>
+      <if test="record.turntoPostId != null" >
+        TURNTO_POST_ID = #{record.turntoPostId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createUser != null" >
+        CREATE_USER = #{record.createUser,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null" >
+        CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.feedbackTime != null" >
+        FEEDBACK_TIME = #{record.feedbackTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update T_CANDIDATE_RECOMMEND
+    set ID = #{record.id,jdbcType=VARCHAR},
+      CANDIDATE_POST_ID = #{record.candidatePostId,jdbcType=VARCHAR},
+      INTERVIEWER = #{record.interviewer,jdbcType=VARCHAR},
+      RESUME_ID = #{record.resumeId,jdbcType=VARCHAR},
+      COMMENTS = #{record.comments,jdbcType=VARCHAR},
+      FEEDBACK = #{record.feedback,jdbcType=VARCHAR},
+      TURNTO_POST_ID = #{record.turntoPostId,jdbcType=VARCHAR},
+      CREATE_USER = #{record.createUser,jdbcType=VARCHAR},
+      CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      FEEDBACK_TIME = #{record.feedbackTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.csot.recruit.model.original.candidate.CandidateRecommend" >
+    update T_CANDIDATE_RECOMMEND
+    <set >
+      <if test="candidatePostId != null" >
+        CANDIDATE_POST_ID = #{candidatePostId,jdbcType=VARCHAR},
+      </if>
+      <if test="interviewer != null" >
+        INTERVIEWER = #{interviewer,jdbcType=VARCHAR},
+      </if>
+      <if test="resumeId != null" >
+        RESUME_ID = #{resumeId,jdbcType=VARCHAR},
+      </if>
+      <if test="comments != null" >
+        COMMENTS = #{comments,jdbcType=VARCHAR},
+      </if>
+      <if test="feedback != null" >
+        FEEDBACK = #{feedback,jdbcType=VARCHAR},
+      </if>
+      <if test="turntoPostId != null" >
+        TURNTO_POST_ID = #{turntoPostId,jdbcType=VARCHAR},
+      </if>
+      <if test="createUser != null" >
+        CREATE_USER = #{createUser,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="feedbackTime != null" >
+        FEEDBACK_TIME = #{feedbackTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.csot.recruit.model.original.candidate.CandidateRecommend" >
+    update T_CANDIDATE_RECOMMEND
+    set CANDIDATE_POST_ID = #{candidatePostId,jdbcType=VARCHAR},
+      INTERVIEWER = #{interviewer,jdbcType=VARCHAR},
+      RESUME_ID = #{resumeId,jdbcType=VARCHAR},
+      COMMENTS = #{comments,jdbcType=VARCHAR},
+      FEEDBACK = #{feedback,jdbcType=VARCHAR},
+      TURNTO_POST_ID = #{turntoPostId,jdbcType=VARCHAR},
+      CREATE_USER = #{createUser,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      FEEDBACK_TIME = #{feedbackTime,jdbcType=TIMESTAMP}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <sql id="Oracle_Dialect_Pagination_Prefix" >
+    <if test="page != null" >
+      select * from ( select row_.*, rownum rownum_ from ( 
+    </if>
+  </sql>
+  <sql id="Oracle_Dialect_Pagination_Suffix" >
+    <if test="page != null" >
+      <![CDATA[ ) row_ ) where rownum_ > #{page.begin} and rownum_ <= #{page.end} ]]>
+    </if>
+  </sql>
+  
+      <sql id="Recommend_Oracle_Dialect_Pagination_Prefix" >
+   <if test="begin != null and end != null" >
+      select * from ( select row_.*, rownum rownum_ from ( 
+    </if>
+  </sql>
+  <sql id="Recommend_Oracle_Dialect_Pagination_Suffix" >
+    <if test="begin != null and end != null" >
+      <![CDATA[ ) row_ ) where rownum_ > #{begin} and rownum_ <= #{end} ]]>
+    </if>
+  </sql>
+  
+  <sql id="query_by_page" >
+    <where>
+    <if test="interviewer != null and interviewer != ''" >
+         and cr.interviewer = #{interviewer,jdbcType=VARCHAR}
+      </if>
+     <if test="positionId != null and positionId != ''" >
+         and cp.POSITION_ID = #{positionId,jdbcType=VARCHAR}
+      </if>
+      <if test="qualifications != null and qualifications != ''" >
+         and cp.POSITION_ID = #{qualifications,jdbcType=VARCHAR}
+      </if>
+       <if test="searchKey != null and searchKey != ''" >
+        and (rb.NAME like '%'||#{searchKey}||'%' 
+        )
+      </if>
+       <if test="qualifications != null and qualifications != ''" >
+         and cp.POSITION_ID = #{qualifications,jdbcType=VARCHAR}
+      </if>
+       <if test="isFeedBack != null  and isFeedBack == 1" >
+         <![CDATA[and cr.FEEDBACK <> '0']]>  
+      </if>
+       <if test="isFeedBack != null and isFeedBack == 2" >
+         and cr.FEEDBACK = '0'
+      </if>
+      
+    </where>
+  </sql>
+  
+  <select id="selectListByPage" resultMap="RecommendResultMap" parameterType="java.util.Map">
+   <include refid="Recommend_Oracle_Dialect_Pagination_Prefix" />
+    select cr.id as candidate_recommend_id,cp.id as candidate_post_id,rc.id as candidate_id,rb.id as resume_id
+  from T_CANDIDATE_RECOMMEND cr
+  left join T_CANDIDATE_POST cp on cr.candidate_post_id = cp.id
+  left join T_RESUME_CANDIDATE rc on cp.candidate_id = rc.id
+  left join t_Resume_Basicinfor rb on rc.resume_id = rb.id
+   <include refid="query_by_page" />
+    <include refid="Recommend_Oracle_Dialect_Pagination_Suffix" />
+  </select>
+  
+    <select id="countByPage" parameterType="java.util.Map" resultType="java.lang.Integer" >
+    select count(1) from T_CANDIDATE_RECOMMEND cr
+  left join T_CANDIDATE_POST cp on cr.candidate_post_id = cp.id
+  left join T_RESUME_CANDIDATE rc on cp.candidate_id = rc.id
+  left join t_Resume_Basicinfor rb on rc.resume_id = rb.id
+    <include refid="query_by_page" />
+  </select>
+  
+  <update id="batchUpdateRecommend" parameterType="java.util.Map">
+  update T_CANDIDATE_RECOMMEND
+     set
+        FEEDBACK = #{status,jdbcType=VARCHAR},
+        FEEDBACK_TIME = sysdate
+     where id in 
+     <foreach item="item" index="index" collection="list" open="("
+            separator="," close=")">
+            #{item}  
+      </foreach>
+  </update>
+  
+  <select id="selectByMap" resultMap="BaseResultMap" parameterType="java.util.Map">
+    select 
+    <include refid="Base_Column_List" />
+    from T_CANDIDATE_RECOMMEND
+    where CANDIDATE_POST_ID = #{candidatePostId,jdbcType=VARCHAR}
+  </select>
+</mapper>

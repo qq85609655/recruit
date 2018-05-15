@@ -1,0 +1,105 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<html>
+  <head>
+		<%@include file="/webpage/common.jsp"%>
+	  <title>规则字段设置</title>
+	  <style>
+	  .table{margin-top:20px;margin-bottom:20px;}
+		.table table{border-radius:5px;font-size:1em;margin-top:10px;}
+		.table table tr th,.table table tr td{border:1px solid #999;line-height:26px;text-align:center;padding:0 10px;}
+		.table .mini-checkbox-check {margin:0;}
+		.table .icon-cancel-1{color:#06c;}
+		.table .icon-cancel-1:hover{color:#48b8e8;}
+	  </style>
+  </head>
+  <body onload="removeLoad();">
+	  <jsp:include page="/webpage/header.jsp"></jsp:include>
+    <div class="co">
+    	<div class="co-right">
+    	  <div class="position-path co-right-center">
+    			<span class="path-title">您的位置 :</span><a class="path-item a-decoration" href="${webRoot}/loginController/main">我的首页</a><em class="path-icon">&gt;&gt;</em><a class="path-item a-decoration">简历库</a><em class="path-icon">&gt;&gt;</em><span class="path-leaf">规则字段设置</span>
+    	  </div>
+			  <div class="co-right-center">
+			  	<div class="tab">
+			  		<a class="tab-item" href="${webRoot}/webpage/com/csot/resume/resumeRule.jsp">设置判重规则</a>
+			  		<a class="tab-item active">字段列表</a>
+			  	</div>
+			  	<div class="table">
+			  		<a class="btn-a condition-add">新增字段</a>
+				  	<table>
+			 				<tr>
+			 					<th></th>
+			 					<th width="200">字段</th>
+			 					<th width="100">分数</th>
+			 					<th width="60">操作</th>
+			 				</tr>
+			 				<tr>
+			 					<td><div id="ck1_1" name="ck1_1" class="mini-checkbox" onvaluechanged=""></div></td>
+			 					<td>身份证号码</td>
+			 					<td>100</td>
+			 					<td><a class="font-icon icon-cancel-1" title="删除"></a></td>
+			 				</tr>
+			 				<tr>
+			 					<td><div id="ck1_2" name="ck1_2" class="mini-checkbox" onvaluechanged=""></div></td>
+			 					<td>姓名</td>
+			 					<td>70</td>
+			 					<td><a class="font-icon icon-cancel-1" title="删除"></a></td>
+			 				</tr>
+			 				<tr>
+			 					<td><div id="ck1_3" name="ck1_3" class="mini-checkbox" onvaluechanged=""></div></td>
+			 					<td>手机号码</td>
+			 					<td>70</td>
+			 					<td><a class="font-icon icon-cancel-1" title="删除"></a></td>
+			 				</tr>
+			 				<tr>
+			 					<td><div id="ck1_4" name="ck1_4" class="mini-checkbox" onvaluechanged=""></div></td>
+			 					<td>邮箱</td>
+			 					<td>70</td>
+			 					<td><a class="font-icon icon-cancel-1" title="删除"></a></td>
+			 				</tr>
+			 				<tr>
+			 					<td><div id="ck1_5" name="ck1_5" class="mini-checkbox" onvaluechanged=""></div></td>
+			 					<td>性别</td>
+			 					<td>5</td>
+			 					<td><a class="font-icon icon-cancel-1" title="删除"></a></td>
+			 				</tr>
+			 				<tr>
+			 					<td><div id="ck1_6" name="ck1_6" class="mini-checkbox" onvaluechanged=""></div></td>
+			 					<td>出生年月</td>
+			 					<td>15</td>
+			 					<td><a class="font-icon icon-cancel-1" title="删除"></a></td>
+			 				</tr>
+			 				<tr>
+			 					<td><div id="ck1_7" name="ck1_7" class="mini-checkbox" onvaluechanged=""></div></td>
+			 					<td>最高教育经历</td>
+			 					<td>10</td>
+			 					<td><a class="font-icon icon-cancel-1" title="删除"></a></td>
+			 				</tr>
+			 				<tr>
+			 					<td><div id="ck1_8" name="ck1_8" class="mini-checkbox" onvaluechanged=""></div></td>
+			 					<td>最新工作经验</td>
+			 					<td>10</td>
+			 					<td><a class="font-icon icon-cancel-1" title="删除"></a></td>
+			 				</tr>
+			 				<tr>
+			 					<td><div id="ck1_9" name="ck1_9" class="mini-checkbox" onvaluechanged=""></div></td>
+			 					<td>最新项目经验</td>
+			 					<td></td>
+			 					<td><a class="font-icon icon-cancel-1" title="删除"></a></td>
+			 				</tr>
+			 				<tr>
+			 					<td><div id="ck1_10" name="ck1_10" class="mini-checkbox" onvaluechanged=""></div></td>
+			 					<td>最新培训信息</td>
+			 					<td></td>
+			 					<td><a class="font-icon icon-cancel-1" title="删除"></a></td>
+			 				</tr>
+ 						</table>
+			  	</div>
+				</div>
+	  	</div>
+		</div>
+    <jsp:include page="/webpage/footer.jsp"></jsp:include>
+  </body>
+  
+</html>
+

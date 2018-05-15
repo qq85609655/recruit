@@ -1,0 +1,36 @@
+package com.csot.recruit.service.campus;
+
+import java.util.List;
+
+import com.csot.recruit.model.extension.campus.CampusTaskExt;
+import com.csot.recruit.model.original.campus.CampusTask;
+
+import org.amberframework.core.common.model.AjaxRtnJson;
+import org.amberframework.web.miniui.pojo.MiniGridPageSort;
+import org.amberframework.web.miniui.pojo.MiniRtn2Grid;
+import org.springframework.web.multipart.MultipartFile;
+
+public interface CampusTaskService {
+  MiniRtn2Grid<CampusTask> getGrid(MiniGridPageSort pageSort, String yearth, String organizationId,
+                                   String siteId, String postId);
+
+  CampusTask getByPrimaryKey(String primaryKey);
+
+  void create(CampusTask campusTask);
+
+  void updateSelective(CampusTask campusTask);
+
+  void remove(String primaryKey);
+
+  boolean checkIsExistTask(String organizationId, String siteId, String postId, String yearth);
+
+  List<CampusTask> getCampusTaskBySiteId(String siteId);
+
+  List<CampusTask> getCampusTaskByPostId(String postId);
+
+  AjaxRtnJson importCampusTask(MultipartFile multipartFile, String basePath) throws Exception;
+
+  List<CampusTaskExt> getGrid4Yearth();
+
+  List<CampusTask> getTaskByOrganizationSitePostYearth(String organizationId, String siteId, String postId, String yearth);
+}

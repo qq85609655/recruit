@@ -1,0 +1,109 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<html>
+  <head>
+		<%@include file="/webpage/common.jsp"%>
+	  <title>判重规则设置</title>
+	  <link type="text/css" rel="stylesheet" href="${ctx}/resources/css/resume/resumeRule.css"/>
+  </head>
+  <body onload="removeLoad();">
+	  <jsp:include page="/webpage/header.jsp"></jsp:include>
+    <div class="co">
+    	<div class="co-right">
+    	  <div class="position-path co-right-center">
+    			<span class="path-title">您的位置 :</span><a class="path-item a-decoration" href="${webRoot}/loginController/main">我的首页</a><em class="path-icon">&gt;&gt;</em><a class="path-item a-decoration">简历库</a><em class="path-icon">&gt;&gt;</em><span class="path-leaf">判重规则</span>
+    	  </div>
+			  <div class="co-right-center">
+			  	<div class="tab">
+			  		<a class="tab-item active">设置判重规则</a>
+			  		<a class="tab-item" href="${ctx}/webpage/com/csot/resume/ruleField.jsp">字段列表</a>
+			  	</div>
+			  	<div class="tip-bar">
+			  		<div class="tip-msg">
+			  			<p>说明：请不要随意变更此设置，此设置的变更将会使人才库简历全部重新判重，耗时较长，可能会影响使用。</p>
+			  		</div>
+			  	</div>
+			  	<div class="main-item score">
+			  		<label>判重分数线：</label><input class="mini-spinner"></input>
+			  	</div>
+			  	<div class="main-item table">
+			  		<label>判重条件:</label>
+			  		<div>
+				  		<table id="condition-table">
+				  			<tr>
+				  				<th><div id="ck0" name="ck0" class="mini-checkbox" onvaluechanged=""></div></th>
+				  				<th>字段一</th>
+				  				<th>字段一分数</th>
+				  				<th>字段二</th>
+				  				<th>字段二分数</th>
+				  				<th>字段三</th>
+				  				<th>字段三分数</th>
+				  				<th>总分数</th>
+				  				<th width="60">操作</th>
+				  			</tr>
+				  			<tr>
+				  				<td><div id="ck1" name="ck1" class="mini-checkbox" onvaluechanged=""></div></td>
+				  				<td>身份证号码</td>
+				  				<td>100</td>
+				  				<td></td>
+				  				<td></td>
+				  				<td></td>
+				  				<td></td>
+				  				<td>100</td>
+				  				<td><a class="font-icon icon-cancel-1" title="删除"></a></td>
+				  			</tr>
+				  			<tr>
+				  				<td><div id="ck2" name="ck2" class="mini-checkbox" onvaluechanged=""></div></td>
+				  				<td>姓名</td>
+				  				<td>70</td>
+				  				<td>手机号</td>
+				  				<td>70</td>
+				  				<td></td>
+				  				<td></td>
+				  				<td>140</td>
+				  				<td><a class="font-icon icon-cancel-1" title="删除"></a></td>
+				  			</tr>
+				  			<tr>
+				  				<td><div id="ck3" name="ck3" class="mini-checkbox" onvaluechanged=""></div></td>
+				  				<td>姓名</td>
+				  				<td>70</td>
+				  				<td>邮箱</td>
+				  				<td>70</td>
+				  				<td></td>
+				  				<td></td>
+				  				<td>140</td>
+				  				<td><a class="font-icon icon-cancel-1" title="删除"></a></td>
+				  			</tr>
+				  			<tr>
+				  				<td><div id="ck4" name="ck4" class="mini-checkbox" onvaluechanged=""></div></td>
+				  				<td>姓名</td>
+				  				<td>70</td>
+				  				<td>性别</td>
+				  				<td>5</td>
+				  				<td>出生年月</td>
+				  				<td>15</td>
+				  				<td>90</td>
+				  				<td><a class="font-icon icon-cancel-1" title="删除"></a></td>
+				  			</tr>
+				  			<tr>
+				  				<td><div id="ck5" name="ck5" class="mini-checkbox" onvaluechanged=""></div></td>
+				  				<td>姓名</td>
+				  				<td>70</td>
+				  				<td>出生年月</td>
+				  				<td>15</td>
+				  				<td>最高教育经历</td>
+				  				<td>10</td>
+				  				<td>95</td>
+				  				<td><a class="font-icon icon-cancel-1" title="删除"></a></td>
+				  			</tr>
+				  		</table>
+				  		<a class="btn-a condition-add" onClick="resumeRuleAdd();">新增判重条件</a>
+			  		</div>
+			  	</div>
+				</div>
+	  	</div>
+		</div>
+    <jsp:include page="/webpage/footer.jsp"></jsp:include>
+    <script src="${ctx}/resources/js/resume/resumeRule.js"></script>
+  </body>
+</html>
+

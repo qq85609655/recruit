@@ -1,0 +1,17 @@
+package com.csot.recruit.common.constant;
+
+public class Constant {
+  
+  /** 路径分隔符  */
+  public static String separator = "/";
+  
+  /**
+   * 修改招聘需求审批邮件模板id
+   */
+  public static String DEMAND_CHANGE_EMAIL_TEMPLATEID = "8f6ddaf809674d99a0db35aa9febabe7";
+  /**
+   * 修改招聘需求审批完成邮件模板id
+   */
+  public static String DEMAND_CHANGED_EMAIL_TEMPLATEID = "fc709d9246a24e7185e99cfd20da47d5";
+  
+}

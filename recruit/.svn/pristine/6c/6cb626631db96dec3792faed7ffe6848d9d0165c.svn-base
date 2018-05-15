@@ -1,0 +1,24 @@
+package com.csot.recruit.common.util;
+
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+
+public class CampusUtils {
+  public static String getCurrentYearth() {
+    // 获取年份
+    Calendar calendar = Calendar.getInstance();
+    Date date = new Date(System.currentTimeMillis());
+    calendar.setTime(date);
+    calendar.add(Calendar.YEAR, +1);
+    date = calendar.getTime();
+    String yearth = new SimpleDateFormat("yyyy").format(date);
+    int month = date.getMonth();
+    if (month < 6) {
+      yearth = yearth + "春季";
+    } else {
+      yearth = yearth + "秋季";
+    }
+    return yearth;
+  }
+}

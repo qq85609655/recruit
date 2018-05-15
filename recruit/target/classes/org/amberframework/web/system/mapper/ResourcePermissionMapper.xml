@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.amberframework.web.system.dao.ResourcePermissionMapper" >
+ 
+ <select id="getResourcesPermissionByUserId" resultType="org.amberframework.web.system.model.UrlPermission" parameterType="java.lang.String">
+	 select  url,permission from t_sys_resource  r  left join t_sys_resource_permission rp  on r.id = rp.resource_id left join t_sys_permission p 
+	 on p.id = rp.permission_id where r.id in (select resource_id from t_sys_role_resource_permission where role_id in(select role_id from t_sys_user_role where user_id =#{userId}))
+ </select>
+
+<select id="getAllResourcesPermission" resultType="org.amberframework.web.system.model.UrlPermission" >
+   select  url,permission from t_sys_resource  r  left join t_sys_resource_permission rp  on r.id = rp.resource_id left join t_sys_permission p 
+	 on p.id = rp.permission_id 
+</select>
+
+<select id="getAllUPByUserId" parameterType="java.lang.String" resultType="org.amberframework.web.system.model.UrlPermission" >
+    select url,permission from t_sys_user_resource_permission urp left join t_sys_resource sr on urp.resource_id = sr.id left join t_sys_permission sp on sp.id =urp.permission_id where urp.user_id=#{userId}
+</select>
+
+<!-- <select id="getAllResourcesPermission" resultType="org.amberframework.web.system.model.UrlPermission" >
+   select  url,permission from t_sys_resource  r  left join t_sys_resource_permission rp  on r.id = rp.resource_id left join t_sys_permission p 
+	 on p.id = rp.permission_id 
+</select> -->
+</mapper>

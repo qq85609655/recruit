@@ -1,0 +1,1 @@
+<html><head><meta http-equiv='Content-Type' content='text/html; charset=UTF-8'><title>发送简历通知邮件模版ww</title></head><body><textarea rows='10' cols='80' id='templateContext' name='templateContext'>向您推荐贵部门当前所需职位的简历，请查看附件并及时反馈你是是是的意见，谢谢。附言：</textarea></body></html>

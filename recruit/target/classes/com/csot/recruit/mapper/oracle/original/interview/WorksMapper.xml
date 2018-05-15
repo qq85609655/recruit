@@ -1,0 +1,413 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.csot.recruit.dao.original.interview.WorksMapper" >
+  <resultMap id="BaseResultMap" type="com.csot.recruit.model.original.interview.Works" >
+    <id column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="PERSON_CODE" property="personCode" jdbcType="VARCHAR" />
+    <result column="WORK_INDEX" property="workIndex" jdbcType="VARCHAR" />
+    <result column="WORKSTARTDATE" property="workstartdate" jdbcType="VARCHAR" />
+    <result column="WORKENDDATE" property="workenddate" jdbcType="VARCHAR" />
+    <result column="COMPANY_NAME" property="companyName" jdbcType="VARCHAR" />
+    <result column="FINAL_SALARY" property="finalSalary" jdbcType="VARCHAR" />
+    <result column="DEPARTMENT" property="department" jdbcType="VARCHAR" />
+    <result column="FINAL_POSITION" property="finalPosition" jdbcType="VARCHAR" />
+    <result column="REPORT_TO" property="reportTo" jdbcType="VARCHAR" />
+    <result column="SUBORDINATES" property="subordinates" jdbcType="VARCHAR" />
+    <result column="SENIORITY" property="seniority" jdbcType="VARCHAR" />
+    <result column="RESPONSIBILITIES" property="responsibilities" jdbcType="VARCHAR" />
+    <result column="LEAVE_REASON" property="leaveReason" jdbcType="VARCHAR" />
+    <result column="RETERENCE" property="reterence" jdbcType="VARCHAR" />
+    <result column="RELATIONSHIP" property="relationship" jdbcType="VARCHAR" />
+    <result column="RETERENCE_PHONE" property="reterencePhone" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    ID, PERSON_CODE, WORK_INDEX, WORKSTARTDATE, WORKENDDATE, COMPANY_NAME, FINAL_SALARY, 
+    DEPARTMENT, FINAL_POSITION, REPORT_TO, SUBORDINATES, SENIORITY, RESPONSIBILITIES, 
+    LEAVE_REASON, RETERENCE, RELATIONSHIP, RETERENCE_PHONE
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.csot.recruit.model.original.interview.WorksCriteria" >
+    <include refid="Oracle_Dialect_Pagination_Prefix" />
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from T_WORK_EXPERIENCE
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <include refid="Oracle_Dialect_Pagination_Suffix" />
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from T_WORK_EXPERIENCE
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from T_WORK_EXPERIENCE
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.csot.recruit.model.original.interview.WorksCriteria" >
+    delete from T_WORK_EXPERIENCE
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.csot.recruit.model.original.interview.Works" >
+    insert into T_WORK_EXPERIENCE (ID, PERSON_CODE, WORK_INDEX, 
+      WORKSTARTDATE, WORKENDDATE, COMPANY_NAME, 
+      FINAL_SALARY, DEPARTMENT, FINAL_POSITION, 
+      REPORT_TO, SUBORDINATES, SENIORITY, 
+      RESPONSIBILITIES, LEAVE_REASON, RETERENCE, 
+      RELATIONSHIP, RETERENCE_PHONE)
+    values (#{id,jdbcType=VARCHAR}, #{personCode,jdbcType=VARCHAR}, #{workIndex,jdbcType=VARCHAR}, 
+      #{workstartdate,jdbcType=VARCHAR}, #{workenddate,jdbcType=VARCHAR}, #{companyName,jdbcType=VARCHAR}, 
+      #{finalSalary,jdbcType=VARCHAR}, #{department,jdbcType=VARCHAR}, #{finalPosition,jdbcType=VARCHAR}, 
+      #{reportTo,jdbcType=VARCHAR}, #{subordinates,jdbcType=VARCHAR}, #{seniority,jdbcType=VARCHAR}, 
+      #{responsibilities,jdbcType=VARCHAR}, #{leaveReason,jdbcType=VARCHAR}, #{reterence,jdbcType=VARCHAR}, 
+      #{relationship,jdbcType=VARCHAR}, #{reterencePhone,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.csot.recruit.model.original.interview.Works" >
+    insert into T_WORK_EXPERIENCE
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="personCode != null" >
+        PERSON_CODE,
+      </if>
+      <if test="workIndex != null" >
+        WORK_INDEX,
+      </if>
+      <if test="workstartdate != null" >
+        WORKSTARTDATE,
+      </if>
+      <if test="workenddate != null" >
+        WORKENDDATE,
+      </if>
+      <if test="companyName != null" >
+        COMPANY_NAME,
+      </if>
+      <if test="finalSalary != null" >
+        FINAL_SALARY,
+      </if>
+      <if test="department != null" >
+        DEPARTMENT,
+      </if>
+      <if test="finalPosition != null" >
+        FINAL_POSITION,
+      </if>
+      <if test="reportTo != null" >
+        REPORT_TO,
+      </if>
+      <if test="subordinates != null" >
+        SUBORDINATES,
+      </if>
+      <if test="seniority != null" >
+        SENIORITY,
+      </if>
+      <if test="responsibilities != null" >
+        RESPONSIBILITIES,
+      </if>
+      <if test="leaveReason != null" >
+        LEAVE_REASON,
+      </if>
+      <if test="reterence != null" >
+        RETERENCE,
+      </if>
+      <if test="relationship != null" >
+        RELATIONSHIP,
+      </if>
+      <if test="reterencePhone != null" >
+        RETERENCE_PHONE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="personCode != null" >
+        #{personCode,jdbcType=VARCHAR},
+      </if>
+      <if test="workIndex != null" >
+        #{workIndex,jdbcType=VARCHAR},
+      </if>
+      <if test="workstartdate != null" >
+        #{workstartdate,jdbcType=VARCHAR},
+      </if>
+      <if test="workenddate != null" >
+        #{workenddate,jdbcType=VARCHAR},
+      </if>
+      <if test="companyName != null" >
+        #{companyName,jdbcType=VARCHAR},
+      </if>
+      <if test="finalSalary != null" >
+        #{finalSalary,jdbcType=VARCHAR},
+      </if>
+      <if test="department != null" >
+        #{department,jdbcType=VARCHAR},
+      </if>
+      <if test="finalPosition != null" >
+        #{finalPosition,jdbcType=VARCHAR},
+      </if>
+      <if test="reportTo != null" >
+        #{reportTo,jdbcType=VARCHAR},
+      </if>
+      <if test="subordinates != null" >
+        #{subordinates,jdbcType=VARCHAR},
+      </if>
+      <if test="seniority != null" >
+        #{seniority,jdbcType=VARCHAR},
+      </if>
+      <if test="responsibilities != null" >
+        #{responsibilities,jdbcType=VARCHAR},
+      </if>
+      <if test="leaveReason != null" >
+        #{leaveReason,jdbcType=VARCHAR},
+      </if>
+      <if test="reterence != null" >
+        #{reterence,jdbcType=VARCHAR},
+      </if>
+      <if test="relationship != null" >
+        #{relationship,jdbcType=VARCHAR},
+      </if>
+      <if test="reterencePhone != null" >
+        #{reterencePhone,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.csot.recruit.model.original.interview.WorksCriteria" resultType="java.lang.Integer" >
+    select count(*) from T_WORK_EXPERIENCE
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update T_WORK_EXPERIENCE
+    <set >
+      <if test="record.id != null" >
+        ID = #{record.id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.personCode != null" >
+        PERSON_CODE = #{record.personCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.workIndex != null" >
+        WORK_INDEX = #{record.workIndex,jdbcType=VARCHAR},
+      </if>
+      <if test="record.workstartdate != null" >
+        WORKSTARTDATE = #{record.workstartdate,jdbcType=VARCHAR},
+      </if>
+      <if test="record.workenddate != null" >
+        WORKENDDATE = #{record.workenddate,jdbcType=VARCHAR},
+      </if>
+      <if test="record.companyName != null" >
+        COMPANY_NAME = #{record.companyName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.finalSalary != null" >
+        FINAL_SALARY = #{record.finalSalary,jdbcType=VARCHAR},
+      </if>
+      <if test="record.department != null" >
+        DEPARTMENT = #{record.department,jdbcType=VARCHAR},
+      </if>
+      <if test="record.finalPosition != null" >
+        FINAL_POSITION = #{record.finalPosition,jdbcType=VARCHAR},
+      </if>
+      <if test="record.reportTo != null" >
+        REPORT_TO = #{record.reportTo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.subordinates != null" >
+        SUBORDINATES = #{record.subordinates,jdbcType=VARCHAR},
+      </if>
+      <if test="record.seniority != null" >
+        SENIORITY = #{record.seniority,jdbcType=VARCHAR},
+      </if>
+      <if test="record.responsibilities != null" >
+        RESPONSIBILITIES = #{record.responsibilities,jdbcType=VARCHAR},
+      </if>
+      <if test="record.leaveReason != null" >
+        LEAVE_REASON = #{record.leaveReason,jdbcType=VARCHAR},
+      </if>
+      <if test="record.reterence != null" >
+        RETERENCE = #{record.reterence,jdbcType=VARCHAR},
+      </if>
+      <if test="record.relationship != null" >
+        RELATIONSHIP = #{record.relationship,jdbcType=VARCHAR},
+      </if>
+      <if test="record.reterencePhone != null" >
+        RETERENCE_PHONE = #{record.reterencePhone,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update T_WORK_EXPERIENCE
+    set ID = #{record.id,jdbcType=VARCHAR},
+      PERSON_CODE = #{record.personCode,jdbcType=VARCHAR},
+      WORK_INDEX = #{record.workIndex,jdbcType=VARCHAR},
+      WORKSTARTDATE = #{record.workstartdate,jdbcType=VARCHAR},
+      WORKENDDATE = #{record.workenddate,jdbcType=VARCHAR},
+      COMPANY_NAME = #{record.companyName,jdbcType=VARCHAR},
+      FINAL_SALARY = #{record.finalSalary,jdbcType=VARCHAR},
+      DEPARTMENT = #{record.department,jdbcType=VARCHAR},
+      FINAL_POSITION = #{record.finalPosition,jdbcType=VARCHAR},
+      REPORT_TO = #{record.reportTo,jdbcType=VARCHAR},
+      SUBORDINATES = #{record.subordinates,jdbcType=VARCHAR},
+      SENIORITY = #{record.seniority,jdbcType=VARCHAR},
+      RESPONSIBILITIES = #{record.responsibilities,jdbcType=VARCHAR},
+      LEAVE_REASON = #{record.leaveReason,jdbcType=VARCHAR},
+      RETERENCE = #{record.reterence,jdbcType=VARCHAR},
+      RELATIONSHIP = #{record.relationship,jdbcType=VARCHAR},
+      RETERENCE_PHONE = #{record.reterencePhone,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.csot.recruit.model.original.interview.Works" >
+    update T_WORK_EXPERIENCE
+    <set >
+      <if test="personCode != null" >
+        PERSON_CODE = #{personCode,jdbcType=VARCHAR},
+      </if>
+      <if test="workIndex != null" >
+        WORK_INDEX = #{workIndex,jdbcType=VARCHAR},
+      </if>
+      <if test="workstartdate != null" >
+        WORKSTARTDATE = #{workstartdate,jdbcType=VARCHAR},
+      </if>
+      <if test="workenddate != null" >
+        WORKENDDATE = #{workenddate,jdbcType=VARCHAR},
+      </if>
+      <if test="companyName != null" >
+        COMPANY_NAME = #{companyName,jdbcType=VARCHAR},
+      </if>
+      <if test="finalSalary != null" >
+        FINAL_SALARY = #{finalSalary,jdbcType=VARCHAR},
+      </if>
+      <if test="department != null" >
+        DEPARTMENT = #{department,jdbcType=VARCHAR},
+      </if>
+      <if test="finalPosition != null" >
+        FINAL_POSITION = #{finalPosition,jdbcType=VARCHAR},
+      </if>
+      <if test="reportTo != null" >
+        REPORT_TO = #{reportTo,jdbcType=VARCHAR},
+      </if>
+      <if test="subordinates != null" >
+        SUBORDINATES = #{subordinates,jdbcType=VARCHAR},
+      </if>
+      <if test="seniority != null" >
+        SENIORITY = #{seniority,jdbcType=VARCHAR},
+      </if>
+      <if test="responsibilities != null" >
+        RESPONSIBILITIES = #{responsibilities,jdbcType=VARCHAR},
+      </if>
+      <if test="leaveReason != null" >
+        LEAVE_REASON = #{leaveReason,jdbcType=VARCHAR},
+      </if>
+      <if test="reterence != null" >
+        RETERENCE = #{reterence,jdbcType=VARCHAR},
+      </if>
+      <if test="relationship != null" >
+        RELATIONSHIP = #{relationship,jdbcType=VARCHAR},
+      </if>
+      <if test="reterencePhone != null" >
+        RETERENCE_PHONE = #{reterencePhone,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.csot.recruit.model.original.interview.Works" >
+    update T_WORK_EXPERIENCE
+    set PERSON_CODE = #{personCode,jdbcType=VARCHAR},
+      WORK_INDEX = #{workIndex,jdbcType=VARCHAR},
+      WORKSTARTDATE = #{workstartdate,jdbcType=VARCHAR},
+      WORKENDDATE = #{workenddate,jdbcType=VARCHAR},
+      COMPANY_NAME = #{companyName,jdbcType=VARCHAR},
+      FINAL_SALARY = #{finalSalary,jdbcType=VARCHAR},
+      DEPARTMENT = #{department,jdbcType=VARCHAR},
+      FINAL_POSITION = #{finalPosition,jdbcType=VARCHAR},
+      REPORT_TO = #{reportTo,jdbcType=VARCHAR},
+      SUBORDINATES = #{subordinates,jdbcType=VARCHAR},
+      SENIORITY = #{seniority,jdbcType=VARCHAR},
+      RESPONSIBILITIES = #{responsibilities,jdbcType=VARCHAR},
+      LEAVE_REASON = #{leaveReason,jdbcType=VARCHAR},
+      RETERENCE = #{reterence,jdbcType=VARCHAR},
+      RELATIONSHIP = #{relationship,jdbcType=VARCHAR},
+      RETERENCE_PHONE = #{reterencePhone,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <sql id="Oracle_Dialect_Pagination_Prefix" >
+    <if test="page != null" >
+      select * from ( select row_.*, rownum rownum_ from ( 
+    </if>
+  </sql>
+  <sql id="Oracle_Dialect_Pagination_Suffix" >
+    <if test="page != null" >
+      <![CDATA[ ) row_ ) where rownum_ > #{page.begin} and rownum_ <= #{page.end} ]]>
+    </if>
+  </sql>
+</mapper>

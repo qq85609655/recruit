@@ -1,0 +1,12 @@
+//通过模板查询
+function sendByTemplate() {
+  
+  OpenDialog(webRoot + "/campusStudentController/sendByTemplate/" + ids, "按模板发送邮件", "", 750, 630);
+}
+
+//自定义发送邮件
+function sendByDefinition() {
+
+  OpenDialog(webRoot + "/campusStudentController/sendByDefinition/" + ids, "自定义发送邮件", "", 780,
+      660);
+}
